@@ -2,7 +2,7 @@
 
 This is repository of group 5 in course CMPE352.
 
-Course Members:
+Group Members:
 
 1) Ali Meriç Deşer
 2) Yusuf Mert Bila
