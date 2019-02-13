@@ -9,7 +9,7 @@ Group Members:
 3) Furkan Kadıoğlu
 4) Veli Can Ünal
 5) Mahmut Uzunpostalcı
-6) Hasan Öztürk
+6) Hasan Öztürk  https://github.com/hasan-ozturk-2017400258
 7) Abdullah Yıldız
 8) Selamettin Dirik
 9) Meltem Suiçmez
