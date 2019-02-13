@@ -1,6 +1,6 @@
 # bounswe2019group5
 
-This is repository of group 5 in course CMPE352.
+This is the repository of group 5 in course CMPE352.
 
 Group Members:
 
