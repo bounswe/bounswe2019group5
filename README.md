@@ -10,8 +10,8 @@ Course Members:
 4) Veli Can Ünal
 5) Mahmut Uzunpostalcı
 6) Hasan Öztürk
-7)Abdullah Yıldız
-8)Selamettin Dirik
-9)Meltem Suiçmez
-10)Abdullah Enes Öncü
-11)Kıvanç Ünal
+7) Abdullah Yıldız
+8) Selamettin Dirik
+9) Meltem Suiçmez
+10) Abdullah Enes Öncü
+11) Kıvanç Ünal
