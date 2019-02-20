@@ -1,6 +1,8 @@
 # bounswe2019group5
 
 This is the repository of group 5 in course CMPE352.
+<br>
+For more information, [Visit the wiki page](https://github.com/bounswe/bounswe2019group5/wiki)
 
 Group Members:
 
