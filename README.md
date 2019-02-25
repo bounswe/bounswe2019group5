@@ -16,4 +16,3 @@ Group Members:
 8) **[Selamettin Dirik](https://github.com/bounswe/bounswe2019group5/wiki/Selamettin-Dirik)**
 9) **[Meltem Suiçmez](https://github.com/bounswe/bounswe2019group5/wiki/Meltem-Suiçmez)**
 10) **[Abdullah Enes Öncü](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Enes-ÖNCÜ)**
-11) Kıvanç Ünal
