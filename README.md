@@ -4,7 +4,10 @@ This is the repository of group 5 in course CMPE352 Fundamentals of Software Eng
 <br>
 For more information, [Visit the home page](https://github.com/bounswe/bounswe2019group5/wiki)
 
-Group Members:
+###   Project Description
+In this course, we will create a Language Learning Platform in accordance with our customer's desires. This platform enables users to practise in any avaible language in terms of reading, listening, vocabulary and writing on a single platform. Further details can be found in [Project Description](https://github.com/bounswe/bounswe2019group5/blob/master/Project_Description.pdf)
+
+#### Group Members:
 
 1) **[Ali Meriç Deşer](https://github.com/bounswe/bounswe2019group5/wiki/Ali-Meriç-Deşer)**
 2) **[Yusuf Mert Bila](https://github.com/bounswe/bounswe2019group5/wiki/Yusuf-Mert-Bila)**
