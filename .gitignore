@@ -1,2 +1,7 @@
 .DS_Store
 key.json
+node_modules
+.vscode
+.webstorm
+npm-debug.*
+*.lock
