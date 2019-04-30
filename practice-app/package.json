@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-  	"ejs": "latest",
     "aws-sdk": "latest",
-    "express": "latest",
+    "axios": "^0.18.0",
     "body-parser": "latest",
+    "cors": "^2.8.5",
+    "ejs": "latest",
+    "express": "latest",
     "mysql": "latest"
   },
   "scripts": {
