@@ -19,9 +19,17 @@ app.post('/', function(req, res) {
 });
 
 app.post('/deneme', function(req, res) {
-    res.send({ message: req.body });   
+    res.send({ message: 'req.body' });   
+});
+
+app.get('/home', function(req, res) {
+    var pair_example = [
+        { name: 'cat', id: '42' },
+        { name: 'vegi', id: '33' },
+        { name: 'plane', id: '68' }];
+    res.send(pair_example);   
 });
 
 
 app.listen(port);
-
+console.log('listen on 8080');
