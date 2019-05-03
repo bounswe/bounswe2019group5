@@ -9,7 +9,8 @@
     "cors": "^2.8.5",
     "ejs": "latest",
     "express": "latest",
-    "mysql": "latest"
+    "mysql": "latest",
+    "querystring": "latest"
   },
   "scripts": {
     "start": "node app.js"
