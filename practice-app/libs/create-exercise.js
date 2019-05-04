@@ -5,7 +5,7 @@ var fs = require('fs');
 var renderedArray = [];
 
 var getClassDataFromWikiData = ((classId, callback) => {
-    var queryString = `SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P279 wd:${classId} . ?item wdt:P18 ?pic SERVICE wikibase:label { bd:serviceParam wikibase:language "en" } }`;
+    var queryString = `SELECT ?itemLabel (SAMPLE(?item) AS ?item) (SAMPLE(?pic) AS ?pic) WHERE {  ?item wdt:P279 wd:${classId};    wdt:P18 ?pic.  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }}GROUP BY ?itemLabel LIMIT 6`;
     var url = 'https://query.wikidata.org/sparql';
 
     axios.post(url,
