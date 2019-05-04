@@ -1,56 +1,39 @@
-var http = require("https");
+var oxfordApi = require('./getDataFromOxfordApi');
+var wikiData = require('./getDataFromWikiData');
 
-function createRequestsForOxfordApi(language, word,image, callback) {
-    var app_id = "WILL BE ADDED LATER";
-    var app_key = "WILL BE ADDED LATER";
-    var options = {
-        word: word,
-        image:image,
-        parameters: {
-            host: 'od-api.oxforddictionaries.com',
-            port: '443',
-            path: '/api/v1/entries/' + language + '/' + encodeURI(word) + '/definitions',
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'app_id': app_id,
-                'app_key': app_key
-            }
-        }
-    };
+//oxfordApi.createRequestsForOxfordApi('en','book',(item) => {oxfordApi.sendRequestForOxfordApi(item);});
 
-    callback(options);
-};
+var renderedArray = wikiData.generateRenderedArray();
+var wordArray = [];
+setTimeout(() => {
 
-function sendRequestForOxfordApi(optionsParameters) {
-    var parameters = optionsParameters.parameters || '';
-    var word = optionsParameters.word || '';
-    var array = [];
-    http.get(parameters, (resp) => {
-        var body = '';
-        resp.on('data', (data) => {
-            body += data;
-        });
-        resp.on('end', () => {
-            if (body.indexOf('<') !== 0) {
-                var parsed = JSON.parse(body || '{}');
+    renderedArray.forEach(element => {
 
-                var definition = ((((((((((parsed || {}).results || [])[0] || {}).lexicalEntries || [])[0] || {}).entries || [])[0] || {}).senses || [])[0] || {}).definitions || [])[0] || '';
+        setTimeout(() => {
+            oxfordApi.createRequestsForOxfordApi('en',element.name,element.imgUrl,(item) => {oxfordApi.sendRequestForOxfordApi(item,function(wordObject){
+                wordArray.push(wordObject);
 
-                var wordImage = optionsParameters.image;
-                array.push({
-                    'word': word,
-                    'definition': definition,
-                    'image':wordImage
+            } );}) 
 
-                })
+        }, 200);
+    });    
+}, 2000);
 
-                console.log(array);
-            }
-        });
-    });
 
-    
+setTimeout(() => {
+
+console.log(wordArray);
+
+}, 7000);
+
+function sendDataToLocalServer(callback) {
+    var server = http.createServer((req, res) => {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(renderedArray));
+    })
+
+    setTimeout(() => {
+        server.listen(3000, '127.0.0.1');
+    }, 3000);
 }
-module.exports.createRequestsForOxfordApi = createRequestsForOxfordApi;
-module.exports.sendRequestForOxfordApi = sendRequestForOxfordApi;  
+
