@@ -1,5 +1,5 @@
 .DS_Store
-key.json
+*.json
 node_modules
 .vscode
 .webstorm
