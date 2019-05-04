@@ -1,50 +1,40 @@
-var axios = require('axios');
-var querystring = require('querystring');
-var http = require('http');
-var fs = require('fs');
-var renderedArray = [];
+var oxfordApi = require('./getDataFromOxfordApi');
+var wikiData = require('./getDataFromWikiData');
 
-var getClassDataFromWikiData = ((classId, callback) => {
-    var queryString = `SELECT ?itemLabel (SAMPLE(?item) AS ?item) (SAMPLE(?pic) AS ?pic) WHERE {  ?item wdt:P279 wd:${classId};    wdt:P18 ?pic.  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }}GROUP BY ?itemLabel LIMIT 6`;
-    var url = 'https://query.wikidata.org/sparql';
+//oxfordApi.createRequestsForOxfordApi('en','book',(item) => {oxfordApi.sendRequestForOxfordApi(item);});
 
-    axios.post(url,
-        querystring.stringify({
-            query: queryString,
-            format: "json"
-        }), {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }).then((res) => {
-            callback(res.data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-});
+var renderedArray = wikiData.generateRenderedArray();
+var wordArray = [];
+setTimeout(() => {
 
-getClassDataFromWikiData('Q42889', (item) => {
+    renderedArray.forEach(element => {
 
-    var array = item.results.bindings;
-    array.forEach(element => {
-        var itemObject = {
-            name: element.itemLabel.value,
-            imgUrl: element.pic.value
-        }
+        setTimeout(() => {
+            oxfordApi.createRequestsForOxfordApi('en', element.name, element.imgUrl, (item) => {
+                oxfordApi.sendRequestForOxfordApi(item, function (wordObject) {
+                    wordArray.push(wordObject);
 
-        renderedArray.push(itemObject);
+                });
+            })
+
+        }, 200);
     });
+}, 2000);
 
-});
-
-var server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(renderedArray));
-})
 
 setTimeout(() => {
-    server.listen(3000, '127.0.0.1');
-}, 3000);
 
-module.exports = getClassDataFromWikiData; 
+    console.log(wordArray);
+
+}, 7000);
+
+function sendDataToLocalServer(callback) {
+    var server = http.createServer((req, res) => {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(renderedArray));
+    })
+
+    setTimeout(() => {
+        server.listen(3000, '127.0.0.1');
+    }, 3000);
+}
