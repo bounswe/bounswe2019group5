@@ -1,40 +1,25 @@
-var oxfordApi = require('./getDataFromOxfordApi');
+var http = require("https");
 var wikiData = require('./getDataFromWikiData');
 
-//oxfordApi.createRequestsForOxfordApi('en','book',(item) => {oxfordApi.sendRequestForOxfordApi(item);});
-
-var renderedArray = wikiData.generateRenderedArray();
-var wordArray = [];
-setTimeout(() => {
-
-    renderedArray.forEach(element => {
-
-        setTimeout(() => {
-            oxfordApi.createRequestsForOxfordApi('en', element.name, element.imgUrl, (item) => {
-                oxfordApi.sendRequestForOxfordApi(item, function (wordObject) {
-                    wordArray.push(wordObject);
-
-                });
-            })
-
-        }, 200);
-    });
-}, 2000);
-
-
-setTimeout(() => {
-
-    console.log(wordArray);
-
-}, 7000);
+function createWordArray(callback) {
+    var renderedArray = wikiData.generateRenderedArray();
+    setTimeout(() => {
+        callback(renderedArray);
+    }, 2000);
+}
 
 function sendDataToLocalServer(callback) {
+    createWordArray((array) => {
+        callback(array);
+    });
+}
+
+sendDataToLocalServer((array) => {
+    console.log(array)
     var server = http.createServer((req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(renderedArray));
-    })
+        res.end(array);
+    });
 
-    setTimeout(() => {
-        server.listen(3000, '127.0.0.1');
-    }, 3000);
-}
+    server.listen(3000, '127.0.0.1');
+});
