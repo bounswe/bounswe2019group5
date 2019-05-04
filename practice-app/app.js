@@ -30,6 +30,24 @@ app.get('/home', function(req, res) {
     res.send(pair_example);   
 });
 
+app.post('/exercise',function(req,res){
+    var exercise_example = [
+        {
+            image:'question 1 url is here',
+            A:'cat',
+            B:'dog',
+            C:'plane'
+        },
+        {
+            image:'question 2 url is here',
+            A:'cat',
+            B:'dog',
+            C:'plane'
+        }
+    ];
+    res.send(exercise_example);
+});
+
 
 app.listen(port);
 console.log('listen on 8080');
