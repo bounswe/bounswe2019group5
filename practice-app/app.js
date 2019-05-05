@@ -35,14 +35,14 @@ app.post('/exercise',function(req,res){
         exerciseId:'id examples',
         questions:[
             {
-                imageUrl :'question 1 url is here',
+                imageUrl :'https://iasbh.tmgrup.com.tr/f51394/650/344/0/0/800/420?u=https://isbh.tmgrup.com.tr/sbh/2017/10/30/ruyada-kopek-gormek-ne-anlama-gelir-1509365192223.jpg',
                 A:'cat',
                 B:'dog',
                 C:'plane',
                 D:'whale'
             },
             {
-                imageUrl:'question 2 url is here',
+                imageUrl:'https://goldenretriever.gen.tr/images/golden-retriever-kokeni.jpg',
                 A:'cat',
                 B:'dog',
                 C:'plane',
@@ -52,6 +52,12 @@ app.post('/exercise',function(req,res){
     res.send(exercise_example);
 });
 
-
+app.post('/result',function(req,res){
+    var result_example = {
+        true:3,
+        false:1
+    }
+    res.send(result_example);
+});
 app.listen(port);
 console.log('listen on 8080');
