@@ -29,7 +29,7 @@ async function getWordObjectsFromOxfordApi(array) {
         promiseArray.push(promise);
     }
     await Promise.all(promiseArray)
-    console.log(resultArray);
+    //console.log(resultArray);
     return resultArray;
 }
 
@@ -50,8 +50,33 @@ function insertAnswers(answers, callback){
     });    
 }
 
+categoryID = 'Q42889';
 
-insertAnswers(['x', 'b','c', 'd'],(x)=>{console.log("Last inserted Test ID: ",x)});
+function createExercise(wordArray){
+ 
+    var questions = [];
 
-getWordsOfAClass('Q42889').then(res => console.log(res))
+    var words = [];
 
+    var images = [];
+    var answers = [];
+
+
+    wordArray.slice(0,15).forEach((element,index) => {
+        
+        if(index % 4 === 0){
+
+            images.push(element.image);
+            answers.push(element.word)
+
+        }
+        words.push(element.word);
+
+    });
+
+    console.log(images);
+}
+
+//insertAnswers(['x', 'b','c', 'd'],(x)=>{console.log("Last inserted Test ID: ",x)});
+
+getWordsOfAClass(categoryID).then(res => createExercise(res));
