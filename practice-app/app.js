@@ -33,16 +33,18 @@ app.get('/home', function(req, res) {
 app.post('/exercise',function(req,res){
     var exercise_example = [
         {
-            image:'question 1 url is here',
+            image :'question 1 url is here',
             A:'cat',
             B:'dog',
-            C:'plane'
+            C:'plane',
+            D:'whale'
         },
         {
             image:'question 2 url is here',
             A:'cat',
             B:'dog',
-            C:'plane'
+            C:'plane',
+            D:'whale'
         }
     ];
     res.send(exercise_example);
