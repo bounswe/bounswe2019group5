@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "async": "^2.6.2",
     "aws-sdk": "latest",
     "axios": "^0.18.0",
     "body-parser": "latest",
     "cors": "^2.8.5",
     "ejs": "latest",
     "express": "latest",
-    "mysql": "latest"
+    "mysql": "latest",
+    "querystring": "latest"
   },
   "scripts": {
     "start": "node app.js"
