@@ -32,22 +32,23 @@ app.get('/home', function(req, res) {
 
 app.post('/exercise',function(req,res){
     var exercise_example = {
-        exerciseId: {
-            0: {
+        exerciseId:'id examples',
+        questions:[
+            {
                 imageUrl :'question 1 url is here',
                 A:'cat',
                 B:'dog',
                 C:'plane',
                 D:'whale'
             },
-            1:{
+            {
                 imageUrl:'question 2 url is here',
                 A:'cat',
                 B:'dog',
                 C:'plane',
                 D:'whale'
             }
-        }};
+        ]};
     res.send(exercise_example);
 });
 
