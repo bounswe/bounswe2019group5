@@ -1,25 +1,36 @@
 var http = require("https");
 var wikiData = require('./getDataFromWikiData');
+var oxfordApi = require('./getDatafromOxfordApi');
+var util = require('util')
 
-function createWordArray(callback) {
-    var renderedArray = wikiData.generateRenderedArray();
-    setTimeout(() => {
-        callback(renderedArray);
-    }, 2000);
+
+async function getWordsOfAClass(classId) {
+    var wikiDataArray = await wikiData.generateRenderedArray(classId)
+    var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
+    return wordObjects;
 }
 
-function sendDataToLocalServer(callback) {
-    createWordArray((array) => {
-        callback(array);
-    });
+async function getWordObjectsFromOxfordApi(array) {
+    var optionArray = [];
+    var resultArray = [];
+    for (let element of array) {
+        var option = await oxfordApi.createRequestsForOxfordApi('en', element.name, element.imgUrl);
+        optionArray.push(option);
+    }
+    var promiseArray = [];
+    for(let option of optionArray) {
+        const promise = oxfordApi.sendRequestForOxfordApi(option)
+        .then((res) => {
+            if(res !== false) {
+                resultArray.push(res);
+            }
+        })
+        .catch(error => console.log(error))
+        promiseArray.push(promise);
+    }
+    await Promise.all(promiseArray)
+    console.log(resultArray);
+    return resultArray;
 }
 
-sendDataToLocalServer((array) => {
-    console.log(array)
-    var server = http.createServer((req, res) => {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(array);
-    });
-
-    server.listen(3000, '127.0.0.1');
-});
+getWordsOfAClass('Q42889').then(res => console.log(res))
