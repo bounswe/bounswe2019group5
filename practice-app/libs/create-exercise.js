@@ -1,50 +1,36 @@
-var axios = require('axios');
-var querystring = require('querystring');
-var http = require('http');
-var fs = require('fs');
-var renderedArray = [];
+var http = require("https");
+var wikiData = require('./getDataFromWikiData');
+var oxfordApi = require('./getDatafromOxfordApi');
+var util = require('util')
 
-var getClassDataFromWikiData = ((classId, callback) => {
-    var queryString = `SELECT ?itemLabel (SAMPLE(?item) AS ?item) (SAMPLE(?pic) AS ?pic) WHERE {  ?item wdt:P279 wd:${classId};    wdt:P18 ?pic.  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }}GROUP BY ?itemLabel LIMIT 6`;
-    var url = 'https://query.wikidata.org/sparql';
 
-    axios.post(url,
-        querystring.stringify({
-            query: queryString,
-            format: "json"
-        }), {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+async function getWordsOfAClass(classId) {
+    var wikiDataArray = await wikiData.generateRenderedArray(classId)
+    var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
+    return wordObjects;
+}
+
+async function getWordObjectsFromOxfordApi(array) {
+    var optionArray = [];
+    var resultArray = [];
+    for (let element of array) {
+        var option = await oxfordApi.createRequestsForOxfordApi('en', element.name, element.imgUrl);
+        optionArray.push(option);
+    }
+    var promiseArray = [];
+    for(let option of optionArray) {
+        const promise = oxfordApi.sendRequestForOxfordApi(option)
+        .then((res) => {
+            if(res !== false) {
+                resultArray.push(res);
             }
-        }).then((res) => {
-            callback(res.data);
         })
-        .catch((error) => {
-            console.error(error);
-        });
-});
+        .catch(error => console.log(error))
+        promiseArray.push(promise);
+    }
+    await Promise.all(promiseArray)
+    console.log(resultArray);
+    return resultArray;
+}
 
-getClassDataFromWikiData('Q42889', (item) => {
-
-    var array = item.results.bindings;
-    array.forEach(element => {
-        var itemObject = {
-            name: element.itemLabel.value,
-            imgUrl: element.pic.value
-        }
-
-        renderedArray.push(itemObject);
-    });
-
-});
-
-var server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(renderedArray));
-})
-
-setTimeout(() => {
-    server.listen(3000, '127.0.0.1');
-}, 3000);
-
-module.exports = getClassDataFromWikiData; 
+getWordsOfAClass('Q42889').then(res => console.log(res))
