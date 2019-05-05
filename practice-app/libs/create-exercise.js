@@ -1,5 +1,5 @@
 var http = require("https");
-var wikiData = require('./getDataFromWikiData');
+var wikiData = require('./getDatafromWikiData');
 var oxfordApi = require('./getDatafromOxfordApi');
 var util = require('util')
 
