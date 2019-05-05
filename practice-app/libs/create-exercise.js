@@ -33,4 +33,25 @@ async function getWordObjectsFromOxfordApi(array) {
     return resultArray;
 }
 
+
+function insertAnswers(answers, callback){
+    var db = require('./connectToDatabase.js')
+    var sql = "INSERT INTO Test ( answer1, answer2, answer3, answer4) values (?,?,?,?)"
+    db.query(sql, answers ,function (err, result) {
+        if (err) throw err;        
+        console.log("row inserted to table");
+        sql = "SELECT LAST_INSERT_ID()"
+        db.query(sql, function (err2, result2) {
+            if (err2) throw err2; 
+            callback(JSON.parse(JSON.stringify(result2))[0]['LAST_INSERT_ID()']);
+            console.log("row inserted to table");
+            db.end();
+           })
+    });    
+}
+
+
+insertAnswers(['x', 'b','c', 'd'],(x)=>{console.log("Last inserted Test ID: ",x)});
+
 getWordsOfAClass('Q42889').then(res => console.log(res))
+
