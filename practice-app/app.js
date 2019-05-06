@@ -34,7 +34,11 @@ app.get('/home', function(req, res) {
 });
 
 app.post('/exercise',function(req,res){
-    var exercise_example = getWordsOfAClass(req.body.id);
+    getWordsOfAClass(req.body.id)
+    .then((exercise_example) => {
+        console.log("exercise_example", exercise_example);
+        res.send(exercise_example);
+    });
     /*
     var exercise_example = {
         exerciseId:'id examples',
@@ -55,7 +59,6 @@ app.post('/exercise',function(req,res){
             }
         ]};
     */
-    res.send(exercise_example);
 });
 
 app.post('/result',function(req,res){
