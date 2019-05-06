@@ -2,6 +2,8 @@ var http = require("https");
 var wikiData = require('./getDatafromWikiData');
 var oxfordApi = require('./getDatafromOxfordApi');
 var util = require('util')
+var mysql      = require('mysql');
+var key = require('../credentials/key.json');
 
 async function getWordsOfAClass(classId) {
     var wikiDataArray = await wikiData.generateRenderedArray(classId);
@@ -37,18 +39,26 @@ async function getWordObjectsFromOxfordApi(array) {
 
 
 function insertAnswers(answers) {
-    var db = require('./connectToDatabase.js')
+    var connection = mysql.createConnection(key);
+
+    connection.connect(function(err){
+    if(!err) {
+        console.log("Database is connected ... nn");    
+    } else {
+        console.log(err);    
+    }
+    });
     var sql = "INSERT INTO Test ( answer1, answer2, answer3, answer4) values (?,?,?,?)"
     return new Promise((resolve, reject) => {
-        db.query(sql, answers, function (err, result) {
+        connection.query(sql, answers, function (err, result) {
             if (err) throw err;
             console.log("row inserted to table");
             sql = "SELECT LAST_INSERT_ID()"
-            db.query(sql, function (err2, result2) {
+            connection.query(sql, function (err2, result2) {
                 if (err2) throw err2;
                 resolve(JSON.parse(JSON.stringify(result2))[0]['LAST_INSERT_ID()']);
                 console.log("row inserted to table");
-                db.end();
+                
             })
         }).on('error', function(e) {
             reject(e.message);
@@ -111,32 +121,32 @@ async function createExercise(wordArray) {
             {
                 imageUrl: images[0],
                 A: firstQuestion[0],
-                B: secondQuestion[0],
-                C: thirdQuestion[0],
-                D: fourthQuestion[0],
+                B: firstQuestion[1],
+                C: firstQuestion[2],
+                D: firstQuestion[3],
 
             },
             {
                 imageUrl: images[1],
-                A: firstQuestion[1],
+                A: secondQuestion[0],
                 B: secondQuestion[1],
-                C: thirdQuestion[1],
-                D: fourthQuestion[1],
+                C: secondQuestion[2],
+                D: secondQuestion[3],
 
             },
             {
                 imageUrl: images[2],
-                A: firstQuestion[2],
-                B: secondQuestion[2],
+                A: thirdQuestion[0],
+                B: thirdQuestion[1],
                 C: thirdQuestion[2],
-                D: fourthQuestion[2],
+                D: thirdQuestion[3],
 
             },
             {
                 imageUrl: images[3],
-                A: firstQuestion[3],
-                B: secondQuestion[3],
-                C: thirdQuestion[3],
+                A: fourthQuestion[0],
+                B: fourthQuestion[1],
+                C: fourthQuestion[2],
                 D: fourthQuestion[3],
 
             },
