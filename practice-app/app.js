@@ -34,7 +34,6 @@ app.get('/home', function(req, res) {
 });
 
 app.post('/exercise',function(req,res){
-    console.log(req);
     var exercise_example = getWordsOfAClass(req.headers.id).then(result => res.send(result));
     /*
     var exercise_example = {
