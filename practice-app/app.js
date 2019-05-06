@@ -1,10 +1,13 @@
 // call the packages we need
+var getWordsOfAClass = require('./libs/create-exercise');
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
+
 app.use(bodyParser.json());
 app.use(cors());
+
 
 //set up port
 var port = process.env.PORT || 8080;
@@ -24,13 +27,15 @@ app.post('/deneme', function(req, res) {
 
 app.get('/home', function(req, res) {
     var pair_example = [
-        { name: 'cat', id: '42' },
-        { name: 'vegi', id: '33' },
-        { name: 'plane', id: '68' }];
+        { name: 'vehicle', id: 'Q42889' },
+        { name: 'animal', id: 'Q729' },
+        { name: 'plant', id: 'Q756' }];
     res.send(pair_example);   
 });
 
 app.post('/exercise',function(req,res){
+    var exercise_example = getWordsOfAClass(req.body.id);
+    /*
     var exercise_example = {
         exerciseId:'id examples',
         questions:[
@@ -49,6 +54,7 @@ app.post('/exercise',function(req,res){
                 D:'whale'
             }
         ]};
+    */
     res.send(exercise_example);
 });
 
