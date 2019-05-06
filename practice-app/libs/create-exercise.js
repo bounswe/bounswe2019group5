@@ -5,10 +5,11 @@ var util = require('util')
 
 async function getWordsOfAClass(classId) {
     var wikiDataArray = await wikiData.generateRenderedArray(classId)
+    console.log("wikiDataArray", wikiDataArray);
     //Please dont delete this line, we can use later.
     // var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
-    var questions = await createExercise(wikiDataArray)
-    //console.log(questions)
+    var questions = await createExercise(wikiDataArray);
+    console.log("questions", questions);
     return questions;
 }
 
