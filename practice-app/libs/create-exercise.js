@@ -3,11 +3,13 @@ var wikiData = require('./getDatafromWikiData');
 var oxfordApi = require('./getDatafromOxfordApi');
 var util = require('util')
 
-
 async function getWordsOfAClass(classId) {
     var wikiDataArray = await wikiData.generateRenderedArray(classId)
-    var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
-    return wordObjects;
+    //Please dont delete this line, we can use later.
+    // var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
+    var questions = await createExercise(wikiDataArray)
+    //console.log(questions)
+    return questions;
 }
 
 async function getWordObjectsFromOxfordApi(array) {
@@ -29,7 +31,6 @@ async function getWordObjectsFromOxfordApi(array) {
         promiseArray.push(promise);
     }
     await Promise.all(promiseArray)
-    //console.log(resultArray);
     return resultArray;
 }
 
@@ -52,107 +53,87 @@ function insertAnswers(answers, callback) {
 
 categoryID = 'Q42889';
 
-function createExercise(wordArray) {
+async function createExercise(wordArray) {
 
     var images = [];
     var firstQuestion = [];
     var secondQuestion = [];
-
     var thirdQuestion = [];
     var fourthQuestion = [];
-
-
     var id = '5'; // LOOK LATER
 
     wordArray.slice(0, 4).forEach((element, index) => {
         if (index % 4 === 0) {
 
-            images.push(element.image);
+            images.push(element.imgUrl);
 
         }
 
-        firstQuestion.push(element.word);
+        firstQuestion.push(element.name);
     });
 
     wordArray.slice(4, 8).forEach((element, index) => {
         if (index % 4 === 0) {
-            images.push(element.image);
+            images.push(element.imgUrl);
         }
 
-        secondQuestion.push(element.word);
-
-
+        secondQuestion.push(element.name);
     });
 
     wordArray.slice(8, 12).forEach((element, index) => {
-
         if (index % 4 === 0) {
-
-            images.push(element.image);
-
+            images.push(element.imgUrl);
         }
-
-        thirdQuestion.push(element.word)
-
-
+        thirdQuestion.push(element.name)
     });
     wordArray.slice(12, 16).forEach((element, index) => {
-
         if (index % 4 === 0) {
-
-            images.push(element.image);
-
+            images.push(element.imgUrl);
         }
 
-        fourthQuestion.push(element.word)
-
-
+        fourthQuestion.push(element.name)
     });
+
     var object = {
-        exerciseId :id,
-        questions : [
+        exerciseId: id,
+        questions: [
             {
-                imageUrl:images[0],
-                A:firstQuestion[0],
-                B:secondQuestion[0],
-                C:thirdQuestion[0],
-                D:fourthQuestion[0],
+                imageUrl: images[0],
+                A: firstQuestion[0],
+                B: secondQuestion[0],
+                C: thirdQuestion[0],
+                D: fourthQuestion[0],
 
             },
             {
-                imageUrl:images[1],
-                A:firstQuestion[1],
-                B:secondQuestion[1],
-                C:thirdQuestion[1],
-                D:fourthQuestion[1],
+                imageUrl: images[1],
+                A: firstQuestion[1],
+                B: secondQuestion[1],
+                C: thirdQuestion[1],
+                D: fourthQuestion[1],
 
             },
             {
-                imageUrl:images[2],
-                A:firstQuestion[2],
-                B:secondQuestion[2],
-                C:thirdQuestion[2],
-                D:fourthQuestion[2],
+                imageUrl: images[2],
+                A: firstQuestion[2],
+                B: secondQuestion[2],
+                C: thirdQuestion[2],
+                D: fourthQuestion[2],
 
             },
             {
-                imageUrl:images[3],
-                A:firstQuestion[3],
-                B:secondQuestion[3],
-                C:thirdQuestion[3],
-                D:fourthQuestion[3],
+                imageUrl: images[3],
+                A: firstQuestion[3],
+                B: secondQuestion[3],
+                C: thirdQuestion[3],
+                D: fourthQuestion[3],
 
             },
 
         ]
-
     }
-
-    console.log(object)
-
-
+    return object;
 }
 
-//insertAnswers(['x', 'b','c', 'd'],(x)=>{console.log("Last inserted Test ID: ",x)});
-
-getWordsOfAClass(categoryID).then(res => createExercise(res));
+//getWordsOfAClass('Q42889');
+module.exports = getWordsOfAClass;
