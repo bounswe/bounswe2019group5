@@ -12,6 +12,7 @@ async function getWordsOfAClass(classId) {
     // var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
     var questions = await createExercise(wikiDataArray);
     //console.log(questions);
+
     return questions;
 }
 

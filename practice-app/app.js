@@ -56,7 +56,6 @@ app.post('/exercise',function(req,res){
             }
         ]};
     */
-    
 });
 
 app.post('/result',function(req,res){
