@@ -3,6 +3,7 @@ var getWordsOfAClass = require('./libs/create-exercise');
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var checkExercise = require('./libs/checkExercise');
 var cors = require('cors');
 
 app.use(bodyParser.json());
@@ -34,11 +35,7 @@ app.get('/home', function(req, res) {
 });
 
 app.post('/exercise',function(req,res){
-    getWordsOfAClass(req.body.id)
-    .then((exercise_example) => {
-        console.log("exercise_example", exercise_example);
-        res.send(exercise_example);
-    });
+    var exercise_example = getWordsOfAClass(req.body.id).then(result => res.send(result));
     /*
     var exercise_example = {
         exerciseId:'id examples',
@@ -62,11 +59,11 @@ app.post('/exercise',function(req,res){
 });
 
 app.post('/result',function(req,res){
-    var result_example = {
-        true:3,
-        false:1
-    }
-    res.send(result_example);
+    //console.log(req.body.responses.answers);
+    var exerciseId = req.body.responses.exerciseId;
+    var answers = req.body.responses.answers;
+    checkExercise(exerciseId, answers, result => res.send(result));
+    
 });
 app.listen(port);
 console.log('listen on 8080');

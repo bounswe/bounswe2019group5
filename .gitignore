@@ -3,3 +3,6 @@ node_modules
 .vscode
 .webstorm
 npm-debug.*
+key.json
+.DS_Store
+.DS_Store
