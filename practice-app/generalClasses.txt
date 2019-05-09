@@ -1,0 +1,22 @@
+[
+  { name: 'dog', id: 'Q144' },
+  { name: 'house cat', id: 'Q146' },
+  { name: 'alcoholic beverage', id: 'Q154' },
+  { name: 'pizza', id: 'Q177' },
+  { name: 'pasta', id: 'Q178' },
+  { name: 'chocolate', id: 'Q195' },
+  { name: 'wine', id: 'Q282' },
+  { name: 'Leather', id: 'Q286' },
+  { name: 'sport', id: 'Q349' },
+  { name: 'clock', id: 'Q376' },
+  { name: 'biology', id: 'Q420' },
+  { name: 'Beer', id: 'Q44' },
+  { name: 'human', id: 'Q5' },
+  { name: 'computer', id: 'Q68' },
+  { name: 'horse', id: 'Q726' },
+  { name: 'weapon', id: 'Q728' },
+  { name: 'Plant', id: 'Q756' },
+  { name: 'cattle', id: 'Q830' },
+  { name: 'apple', id: 'Q89' },
+  { name: 'Android', id: 'Q94' }
+]
