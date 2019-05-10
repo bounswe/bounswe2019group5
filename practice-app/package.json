@@ -15,5 +15,9 @@
   },
   "scripts": {
     "start": "node app.js"
-  }
+  },
+  "description": "Set up:",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC"
 }
