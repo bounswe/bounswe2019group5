@@ -71,92 +71,52 @@ categoryID = 'Q42889';
 
 async function createExercise(wordArray) {
 
+    let nuQue = 4; // Number of questions
+    let nuOpt = 4; // Number of options
+
+    if (wordArray.length<nuQue*nuOpt)   return null; // Control sufficiency of data
+
+    //Random Shuffle
+    for (var i=wordArray.length-1; i>0; i--) {
+        let j = Math.floor( Math.random()*(i+1) );
+        console.log(i, i<=wordArray.length);
+        let temp = wordArray[i];
+        wordArray[i] = wordArray[j];
+        wordArray[j] = temp;
+    }
+
     var images = [];
-    var firstQuestion = [];
-    var secondQuestion = [];
-    var thirdQuestion = [];
-    var fourthQuestion = [];
+    var questions = [];
     var id = '5'; // LOOK LATER
     var answerArray = [];
 
-    wordArray.slice(0, 4).forEach((element, index) => {
-        if (index % 4 === 0) {
+    for (var i=0; i<nuQue; i++) {
+        let randIndex = Math.floor(Math.random()*nuOpt);
 
-            images.push(element.imgUrl);
-            answerArray.push(element.name);
-        }
-
-        firstQuestion.push(element.name);
-    });
-
-    wordArray.slice(4, 8).forEach((element, index) => {
-        if (index % 4 === 0) {
-            images.push(element.imgUrl);
-            answerArray.push(element.name);
-        }
-
-        secondQuestion.push(element.name);
-    });
-
-    wordArray.slice(8, 12).forEach((element, index) => {
-        if (index % 4 === 0) {
-            images.push(element.imgUrl);
-            answerArray.push(element.name);
-        }
-        thirdQuestion.push(element.name)
-    });
-    wordArray.slice(12, 16).forEach((element, index) => {
-        if (index % 4 === 0) {
-            images.push(element.imgUrl);
-            answerArray.push(element.name);
-        }
-
-        fourthQuestion.push(element.name)
-    });
-
-    
+        wordArray.slice(i*nuOpt, (i+1)*nuOpt).forEach((element, index) => {
+            if (index % nuOpt === randIndex) {
+                images.push(element.imgUrl);
+                answerArray.push(element.name);
+            }
+            questions.push(element.name);
+        });
+        
+    }
 
     var object = {
         exerciseId: id,
-        questions: [
-            {
-                imageUrl: images[0],
-                A: firstQuestion[0],
-                B: firstQuestion[1],
-                C: firstQuestion[2],
-                D: firstQuestion[3],
-
-            },
-            {
-                imageUrl: images[1],
-                A: secondQuestion[0],
-                B: secondQuestion[1],
-                C: secondQuestion[2],
-                D: secondQuestion[3],
-
-            },
-            {
-                imageUrl: images[2],
-                A: thirdQuestion[0],
-                B: thirdQuestion[1],
-                C: thirdQuestion[2],
-                D: thirdQuestion[3],
-
-            },
-            {
-                imageUrl: images[3],
-                A: fourthQuestion[0],
-                B: fourthQuestion[1],
-                C: fourthQuestion[2],
-                D: fourthQuestion[3],
-
-            },
-
-        ]
+        questions: [],
     }
 
-    var idPromise = insertAnswers(answerArray);
-    await Promise.resolve(idPromise).then(res=>object.exerciseId = res);
+    for (var i=0; i<nuQue; i++) {
+        object.questions[i] = {};
+        object.questions[i].imageUrl = images[i];
+        for (var j=0; j<nuOpt; j++)
+            object.questions[i][String.fromCharCode('A'.charCodeAt()+j)] = questions[i*nuOpt+j];
+    }
+
+    await insertAnswers(answerArray)
+        .then(res=>object.exerciseId = res);
     return object;
 }
 
