@@ -69,19 +69,13 @@ function insertAnswers(answers) {
 
 categoryID = 'Q42889';
 
-async function createExercise(wordArray, nuQue=4, nuOpt=4) {
+async function createExercise(wordArray, numberOfQuestions=4, numberOfOptions=4) {
 
-    //nuQue is number of questions default it is 4
-    //nuOpt is number of options default it is 4
-
-    console.log(wordArray);
-
-    if (wordArray.length<nuQue*nuOpt)   return null; // Control sufficiency of data
+    if (wordArray.length<numberOfQuestions*numberOfOptions)   return null; // Control sufficiency of data
 
     //Random Shuffle
     for (var i=wordArray.length-1; i>0; i--) {
         let j = Math.floor( Math.random()*(i+1) );
-        console.log(i, i<=wordArray.length);
         let temp = wordArray[i];
         wordArray[i] = wordArray[j];
         wordArray[j] = temp;
@@ -89,14 +83,13 @@ async function createExercise(wordArray, nuQue=4, nuOpt=4) {
 
     var images = [];
     var questions = [];
-    var id = '5'; // LOOK LATER
     var answerArray = [];
 
-    for (var i=0; i<nuQue; i++) {
-        let randIndex = Math.floor(Math.random()*nuOpt);
+    for (var i=0; i<numberOfQuestions; i++) {
+        let randIndex = Math.floor(Math.random()*numberOfOptions);
 
-        wordArray.slice(i*nuOpt, (i+1)*nuOpt).forEach((element, index) => {
-            if (index % nuOpt === randIndex) {
+        wordArray.slice(i*numberOfOptions, (i+1)*numberOfOptions).forEach((element, index) => {
+            if (index % numberOfOptions === randIndex) {
                 images.push(element.imgUrl);
                 answerArray.push(element.name);
             }
@@ -106,15 +99,14 @@ async function createExercise(wordArray, nuQue=4, nuOpt=4) {
     }
 
     var object = {
-        exerciseId: id,
         questions: [],
     }
 
-    for (var i=0; i<nuQue; i++) {
+    for (var i=0; i<numberOfQuestions; i++) {
         object.questions[i] = {};
         object.questions[i].imageUrl = images[i];
-        for (var j=0; j<nuOpt; j++)
-            object.questions[i][String.fromCharCode('A'.charCodeAt()+j)] = questions[i*nuOpt+j];
+        for (var j=0; j<numberOfOptions; j++)
+            object.questions[i][String.fromCharCode('A'.charCodeAt()+j)] = questions[i*numberOfOptions+j];
     }
 
     await insertAnswers(answerArray)
@@ -123,4 +115,4 @@ async function createExercise(wordArray, nuQue=4, nuOpt=4) {
 }
 
 //getWordsOfAClass('Q42889');
-module.exports = getWordsOfAClass;
+module.exports = {getWordsOfAClass};
