@@ -12,33 +12,10 @@ class App extends Component {
   state = {
     message: '',
     list: []
-  }
-  
-  getMyApi = _ => {
-    fetch('http://localhost:8080')
-    .then(response => response.json())
-    .then(response => this.setState({message:response}))
-    .catch(err => console.error(err))
-  }
-  
-
-  postMyApi = _ => {
-    fetch('http://localhost:8080/deneme',{
-      method: 'post',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({dd: 'dsasaasd'})
-    })
-    .then(response => response.json())
-    .then(response => this.setState({message:response}))
-    .then(response => console.log(this.state.message))
-    .catch(err => console.error(err))
-  }
+  };
 
 
-  render(){
+  render() {
     return(
       
       <div className="Main">
