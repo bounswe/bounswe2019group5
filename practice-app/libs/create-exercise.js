@@ -115,4 +115,4 @@ async function createExercise(wordArray, numberOfQuestions=4, numberOfOptions=4)
 }
 
 //getWordsOfAClass('Q42889');
-module.exports = {getWordsOfAClass};
+module.exports = {getWordsOfAClass, createExercise};

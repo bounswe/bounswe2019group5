@@ -7,13 +7,16 @@
     "aws-sdk": "latest",
     "axios": "^0.18.0",
     "body-parser": "latest",
+    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "ejs": "latest",
     "express": "latest",
+    "mocha": "^6.1.4",
     "mysql": "latest",
     "querystring": "latest"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node ./node_modules/mocha/bin/mocha --timeout 10000"
   }
 }
