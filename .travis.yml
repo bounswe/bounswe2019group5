@@ -4,12 +4,13 @@ node_js:
  - "stable"
  
 before_script:
-cd /practice-app
-npm init
-npm install express
-npm install axios
-npm install mysql
+
+-cd /practice-app
+-npm init
+-npm install express
+-npm install axios
+-npm install mysql
 
 script:
-cd /test
-node test.js test
+-cd /test
+-node test.js test
