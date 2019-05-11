@@ -11,4 +11,5 @@ npm install axios
 npm install mysql
 
 script:
-node app.js
+cd /test
+node test.js
