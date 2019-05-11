@@ -12,4 +12,4 @@ npm install mysql
 
 script:
 cd /test
-node test.js
+node test.js test
