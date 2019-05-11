@@ -2,3 +2,13 @@ language: node_js
 sudo: false
 node_js:
  - "stable"
+ 
+before_script:
+cd /practice-app
+npm init
+npm install express
+npm install axios
+npm install mysql
+
+script:
+node app.js
