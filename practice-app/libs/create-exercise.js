@@ -69,10 +69,12 @@ function insertAnswers(answers) {
 
 categoryID = 'Q42889';
 
-async function createExercise(wordArray) {
+async function createExercise(wordArray, nuQue=4, nuOpt=4) {
 
-    let nuQue = 4; // Number of questions
-    let nuOpt = 4; // Number of options
+    //nuQue is number of questions default it is 4
+    //nuOpt is number of options default it is 4
+
+    console.log(wordArray);
 
     if (wordArray.length<nuQue*nuOpt)   return null; // Control sufficiency of data
 
