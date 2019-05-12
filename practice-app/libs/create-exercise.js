@@ -3,14 +3,15 @@ var wikiData = require('./getDatafromWikiData');
 var oxfordApi = require('./getDatafromOxfordApi');
 var util = require('util')
 var mysql      = require('mysql');
+var translate = require('./translate').translate;
 var key = require('../credentials/key.json');
 
-async function getWordsOfAClass(classId) {
+async function getWordsOfAClass(classId, lang="en") {
     var wikiDataArray = await wikiData.generateRenderedArray(classId);
     console.log(wikiDataArray);
     //Please dont delete this line, we can use later.
     // var wordObjects = await getWordObjectsFromOxfordApi(wikiDataArray);
-    var questions = await createExercise(wikiDataArray);
+    var questions = await createExercise(wikiDataArray, lang);
     //console.log(questions);
 
     return questions;
@@ -69,7 +70,7 @@ function insertAnswers(answers) {
 
 categoryID = 'Q42889';
 
-async function createExercise(wordArray, numberOfQuestions=4, numberOfOptions=4) {
+async function createExercise(wordArray, lang="en", numberOfQuestions=4, numberOfOptions=4) {
 
     if (wordArray.length<numberOfQuestions*numberOfOptions)   return null; // Control sufficiency of data
 
@@ -88,13 +89,16 @@ async function createExercise(wordArray, numberOfQuestions=4, numberOfOptions=4)
     for (var i=0; i<numberOfQuestions; i++) {
         let randIndex = Math.floor(Math.random()*numberOfOptions);
 
-        wordArray.slice(i*numberOfOptions, (i+1)*numberOfOptions).forEach((element, index) => {
+        for (var index=i*numberOfOptions; index<(i+1)*numberOfOptions; index++) {
+            element = wordArray[index];
+            var trWord = await translate(element.name, lang);
+
             if (index % numberOfOptions === randIndex) {
                 images.push(element.imgUrl);
-                answerArray.push(element.name);
+                answerArray.push(trWord);
             }
-            questions.push(element.name);
-        });
+            questions.push(trWord);
+        }
         
     }
 
@@ -109,8 +113,9 @@ async function createExercise(wordArray, numberOfQuestions=4, numberOfOptions=4)
             object.questions[i][String.fromCharCode('A'.charCodeAt()+j)] = questions[i*numberOfOptions+j];
     }
 
-    await insertAnswers(answerArray)
-        .then(res=>object.exerciseId = res);
+    var res = await insertAnswers(answerArray)
+    object.exerciseId = res;
+    console.log("============\n",object,"==========\n",answerArray);
     return object;
 }
 

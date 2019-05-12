@@ -11,7 +11,8 @@ class HomePage extends DataCacher{
   constructor(props){
     super(props);
     this.state = {
-      list : []
+      list : [],
+      lang : 'en',
       
     }
   }
@@ -29,12 +30,20 @@ class HomePage extends DataCacher{
   render() {
     return (
         <div>
+
+          <select value={this.state.lang} onChange={e => this.setState({lang: e.target.value})}>
+            <option value="en">en</option>
+            <option value="tr">tr</option>
+            <option value="de">de</option>
+            <option value="spa">spa</option>
+          </select>
           
           <p>{this.state.list.map(item => (
             <div>
               <Link to={{
                 pathname:'/exercise',
-                id:item.id
+                id:item.id,
+                lang:this.state.lang
               }}>{item.name}</Link>  
             </div>))}
           </p> 

@@ -32,6 +32,31 @@ app.post('/deneme', function(req, res) {
 
 app.get('/home', async function(req, res) {
 
+    // This is format which is to be sent to frontend
+    var pair_example = [
+        { name: 'dog', id: 'Q144' },
+        { name: 'house cat', id: 'Q146' },
+        { name: 'alcoholic beverage', id: 'Q154' },
+        { name: 'pizza', id: 'Q177' },
+        { name: 'pasta', id: 'Q178' },
+        { name: 'chocolate', id: 'Q195' },
+        { name: 'wine', id: 'Q282' },
+        { name: 'Leather', id: 'Q286' },
+        { name: 'sport', id: 'Q349' },
+        { name: 'clock', id: 'Q376' },
+        { name: 'biology', id: 'Q420' },
+        { name: 'Beer', id: 'Q44' },
+        { name: 'human', id: 'Q5' },
+        { name: 'computer', id: 'Q68' },
+        { name: 'horse', id: 'Q726' },
+        { name: 'weapon', id: 'Q728' },
+        { name: 'Plant', id: 'Q756' },
+        { name: 'cattle', id: 'Q830' },
+        { name: 'apple', id: 'Q89' },
+        { name: 'Android', id: 'Q94' }
+      ];
+    res.send(pair_example);
+
     var promise = getLabelsFromDatabase();
     answers = {};
     await Promise.resolve(promise)
@@ -82,7 +107,7 @@ async function getLabelsFromDatabase(){
 }
 
 app.post('/exercise',function(req,res){
-    var exercise_example = getWordsOfAClass(req.body.id).then(result => res.send(result));
+    var exercise_example = getWordsOfAClass(req.body.id, req.body.lang).then(result => res.send(result));
     /*
     var exercise_example = {
         exerciseId:'id examples',

@@ -27,7 +27,7 @@ class ExercisePage extends DataCacher{
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({id:this.props.location.id})
+      body: JSON.stringify({id:this.props.location.id, lang:this.props.location.lang})
     })
     .then(response => response.json())
     .then(response => this.setState({exercise:response}))
