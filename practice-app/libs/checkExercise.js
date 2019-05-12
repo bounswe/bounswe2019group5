@@ -80,5 +80,4 @@ function getExerciseAnswers(exerciseId) {
 //checkExercise("11", [ 'unidentified flying object', 'ice resurfacer', 'power car', 'rocket' ], res => console.log(res));
 //Promise.resolve(promise).then(res => console.log(res));
 
-module.exports = checkExercise;
-exports = getExerciseAnswers;
+module.exports = {checkExercise, getExerciseAnswers};
