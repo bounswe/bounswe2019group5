@@ -11,7 +11,8 @@ class ResultPage extends DataCacher{
     this.state = {
       result : {
           true:'',
-          false:''
+          false:'',
+          fback:[]
         }
     }
   }
@@ -37,7 +38,12 @@ class ResultPage extends DataCacher{
         <div>
           <p>{this.state.result.true} Correct Answer</p>
           <p>{this.state.result.false} Wrong Answer</p>
-          
+          <br />
+          <p>INFORMATIVE FEEDBACK</p>
+          <p>First Answer   is {this.state.result.fback[0]}</p>
+          <p>Second Answer  is {this.state.result.fback[1]}</p>
+          <p>Third Answer   is {this.state.result.fback[2]}</p>
+          <p>Fourth Answer  is {this.state.result.fback[3]}</p>
         </div>
     );
 
