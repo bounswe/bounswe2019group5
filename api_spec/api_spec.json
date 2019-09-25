@@ -1,0 +1,49 @@
+{
+    "user/login":
+    {
+        
+        "request":
+        {
+            "email || user_name":"string",
+            "password":"string"
+
+        },
+        "response":
+        {
+            "token":"string",
+            "status":"int"
+        }
+    },
+
+    "user/register":
+    {
+        "request":
+        {
+            "name":"string",
+            "surname":"string",
+            "email":"string",
+            "user_name":"string",
+            "password":"string",
+            "native_language":"string"
+
+        },
+        "response":
+        {
+            "token":"string",
+            "status":"int"
+        }
+    },
+
+    "user/login/guest":
+    {
+        "request":
+        {
+            "language":"string"
+        },
+        "response":
+        {
+            "token":"string",
+            "status":"int"
+        }
+    }
+}
