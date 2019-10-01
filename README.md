@@ -1,4 +1,4 @@
-# CMPE 352 - Group 5
+# CMPE 451 - Group 5
 
 This is the repository of group 5 in course CMPE352 Fundamentals of Software Engineering.
 <br>
