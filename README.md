@@ -12,10 +12,16 @@ In this course, we will create a Language Learning Platform in accordance with o
 1) **[Ali Meriç Deşer](https://github.com/bounswe/bounswe2019group5/wiki/Ali-Meriç-Deşer)**
 2) **[Yusuf Mert Bila](https://github.com/bounswe/bounswe2019group5/wiki/Yusuf-Mert-Bila)**
 3) **[Furkan Kadıoğlu](https://github.com/bounswe/bounswe2019group5/wiki/Furkan-Kadıoğlu)**
-4) **[Veli Can Ünal](https://github.com/bounswe/bounswe2019group5/wiki/Veli-Can-ÜNAL)**
+4) **[Nevzat Ersoy](https://github.com/bounswe/bounswe2019group5/wiki/)**
 5) **[Mahmut Uzunpostalcı](https://github.com/bounswe/bounswe2019group5/wiki/Mahmut-Uzunpostalcı)**
 6) **[Hasan Öztürk](https://github.com/bounswe/bounswe2019group5/wiki/Hasan-Öztürk)**
-7) **[Abdullah Yıldız](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Yıldız)**
+7) **[Kartal Kaan Bozdoğan](https://github.com/bounswe/bounswe2019group5/wiki/)**
 8) **[Selamettin Dirik](https://github.com/bounswe/bounswe2019group5/wiki/Selamettin-Dirik)**
 9) **[Meltem Suiçmez](https://github.com/bounswe/bounswe2019group5/wiki/Meltem-Suiçmez)**
 10) **[Abdullah Enes Öncü](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Enes-ÖNCÜ)**
+
+##### Old Members:
+
+1) **[Veli Can Ünal](https://github.com/bounswe/bounswe2019group5/wiki/Veli-Can-ÜNAL)**
+2) **[Abdullah Yıldız](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Yıldız)**
+
