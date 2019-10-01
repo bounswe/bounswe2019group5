@@ -9,29 +9,20 @@ class LoginView(APIView):
     
     def post(self,request):
 
-        isUser = False
-        response = {
-            'token':'not ok',
-            'status':'1'
-        }
-        
-
         if 'user_name' in request.data:
-            username = request.data['user_name']
-            if User.objects.filter(username=username).exists():
-                user = User.objects.get(username=username)
-                isUser = user.password == request.data['password']
-            
-        elif 'email' in request.data:
-            email = request.data['email']
-            if User.objects.filter(email=email).exists():
-                user = User.objects.get(email=email)
-                isUser = user.password == request.data['password']
-        
-        if isUser:
-            response = {
-                'token':'ok',
-                'status':'0'
+            user = User.objects.filter(username=request.data.get('user_name')).first()
+        else:
+            user = User.objects.filter(email=request.data.get('email')).first()
+
+        if not user or not user.check_password(request.data.get('password')):
+            return Response({
+                'token':'not ok',
+                'status':'1'
+            })
+
+        response = {
+            'token':'ok',
+            'status':'0'
         }
         
         
@@ -44,12 +35,12 @@ class RegisterView(APIView):
 
         try:
             user = User(
-                name = req['name'],
-                surname = req['surname'],
+                first_name = req['name'],
+                last_name = req['surname'],
                 username = req['user_name'],
                 email = req['email'],
-                password = req['password'],
                 nativeLanguage = req['native_language'])
+            user.set_password(req['password'])
             user.save()
 
             response = {
