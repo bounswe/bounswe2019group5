@@ -1,4 +1,4 @@
-# CMPE 451 - Group 5
+# CMPE 352-451 - Group 5
 
 This is the repository of group 5 in course CMPE352 Fundamentals of Software Engineering.
 <br>
@@ -12,16 +12,15 @@ In this course, we will create a Language Learning Platform in accordance with o
 1) **[Ali Meriç Deşer](https://github.com/bounswe/bounswe2019group5/wiki/Ali-Meriç-Deşer)**
 2) **[Yusuf Mert Bila](https://github.com/bounswe/bounswe2019group5/wiki/Yusuf-Mert-Bila)**
 3) **[Furkan Kadıoğlu](https://github.com/bounswe/bounswe2019group5/wiki/Furkan-Kadıoğlu)**
-4) **[Nevzat Ersoy](https://github.com/bounswe/bounswe2019group5/wiki/)**
+4) **[Meltem Suiçmez](https://github.com/bounswe/bounswe2019group5/wiki/Meltem-Suiçmez)**
 5) **[Mahmut Uzunpostalcı](https://github.com/bounswe/bounswe2019group5/wiki/Mahmut-Uzunpostalcı)**
 6) **[Hasan Öztürk](https://github.com/bounswe/bounswe2019group5/wiki/Hasan-Öztürk)**
-7) **[Kartal Kaan Bozdoğan](https://github.com/bounswe/bounswe2019group5/wiki/)**
+7) **[Abdullah Enes Öncü](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Enes-ÖNCÜ)**
 8) **[Selamettin Dirik](https://github.com/bounswe/bounswe2019group5/wiki/Selamettin-Dirik)**
-9) **[Meltem Suiçmez](https://github.com/bounswe/bounswe2019group5/wiki/Meltem-Suiçmez)**
-10) **[Abdullah Enes Öncü](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Enes-ÖNCÜ)**
+9) **[Nevzat Ersoy](https://github.com/bounswe/bounswe2019group5/wiki/Nevzat-Ersoy)**
+10) **[Kartal Kaan Bozdoğan](https://github.com/bounswe/bounswe2019group5/wiki/Kartal-Kaan-Bozdo%C4%9Fan)**
 
 ##### Old Members:
 
 1) **[Veli Can Ünal](https://github.com/bounswe/bounswe2019group5/wiki/Veli-Can-ÜNAL)**
 2) **[Abdullah Yıldız](https://github.com/bounswe/bounswe2019group5/wiki/Abdullah-Yıldız)**
-
