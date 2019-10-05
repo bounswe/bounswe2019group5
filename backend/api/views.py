@@ -17,12 +17,12 @@ class LoginView(APIView):
         if not user or not user.check_password(request.data.get('password')):
             return Response({
                 'token':'not ok',
-                'status':'1'
+                'message':'1'
             })
 
         response = {
             'token':'ok',
-            'status':'0'
+            'message':'0'
         }
         
         
@@ -45,12 +45,12 @@ class RegisterView(APIView):
 
             response = {
                 'token':'ok',
-                'status':0
+                'message':'new user is registered'
             }
         except:
             response = {
                 'token':'not ok',
-                'status':1
+                'message':'no register'
             }
             
         return Response(response)
@@ -60,5 +60,5 @@ class GuestView(APIView):
     def post(self,request):
         return Response({
             'token':'expected_token',
-            'status':0
+            'message':'server not available'
         })
