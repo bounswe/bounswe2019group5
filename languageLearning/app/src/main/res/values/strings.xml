@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">languageLearning</string>
+    <string name="login_button_text">Login</string>
+</resources>
