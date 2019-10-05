@@ -148,9 +148,9 @@ export const get_test_result = async (
         nuOfFalseAnswers: 0,
         statusOfAnswers: [false, false, false, false, false],
     };
-    Array(answers).forEach( (element, index) => {
-        result.statusOfAnswers[index] = (element == trueOptions[index]);
-        if ((element == trueOptions[index]))
+    for(let i=0; i<answers.length; i++){
+        result.statusOfAnswers[i] = (answers[i] === trueOptions[i]);
+        if ((answers[i] === trueOptions[i]))
         {
             result.nuOfTrueAnswers++;
         }
@@ -158,6 +158,6 @@ export const get_test_result = async (
         {
             result.nuOfFalseAnswers++;
         }
-    });
+    }
     return result;
 }

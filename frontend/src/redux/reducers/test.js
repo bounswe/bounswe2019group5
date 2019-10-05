@@ -22,13 +22,13 @@ export default (state = initialState, action) => {
         loading: true,
         isFinished: false,
         profTest: null,
+        testResult: null,
       }
     
     case PROF_TEST:
       return {
         ...state,
         loading: false,
-        isFinished: false,
         profTest: action.profTest,
       }
     

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import Question from '../question';
 import { get_prof_test, get_test_result } from "../../redux/action-creators/test";
+import _ from 'lodash';
 
 class ProfTest extends Component {
 
@@ -15,7 +17,6 @@ class ProfTest extends Component {
     componentDidMount(){
         this.props.get_prof_test(this.props.authentication.token);
         this.state.isAnswersPrepared = false;
-        console.log("function called");
     }
 
     componentDidUpdate(){
@@ -40,16 +41,9 @@ class ProfTest extends Component {
                 </div>
             );
         }
-        if (profTest && !this.props.test.isFinished){
+        if (profTest){
             const question = profTest.questions[this.state.questionIndex];
             const questionIndex = this.state.questionIndex;
-            const optionMarks = question.options.map( option =>
-                                    <option
-                                        key={option.optionName}
-                                        value={option.optionName}>
-                                        {option.optionText}
-                                    </option>
-                                );
             return (
                 <div>
                     <div><h1>{profTest.testName}</h1></div>
@@ -57,16 +51,16 @@ class ProfTest extends Component {
                         <h2>{question.questionName}</h2>
                         <p>{question.questionText}</p>
                     </div>
-                    <select
-                        value={this.state.answers[questionIndex]}
-                        onChange = { event => {
-                            const newAnswers = this.state.answers;
-                            newAnswers[questionIndex] = event.target.value;
+                    
+                    <Question 
+                        options={question.options}
+                        selectedOption={this.state.answers[this.state.questionIndex]}
+                        questionAnswerStatus={this.props.test.testResult? this.props.test.testResult.statusOfAnswers[this.state.questionIndex]: null}
+                        onChange={newAnswer => {
+                            const newAnswers = _.cloneDeep(this.state.answers);
+                            newAnswers[this.state.questionIndex] = newAnswer;
                             this.setState({answers: newAnswers});
-                        }}
-                    >
-                        {optionMarks}
-                    </select>
+                        }}/>
                     <div>
                         <button onClick = { () => this.setState({questionIndex: questionIndex>0 ? questionIndex-1 : questionIndex}) }>PREV</button>
                         <button onClick = { () => this.setState({questionIndex: questionIndex<profTest.nuOfQuestions-1 ? questionIndex+1 : questionIndex}) }>NEXT</button>
@@ -77,7 +71,7 @@ class ProfTest extends Component {
                 </div>
             );
         }
-        return (<div/>)
+        return (<div/>);
     }
 }
 
