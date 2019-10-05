@@ -4,6 +4,7 @@ import Home from "../home";
 import About from "../about";
 import Login from "../login";
 import SignIn from "../signin";
+import ProfTest from "../profTest";
 
 const App = () => (
   <div>
@@ -17,6 +18,8 @@ const App = () => (
       <Route exact path="/about-us" component={About} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/prof-test" component={ProfTest} />
+      
     </main>
   </div>
 );

@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import counter from "./counter";
 import authentication from "./authentication";
-import signin from "./signin";
+import test from "./test";
 
 const rootReducer = combineReducers({
   counter,
   authentication,
-  signin
+  test,
 });
 
 export default rootReducer;

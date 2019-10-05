@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { signin } from "../../redux/action-creators/signin";
+import { signin } from "../../redux/action-creators/authentication";
 
 class SignIn extends Component {
   state = {
@@ -95,10 +95,10 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = ({ signin }) => ({
-  token: signin.token,
-  status: signin.status,
-  loading: signin.loading
+const mapStateToProps = ({ authentication }) => ({
+  token: authentication.token,
+  status: authentication.status,
+  loading: authentication.loading
 });
 
 const mapDispatchToProps = dispatch =>
