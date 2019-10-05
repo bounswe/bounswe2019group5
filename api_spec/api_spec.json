@@ -11,7 +11,7 @@
         "response":
         {
             "token":"string",
-            "status":"int"
+            "message":"int"
         }
     },
 
@@ -30,7 +30,7 @@
         "response":
         {
             "token":"string",
-            "status":"int"
+            "message":"int"
         }
     },
 
@@ -43,7 +43,32 @@
         "response":
         {
             "token":"string",
-            "status":"int"
+            "message":"int"
         }
+    },
+    "profiency/":
+    {
+         "testId": "1247828", 
+         "questions": [
+             {
+                 "id": "asd12ejd",
+                 "answer": "which index is correct",
+                 "text": "This is the first question. What is the answer?",
+                 "options": [
+                     {
+                         "optionText": "This is the first"
+                     },
+                     {
+                         "optionText": "This is the second"
+                     },
+                     {
+                         "optionText": "This is the third"
+                     },
+                     {
+                         "optionText": "This is the fourth"
+                     },
+                 ],
+             },
+         ]
     }
 }
