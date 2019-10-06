@@ -1,14 +1,13 @@
-from django.shortcuts import render
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 
 from .models import User
 
 class LoginView(APIView):
     
     def post(self,request):
-
+        
         if 'user_name' in request.data:
             user = User.objects.filter(username=request.data.get('user_name')).first()
         else:
@@ -19,6 +18,8 @@ class LoginView(APIView):
                 'token':'not ok',
                 'message':'1'
             })
+        
+        Token.objects.get_or_create(user=user)
 
         response = {
             'token':'ok',
@@ -58,6 +59,9 @@ class RegisterView(APIView):
 
 class GuestView(APIView):
     def post(self,request):
+        if request.user in User.objects.all():
+            #user authenticated
+            pass
         return Response({
             'token':'expected_token',
             'message':'server not available'
