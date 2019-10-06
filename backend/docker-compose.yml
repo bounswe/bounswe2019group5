@@ -2,9 +2,30 @@ version: '3'
 
 services:
   web:
+    image: backend_image
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - "8000:8000"
+    environment: 
+      - SECRET_KEY=$SECRET_KEY 
+    depends_on:
+      - migration
+  migration:
+    build: .
+    command: python manage.py migrate --noinput
+    environment: 
+      - SECRET_KEY=$SECRET_KEY 
+    volumes:
+      - .:/code
+    depends_on:
+      - makemigration
+  makemigration:
+    build: .
+    command: python manage.py makemigrations
+    environment: 
+      - SECRET_KEY=$SECRET_KEY 
+    volumes:
+      - .:/code
