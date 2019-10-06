@@ -1,16 +1,20 @@
-language: node_js
-sudo: false
-node_js:
- - "stable"
- 
-before_script:
+language: python
 
--cd /practice-app
--npm init
--npm install express
--npm install axios
--npm install mysql
+python: 
+  - "3.6"
 
-script:
--cd /test
--node test.js test
+env:
+  global: 
+    - SECRET_KEY=$SECRET_KEY
+
+services:
+  - docker
+
+before_install:
+  - cd backend
+
+before_script: 
+  - pip install docker-compose
+
+script: 
+  - docker-compose run web sh -c "python manage.py test"

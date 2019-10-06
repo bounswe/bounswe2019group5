@@ -5,7 +5,7 @@ class LoginViewTests(APITestCase):
     def test_email_not_found(self):
     
         response = self.client.post('/user/login',request)
-        self.assertEqual(4,4)
+        self.assertEqual(4, 4)
         
 
 class RegisterViewTests(APITestCase):
