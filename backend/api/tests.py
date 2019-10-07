@@ -72,7 +72,42 @@ class LoginViewTests(APITestCase):
         self.assertTrue(not 'token' in response.data.keys())
 
 
-# class RegisterViewTests(APITestCase):
+class RegisterViewTests(APITestCase):
+    def test_succesful_register(self):
+        req = {
+            "name": "Ada",
+            "surname": "Lovelace",
+            "email": "adaLovelace@email.com",
+            "username": "ada21",
+            "password": "isa21-ad",
+            "native_language": "english"
+        }
+        response = self.client.post('/user/register', req)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue('token' in response.data.keys())
+
+    def test_missing_field(self):
+        req = {
+            "name": "Ada",
+            "surname": "Lovelace",
+            "email": "adaLovelace@email.com",
+            "username": "ada21",
+            "password": "isa21-ad",
+            "native_language": "english"
+        }
+        for key in req:
+            deficient_req = {**req}
+            del deficient_req[key]
+            response = self.client.post('/user/register', deficient_req)
+            self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+            self.assertTrue(not 'token' in response.data.keys())
+            self.assertTrue('message' in response.data.keys())
+
+        response = self.client.post('/user/register', {})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue(not 'token' in response.data.keys())
+        self.assertTrue('message' in response.data.keys())
+
 
 class GuestViewTests(APITestCase):
     def test_is_token_valid(self):

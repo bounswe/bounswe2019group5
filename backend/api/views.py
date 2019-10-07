@@ -56,7 +56,7 @@ class RegisterView(APIView):
             user = User(
                 first_name=req['name'],
                 last_name=req['surname'],
-                username=req['user_name'],
+                username=req['username'],
                 email=req['email'],
                 nativeLanguage=req['native_language'])
             user.set_password(req['password'])
