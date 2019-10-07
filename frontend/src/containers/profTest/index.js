@@ -26,9 +26,9 @@ class ProfTest extends Component {
     if (this.props.test.profTest && !this.state.isAnswersPrepared) {
       const answers = new Array(this.props.test.profTest.nuOfQuestions);
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.test.profTest.questions[
+        answers[i] = this.props.test.profTest.testQuestions[
           i
-        ].options[0].optionName;
+        ].questionOptions[0].optionName;
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -70,7 +70,7 @@ class ProfTest extends Component {
     }
 
     if (this.props.test.isFinished && profTest) {
-      const question = profTest.questions[this.state.questionIndex];
+      const question = profTest.testQuestions[this.state.questionIndex];
       const questionIndex = this.state.questionIndex;
       return (
         <div>
@@ -83,7 +83,7 @@ class ProfTest extends Component {
           </div>
 
           <Question
-            options={question.options}
+            questionOptions={question.questionOptions}
             selectedOption={this.state.answers[this.state.questionIndex]}
             questionAnswerStatus={
               this.props.test.testResult
@@ -145,7 +145,7 @@ class ProfTest extends Component {
     }
 
     if (profTest) {
-      const question = profTest.questions[this.state.questionIndex];
+      const question = profTest.testQuestions[this.state.questionIndex];
       const questionIndex = this.state.questionIndex;
       return (
         <div>
@@ -158,7 +158,7 @@ class ProfTest extends Component {
           </div>
 
           <Question
-            options={question.options}
+            questionOptions={question.questionOptions}
             selectedOption={this.state.answers[this.state.questionIndex]}
             questionAnswerStatus={
               this.props.test.testResult
