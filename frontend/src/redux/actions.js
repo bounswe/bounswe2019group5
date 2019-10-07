@@ -6,8 +6,8 @@ export const DECREMENT = "counter/DECREMENT";
 export const LOGIN_REQUESTED = "login/LOGIN_REQUESTED";
 export const LOGIN = "login/LOGIN";
 
-export const SIGNIN_REQUESTED = "signin/SIGNIN_REQUESTED";
-export const SIGNIN = "signin/SIGNIN";
+export const SIGNUP_REQUESTED = "signup/SIGNUP_REQUESTED";
+export const SIGNUP = "signup/SIGNUP";
 
 export const PROF_TEST_REQUESTED = "test/PROF_TEST_REQUESTED";
 export const PROF_TEST = "test/PROF_TEST";
