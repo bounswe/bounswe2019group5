@@ -16,6 +16,47 @@ const Home = props => (
         : "NO TOKEN"}
     </p>
 
+    <p>
+      {props.test !== null
+        ? props.test.testResult !== null
+          ? "Number Of True Answers: " + props.test.testResult.nuOfTrueAnswers
+          : ""
+        : "isFinished not working"}
+    </p>
+
+    <p>
+      {props.test !== null
+        ? props.test.testResult !== null
+          ? "Number Of False Answers: " + props.test.testResult.nuOfFalseAnswers
+          : ""
+        : "isFinished not working"}
+    </p>
+
+    <p>
+      {props.test !== null
+        ? props.test.testResult !== null
+          ? "Your Level: " +
+            ((props.test.testResult.nuOfTrueAnswers * 100) /
+              props.test.testResult.nuOfQuestions ===
+            20
+              ? "Beginner"
+              : (props.test.testResult.nuOfTrueAnswers * 100) /
+                  props.test.testResult.nuOfQuestions ===
+                40
+              ? "Intermediate"
+              : (props.test.testResult.nuOfTrueAnswers * 100) /
+                  props.test.testResult.nuOfQuestions ===
+                60
+              ? "Upper-Intermediate"
+              : (props.test.testResult.nuOfTrueAnswers * 100) /
+                  props.test.testResult.nuOfQuestions ===
+                80
+              ? "Advanced"
+              : "Upper-Advanced")
+          : ""
+        : "props.test is not working"}
+    </p>
+
     <h1>Home</h1>
     <p>Count: {props.count}</p>
 
@@ -41,10 +82,11 @@ const Home = props => (
   </div>
 );
 
-const mapStateToProps = ({ counter }) => ({
+const mapStateToProps = ({ counter, test }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
+  isDecrementing: counter.isDecrementing,
+  test
 });
 
 const mapDispatchToProps = dispatch =>
