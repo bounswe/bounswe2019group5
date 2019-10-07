@@ -1,5 +1,6 @@
 db.sqlite3
 backend/productionSettings.py
 **/__pycache__
-api/migrations/
+**/migrations/
 Pipfile
+Pipfile.lock
