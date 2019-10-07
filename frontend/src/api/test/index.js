@@ -8,12 +8,12 @@ export const get_prof_test = async (token = null) => {
     testId: "1247828",
     testName: "Example Prof Test",
     nuOfQuestions: 5,
-    questions: [
+    testQuestions: [
       {
         questionId: "asd12ejd",
         questionName: "Question 1",
         questionText: "This is the first question. What is the answer?",
-        options: [
+        questionOptions: [
           {
             optionName: "A",
             optionText: "This is the first"
@@ -37,7 +37,7 @@ export const get_prof_test = async (token = null) => {
         questionId: "sa1212ejd",
         questionName: "Question 2",
         questionText: "This is the second question. What is the answer?",
-        options: [
+        questionOptions: [
           {
             optionName: "A",
             optionText: "This is the first"
@@ -61,7 +61,7 @@ export const get_prof_test = async (token = null) => {
         questionId: "qjsd12ejd",
         questionName: "Question 3",
         questionText: "This is the third question. What is the answer?",
-        options: [
+        questionOptions: [
           {
             optionName: "A",
             optionText: "This is the first"
@@ -85,7 +85,7 @@ export const get_prof_test = async (token = null) => {
         questionId: "all13as",
         questionName: "Question 4",
         questionText: "This is the fourth question. What is the answer?",
-        options: [
+        questionOptions: [
           {
             optionName: "A",
             optionText: "This is the first"
@@ -109,7 +109,7 @@ export const get_prof_test = async (token = null) => {
         questionId: "asl13as",
         questionName: "Question 5",
         questionText: "This is the fifth question. What is the answer?",
-        options: [
+        questionOptions: [
           {
             optionName: "A",
             optionText: "This is the first"
