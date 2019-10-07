@@ -6,7 +6,7 @@ import test from "./test";
 const rootReducer = combineReducers({
   counter,
   authentication,
-  test,
+  test
 });
 
 export default rootReducer;
