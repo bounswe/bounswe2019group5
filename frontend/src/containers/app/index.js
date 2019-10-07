@@ -3,7 +3,7 @@ import { Route, Link } from "react-router-dom";
 import Home from "../home";
 import About from "../about";
 import Login from "../login";
-import SignIn from "../signin";
+import SignUp from "../signup";
 import ProfTest from "../profTest";
 
 const App = () => (
@@ -17,9 +17,8 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/about-us" component={About} />
       <Route exact path="/login" component={Login} />
-      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signup" component={SignUp} />
       <Route exact path="/prof-test" component={ProfTest} />
-      
     </main>
   </div>
 );
