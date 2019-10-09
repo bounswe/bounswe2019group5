@@ -1,15 +1,44 @@
-from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
-
+import numpy as np
+import random 
 
 from .models import User
 
 
-class LoginView(APIView):
+class ProficiencyView(generics.CreateAPIView):
+
+    def get_random_questions(questionsNumber,questionLevel):
+        setOfQuestion = Question.objects.filter(questionLevel=questionLevel)
+        if len(setOfQuestion) < questionsNumber:
+            return setOfQuestion
+        else:
+            return random.sample(setOfQuestion,questionsNumber)
+
+    def get_prof_test():
+        size = 1
+        category = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+        questionList = np.array([get_random_questions(size, i) for i in category])
+        questionList = np.reshape(questionList, (1, -1)).tolist()[0]
+    
+        return {
+            "testQuestions": questionList,
+        }
+
+    def post(self, request):
+        permission_classes = (IsAuthenticated, )
+        is_anonymous = request.user in User.objects.all()
+        if is_anonymous:
+            return Response({'message': 'session expired'}, status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response(get_prof_test(), status.HTTP_200_OK)
+
+
+class LoginView(generics.CreateAPIView):
 
     def post(self, request):
         if 'email_username' in request.data and 'password' in request.data:
@@ -48,7 +77,7 @@ class LoginView(APIView):
                 status=status.HTTP_400_BAD_REQUEST)
 
 
-class RegisterView(APIView):
+class RegisterView(generics.CreateAPIView):
     def post(self, request):
         req = request.data
 
@@ -76,7 +105,7 @@ class RegisterView(APIView):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
-class GuestView(APIView):
+class GuestView(generics.CreateAPIView):
     def post(self, request):
         permission_classes = (IsAuthenticated, )
 
