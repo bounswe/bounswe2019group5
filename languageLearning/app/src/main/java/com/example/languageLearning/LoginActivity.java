@@ -14,10 +14,12 @@ public class LoginActivity extends AppCompatActivity {
     private final String TAG = LoginActivity.class.getName();
 
     Button loginButton;
+    private MyApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (MyApplication)getApplication();
         setContentView(R.layout.activity_main);
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
