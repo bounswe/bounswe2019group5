@@ -46,17 +46,16 @@
             "message":"int"
         }
     },
-    "profiency/":
+    "user/profiency/":
     {
          "testLanguage":"english",
          
     },
     {
-         "testId": "1247828",
-         "testLanguage":"english"
+        
          "testQuestions": [
              {
-                 "questionId": "asd12ejd",
+      
                  "questionAnswer": "This is the second",
                  "questionText": "This is the first question. What is the answer?",
                  "questionOptions": [
