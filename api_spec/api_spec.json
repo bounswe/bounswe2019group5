@@ -78,4 +78,41 @@
              }
          ]
     }
+
+    "/user/profile": // GET REQUEST RESPONSE
+{
+    "username":"kagan43",
+    "firstName":"kagan",
+    "lastName":"soylu",
+    "userNativeLang":"english",
+    "userAttendedLangs":["german","turkish"],
+    "userRateAverage":"3.5", //range(0,5)
+    "userComments":[
+        {
+            "username":"alan21",
+            "comment":"good staff",
+            "rate":"3" //range(0,5)
+        },
+        {
+            "username":"joe21",
+            "comment":"worst staff",
+            "rate":"1"  //range(0,5)
+        } 
+    ]
+    
+},
+
+
+"user/statistics": //!!!!!INCOMPLETED!!!!!
+
+{
+    "request":{
+        "userLang":"turkish"
+    },
+    "response":{
+        "userLevel":"A2",
+        "userProgressRatio":"0.3", //range(0,1)
+        }
+        
+    }
 }
