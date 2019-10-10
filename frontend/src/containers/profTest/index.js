@@ -69,81 +69,6 @@ class ProfTest extends Component {
       );
     }
 
-    if (this.props.test.isFinished && profTest) {
-      const question = profTest.testQuestions[this.state.questionIndex];
-      const questionIndex = this.state.questionIndex;
-      return (
-        <div>
-          <div>
-            <h1>{profTest.testName}</h1>
-          </div>
-          <div>
-            <h2>{question.questionName}</h2>
-            <p>{question.questionText}</p>
-          </div>
-
-          <Question
-            questionOptions={question.questionOptions}
-            selectedOption={this.state.answers[this.state.questionIndex]}
-            questionAnswerStatus={
-              this.props.test.testResult
-                ? this.props.test.testResult.statusOfAnswers[
-                    this.state.questionIndex
-                  ]
-                : null
-            }
-            onChange={newAnswer => {
-              const newAnswers = _.cloneDeep(this.state.answers);
-              newAnswers[this.state.questionIndex] = newAnswer;
-              this.setState({ answers: newAnswers });
-            }}
-          />
-          <div>
-            <button
-              onClick={() =>
-                this.setState({
-                  questionIndex:
-                    questionIndex > 0 ? questionIndex - 1 : questionIndex
-                })
-              }
-            >
-              PREV
-            </button>
-            <button
-              onClick={() =>
-                this.setState({
-                  questionIndex:
-                    questionIndex < profTest.nuOfQuestions - 1
-                      ? questionIndex + 1
-                      : questionIndex
-                })
-              }
-            >
-              NEXT
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={() =>
-                this.props.get_test_result(
-                  this.props.authentication.token,
-                  profTest.testId,
-                  this.state.answers
-                )
-              }
-            >
-              Complete the Test!
-            </button>
-          </div>
-          <div>
-            <button onClick={this.handleHomeRedirection}>
-              Congratulations, let's go to home page!
-            </button>
-          </div>
-        </div>
-      );
-    }
-
     if (profTest) {
       const question = profTest.testQuestions[this.state.questionIndex];
       const questionIndex = this.state.questionIndex;
@@ -210,6 +135,14 @@ class ProfTest extends Component {
               Complete the Test!
             </button>
           </div>
+          {
+            this.props.test.isFinished &&
+                    <div>
+                        <button onClick={this.handleHomeRedirection}>
+                        Congratulations, let's go to home page!
+                        </button>
+                    </div>
+          }
         </div>
       );
     }
