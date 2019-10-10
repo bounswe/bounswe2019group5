@@ -7,35 +7,45 @@ from rest_framework import status
 import numpy as np
 import random 
 
-from .models import User
+from .models import User,Question
+from .serializers import QuestionSerializer
 
 
 class ProficiencyView(generics.CreateAPIView):
 
-    def get_random_questions(questionsNumber,questionLevel):
-        setOfQuestion = Question.objects.filter(questionLevel=questionLevel)
-        if len(setOfQuestion) < questionsNumber:
-            return setOfQuestion
-        else:
-            return random.sample(setOfQuestion,questionsNumber)
-
-    def get_prof_test():
-        size = 1
-        category = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-        questionList = np.array([get_random_questions(size, i) for i in category])
-        questionList = np.reshape(questionList, (1, -1)).tolist()[0]
-    
-        return {
-            "testQuestions": questionList,
-        }
 
     def post(self, request):
+        def get_random_questions(questionsNumber,questionLevel):
+            setOfQuestion = Question.objects.filter(questionLevel=questionLevel)
+            serializer = QuestionSerializer(setOfQuestion,many=True)
+            setOfQuestion = serializer.data
+
+            if len(setOfQuestion) < questionsNumber:
+                return setOfQuestion
+            else:
+                return random.sample(setOfQuestion,questionsNumber)
+        def get_prof_test():
+            size = 1
+            category = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+            questionList = np.array([get_random_questions(size, i) for i in category])
+            questionList = np.reshape(questionList, (1, -1)).tolist()[0]
+
+            #serializer = QuestionSerializer(questionList)
+
+            return {
+                "testQuestions": questionList,
+            }
+        
         permission_classes = (IsAuthenticated, )
         is_anonymous = request.user in User.objects.all()
-        if is_anonymous:
-            return Response({'message': 'session expired'}, status.HTTP_401_UNAUTHORIZED)
+        
+        if not request.user.is_authenticated:
+            return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not 'testLanguage' in request.data:
+            return Response({'message':'language field must be exist'},status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(get_prof_test(), status.HTTP_200_OK)
+            return Response(get_prof_test(), status=status.HTTP_200_OK)
 
 
 class LoginView(generics.CreateAPIView):
