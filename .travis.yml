@@ -1,5 +1,14 @@
 language: python
 
+branches:
+  except:
+  - frontend
+
+# safelist
+branches:
+  only:
+  - backend
+
 python: 
   - "3.6"
 
