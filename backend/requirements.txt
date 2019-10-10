@@ -6,3 +6,4 @@ pycodestyle==2.5.0
 pytz==2019.2
 sqlparse==0.3.0
 toml==0.10.0
+django-cors-headers
