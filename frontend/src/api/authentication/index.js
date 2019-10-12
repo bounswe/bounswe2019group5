@@ -5,47 +5,51 @@ function timeout(ms) {
 }
 
 export const login = async (usernameOrEmail, password) => {
-  
-  /*fetch(parameters.apiUrl+'/user/login', {
+  const data = await fetch(parameters.apiUrl+'/user/login', {
     method: 'post',
-    body: {
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
       email_username: usernameOrEmail,
-      password,
-    },
+      password: password,
+    }),
   }).then(response => {
     console.log(response);
     return response.json();
   }).then(data => {
-    //console.log(data);
-  });*/
-
-  await timeout(3000);
-  if (usernameOrEmail === "user" && password === "12345678") {
-    return { token: "this is a token", status: 0 };
-  } else {
-    return { token: null, status: -1 };
-  }
+    console.log(data);
+    return data;
+  });
+  console.log(data);
+  return data;
 };
 
 export const signup = async (
   name,
   surname,
   email,
-  user_name,
+  username,
   password,
   native_language
 ) => {
-  await timeout(3000);
-  if (
-    name === "mert" &&
-    surname === "maysallar" &&
-    email === "mmaysallar@gmail.com" &&
-    user_name === "mm" &&
-    password === "12345678" &&
-    native_language === "turkish"
-  ) {
-    return { token: "this is a signed up user token", status: 0 };
-  } else {
-    return { token: null, status: -1 };
-  }
+
+  return await fetch(parameters.apiUrl+'/user/register', {
+    method: 'post',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      name,
+      surname,
+      email,
+      username,
+      password,
+      native_language,
+    }),
+  }).then(response => {
+    return response.json();
+  }).then(data => {
+    return data;
+  });
 };
+
+export const logout = async () => {
+  await timeout(500);
+}

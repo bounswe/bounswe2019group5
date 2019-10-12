@@ -3,10 +3,11 @@ import counter from "./counter";
 import authentication from "./authentication";
 import test from "./test";
 
+
 const rootReducer = combineReducers({
   counter,
   authentication,
-  test
+  test,
 });
 
 export default rootReducer;

@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 import { login } from "../../redux/action-creators/authentication";
 
 class Login extends Component {
+  constructor (props){
+    super(props);
+    console.log(props.authentication.token);
+  }
   state = {
     usernameOrEmail: "",
     password: ""
@@ -19,34 +23,47 @@ class Login extends Component {
   };
 
   render() {
-    if (this.props.loading) {
+    if (this.props.authentication.token != null){
+      return (
+        <Redirect
+          to={{
+            pathname: "/",
+          }}
+        />
+      );
+    }
+    else if (this.props.authentication.loading) {
       return (
         <div>
           <h1>LOADING</h1>
         </div>
       );
-    } else if (this.props.status === 0) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { token: this.props.token }
-          }}
-        />
-      );
     } else {
       return (
         <div>
           <form onSubmit={this.handleSubmit}>
-            <label>Username or Email:</label>
-            <input
-              type="text"
-              id="usernameOrEmail"
-              onChange={this.handleChange}
-            />
-            <label>Password:</label>
-            <input type="password" id="password" onChange={this.handleChange} />
-            <button>Login</button>
+            <div>
+              <label>Username or Email:</label>
+              <input
+                type="text"
+                id="usernameOrEmail"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Password:</label>
+              <input type="password" id="password" onChange={this.handleChange} />
+            </div>
+            {this.props.authentication.message!=null &&
+              (
+                <div>
+                  <label style={{color: 'red'}}>{this.props.authentication.message}</label>
+                </div>
+              )
+            }
+            <div>
+              <button>Login</button>
+            </div>
           </form>
         </div>
       );
@@ -55,9 +72,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = ({ authentication }) => ({
-  token: authentication.token,
-  status: authentication.status,
-  loading: authentication.loading
+  authentication
 });
 
 const mapDispatchToProps = dispatch =>

@@ -1,7 +1,8 @@
-import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP } from "../actions";
+import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT } from "../actions";
 
 import { login as login_api } from "../../api/authentication";
 import { signup as signup_api } from "../../api/authentication";
+import { logout as logout_api } from "../../api/authentication";
 
 export const login = (usernameOrEmail, password) => {
   return dispatch => {
@@ -13,7 +14,7 @@ export const login = (usernameOrEmail, password) => {
       dispatch({
         type: LOGIN,
         token: response.token,
-        status: response.status
+        message: response.message,
       });
     });
   };
@@ -37,9 +38,27 @@ export const signup = (
         dispatch({
           type: SIGNUP,
           token: response.token,
-          status: response.status
+          message: response.message,
         });
       }
     );
   };
 };
+
+export const logout = () => {
+  return dispatch => {
+    dispatch({
+      type: LOGOUT_REQUESTED,
+    });
+
+    logout_api().then(() => {
+      dispatch({
+        type: LOGOUT,
+        token: null,
+        message: null,
+      });
+    });
+
+
+  }
+}
