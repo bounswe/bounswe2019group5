@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { signin } from "../../redux/action-creators/authentication";
+import { signup } from "../../redux/action-creators/authentication";
 
-class SignIn extends Component {
+class SignUp extends Component {
   state = {
     name: "",
     surname: "",
@@ -19,7 +19,7 @@ class SignIn extends Component {
     });
   };
   handleSubmit = e => {
-    this.props.signin(
+    this.props.signup(
       this.state.name,
       this.state.surname,
       this.state.email,
@@ -80,14 +80,14 @@ class SignIn extends Component {
 
             <div>
               <label>Native Language:</label>
-              <input
-                type="text"
-                id="native_language"
-                onChange={this.handleChange}
-              />
+              <select id="native_language" onChange={this.handleChange}>
+                <option value="">Please choose your native language</option>
+                <option value="turkish">Turkish</option>
+                <option value="english">English</option>
+              </select>
             </div>
 
-            <button>SignIn</button>
+            <button>Sign Up</button>
           </form>
         </div>
       );
@@ -104,7 +104,7 @@ const mapStateToProps = ({ authentication }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      signin
+      signup
     },
     dispatch
   );
@@ -112,4 +112,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn);
+)(SignUp);

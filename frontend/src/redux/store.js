@@ -21,8 +21,8 @@ const composedEnhancers = compose(
 )
 
 const store = createStore(
-	rootReducer,
-	initialState,
+  rootReducer,
+  initialState,
     composedEnhancers
 )
 

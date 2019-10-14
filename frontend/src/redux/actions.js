@@ -3,11 +3,14 @@ export const INCREMENT = "counter/INCREMENT";
 export const DECREMENT_REQUESTED = "counter/DECREMENT_REQUESTED";
 export const DECREMENT = "counter/DECREMENT";
 
-export const LOGIN_REQUESTED = "login/LOGIN_REQUESTED";
-export const LOGIN = "login/LOGIN";
+export const LOGIN_REQUESTED = "authentication/LOGIN_REQUESTED";
+export const LOGIN = "authentication/LOGIN";
 
-export const SIGNIN_REQUESTED = "signin/SIGNIN_REQUESTED";
-export const SIGNIN = "signin/SIGNIN";
+export const SIGNUP_REQUESTED = "authentication/SIGNUP_REQUESTED";
+export const SIGNUP = "authentication/SIGNUP";
+
+export const LOGOUT_REQUESTED = "authentication/LOGOUT_REQUESTED";
+export const LOGOUT = "authentication/LOGOUT";
 
 export const PROF_TEST_REQUESTED = "test/PROF_TEST_REQUESTED";
 export const PROF_TEST = "test/PROF_TEST";
