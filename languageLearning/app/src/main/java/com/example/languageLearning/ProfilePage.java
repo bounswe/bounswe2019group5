@@ -89,10 +89,10 @@ public class ProfilePage extends AppCompatActivity {
             userName.setText("@" + userName_s);
 
             TextView nativeLang = (TextView) findViewById(R.id.nativeLang);
-            nativeLang.setText("Native Language: " + userNativeLang_s);
+            nativeLang.setText(userNativeLang_s);
 
             TextView averageRate = (TextView) findViewById(R.id.averageRate);
-            averageRate.setText("Average Rate: " + Double.toString(userRateAverage_d));
+            averageRate.setText(Double.toString(userRateAverage_d));
 
 
 
@@ -100,5 +100,7 @@ public class ProfilePage extends AppCompatActivity {
             Log.i(TAG, "Error: " + e.getMessage().toString());
             //e.printStackTrace();
         }
+
+
     }
 }
