@@ -2,6 +2,7 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ public class ProfExamActivity extends AppCompatActivity {
     TextView question_textview;
     Button buttons[] = new Button[4];
     int currentQuestionIndex;
+    int correctCount=0;
 
     final private String[] dummy_questions = {
             "Which of the options below is a correct sentence?",
@@ -40,6 +42,10 @@ public class ProfExamActivity extends AppCompatActivity {
             }
     };
 
+    final private int[] dummy_answers = {
+        2, 0, 1
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +72,50 @@ public class ProfExamActivity extends AppCompatActivity {
             buttons[i].setText(dummy_options[index][i]);
     }
 
+    private int getButtonIndex(Button b) {
+        for (int i=0; i<4; i++) {
+            if (b == buttons[i])
+                return i;
+        }
+        return -1;
+    }
+
     private void OptionClicked(Button v) {
+        int buttonIndex = getButtonIndex(v);
+        if (dummy_answers[currentQuestionIndex] == buttonIndex)
+            correctCount += 1;
         currentQuestionIndex += 1;
 
         if (currentQuestionIndex == dummy_questions.length) {
-            finish();
+            showResults();
             return ;
         }
 
         setCurrentQuestion(currentQuestionIndex);
+    }
+
+    private String calculateLevel(int corr, int all) {
+        if (corr < all*18.0/100)
+            return "A1";
+        if (corr < all*36.0/100)
+            return "A2";
+        if (corr < all*54.0/100)
+            return "B1";
+        if (corr < all*72.0/100)
+            return "B2";
+        if (corr < all*90.0/100)
+            return "C1";
+        return "C2";
+    }
+
+    private void showResults() {
+        Intent intent = new Intent(this, ProfResultActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("COUNT_CORRECT", correctCount);
+        b.putInt("COUNT_INCORRECT", dummy_questions.length - correctCount);
+        b.putString("LEVEL", calculateLevel(correctCount, dummy_questions.length));
+        intent.putExtras(b);
+        startActivity(intent);
+        finish();
     }
 }
