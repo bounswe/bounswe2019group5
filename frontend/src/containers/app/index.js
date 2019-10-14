@@ -9,6 +9,7 @@ import SignUp from "../signup";
 import ProfTest from "../profTest";
 import TestResults from "../test-results";
 import Guest from "../guest"
+import StyledLogin from "../styledLogin"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Form, Container, Row, Col, Image, Button, ButtonToolbar } from 'react-bootstrap';
 import { logout } from "../../redux/action-creators/authentication";
@@ -28,18 +29,18 @@ class App extends Component {
             )
           }
           {!this.props.authentication.token &&
-            (
-              <Link to="/login">Login</Link>
+            (<Button variant="outline-warning">
+              <Link to="/login">Login</Link></Button>
             )
           }
           {!this.props.authentication.token &&
-            (
-              <Link to="/signup">Singup</Link>
+            (<Button variant="outline-success">
+              <Link to="/signup">Singup</Link></Button>
             )
           }
       </Nav>
       <Form inline>
-        <Nav.Link href="about">  <Button variant="outline-warning">
+        <Nav.Link href="about">  <Button variant="outline-info">
           <Link to="/about-us">About</Link>
 
         </Button> </Nav.Link>
@@ -55,6 +56,7 @@ class App extends Component {
       <Route exact path="/prof-test" component={ProfTest} />
       <Route exact path="/guest" component={Guest} />
       <Route exact path="/test-results" component={TestResults} />
+      <Route exact path="/styled-login" component={StyledLogin} />
     </main>
   </>
 )
