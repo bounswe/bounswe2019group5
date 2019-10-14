@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class ProfResultActivity extends AppCompatActivity {
 
-    TextView title, correctAnswer, incorrectAnswer, level;
+    TextView correctAnswer, incorrectAnswer, level;
     private static final String TAG = "MyActivity";
 
     @Override
@@ -16,7 +16,6 @@ public class ProfResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prof_result);
 
-        title = findViewById(R.id.title);
         correctAnswer = findViewById(R.id.correctAnswer);
         incorrectAnswer = findViewById(R.id.incorrectAnswer);
         level = findViewById(R.id.level);

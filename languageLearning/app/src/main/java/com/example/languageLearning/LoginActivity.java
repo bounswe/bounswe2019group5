@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
                 String spassword = password.getText().toString();
                 Log.d(TAG, "UN:"+susername + ", P:" + spassword);
 
-                Intent intent = new Intent(LoginActivity.this, ProfExamActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
