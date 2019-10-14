@@ -3,6 +3,8 @@ import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { login } from "../../redux/action-creators/authentication";
+import { Button, ButtonToolbar } from 'react-bootstrap';
+
 
 class Login extends Component {
   constructor (props){
@@ -66,6 +68,7 @@ class Login extends Component {
             </div>
           </form>
         </div>
+        
       );
     }
   }

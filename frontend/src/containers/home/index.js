@@ -1,63 +1,44 @@
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
+import { Button, Card, CardDeck } from 'react-bootstrap';
 
 const Home = props => (
-  <div>
-    <p>
-      {props.authentication.token != null
-        ? props.authentication.token
-        : "NO TOKEN"}
-    </p>
 
-    <p>
-      {props.test !== null
-        ? props.test.testResult !== null
-          ? "Number Of True Answers: " + props.test.testResult.nuOfTrueAnswers
-          : ""
-        : "isFinished not working"}
-    </p>
+<>
+<CardDeck style={{padding:'15px'}}>
+  <Card border="warning"style={{ width: '18rem' }}>
+  <Card.Body align="center">
+    <Card.Text>
+      If you're registered, login.
+    </Card.Text>
+    <Button variant="outline-warning">
+    <Link to="/login">Login</Link>
+  </Button>  </Card.Body>
+</Card>
 
-    <p>
-      {props.test !== null
-        ? props.test.testResult !== null
-          ? "Number Of False Answers: " + props.test.testResult.nuOfFalseAnswers
-          : ""
-        : "isFinished not working"}
-    </p>
+<Card border="success"style={{ width: '18rem' }}>
+<Card.Body align="center">
+  <Card.Text>
+    If you are new, sign up here.
+  </Card.Text>
+  <Button variant="outline-success">
+  <Link to="/signin">Sign-up</Link>
+</Button>  </Card.Body>
+</Card>
 
-    <p>
-      {props.test !== null
-        ? props.test.testResult !== null
-          ? "Your Level: " +
-            ((props.test.testResult.nuOfTrueAnswers * 100) /
-              props.test.testResult.nuOfQuestions ===
-            20
-              ? "Beginner"
-              : (props.test.testResult.nuOfTrueAnswers * 100) /
-                  props.test.testResult.nuOfQuestions ===
-                40
-              ? "Intermediate"
-              : (props.test.testResult.nuOfTrueAnswers * 100) /
-                  props.test.testResult.nuOfQuestions ===
-                60
-              ? "Upper-Intermediate"
-              : (props.test.testResult.nuOfTrueAnswers * 100) /
-                  props.test.testResult.nuOfQuestions ===
-                80
-              ? "Advanced"
-              : "Upper-Advanced")
-          : ""
-        : "props.test is not working"}
-    </p>
-  </div>
+  <Card border="secondary"style={{ width: '18rem' }}>
+  <Card.Body align="center">
+    <Card.Text>
+      You can continue as a guest user if you wish.
+    </Card.Text>
+    <Button variant="outline-secondary">
+    <Link to="/guest">Guest</Link>
+  </Button>  </Card.Body>
+</Card>
+</CardDeck>
+</>
 );
 
-const mapStateToProps = ({ counter, test, authentication }) => ({
-  test,
-  authentication
-});
 
-export default connect(
-  mapStateToProps,
-)(Home);
+
+export default Home;
