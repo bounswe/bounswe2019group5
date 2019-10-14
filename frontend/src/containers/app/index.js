@@ -11,19 +11,18 @@ import TestResults from "../test-results";
 import Guest from "../guest"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Form, Container, Row, Col, Image, Button, ButtonToolbar } from 'react-bootstrap';
+import { logout } from "../../redux/action-creators/authentication";
 
+class App extends Component {
 
-const App = () => (
+  render() {
+    return (
   <>
     <Navbar >
       <Navbar.Brand href="#home"><Link to="/"><Image width={250} height={100} alt="bonibon" src="https://github.com/bounswe/bounswe2019group5/raw/master/Images/logo.jpeg" fluid /></Link>
       </Navbar.Brand>
       <Nav className="mr-auto">
-      </Nav>
-      <Form inline>
-        <Nav.Link href="#about">          <Button variant="outline-warning">
-          <Link to="/about-us">About</Link>
-          {this.props.authentication.token &&
+      {this.props.authentication.token &&
             (
               <Link to="/" onClick={() => this.props.logout()}>Logout</Link>
             )
@@ -38,6 +37,11 @@ const App = () => (
               <Link to="/signup">Singup</Link>
             )
           }
+      </Nav>
+      <Form inline>
+        <Nav.Link href="about">  <Button variant="outline-warning">
+          <Link to="/about-us">About</Link>
+
         </Button> </Nav.Link>
       </Form>
     </Navbar>
@@ -47,13 +51,15 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/about-us" component={About} />
       <Route exact path="/login" component={Login} />
-      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signup" component={SignUp} />
       <Route exact path="/prof-test" component={ProfTest} />
       <Route exact path="/guest" component={Guest} />
       <Route exact path="/test-results" component={TestResults} />
     </main>
   </>
-);
+)
+}
+}
 
 const mapStateToProps = ({ authentication }) => ({
   authentication

@@ -22,7 +22,7 @@ const Home = props => (
     If you are new, sign up here.
   </Card.Text>
   <Button variant="outline-success">
-  <Link to="/signin">Sign-up</Link>
+  <Link to="/signup">Sign-up</Link>
 </Button>  </Card.Body>
 </Card>
 
