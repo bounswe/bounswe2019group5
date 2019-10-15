@@ -11,6 +11,12 @@ from .models import User, Question
 from .serializers import QuestionSerializer
 
 
+class ProfileView(generics.CreateAPIView):
+
+    def post(self, request):
+        pass
+
+
 class ProficiencyView(generics.CreateAPIView):
 
     def post(self, request):
@@ -60,7 +66,7 @@ class ProficiencyView(generics.CreateAPIView):
 class LoginView(generics.CreateAPIView):
 
     def post(self, request):
-        if 'email_username' in request.data and 'password' in request.data:
+        if ('email_username' in request.data) and ('password' in request.data):
             user = User.objects.filter(
                 username=request.data.get('email_username')).first()
             if not user:
