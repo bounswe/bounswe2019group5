@@ -13,11 +13,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Form } from 'react-bootstrap';
 import orange from '@material-ui/core/colors/orange';
+import { border, borderColor } from "@material-ui/system";
 
 
 const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
+            backgroundImage: 'url(https://github.com/bounswe/bounswe2019group5/blob/master/Images/bonibonarkaplan.jpg?raw=true)',
             backgroundColor: orange[400],
         },
     },
@@ -26,13 +28,13 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        background: theme.palette.common.white,
+        borderColor: orange[400],
+        borderWidth: '100%',
+        borderRadius: '15'
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '80%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -47,9 +49,9 @@ export default function Guest() {
         language: "",
     } );
 
-    return (<Container component="main" maxWidth="xs">
+    return (<Container component="main" maxWidth="xs" >
         <CssBaseline />
-        <div className={classes.paper}>
+        <div className={classes.paper} >
         <Typography component="h1" variant="h5">
             You can continue as a guest.
           </Typography>
