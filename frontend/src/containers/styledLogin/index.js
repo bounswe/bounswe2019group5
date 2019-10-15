@@ -20,14 +20,14 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: 'center',
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(2, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.dark,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -84,10 +84,12 @@ export default function StyledLogin() {
             >
               Log In
             </Button>
+
             <Grid container>
-              <Grid item><Button>
-                <Link to="/signup">Don't have an account? Sign-up</Link></Button>
-              </Grid>
+              <Button variant="contained"
+                fullWidth
+                color="info">
+                <Link to="/styled-signup">Don't have an account? Sign-up</Link></Button>
             </Grid>
           </form>
         </div>

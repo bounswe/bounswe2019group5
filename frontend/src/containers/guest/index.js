@@ -18,10 +18,6 @@ class Guest extends Component {
         });
     };
 
-    forwardProf = e => {
-
-    }
-
     handleSelect = e => {
         this.setState(state => {
             return {
@@ -34,7 +30,7 @@ class Guest extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.forwardProf}>
+                <form>
                     <label>Type nickname or continue with default</label>
                     <input
                         type="text"
