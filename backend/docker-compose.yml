@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    image: backend_image
+    restart: always
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment: 
+      - SECRET_KEY=$SECRET_KEY 
+  #   depends_on:
+  #     - db
+  # db:
+  #   image: mysql:5.7
+  #   restart: always
+  #   environment:
+  #      MYSQL_DATABASE: 'secret'
+  #      MYSQL_PASSWORD: 'secret'
+  #      MYSQL_ROOT_PASSWORD: 'secret'
+  #   ports:
+  #     - '3306:3306'

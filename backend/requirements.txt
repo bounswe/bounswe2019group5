@@ -1,0 +1,9 @@
+autopep8==1.4.4
+Django==2.2.6
+djangorestframework==3.10.3
+numpy==1.17.2
+pycodestyle==2.5.0
+pytz==2019.2
+sqlparse==0.3.0
+toml==0.10.0
+django-cors-headers
