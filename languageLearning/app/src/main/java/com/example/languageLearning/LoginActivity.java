@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                 passwordView = findViewById(R.id.passwordView);
                 String username = usernameView.getText().toString();
                 String password = passwordView.getText().toString();
-                Log.d(TAG, "UN:"+username + ", P:" + password);
 
                 if(username.isEmpty()){
                     showErrorPopup("You must enter an e-mail/username");
@@ -61,14 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if(!(username.isEmpty() | password.isEmpty())) {
-                    String returnedToken;
-                    returnedToken = sendLoginRequest(username, password, requestQueue);
-                    Log.d(TAG, "Returned Token: " + returnedToken);
-                    if(!returnedToken.isEmpty()) {
-                        app.setToken(returnedToken);
-                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                        startActivity(intent);
-                    }
+                    sendLoginRequest(username, password, requestQueue);
                 }
 
             }
@@ -104,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         popup.show();
     }
 
-    public String sendLoginRequest(String username, String password, RequestQueue reqQ){
+    public void sendLoginRequest(String username, String password, RequestQueue reqQ){
         String loginUrl = "http://18.197.149.174:8000/user/login";
 
         JSONObject json = new JSONObject();
@@ -118,9 +110,14 @@ public class LoginActivity extends AppCompatActivity {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, loginUrl, json, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, "Response: " + response.toString());
                 token = response.toString();
-                showErrorPopup(response.toString());
+                Log.d(TAG, "Returned Token: " + token);
+
+                if(!token.isEmpty()) {
+                    app.setToken(token);
+                    Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                    startActivity(intent);
+                }
 
 
             }
@@ -137,7 +134,5 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         reqQ.add(jsonRequest);
-
-        return token;
     }
 }
