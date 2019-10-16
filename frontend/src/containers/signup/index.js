@@ -3,8 +3,21 @@ import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { signup } from "../../redux/action-creators/authentication";
+import styles from "./styles";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { Form } from 'react-bootstrap';
+import { withStyles } from '@material-ui/core/styles';
+import { CircularProgress } from "@material-ui/core";
 
 class SignUp extends Component {
+
   state = {
     name: "",
     surname: "",
@@ -28,77 +41,153 @@ class SignUp extends Component {
       this.state.native_language
     );
   };
-
+  
   render() {
-    if (this.props.loading) {
-      return (
-        <div>
-          <h1>LOADING</h1>
-        </div>
-      );
-    } else if (this.props.status === 0) {
+
+    const {classes} = this.props;
+    console.log(this.props);
+
+    if (this.props.authentication.token != null) {
       return (
         <Redirect
           to={{
             pathname: "/",
-            state: { token: this.props.token }
+            state: { token: this.props.authentication.token }
           }}
         />
       );
     } else {
       return (
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <label>Name:</label>
-              <input type="text" id="name" onChange={this.handleChange} />
-            </div>
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline />
+          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}></Avatar>
+              <Typography component="h1" variant="h5">
+                Welcome! You can sign up here easily.
+              </Typography>
+            {this.props.authentication.loading &&
+              <div>
+                <h1>LOADING...</h1>
+              </div>
+            }
+            {!this.props.authentication.loading &&
+              <form className={classes.form} onSubmit={this.handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Name"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Name"
+                      autoFocus
+                      autoComplete="fname"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
 
-            <div>
-              <label>Surname:</label>
-              <input type="text" id="surname" onChange={this.handleChange} />
-            </div>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Surname"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="surname"
+                      label="Surname"
+                      autoComplete="sname"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
 
-            <div>
-              <label>Email:</label>
-              <input type="email" id="email" onChange={this.handleChange} />
-            </div>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      type="email"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
 
-            <div>
-              <label>Username:</label>
-              <input type="text" id="username" onChange={this.handleChange} />
-            </div>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="username"
+                      label="User Name"
+                      name="username"
+                      autoComplete="username"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
 
-            <div>
-              <label>Password:</label>
-              <input
-                type="password"
-                id="password"
-                onChange={this.handleChange}
-              />
-            </div>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
 
-            <div>
-              <label>Native Language:</label>
-              <select id="native_language" onChange={this.handleChange}>
-                <option value="">Please choose your native language</option>
-                <option value="turkish">Turkish</option>
-                <option value="english">English</option>
-              </select>
-            </div>
+                  <Grid item xs={12}>
+                    <Form.Label>Native Language</Form.Label>
+                    <Form.Control
+                      as="select"
+                      id="native_language"
+                      onChange={this.handleChange}>
+                      <option>English</option>
+                      <option>Turkish</option>
+                      <option>German</option>
+                    </Form.Control>
+                  </Grid>
 
-            <button>Sign Up</button>
-          </form>
-        </div>
+                </Grid>
+
+                {this.props.authentication.message!=null &&
+                  (
+                    <div>
+                      <label style={{color: 'red'}}>{this.props.authentication.message}</label>
+                    </div>
+                  )
+                }
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color = "primary"
+                  className={classes.submit}
+
+                >
+                  Sign Up
+                </Button>
+                <Grid container justify="flex-end"></Grid>
+              </form>
+          }
+            </div>
+          </Grid>
+        </Grid>
       );
     }
   }
 }
 
 const mapStateToProps = ({ authentication }) => ({
-  token: authentication.token,
-  status: authentication.status,
-  loading: authentication.loading
+  authentication
 });
 
 const mapDispatchToProps = dispatch =>
@@ -109,7 +198,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
+export default withStyles(styles) ( connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUp);
+)(SignUp) );

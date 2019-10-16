@@ -24,7 +24,7 @@ export const signup = (
   name,
   surname,
   email,
-  user_name,
+  username,
   password,
   native_language
 ) => {
@@ -33,7 +33,7 @@ export const signup = (
       type: SIGNUP_REQUESTED
     });
 
-    signup_api(name, surname, email, user_name, password, native_language).then(
+    signup_api(name, surname, email, username, password, native_language).then(
       response => {
         dispatch({
           type: SIGNUP,
