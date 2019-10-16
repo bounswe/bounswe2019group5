@@ -3,15 +3,19 @@ package com.example.languageLearning;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
     private final String TAG = LoginActivity.class.getName();
+
+    TextView registerText;
 
     Button loginButton;
     private MyApplication app;
@@ -36,5 +40,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        registerText = findViewById(R.id.regısterText);
+        registerText.setPaintFlags(registerText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
     }
 }
