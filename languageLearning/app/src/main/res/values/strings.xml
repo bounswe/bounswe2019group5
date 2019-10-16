@@ -11,4 +11,5 @@
     <string name="turkish">Turkish</string>
     <string name="german">German</string>
     <string name="native_language">Native Language</string>
+    <string name="create_my_account">Create My Account</string>
 </resources>

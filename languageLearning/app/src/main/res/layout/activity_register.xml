@@ -100,7 +100,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="128dp"
         android:background="#2196F3"
-        android:text="Create My Account"
+        android:text="@string/create_my_account"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,19 +140,22 @@
             android:id="@+id/englishRadioButton"
             android:layout_width="91dp"
             android:layout_height="27dp"
-            android:text="@string/english" />
+            android:text="@string/english"
+            android:onClick="checkButton"/>
 
         <RadioButton
             android:id="@+id/turkishRadioButton"
             android:layout_width="92dp"
             android:layout_height="28dp"
-            android:text="@string/turkish" />
+            android:text="@string/turkish"
+            android:onClick="checkButton"/>
 
         <RadioButton
             android:id="@+id/germanRadioButton"
             android:layout_width="92dp"
             android:layout_height="wrap_content"
-            android:text="@string/german" />
+            android:text="@string/german"
+            android:onClick="checkButton"/>
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
