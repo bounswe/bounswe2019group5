@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private final String TAG = "TEST";
 
-    String token;
+    String token = "";
 
     TextView registerText;
 
@@ -63,12 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                 if(!(username.isEmpty() | password.isEmpty())) {
                     String returnedToken;
                     returnedToken = sendLoginRequest(username, password, requestQueue);
+                    Log.d(TAG, "Returned Token: " + returnedToken);
                     if(!returnedToken.isEmpty()) {
                         app.setToken(returnedToken);
+                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                        startActivity(intent);
                     }
                 }
-                //Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                //startActivity(intent);
+
             }
         });
 
