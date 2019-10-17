@@ -36,7 +36,7 @@
         app:layout_constraintWidth_percent="0.925" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/username"
         android:layout_width="303dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
