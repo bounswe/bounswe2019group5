@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView registerText;
 
-    Button loginButton, registerButton;
+    Button loginButton;
     private MyApplication app;
 
     Dialog popup;
@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         loginButton = findViewById(R.id.loginButton);
-        registerButton = findViewById(R.id.registerButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerText = findViewById(R.id.regısterText);
+        registerText = findViewById(R.id.registerText);
         registerText.setPaintFlags(registerText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
