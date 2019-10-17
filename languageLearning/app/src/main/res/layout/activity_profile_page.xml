@@ -38,7 +38,7 @@
                 android:layout_below="@+id/imgUser"
                 android:layout_centerHorizontal="true"
                 android:text="Joey Tribbiani"
-                android:textSize="32sp"
+                android:textSize="38sp"
                 android:textColor="@color/white"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginTop="32sp"/>
@@ -50,7 +50,7 @@
                 android:layout_below="@+id/firstName_lastName"
                 android:layout_centerHorizontal="true"
                 android:text="New york"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:textColor="@color/address"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginTop="14sp"/>

@@ -17,11 +17,4 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
     }
 
-    public void onClickProfile(View view){
-
-        Intent i = new Intent(this, ProfilePage.class);
-        startActivity(i);
-
-    }
-
 }
