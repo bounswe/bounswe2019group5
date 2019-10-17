@@ -4,16 +4,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RegisterActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REGISTER HERE"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:hint="@string/name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_label"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <EditText
+        android:id="@+id/surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:hint="@string/surname"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/surname" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:hint="@string/username"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/native_lang_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/native_language"
+        android:textColor="#4D2496"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="216dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="128dp"
+        android:background="#2196F3"
+        android:text="@string/create_my_account"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/languagesRadioGroup"
+        app:layout_constraintVertical_bias="0.17000002" />
+
+    <TextView
+        android:id="@+id/sign_up_label"
+        android:layout_width="124dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/sign_up"
+        android:textColor="#2196F3"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <RadioGroup
+        android:id="@+id/languagesRadioGroup"
+        android:layout_width="91dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/native_lang_label"
+        app:layout_constraintVertical_bias="0.01999998">
+
+        <RadioButton
+            android:id="@+id/englishRadioButton"
+            android:layout_width="91dp"
+            android:layout_height="27dp"
+            android:text="@string/english"
+            android:onClick="checkButton"/>
+
+        <RadioButton
+            android:id="@+id/turkishRadioButton"
+            android:layout_width="92dp"
+            android:layout_height="28dp"
+            android:text="@string/turkish"
+            android:onClick="checkButton"/>
+
+        <RadioButton
+            android:id="@+id/germanRadioButton"
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
+            android:text="@string/german"
+            android:onClick="checkButton"/>
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
