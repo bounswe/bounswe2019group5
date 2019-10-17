@@ -2,13 +2,14 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from django.core import serializers
 
 from rest_framework import status
 import numpy as np
 import random
 
-from .models import User, Question
-from .serializers import QuestionSerializer
+from .models import User, Question, ProficiencyExam, QuestionOption
+from .serializers import ProficiencyExamSerializer, QuestionOptionSerializer, QuestionSerializer
 
 
 class ProfileView(generics.CreateAPIView):
@@ -19,48 +20,28 @@ class ProfileView(generics.CreateAPIView):
 
 class ProficiencyView(generics.CreateAPIView):
 
-    def post(self, request):
-        def get_random_questions(questionsNumber, questionLevel):
-            setOfQuestion = Question.objects.filter(questionLevel=questionLevel)
-            serializer = QuestionSerializer(setOfQuestion, many=True)
-            setOfQuestion = serializer.data
+    def get(self, request):
+        def get_prof_test(language):
+            proficiency_exams = ProficiencyExam.objects.filter(language=language)
+            return random.sample(list(proficiency_exams), 1)[0]
 
-            if len(setOfQuestion) < questionsNumber:
-                return setOfQuestion
-            else:
-                return random.sample(setOfQuestion, questionsNumber)
 
-        def get_prof_test():
-            size = 1
-            category = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-            questionList = [get_random_questions(size, i) for i in category]
+        #permission_classes = (IsAuthenticated,)
 
-            if [] in questionList:
-                return []
-            else:
-                questionList = np.reshape(questionList, (1, -1)).tolist()[0]
+       # if not request.user.is_authenticated:
+           # return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            # serializer = QuestionSerializer(questionList)
-
-            return {
-                "testQuestions": questionList,
-            }
-
-        permission_classes = (IsAuthenticated,)
-
-        if not request.user.is_authenticated:
-            return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
-
-        if 'testLanguage' not in request.data:
+        if 'language' not in request.data:
             return Response({'message': 'language field must be exist'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            prof_test = get_prof_test()
+            prof_test = get_prof_test(request.data['language'])
+
             if not prof_test:
                 return Response(
                     {'message': 'database does not have enough questions for proficiency test'},
                     status=status.HTTP_503_SERVICE_UNAVAILABLE)
             else:
-                return Response(prof_test, status=status.HTTP_200_OK)
+                return Response(ProficiencyExamSerializer(prof_test).data, status=status.HTTP_200_OK)
 
 
 class LoginView(generics.CreateAPIView):

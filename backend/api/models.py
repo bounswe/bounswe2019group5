@@ -1,14 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User as UserBase
 
+languageChoices = [
+    ('english', 'english'),
+    ('turkish', 'turkish'),
+    ('german', 'german')
+]
 
 class User(UserBase):
-
-    languageChoices = [
-        ('english', 'english'),
-        ('turkish', 'turkish'),
-        ('german', 'german')
-    ]
 
     nativeLanguage = models.CharField(max_length=20, choices=languageChoices)
 '''
@@ -18,6 +17,14 @@ class ListField(models.Field):
         kwargs['max_length'] = 104
         super().__init__(*args, **kwargs)
 '''
+
+class Exam(models.Model):
+    class Meta:
+        abstract: True
+
+class ProficiencyExam(Exam):
+    language =  models.CharField(max_length=20, choices=languageChoices)
+
 class Question(models.Model):
     levels = [
         ('A1','A1'),
@@ -27,18 +34,18 @@ class Question(models.Model):
         ('C1','C1'),
         ('C2','C2'),
     ]
-    questionTypes = [
-        ('vocab','vocab'),
+    types = [
+        ('vocabulary','vocabulary'),
         ('grammar','grammar'),
         ('reading','reading'),
     ]
-    index = [(i,i) for i in range(4)]
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='questions')
 
-    questionLevel = models.CharField(choices=levels,max_length=2)
-    questionType = models.CharField(choices=questionTypes,max_length=10)
-    questionAnswer = models.IntegerField(choices=index)
-    questionText = models.CharField(max_length=1000)
-    #questionOptions = models.
+    level = models.CharField(choices=levels,max_length=2)
+    type = models.CharField(choices=types,max_length=10, default='vocabulary')
+    answer = models.CharField(max_length=1000, default='')
+    text = models.CharField(max_length=1000,default='' )
+    '''
     q = {
             "questionLevel": "A2",
             "questionType": "vocab",
@@ -54,3 +61,12 @@ class Question(models.Model):
                 "burn"
             ],
     }
+    '''
+
+class QuestionOption(models.Model):
+    text = models.CharField(max_length=1000)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question_options')
+
+
+
+
