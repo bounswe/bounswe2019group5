@@ -23,7 +23,7 @@
                     android:layout_height="120dp"
                     android:layout_margin="9dp"
                     android:padding="5dp"
-                    android:src="@drawable/ic_user"
+                    android:src="@drawable/ic_profil"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     android:background="@drawable/circle">
