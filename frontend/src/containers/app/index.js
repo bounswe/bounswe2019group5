@@ -36,7 +36,7 @@ class App extends Component {
           <Nav className="mr-auto">
             {this.props.authentication.token &&
               (
-                <Link to="/" onClick={() => this.props.logout()}>
+                <Link to="/login" onClick={() => this.props.logout()}>
                   <Button variant="outline-warning">Logout</Button>
                 </Link>
               )

@@ -1,5 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
-
 const styles = theme => ({
   root: {
     height: '100vh',
