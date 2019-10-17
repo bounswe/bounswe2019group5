@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView registerText;
 
-    Button loginButton;
+    Button loginButton, registerButton;
     private MyApplication app;
 
     Dialog popup;
@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
 

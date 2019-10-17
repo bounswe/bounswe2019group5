@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">languageLearning</string>
     <string name="login_button_text">Login</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="email">Email</string>
+    <string name="english">English</string>
+    <string name="turkish">Turkish</string>
+    <string name="german">German</string>
+    <string name="native_language">Native Language</string>
+    <string name="create_my_account">Create My Account</string>
 </resources>

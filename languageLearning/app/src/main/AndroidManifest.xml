@@ -15,14 +15,11 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".MainMenuActivity"></activity>
         <activity android:name=".ProfResultActivity" />
-        <activity
-            android:name=".ProfExamActivity"
-            android:exported="true" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ProfExamActivity" android:exported="true" />
+        <activity android:name="com.example.languageLearning.RegisterActivity"></activity>
+        <activity android:name="com.example.languageLearning.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

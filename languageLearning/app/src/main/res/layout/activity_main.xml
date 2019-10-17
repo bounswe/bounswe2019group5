@@ -39,7 +39,9 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="Password"
+        android:gravity="center_horizontal"
+        android:hint="@string/password"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameView" />
