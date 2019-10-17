@@ -96,6 +96,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void sendLoginRequest(String username, String password, RequestQueue reqQ){
+        final Bundle b = new Bundle();
+        b.putString("USERNAME",username);
+
         String loginUrl = "http://18.197.149.174:8000/user/login";
 
         JSONObject json = new JSONObject();
@@ -114,10 +117,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(!token.isEmpty()) {
                     app.setToken(token);
+
                     Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
-
 
             }
         }, new Response.ErrorListener() {
