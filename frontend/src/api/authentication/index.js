@@ -1,25 +1,34 @@
 import parameters from '../parameters'
+import axios from 'axios';
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export const login = async (usernameOrEmail, password) => {
-  const data = await fetch(parameters.apiUrl+'/user/login', {
-    method: 'post',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({
-      email_username: usernameOrEmail,
-      password: password,
-    }),
-  }).then(response => {
-    console.log(response);
-    return response.json();
-  }).then(data => {
-    console.log(data);
-    return data;
-  });
-  console.log(data);
+
+  const data = await axios
+    .post(parameters.apiUrl+'/user/login',
+      {
+        email_username: usernameOrEmail,
+        password: password,
+      },
+      {
+        headers: {'Content-Type':'application/json'},
+        timeout: 3000,
+      }
+    )
+    .then(response => response.data)
+    .catch(err => 
+      {
+        console.log(err.message);
+        return {
+          token: null,
+          message: err.response? err.response.data.message : 'Connection Error!',
+        };
+      }
+    );
+
   return data;
 };
 
@@ -32,22 +41,32 @@ export const signup = async (
   native_language
 ) => {
 
-  return await fetch(parameters.apiUrl+'/user/register', {
-    method: 'post',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({
-      name,
-      surname,
-      email,
-      username,
-      password,
-      native_language,
-    }),
-  }).then(response => {
-    return response.json();
-  }).then(data => {
-    return data;
-  });
+  const data = await axios
+    .post(parameters.apiUrl+'/user/register',
+      {
+        name,
+        surname,
+        email,
+        username,
+        password,
+        native_language,
+      },
+      {
+        headers: {'Content-Type':'application/json'},
+        timeout: 3000,
+      }
+    )
+    .then(response => response.data)
+    .catch( err => 
+      {
+        return {
+          token: null,
+          message: err.response? err.response.data.message : 'Connection Error!',
+        };
+      }
+    );
+
+  return data;
 };
 
 export const logout = async () => {

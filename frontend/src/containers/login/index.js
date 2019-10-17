@@ -98,6 +98,14 @@ class Login extends Component {
                   onChange={this.handleChange}
                 />
 
+                {this.props.authentication.message!=null &&
+                  (
+                    <div>
+                      <label style={{color: 'red'}}>{this.props.authentication.message}</label>
+                    </div>
+                  )
+                }
+
                 <Button
                   type="submit"
                   fullWidth
