@@ -8,7 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/grad"
-            android:paddingBottom="20dp">
+            android:paddingBottom="1dp">
 
             <RelativeLayout
                 android:id="@+id/imgUser"
@@ -23,7 +23,7 @@
                     android:layout_height="120dp"
                     android:layout_margin="9dp"
                     android:padding="5dp"
-                    android:src="@drawable/ic_profil"
+                    android:src="@drawable/ic_person"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     android:background="@drawable/circle">
@@ -78,19 +78,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="1"
-                android:paddingTop="5dp"
+                android:background="@color/followersBg"
+                android:gravity="center"
                 android:paddingBottom="5dp"
-                android:background="@color/followersBg">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal "
-                    android:orientation="vertical"/>
+                android:paddingTop="5dp">
 
                 <Button
                     android:id="@+id/button2"
@@ -98,6 +92,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View Comments" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal "
+                    android:orientation="vertical" />
 
             </RelativeLayout>
 
@@ -153,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:text="Native Language"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/nativeLang"
@@ -162,7 +162,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="joey@gmail.com"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="25sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:text="Average Rate"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/averageRate"
@@ -194,7 +194,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="54651685165"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="25sp" />
 
                     <View
                         android:layout_width="match_parent"

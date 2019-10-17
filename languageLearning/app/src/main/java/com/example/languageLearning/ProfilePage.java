@@ -92,7 +92,7 @@ public class ProfilePage extends AppCompatActivity {
             nativeLang.setText(userNativeLang_s);
 
             TextView averageRate = (TextView) findViewById(R.id.averageRate);
-            averageRate.setText(Double.toString(userRateAverage_d));
+            averageRate.setText(Double.toString(userRateAverage_d) + " / 5.0");
 
 
 
