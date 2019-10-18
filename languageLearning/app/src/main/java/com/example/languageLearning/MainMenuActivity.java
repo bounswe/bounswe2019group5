@@ -30,7 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ProfExamActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, ProfilePage.class);
                 startActivity(intent);
             }
         });

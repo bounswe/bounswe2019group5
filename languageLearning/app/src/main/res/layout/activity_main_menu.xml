@@ -14,7 +14,7 @@
         android:text="TextView"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/logoutButton"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
         app:layout_constraintStart_toEndOf="@+id/profileButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,12 +34,72 @@
         android:id="@+id/logoutButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="#00AA9494"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/logout" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="89dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Exercises"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Change Language"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton" />
+
+    <ImageButton
+        android:id="@+id/exerciseButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:background="#00503E3E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
+        app:srcCompat="@drawable/exercises" />
+
+    <ImageButton
+        android:id="@+id/changeLanguageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="#00A88E8E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/language" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:background="#00AA9494"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:tint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logout" />
+        app:srcCompat="@drawable/ic_settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
