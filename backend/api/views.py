@@ -25,11 +25,10 @@ class ProficiencyView(generics.CreateAPIView):
             proficiency_exams = ProficiencyExam.objects.filter(language=language)
             return random.sample(list(proficiency_exams), 1)[0]
 
+        # permission_classes = (IsAuthenticated,)
 
-        #permission_classes = (IsAuthenticated,)
-
-       # if not request.user.is_authenticated:
-           # return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not request.user.is_authenticated:
+        # return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
 
         if 'language' not in request.data:
             return Response({'message': 'language field must be exist'}, status=status.HTTP_400_BAD_REQUEST)

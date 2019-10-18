@@ -8,9 +8,9 @@ class QuestionOptionSerializer(serializers.ModelSerializer):
         fields = ('text',)
 
 
-
 class QuestionSerializer(serializers.ModelSerializer):
     question_options = QuestionOptionSerializer(many=True)
+
     class Meta:
         model = Question
         fields = ('id', 'text', 'question_options')
@@ -18,6 +18,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class ProficiencyExamSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
+
     class Meta:
         model = ProficiencyExam
         fields = ('id', 'language', 'questions')
