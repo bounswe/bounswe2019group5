@@ -13,9 +13,9 @@ const Home = props => (
           <Card.Text>
             If you're registered, login.
     </Card.Text>
-          <Button variant="outline-warning">
-            <Link to="/styled-login">Login</Link>
-          </Button>  </Card.Body>
+
+          <Link to="/styled-login"><Button variant="outline-warning">Login </Button>  </Link>
+        </Card.Body>
       </Card>
 
       <Card border="success" style={{ width: '18rem' }}>
@@ -23,9 +23,9 @@ const Home = props => (
           <Card.Text>
             If you are new, sign up here.
   </Card.Text>
-          <Button variant="outline-success">
-            <Link to="/styled-signup">Sign-up</Link>
-          </Button>  </Card.Body>
+
+          <Link to="/styled-signup"><Button variant="outline-success">Sign-up </Button>  </Link>
+        </Card.Body>
       </Card>
 
       <Card border="secondary" style={{ width: '18rem' }}>
@@ -33,9 +33,8 @@ const Home = props => (
           <Card.Text>
             You can continue as a guest user if you wish.
     </Card.Text>
-          <Button variant="outline-secondary">
-            <Link to="/guest">Guest</Link>
-          </Button>  </Card.Body>
+          <Link to="/guest-login"><Button variant="outline-secondary">Guest  </Button> </Link>
+        </Card.Body>
       </Card>
     </CardDeck>
     <Image src="https://github.com/bounswe/bounswe2019group5/blob/master/Images/kapak.png?raw=true" fluid />
