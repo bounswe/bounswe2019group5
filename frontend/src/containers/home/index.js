@@ -13,7 +13,7 @@ const Home = props => (
           <Card.Text>
             If you're registered, login.
     </Card.Text>
-          <Link to="/styled-login"><Button variant="outline-warning">Login </Button>  </Link>
+          <Link to="/login"><Button variant="outline-warning">Login </Button>  </Link>
         </Card.Body>
       </Card>
       <Card border="success">
@@ -21,7 +21,7 @@ const Home = props => (
           <Card.Text>
             If you are new, sign up here.
   </Card.Text>
-          <Link to="/styled-signup"><Button variant="outline-success">Sign-up </Button>  </Link>
+          <Link to="/signup"><Button variant="outline-success">Sign-up </Button>  </Link>
         </Card.Body>
       </Card>
       <Card border="secondary">
