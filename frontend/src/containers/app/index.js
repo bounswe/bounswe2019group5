@@ -21,7 +21,7 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
-
+import LanguageSelection from "../languageSelection"
 import GuestLogin from "../guestLogin";
 
 import { logout } from "../../redux/action-creators/authentication";
@@ -82,9 +82,8 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/prof-test" component={ProfTest} />
-
+          <Route exact path="/lang-select" component={LanguageSelection} />
           <Route exact path="/test-result" component={TestResult} />
-
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
         </main>

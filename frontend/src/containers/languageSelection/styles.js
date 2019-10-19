@@ -1,5 +1,11 @@
+import orange from '@material-ui/core/colors/orange';
 const styles = theme => ({
-    root: {
+    '@global': {
+        body: {
+            backgroundColor: orange[400],
+        },
+    },
+        root: {
         height: '100vh',
     },
     paper: {
@@ -7,10 +13,6 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.primary.dark,
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -20,5 +22,5 @@ const styles = theme => ({
         margin: theme.spacing(3, 0, 2),
     },
 });
-  
+
 export default styles;

@@ -10,143 +10,70 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { login } from "../../redux/action-creators/authentication";
+import { set_selected_language } from "../../redux/action-creators/userInfo"
 import styles from "./styles";
 import { withStyles } from '@material-ui/core/styles';
+import LanguageGrid from "./languageGrid"
 
 
 class LanguageSelection extends Component {
-  constructor (props){
-    super(props);
-    console.log(props.authentication.token);
-  }
-  state = {
-    language: "",
-  };
-  handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
-  handleSubmit = e => {
-    this.props.LanguageSelection(this.state.language);
-  };
+    state = { isLanguageSelected: false }
+    constructor(props) {
+        super(props);
+        console.log(props.authentication.token);
+    };
+    handleSubmit = (language) => {
+        this.props.set_selected_language(language);
+        this.setState({ isLanguageSelected: true })
+    };
 
-  render() {
-
-    const {classes} = this.props;
-
-    if (this.props.authentication.token != null){
-      return (
-        <Redirect
-          to={{
-            pathname: "/",
-          }}
-        />
-      );
-    }
-    else if (this.state.goToSignInPage != null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/signup",
-          }}
-        />
-      );
-    }
-    else if (this.props.authentication.loading) {
-      return (
-        <div>
-          <h1>LOADING</h1>
-        </div>
-      );
-    } else {
-      return (
-        <Grid container component="main" className={classes.root}>
-          <CssBaseline />
-          <Grid item xs={false} sm={4} md={7} className={classes.image} />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}/>
-              <Typography component="h1" variant="h5">Log in</Typography>
-
-              <form className={classes.form} onSubmit={this.handleSubmit}>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="usernameOrEmail"
-                  label="Enter Your Username or Email"
-                  name="usernameOrEmail"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={this.handleChange}
+    render() {
+        const { classes } = this.props;
+        if (this.state.isLanguageSelected) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: "/prof-test",
+                    }}
                 />
+            );
+        }
+        else {
+            return (
+                <>
+                    <Grid><Typography component="h1" variant="h2" align='center'>
+                        Select a language to take its proficiency test.
+              </Typography>
+                    </Grid>
 
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={this.handleChange}
-                />
-
-                {this.props.authentication.message!=null &&
-                  (
-                    <div>
-                      <label style={{color: 'red'}}>{this.props.authentication.message}</label>
-                    </div>
-                  )
-                }
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Log In
-               </Button>
-
-                <Grid container>
-                  <Button variant="contained"
-                    fullWidth
-                    color="info"
-                    onClick={() => this.setState({goToSignInPage: true})}>
-                      Don't have an account? Sign-up now
-                  </Button>
-                </Grid>
-
-              </form>
-
-            </div>
-          </Grid>
-        </Grid>
-      );
+                    <Grid container spacing={3} component="main" className={classes.root}>
+                        <CssBaseline />
+                        <LanguageGrid handleClick={() => this.handleSubmit("turkish")} avatarBg={"https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/turkish-icon-.png?raw=true"} language={"Turkish"} />
+                        <LanguageGrid handleClick={() => this.handleSubmit("english")} avatarBg={"https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/english.png?raw=true"} language={"English"} />
+                        <LanguageGrid handleClick={() => this.handleSubmit("german")} avatarBg={"https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/germany-icon-18.png?raw=true"} language={"German"} />
+                    </Grid>
+                </>
+            );
+        }
     }
-  }
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  authentication
+const mapStateToProps = ({ authentication, userInfo }) => ({
+    authentication,
+    userInfo
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      login
-    },
-    dispatch
-  );
+    bindActionCreators(
+        {
+            login,
+            set_selected_language
+        },
+        dispatch
+    );
 
-export default withStyles(styles) ( 
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ) (Login) );
+export default withStyles(styles)(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(LanguageSelection));

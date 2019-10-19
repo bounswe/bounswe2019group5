@@ -1,7 +1,7 @@
 import { SET_SELECTED_LANGUAGE } from "../actions";
 
 const initialState = {
-  selectedLanguage: 'turkish',
+  selectedLanguage: '',
   username: null,
   email: null,
 };
