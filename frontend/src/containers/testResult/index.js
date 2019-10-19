@@ -78,20 +78,15 @@ const TestResult = props => {
                 {props.test !== null
                   ? props.test.testResult !== null
                     ? "Your Level: " +
-                      ((props.test.testResult.nuOfTrueAnswers * 100) /
-                        props.test.testResult.nuOfQuestions ===
-                      20
+                      ((props.test.testResult.nuOfTrueAnswers * 100) / 5 === 20
                         ? "A2"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) /
-                            props.test.testResult.nuOfQuestions ===
+                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
                           40
                         ? "B1"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) /
-                            props.test.testResult.nuOfQuestions ===
+                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
                           60
                         ? "B2"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) /
-                            props.test.testResult.nuOfQuestions ===
+                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
                           80
                         ? "C1"
                         : "C2")
