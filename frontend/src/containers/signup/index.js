@@ -50,7 +50,7 @@ class SignUp extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: "/lang-select",
             state: { token: this.props.authentication.token }
           }}
         />
