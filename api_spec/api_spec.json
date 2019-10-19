@@ -74,7 +74,24 @@
                 ]
             }
         ]
-    }
+    },
+
+
+    "user/get_exam_result": (POST) // zaten autherization var
+    {
+        "id": 2,                // This is exam id
+        "answers": [            // Number of elements as number of questions in exam
+            { 
+                "id": 1,        // this is question id
+                "answer": "gos" // answer of user for question id=1 
+            }
+        ]
+    },
+    {
+        nuOfTrueAnswers: 3,
+        nuOfFalseAnswers: 2,
+        statusOfAnswers: ['true', 'false', 'true', 'true', 'false'],
+    },
 
     "/user/profile": // GET REQUEST RESPONSE
 {
