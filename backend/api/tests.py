@@ -59,6 +59,7 @@ class ProficiencyTest(APITestCase):
 
 """
 
+
 class LoginViewTests(APITestCase):
     def setUp(self):
         data = {
@@ -90,7 +91,6 @@ class LoginViewTests(APITestCase):
         self.assertTrue('token' in response.data.keys())
 
     def test_user_not_found(self):
-
         req = {
             'email_username': 'david',
             'password': 'gHGG-jhj23'
