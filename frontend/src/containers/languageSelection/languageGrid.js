@@ -19,7 +19,10 @@ const useStyles = makeStyles(theme => ({
         backgroundPosition: 'center',
     },
     paper: {
-        margin: theme.spacing(2, 4),
+        padding: theme.spacing(3, 2),
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         color: theme.palette.text.secondary    
     },
