@@ -21,7 +21,7 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
-import LanguageSelection from "../languageSelection"
+import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
 
 import { logout } from "../../redux/action-creators/authentication";
@@ -52,7 +52,7 @@ class App extends Component {
           </Navbar.Brand>
           <Nav className="mr-auto">
             {this.props.authentication.token && (
-              <Link to="/login" onClick={() => this.props.logout()}>
+              <Link to="/" onClick={() => this.props.logout()}>
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
