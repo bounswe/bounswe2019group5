@@ -4,4 +4,4 @@ backend/productionSettings.py
 **/migrations/
 Pipfile
 Pipfile.lock
-.idea
+**/.idea/
