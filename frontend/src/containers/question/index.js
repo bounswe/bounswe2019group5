@@ -44,24 +44,23 @@ export class Question extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.selectedOption);
     return (
       <div>
         <FormControl component="fieldset" className={classes.formControl}>
-        <RadioGroup>
-          {this.props.questionOptions.map(option => (
-            <FormControlLabel
-              control={<Radio style={this.findColorOfRadioButton(option)} />}
-              label={option.text}
-              checked={this.props.selectedOption === option.text}
-              onChange={() => {
-                if (this.props.questionAnswerStatus == undefined)
-                  this.props.onChange(option.text);
-              }}
-              style={this.findColorOfText(option)}
-            />
-          ))}
-        </RadioGroup>
+          <RadioGroup>
+            {this.props.questionOptions.map(option => (
+              <FormControlLabel
+                control={<Radio style={this.findColorOfRadioButton(option)} />}
+                label={option.text}
+                checked={this.props.selectedOption === option.text}
+                onChange={() => {
+                  if (this.props.questionAnswerStatus == undefined)
+                    this.props.onChange(option.text);
+                }}
+                style={this.findColorOfText(option)}
+              />
+            ))}
+          </RadioGroup>
         </FormControl>
       </div>
     );

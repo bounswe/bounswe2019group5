@@ -9,7 +9,7 @@ import {
 } from "../../redux/action-creators/test";
 import _ from "lodash";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+import { Button } from "react-bootstrap";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -29,11 +29,14 @@ class ProfTest extends Component {
     questionIndex: 0,
     answers: [],
     isAnswersPrepared: false,
-    isHomeRedirected: false,
+    isHomeRedirected: false
   };
 
   componentDidMount() {
-    this.props.get_prof_test(this.props.authentication.token, this.props.userInfo.selectedLanguage);
+    this.props.get_prof_test(
+      this.props.authentication.token,
+      this.props.userInfo.selectedLanguage
+    );
     this.state.isAnswersPrepared = false;
   }
 
@@ -44,7 +47,7 @@ class ProfTest extends Component {
         answers[i] = this.props.test.profTest.questions[
           i
         ].question_options[0].text;
-      console.log("YENI"+answers);
+      console.log("YENI" + answers);
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -59,16 +62,14 @@ class ProfTest extends Component {
   };
 
   render() {
-
-    if (this.props.authentication.token==null)
-    {
+    if (this.props.authentication.token == null) {
       return (
         <Redirect
-            to={{
-              pathname: "/home",
-            }}
-          />
-        );
+          to={{
+            pathname: "/home"
+          }}
+        />
+      );
     }
 
     const profTest = this.props.test.profTest;
@@ -100,75 +101,77 @@ class ProfTest extends Component {
       const questionIndex = this.state.questionIndex;
       const question = profTest.questions[questionIndex];
 
-      console.log("SELAMEDDIN "+questionIndex+" "+this.state.answers[questionIndex]);
+      console.log(
+        "SELAMEDDIN " + questionIndex + " " + this.state.answers[questionIndex]
+      );
       return (
         <Container
           component="main"
-          maxWidth="md"
+          maxWidth="sm"
           justify="center"
           alignItems="center"
         >
           <CssBaseline />
           <Grid item component={Paper} square>
             <div className={classes.paper}>
-              <Typography component="h1" variant="h5">
-                {question.text}
-              </Typography>
+              <div className="d-flex flex-column">
+                <Typography component="h1" variant="h5">
+                  {question.text}
+                </Typography>
 
-              <Question
-                questionOptions={question.question_options}
-                selectedOption={this.state.answers[questionIndex]}
-                questionAnswerStatus={
-                  this.props.test.testResult
-                    ? this.props.test.testResult.statusOfAnswers[
-                        questionIndex
-                      ]
-                    : null
-                }
-                onChange={newAnswer => {
-                  const newAnswers = _.cloneDeep(this.state.answers);
-                  newAnswers[questionIndex] = newAnswer;
-                  this.setState({ answers: newAnswers });
-                }}
-              />
+                <Question
+                  questionOptions={question.question_options}
+                  selectedOption={this.state.answers[questionIndex]}
+                  questionAnswerStatus={
+                    this.props.test.testResult
+                      ? this.props.test.testResult.statusOfAnswers[
+                          questionIndex
+                        ]
+                      : null
+                  }
+                  onChange={newAnswer => {
+                    const newAnswers = _.cloneDeep(this.state.answers);
+                    newAnswers[questionIndex] = newAnswer;
+                    this.setState({ answers: newAnswers });
+                  }}
+                />
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() =>
-                  this.setState({
-                    questionIndex:
-                      questionIndex > 0 ? questionIndex - 1 : questionIndex
-                  })
-                }
-              >
-                PREV
-              </Button>
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() =>
-                  this.setState({
-                    questionIndex:
-                      questionIndex < profTest.questions.length-1 ? questionIndex + 1 : questionIndex
-                  })
-                }
-              >
-                NEXT
-              </Button>
-
-              <Grid container>
                 <Button
-                  variant="contained"
+                  type="submit"
                   fullWidth
-                  color="info"
+                  variant="info"
+                  className={classes.submit}
+                  onClick={() =>
+                    this.setState({
+                      questionIndex:
+                        questionIndex > 0 ? questionIndex - 1 : questionIndex
+                    })
+                  }
+                >
+                  PREV
+                </Button>
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="info"
+                  className={classes.submit}
+                  onClick={() =>
+                    this.setState({
+                      questionIndex:
+                        questionIndex < profTest.questions.length - 1
+                          ? questionIndex + 1
+                          : questionIndex
+                    })
+                  }
+                >
+                  NEXT
+                </Button>
+
+                <Button
+                  variant="success"
+                  fullWidth
+                  className={classes.submit}
                   onClick={() =>
                     this.props.get_test_result(
                       this.props.authentication.token,
@@ -179,20 +182,18 @@ class ProfTest extends Component {
                 >
                   Complete the Test!
                 </Button>
-              </Grid>
 
-              {this.props.test.isFinished && (
-                <Grid container>
+                {this.props.test.isFinished && (
                   <Button
-                    variant="contained"
+                    variant="warning"
                     fullWidth
-                    color="info"
+                    className={classes.submit}
                     onClick={this.handleHomeRedirection}
                   >
                     Congratulations, let's go to see the test results!
                   </Button>
-                </Grid>
-              )}
+                )}
+              </div>
             </div>
           </Grid>
         </Container>
@@ -205,14 +206,14 @@ class ProfTest extends Component {
 const mapStateToProps = ({ test, authentication, userInfo }) => ({
   test,
   authentication,
-  userInfo,
+  userInfo
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       get_prof_test,
-      get_test_result,
+      get_test_result
     },
     dispatch
   );

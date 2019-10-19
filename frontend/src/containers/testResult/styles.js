@@ -2,7 +2,7 @@ const styles = theme => ({
   "@global": {
     body: {
       backgroundImage:
-        "url(https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/question%20arka%20plan.jpg?raw=true)"
+        "url(https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/test%20results.jpg?raw=true)"
     }
   },
   paper: {
@@ -18,7 +18,7 @@ const styles = theme => ({
     marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(1, 0, 1)
+    margin: theme.spacing(3, 0, 2)
   }
 });
 
