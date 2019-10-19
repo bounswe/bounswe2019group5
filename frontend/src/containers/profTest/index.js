@@ -29,22 +29,22 @@ class ProfTest extends Component {
     questionIndex: 0,
     answers: [],
     isAnswersPrepared: false,
-    isCompleted: false,
-    isHomeRedirected: false
+    isHomeRedirected: false,
   };
 
   componentDidMount() {
-    this.props.get_prof_test(this.props.authentication.token);
+    this.props.get_prof_test(this.props.authentication.token, "english");
     this.state.isAnswersPrepared = false;
   }
 
   componentDidUpdate() {
     if (this.props.test.profTest && !this.state.isAnswersPrepared) {
-      const answers = new Array(this.props.test.profTest.nuOfQuestions);
+      const answers = new Array(this.props.test.profTest.questions.length);
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.test.profTest.testQuestions[
+        answers[i] = this.props.test.profTest.questions[
           i
-        ].questionOptions[0].optionName;
+        ].question_options[0].text;
+      console.log("YENI"+answers);
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -71,8 +71,6 @@ class ProfTest extends Component {
     }
 
     if (this.state.isHomeRedirected) {
-      //console.log(this.props);
-      //console.log(this.state);
       return (
         <Redirect
           to={{
@@ -87,8 +85,10 @@ class ProfTest extends Component {
     }
 
     if (profTest) {
-      const question = profTest.testQuestions[this.state.questionIndex];
       const questionIndex = this.state.questionIndex;
+      const question = profTest.questions[questionIndex];
+
+      console.log("SELAMEDDIN "+questionIndex+" "+this.state.answers[questionIndex]);
       return (
         <Container
           component="main"
@@ -100,22 +100,22 @@ class ProfTest extends Component {
           <Grid item component={Paper} square>
             <div className={classes.paper}>
               <Typography component="h1" variant="h5">
-                {question.questionText}
+                {question.text}
               </Typography>
 
               <Question
-                questionOptions={question.questionOptions}
-                selectedOption={this.state.answers[this.state.questionIndex]}
+                questionOptions={question.question_options}
+                selectedOption={this.state.answers[questionIndex]}
                 questionAnswerStatus={
                   this.props.test.testResult
                     ? this.props.test.testResult.statusOfAnswers[
-                        this.state.questionIndex
+                        questionIndex
                       ]
                     : null
                 }
                 onChange={newAnswer => {
                   const newAnswers = _.cloneDeep(this.state.answers);
-                  newAnswers[this.state.questionIndex] = newAnswer;
+                  newAnswers[questionIndex] = newAnswer;
                   this.setState({ answers: newAnswers });
                 }}
               />
@@ -142,16 +142,12 @@ class ProfTest extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={() => {
-                  this.props.get_test_result(
-                    this.props.authentication.token,
-                    profTest.testId,
-                    this.state.answers
-                  );
+                onClick={() =>
                   this.setState({
-                    isCompleted: true
-                  });
-                }}
+                    questionIndex:
+                      questionIndex < profTest.questions.length-1 ? questionIndex + 1 : questionIndex
+                  })
+                }
               >
                 NEXT
               </Button>
@@ -164,7 +160,7 @@ class ProfTest extends Component {
                   onClick={() =>
                     this.props.get_test_result(
                       this.props.authentication.token,
-                      profTest.testId,
+                      profTest.id,
                       this.state.answers
                     )
                   }
@@ -173,7 +169,7 @@ class ProfTest extends Component {
                 </Button>
               </Grid>
 
-              {this.props.test.isCompleted && (
+              {this.props.test.isFinished && (
                 <Grid container>
                   <Button
                     variant="contained"
@@ -189,90 +185,6 @@ class ProfTest extends Component {
           </Grid>
         </Container>
       );
-
-      /*
-      const question = profTest.testQuestions[this.state.questionIndex];
-      const questionIndex = this.state.questionIndex;
-      return (
-        <div className="TestBox">
-          <div>
-            <h1>{profTest.testName}</h1>
-          </div>
-          <div className="QuestionBox">
-            <h2>{question.questionName}</h2>
-            <p className="QuestionBox_content">{question.questionText}</p>
-          </div>
-
-          <Question
-            questionOptions={question.questionOptions}
-            selectedOption={this.state.answers[this.state.questionIndex]}
-            questionAnswerStatus={
-              this.props.test.testResult
-                ? this.props.test.testResult.statusOfAnswers[
-                    this.state.questionIndex
-                  ]
-                : null
-            }
-            onChange={newAnswer => {
-              const newAnswers = _.cloneDeep(this.state.answers);
-              newAnswers[this.state.questionIndex] = newAnswer;
-              this.setState({ answers: newAnswers });
-            }}
-          />
-          <div>
-            <button
-              className="Button"
-              onClick={() =>
-                this.setState({
-                  questionIndex:
-                    questionIndex > 0 ? questionIndex - 1 : questionIndex
-                })
-              }
-            >
-              PREV
-            </button>
-            <button
-              className="Button"
-              onClick={() =>
-                this.setState({
-                  questionIndex:
-                    questionIndex < profTest.nuOfQuestions - 1
-                      ? questionIndex + 1
-                      : questionIndex
-                })
-              }
-            >
-              NEXT
-            </button>
-          </div>
-          <div>
-            <button
-              className="Button_complete"
-              onClick={() =>
-                this.props.get_test_result(
-                  this.props.authentication.token,
-                  profTest.testId,
-                  this.state.answers
-                )
-              }
-            >
-              Complete the Test!
-            </button>
-          </div>
-          {this.props.test.isFinished && (
-            <div>
-              <button
-                className="Button_complete"
-                onClick={this.handleHomeRedirection}
-              >
-                Congratulations, let's go to see the test results!
-              </button>
-            </div>
-          )}
-        </div>
-        
-      );
-      */
     }
     return <div />;
   }
