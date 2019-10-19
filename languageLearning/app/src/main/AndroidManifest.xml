@@ -11,10 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BridgeActivity">
-
-        </activity>
-        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".BridgeActivity"></activity>
+        <activity android:name=".ProfilePage"></activity>
+        <activity android:name=".MainMenuActivity"></activity>
         <activity android:name=".ProfResultActivity" />
         <activity
             android:name=".ProfExamActivity"
