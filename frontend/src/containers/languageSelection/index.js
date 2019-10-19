@@ -29,7 +29,16 @@ class LanguageSelection extends Component {
 
     render() {
         const { classes } = this.props;
-        if (this.state.isLanguageSelected) {
+        if (this.props.authentication.token == null) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: "/home"
+                    }}
+                />
+            );
+        }
+        else if (this.state.isLanguageSelected) {
             return (
                 <Redirect
                     to={{
