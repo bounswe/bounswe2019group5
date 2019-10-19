@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textColor="#0721f1"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/choose"
+        android:layout_width="304dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:focusable="auto"
+        android:selectAllOnFocus="true"
+        android:shadowColor="#00DB2D2D"
+        android:text="Choose a language for proficiency exam"
+
+        android:textColor="#673AB7"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/turkishButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/choose"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:background="#33ff74"
+        android:onClick="onClickTurkish"
+        android:text="Turkish"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/englishButton"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+
+        android:layout_below="@id/turkishButton"
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:background="#f6ff33"
+        android:onClick="onClickEnglish"
+        android:text="English"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/germanButton"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+
+        android:layout_below="@id/englishButton"
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:background="#ff33ce"
+
+        android:onClick="onClickGerman"
+        android:text="German"
+        android:textSize="25sp" />
+
+
+
+</RelativeLayout>
