@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Don't have an acoount? Register here"
+        android:text="Don't have an account? Register here"
         android:textColor="#3F51B5"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
