@@ -7,6 +7,7 @@ import About from "../about";
 import Login from "../login";
 import SignUp from "../signup";
 import ProfTest from "../profTest";
+
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -20,6 +21,9 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
+
+import GuestLogin from "../guestLogin";
+
 import { logout } from "../../redux/action-creators/authentication";
 
 class App extends Component {
@@ -78,7 +82,11 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/prof-test" component={ProfTest} />
+
           <Route exact path="/test-result" component={TestResult} />
+
+          <Route exact path="/guest-login" component={GuestLogin} />
+          <Route exact path="/home" component={Home} />
         </main>
       </div>
     );
