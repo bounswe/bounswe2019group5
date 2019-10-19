@@ -8,12 +8,12 @@ import {
 import {get_prof_test as get_prof_test_api} from '../../api/test';
 import {get_test_result as get_test_result_api} from '../../api/test';
 
-export const get_prof_test = (token) => {
+export const get_prof_test = (token, selectedLanguage) => {
 	return dispatch => {
 		dispatch({
 			type : PROF_TEST_REQUESTED
 		});
-		get_prof_test_api(token)
+		get_prof_test_api(token, selectedLanguage)
 			.then(response => {
 				dispatch({
                     type: PROF_TEST,

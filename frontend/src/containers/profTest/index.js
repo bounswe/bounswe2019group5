@@ -33,7 +33,7 @@ class ProfTest extends Component {
   };
 
   componentDidMount() {
-    this.props.get_prof_test(this.props.authentication.token, "english");
+    this.props.get_prof_test(this.props.authentication.token, this.props.userInfo.selectedLanguage);
     this.state.isAnswersPrepared = false;
   }
 
@@ -190,16 +190,17 @@ class ProfTest extends Component {
   }
 }
 
-const mapStateToProps = ({ test, authentication }) => ({
+const mapStateToProps = ({ test, authentication, userInfo }) => ({
   test,
-  authentication
+  authentication,
+  userInfo,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       get_prof_test,
-      get_test_result
+      get_test_result,
     },
     dispatch
   );

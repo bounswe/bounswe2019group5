@@ -4,12 +4,12 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const get_prof_test = async (token = null, language = 'en') => {
+export const get_prof_test = async (token, language) => {
 
   await timeout(1200);
   return {
       id: 1247828,
-      language: "english",
+      language: "engselamelish",
       questions: [
         {
             id: 1,
