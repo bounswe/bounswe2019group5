@@ -24,7 +24,7 @@ export class Question extends Component {
   }
   findColorOfText = option => {
     if (
-      option.optionName != this.props.selectedOption ||
+      option.text != this.props.selectedOption ||
       this.props.questionAnswerStatus == undefined
     )
       return { color: "black" };
@@ -32,35 +32,36 @@ export class Question extends Component {
     else return { color: "red" };
   };
 
+  findColorOfRadioButton = option => {
+    if (
+      option.text != this.props.selectedOption ||
+      this.props.questionAnswerStatus == undefined
+    )
+      return { color: "orange" };
+    else if (this.props.questionAnswerStatus) return { color: "green" };
+    else return { color: "red" };
+  };
+
   render() {
     const { classes } = this.props;
+    console.log(this.props.selectedOption);
     return (
       <div>
         <FormControl component="fieldset" className={classes.formControl}>
+        <RadioGroup>
           {this.props.questionOptions.map(option => (
-            <div key={option.optionName}>
-              <FormLabel
-                component="legend"
-                style={this.findColorOfText(option)}
-              >
-                <RadioGroup
-                  name={option.optionName}
-                  value={option.optionName}
-                  checked={this.props.selectedOption == option.optionName}
-                  onChange={() => {
-                    if (this.props.questionAnswerStatus == undefined)
-                      this.props.onChange(option.optionName);
-                  }}
-                >
-                  <FormControlLabel
-                    value={option.optionName}
-                    control={<Radio />}
-                    label={option.optionText}
-                  />
-                </RadioGroup>
-              </FormLabel>
-            </div>
+            <FormControlLabel
+              control={<Radio style={this.findColorOfRadioButton(option)} />}
+              label={option.text}
+              checked={this.props.selectedOption === option.text}
+              onChange={() => {
+                if (this.props.questionAnswerStatus == undefined)
+                  this.props.onChange(option.text);
+              }}
+              style={this.findColorOfText(option)}
+            />
           ))}
+        </RadioGroup>
         </FormControl>
       </div>
     );
