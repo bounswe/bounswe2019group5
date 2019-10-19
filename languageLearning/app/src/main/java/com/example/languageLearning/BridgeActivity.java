@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 public class BridgeActivity extends AppCompatActivity {
 
-    Intent i = new Intent(this, ProfExamActivity.class);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class BridgeActivity extends AppCompatActivity {
 
     public void onClickTurkish(View view){
 
+        Intent i = new Intent(this, ProfExamActivity.class);
         Button b = (Button) view;
         String buttonText = b.getText().toString();
         i.putExtra("languageChoice", buttonText);
@@ -39,6 +40,7 @@ public class BridgeActivity extends AppCompatActivity {
 
     public void onClickEnglish(View view){
 
+        Intent i = new Intent(this, ProfExamActivity.class);
         Button b = (Button) view;
         String buttonText = b.getText().toString();
         i.putExtra("languageChoice", buttonText);
@@ -48,6 +50,7 @@ public class BridgeActivity extends AppCompatActivity {
 
     public void onClickGerman(View view){
 
+        Intent i = new Intent(this, ProfExamActivity.class);
         Button b = (Button) view;
         String buttonText = b.getText().toString();
         i.putExtra("languageChoice", buttonText);
