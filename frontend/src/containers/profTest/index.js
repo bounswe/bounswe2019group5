@@ -8,12 +8,28 @@ import {
   get_test_result
 } from "../../redux/action-creators/test";
 import _ from "lodash";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import { login } from "../../redux/action-creators/authentication";
+import styles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
 
 class ProfTest extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     questionIndex: 0,
     answers: [],
     isAnswersPrepared: false,
+    isCompleted: false,
     isHomeRedirected: false
   };
 
@@ -44,6 +60,7 @@ class ProfTest extends Component {
 
   render() {
     const profTest = this.props.test.profTest;
+    const { classes } = this.props;
 
     if (this.props.test.loading) {
       return (
@@ -59,7 +76,7 @@ class ProfTest extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: "/test-result",
             state: {
               token: this.props.token,
               test: this.props.test
@@ -73,13 +90,117 @@ class ProfTest extends Component {
       const question = profTest.testQuestions[this.state.questionIndex];
       const questionIndex = this.state.questionIndex;
       return (
-        <div>
+        <Container
+          component="main"
+          maxWidth="md"
+          justify="center"
+          alignItems="center"
+        >
+          <CssBaseline />
+          <Grid item component={Paper} square>
+            <div className={classes.paper}>
+              <Typography component="h1" variant="h5">
+                {question.questionText}
+              </Typography>
+
+              <Question
+                questionOptions={question.questionOptions}
+                selectedOption={this.state.answers[this.state.questionIndex]}
+                questionAnswerStatus={
+                  this.props.test.testResult
+                    ? this.props.test.testResult.statusOfAnswers[
+                        this.state.questionIndex
+                      ]
+                    : null
+                }
+                onChange={newAnswer => {
+                  const newAnswers = _.cloneDeep(this.state.answers);
+                  newAnswers[this.state.questionIndex] = newAnswer;
+                  this.setState({ answers: newAnswers });
+                }}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() =>
+                  this.setState({
+                    questionIndex:
+                      questionIndex > 0 ? questionIndex - 1 : questionIndex
+                  })
+                }
+              >
+                PREV
+              </Button>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => {
+                  this.props.get_test_result(
+                    this.props.authentication.token,
+                    profTest.testId,
+                    this.state.answers
+                  );
+                  this.setState({
+                    isCompleted: true
+                  });
+                }}
+              >
+                NEXT
+              </Button>
+
+              <Grid container>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="info"
+                  onClick={() =>
+                    this.props.get_test_result(
+                      this.props.authentication.token,
+                      profTest.testId,
+                      this.state.answers
+                    )
+                  }
+                >
+                  Complete the Test!
+                </Button>
+              </Grid>
+
+              {this.props.test.isCompleted && (
+                <Grid container>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="info"
+                    onClick={this.handleHomeRedirection}
+                  >
+                    Congratulations, let's go to see the test results!
+                  </Button>
+                </Grid>
+              )}
+            </div>
+          </Grid>
+        </Container>
+      );
+
+      /*
+      const question = profTest.testQuestions[this.state.questionIndex];
+      const questionIndex = this.state.questionIndex;
+      return (
+        <div className="TestBox">
           <div>
             <h1>{profTest.testName}</h1>
           </div>
-          <div>
+          <div className="QuestionBox">
             <h2>{question.questionName}</h2>
-            <p>{question.questionText}</p>
+            <p className="QuestionBox_content">{question.questionText}</p>
           </div>
 
           <Question
@@ -100,6 +221,7 @@ class ProfTest extends Component {
           />
           <div>
             <button
+              className="Button"
               onClick={() =>
                 this.setState({
                   questionIndex:
@@ -110,6 +232,7 @@ class ProfTest extends Component {
               PREV
             </button>
             <button
+              className="Button"
               onClick={() =>
                 this.setState({
                   questionIndex:
@@ -124,6 +247,7 @@ class ProfTest extends Component {
           </div>
           <div>
             <button
+              className="Button_complete"
               onClick={() =>
                 this.props.get_test_result(
                   this.props.authentication.token,
@@ -135,16 +259,20 @@ class ProfTest extends Component {
               Complete the Test!
             </button>
           </div>
-          {
-            this.props.test.isFinished &&
-                    <div>
-                        <button onClick={this.handleHomeRedirection}>
-                        Congratulations, let's go to home page!
-                        </button>
-                    </div>
-          }
+          {this.props.test.isFinished && (
+            <div>
+              <button
+                className="Button_complete"
+                onClick={this.handleHomeRedirection}
+              >
+                Congratulations, let's go to see the test results!
+              </button>
+            </div>
+          )}
         </div>
+        
       );
+      */
     }
     return <div />;
   }
@@ -164,7 +292,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfTest);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ProfTest)
+);
