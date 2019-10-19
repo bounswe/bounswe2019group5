@@ -59,6 +59,18 @@ class ProfTest extends Component {
   };
 
   render() {
+
+    if (this.props.authentication.token==null)
+    {
+      return (
+        <Redirect
+            to={{
+              pathname: "/home",
+            }}
+          />
+        );
+    }
+
     const profTest = this.props.test.profTest;
     const { classes } = this.props;
 
