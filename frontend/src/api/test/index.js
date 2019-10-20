@@ -6,131 +6,28 @@ function timeout(ms) {
 
 export const get_prof_test = async (token, language) => {
 
-  await timeout(1200);
-  return {
-      id: 1247828,
-      language: "engselamelish",
-      questions: [
-        {
-            id: 1,
-            text: language+" This is the first question. What is the answer?",
-            question_options: [
-                {
-                  text: "This is the first",
-                },
-                {
-                  text: "This is the second",
-                },
-                {
-                  text: "This is the third",
-                },
-                {
-                  text: "This is the fourth",
-                },
-            ],
-        },
-
-        {
-          id: 2,
-          text: language+" This is the second question. What is the answer?",
-          question_options: [
-              {
-                text: "This is the first",
-              },
-              {
-                text: "This is the second",
-              },
-              {
-                text: "This is the third",
-              },
-              {
-                text: "This is the fourth",
-              },
-          ],
-        },
-
-        {
-          id: 3,
-          text: language+" This is the third question. What is the answer?",
-          question_options: [
-              {
-                text: "This is the first",
-              },
-              {
-                text: "This is the second",
-              },
-              {
-                text: "This is the third",
-              },
-              {
-                text: "This is the fourth",
-              },
-          ],
-        },
-
-        {
-          id: 4,
-          text: language+" This is the fourth question. What is the answer?",
-          question_options: [
-              {
-                text: "This is the first",
-              },
-              {
-                text: "This is the second",
-              },
-              {
-                text: "This is the third",
-              },
-              {
-                text: "This is the fourth",
-              },
-          ],
-        },
-
-        {
-          id: 5,
-          text: language+" This is the fifth question. What is the answer?",
-          question_options: [
-              {
-                text: "This is the first",
-              },
-              {
-                text: "This is the second",
-              },
-              {
-                text: "This is the fifth",
-              },
-              {
-                text: "This is the fourth",
-              },
-          ],
-        },
-      ],
-    };
-
-  const data = await axios
+  return await axios
     .get(parameters.apiUrl+'/user/proficiency',
       {
-        language,
-      },
-      {
-        headers: {'Content-Type':'application/json'},
-        Authorization: 'Token '+token,
+        params: {
+          language: 'english',
+        },
+        headers: {
+          'Content-Type':'application/json',
+          "Authorization": "Token 4024b84ebf75573413c27b1eab3735525aca827a",
+        },
         timeout: 3000,
       }
     )
     .then(response => response.data)
     .catch(err => 
       {
-        console.log(err.message);
         return {
-          token: null,
           message: err.response? err.response.data.message : 'Connection Error!',
         };
       }
     );
-
-  console.log("PROFTESTSORGU\n"+data);
+    
 };
 
 export const get_test_result = async (token, testId, answers) => {
