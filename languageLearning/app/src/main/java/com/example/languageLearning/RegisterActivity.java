@@ -105,13 +105,22 @@ public class RegisterActivity extends AppCompatActivity {
                     String token = response.toString();
                     //Toast.makeText(getApplicationContext(), objres.toString(), Toast.LENGTH_LONG).show();
                     app.setToken(token); //My Application Token Setter
+                    app.setUsername(username.getText().toString());
                     Log.d("Token Set to My App :",app.getToken());
+
+                Intent intent = new Intent(RegisterActivity.this, BridgeActivity.class);
+                startActivity(intent);
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
+                        + "\nStatus Code " + error.networkResponse.statusCode
+                        + "\nCause " + error.getCause()
+                        + "\nnetworkResponse " + error.networkResponse.data.toString()
+                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

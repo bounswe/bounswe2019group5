@@ -14,7 +14,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = "TEST";
     private MyApplication app;
     TextView welcomeMessage;
-    ImageButton profileButton, logoutButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton;
     Dialog popup;
 
     @Override
@@ -26,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
         welcomeMessage = findViewById(R.id.welcomeMessage);
         profileButton = findViewById(R.id.profileButton);
         logoutButton = findViewById(R.id.logoutButton);
+        changeLanguageButton = findViewById(R.id.changeLanguageButton);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,9 +43,15 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        Bundle b = getIntent().getExtras();
-        String username = b.getString("USERNAME");
-        welcomeMessage.setText("Hello " + username + "!");
+        changeLanguageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, BridgeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        welcomeMessage.setText("Hello " + app.getUsername() + "!");
 
     }
 
@@ -57,6 +64,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 app.setToken("");
+                app.setUsername("");
                 Intent intent = new Intent(MainMenuActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

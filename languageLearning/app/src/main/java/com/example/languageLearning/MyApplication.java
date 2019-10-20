@@ -21,6 +21,15 @@ import java.util.Map;
 public class MyApplication extends Application {
     private String token;
     private RequestQueue requestQueue;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public void onCreate() {
