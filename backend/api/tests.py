@@ -166,3 +166,7 @@ class RegisterViewTests(APITestCase):
 class GuestViewTests(APITestCase):
     def test_is_token_valid(self):
         pass
+
+
+class UserModelTests(APITestCase):
+    def 
