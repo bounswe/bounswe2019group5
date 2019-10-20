@@ -26,6 +26,7 @@ class Question {
     int id; // As returned by the backend
     String text;
     String options[];
+    String answer;
 }
 
 public class ProfExamActivity extends AppCompatActivity {
@@ -99,14 +100,14 @@ public class ProfExamActivity extends AppCompatActivity {
         for (int i=0; i<questions.length; i++) {
             JSONObject jquestion = (JSONObject) jquestions.get(i);
             JSONArray joptions = jquestion.getJSONArray("question_options");
-            String text = jquestion.getString("text");
             String options[] = new String[4];
             for (int j=0; j<4; j++)
                 options[j] = ((JSONObject)(joptions.get(j))).getString("text");
             questions[i] = new Question();
-            questions[i].text = text;
+            questions[i].text = jquestion.getString("text");
             questions[i].options = options;
             questions[i].id = jquestion.getInt("id");
+            questions[i].answer = jquestion.getString("answer");
         }
     }
 
@@ -157,7 +158,12 @@ public class ProfExamActivity extends AppCompatActivity {
     }
 
     private void finishTest() throws JSONException {
-        showResults(1, 0); // The get_exam_result API wasn't ready at the time I wrote the code below. It can be turned on once the API becomes functional. No guarantees that it works.
+        int correctCount = 0;
+        for (int i=0; i<questions.length; i++) {
+            if (chosenAnswers[i].equals(questions[i].answer))
+                correctCount += 1;
+        }
+        showResults(correctCount, questions.length - correctCount); // The get_exam_result API wasn't ready at the time I wrote the code below. It can be turned on once the API becomes functional. No guarantees that it works.
         /*final String path = "user/get_exam_result";
         JSONObject data = new JSONObject();
         data.put("id", examId);
