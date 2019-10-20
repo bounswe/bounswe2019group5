@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Question, QuestionOption, ProficiencyExam
+from .models import *
 
 
 class QuestionOptionSerializer(serializers.ModelSerializer):
@@ -22,3 +22,23 @@ class ProficiencyExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProficiencyExam
         fields = ('id', 'language', 'questions')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id','commentor','comment','rate')
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ('language')
+
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    userComments = CommentSerializer(many=True)
+    userAttendedLangs = LanguageSerializer(many=True)
+    class Meta:
+        model = User
+        fields = ('id','username','first_name','last_name','nativeLanguage')

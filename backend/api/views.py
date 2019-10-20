@@ -2,20 +2,30 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from django.core import serializers
+from rest_framework.exceptions import ValidationError
 
 from rest_framework import status
 import numpy as np
 import random
 
-from .models import User, Question, ProficiencyExam, QuestionOption
-from .serializers import ProficiencyExamSerializer, QuestionOptionSerializer, QuestionSerializer
+from .models import *
+from .serializers import *
 
 
-class ProfileView(generics.CreateAPIView):
+class ProfileView(APIView):
 
-    def post(self, request):
-        pass
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            raise ValidationError("User is not authorized")
+        id=request.user.id
+        basic_user=User.objects.filter(id=id)
+        if not basic_user:
+            raise ValidationError("User does not exist")
+        basic_user=basic_user.first()
+        serializer=UserProfileSerializer(basic_user)
+        return Response(serializer.data, status=200)
 
 
 class ProficiencyView(generics.CreateAPIView):
