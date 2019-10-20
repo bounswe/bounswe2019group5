@@ -30,10 +30,10 @@ class ProficiencyView(generics.CreateAPIView):
         # if not request.user.is_authenticated:
         # return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if 'language' not in request.data:
+        if 'language' not in request.GET:
             return Response({'message': 'language field must be exist'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            prof_test = get_prof_test(request.data['language'])
+            prof_test = get_prof_test(request.GET['language'])
 
             if not prof_test:
                 return Response(
