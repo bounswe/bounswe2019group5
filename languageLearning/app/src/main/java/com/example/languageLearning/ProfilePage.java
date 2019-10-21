@@ -26,9 +26,9 @@ public class ProfilePage extends AppCompatActivity {
         JSONArray langArray = new JSONArray();
 
         try {
-            json.put("userName", "destroyer");
-            json.put("firstName", "Tony");
-            json.put("lastName", "Montana");
+            json.put("userName", "halil02");
+            json.put("firstName", "Halil");
+            json.put("lastName", "Yılmaz");
             json.put("userNativeLang", "Turkish");
             json.put("userRateAverage", 4.9);
 
