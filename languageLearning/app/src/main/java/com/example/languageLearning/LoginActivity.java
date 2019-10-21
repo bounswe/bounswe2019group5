@@ -26,8 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private final String TAG = "TEST";
 
-    String token = "";
-
     TextView registerText;
 
     Button loginButton;
@@ -110,16 +108,21 @@ public class LoginActivity extends AppCompatActivity {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, loginUrl, json, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                token = response.toString();
+                String token;
+                try {
+                    token = response.getString("token");
+                }
+                catch (JSONException e) {
+                    Log.e(TAG, "No token from the server: " + response.toString());
+                    return ;
+                }
                 Log.d(TAG, "Returned Token: " + token);
 
-                if(!token.isEmpty()) {
-                    app.setToken(token);
-                    app.setUsername(username);
+                app.setToken(token);
+                app.setUsername(username);
 
-                    Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                startActivity(intent);
 
             }
         }, new Response.ErrorListener() {

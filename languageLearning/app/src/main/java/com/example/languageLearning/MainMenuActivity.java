@@ -63,8 +63,8 @@ public class MainMenuActivity extends AppCompatActivity {
         logoutYesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                app.setToken("");
-                app.setUsername("");
+                app.setToken(null);
+                app.setUsername(null);
                 Intent intent = new Intent(MainMenuActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

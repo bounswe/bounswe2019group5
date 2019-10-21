@@ -32,6 +32,8 @@ import java.io.UnsupportedEncodingException;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private final String TAG = this.getClass().getName();
+
     private MyApplication app;
     EditText name, surname, email, username, password;
     Button submit_button;
@@ -101,12 +103,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                    JSONObject objres = response;
-                    String token = response.toString();
-                    //Toast.makeText(getApplicationContext(), objres.toString(), Toast.LENGTH_LONG).show();
-                    app.setToken(token); //My Application Token Setter
-                    app.setUsername(username.getText().toString());
-                    Log.d("Token Set to My App :",app.getToken());
+                String token;
+                try {
+                    token = response.getString("token");
+                }
+                catch (JSONException e) {
+                    Log.e(TAG, "No token from the server: " + response.toString());
+                    return ;
+                }
+                //Toast.makeText(getApplicationContext(), objres.toString(), Toast.LENGTH_LONG).show();
+                app.setToken(token); //My Application Token Setter
+                app.setUsername(username.getText().toString());
+                Log.d("Token Set to My App :",app.getToken());
 
                 Intent intent = new Intent(RegisterActivity.this, BridgeActivity.class);
                 startActivity(intent);
