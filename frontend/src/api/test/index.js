@@ -10,7 +10,7 @@ export const get_prof_test = async (token, language) => {
     .get(parameters.apiUrl+'/user/proficiency',
       {
         params: {
-          language: 'english',
+          language,
         },
         headers: {
           'Content-Type':'application/json',
