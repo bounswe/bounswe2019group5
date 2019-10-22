@@ -167,23 +167,25 @@ class ProfTest extends Component {
                 >
                   NEXT
                 </Button>
+                
+                {!this.props.test.isFinished &&
+                  <Button
+                    variant="success"
+                    fullWidth
+                    className={classes.submit}
+                    onClick={() =>
+                      this.props.get_test_result(
+                        this.props.authentication.token,
+                        profTest,
+                        this.state.answers
+                      )
+                    }
+                  >
+                    Complete the Test!
+                  </Button>
+                }
 
-                <Button
-                  variant="success"
-                  fullWidth
-                  className={classes.submit}
-                  onClick={() =>
-                    this.props.get_test_result(
-                      this.props.authentication.token,
-                      profTest,
-                      this.state.answers
-                    )
-                  }
-                >
-                  Complete the Test!
-                </Button>
-
-                {this.props.test.isFinished && (
+                {this.props.test.isFinished &&
                   <Button
                     variant="warning"
                     fullWidth
@@ -192,7 +194,7 @@ class ProfTest extends Component {
                   >
                     Congratulations, let's go to see the test results!
                   </Button>
-                )}
+                }
               </div>
             </div>
           </Grid>

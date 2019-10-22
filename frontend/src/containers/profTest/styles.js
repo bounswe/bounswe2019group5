@@ -10,7 +10,7 @@ const styles = theme => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "left",
     background: theme.palette.common.white
   },
   form: {
