@@ -27,16 +27,23 @@ export const get_prof_test = async (token, language) => {
         };
       }
     );
-    
+
 };
 
-export const get_test_result = async (token, testId, answers) => {
+export const get_test_result = async (token, test, answers) => {
   await timeout(500);
-  const trueOptions = ['This is the first', 'This is the second', 'This is the third', 'This is the fourth', 'This is the fifth',];
+  const trueOptions = [];
+  const statusOfAnswers = [];
+  
+  test.questions.map(question => {
+    trueOptions.push(question.answer);
+    statusOfAnswers.push(false);
+  });
+
   const result = {
     nuOfTrueAnswers: 0,
     nuOfFalseAnswers: 0,
-    statusOfAnswers: [false, false, false, false, false]
+    statusOfAnswers
   };
   console.log("GETTESTRESULT"+answers);
   for (let i = 0; i < answers.length; i++) {

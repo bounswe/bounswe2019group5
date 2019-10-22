@@ -175,7 +175,7 @@ class ProfTest extends Component {
                   onClick={() =>
                     this.props.get_test_result(
                       this.props.authentication.token,
-                      profTest.id,
+                      profTest,
                       this.state.answers
                     )
                   }
