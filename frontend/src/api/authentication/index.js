@@ -1,41 +1,74 @@
+import parameters from '../parameters'
+import axios from 'axios';
+
 function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const login = async (
-    usernameOrEmail, 
-    password
+export const login = async (usernameOrEmail, password) => {
+
+  const data = await axios
+    .post(parameters.apiUrl+'/user/login',
+      {
+        email_username: usernameOrEmail,
+        password: password,
+      },
+      {
+        headers: {'Content-Type':'application/json'},
+        timeout: 3000,
+      }
+    )
+    .then(response => response.data)
+    .catch(err => 
+      {
+        console.log(err.message);
+        return {
+          token: null,
+          message: err.response? err.response.data.message : 'Connection Error!',
+        };
+      }
+    );
+
+  return data;
+};
+
+export const signup = async (
+  name,
+  surname,
+  email,
+  username,
+  password,
+  native_language
 ) => {
-	await timeout(3000);
-	if (usernameOrEmail==="user" && password==="12345678") {
-		return {token: "this is a token", status: 0};
-	}
-	else {
-		return {token: null, status: -1};
-	}
+
+  const data = await axios
+    .post(parameters.apiUrl+'/user/register',
+      {
+        name,
+        surname,
+        email,
+        username,
+        password,
+        native_language,
+      },
+      {
+        headers: {'Content-Type':'application/json'},
+        timeout: 3000,
+      }
+    )
+    .then(response => response.data)
+    .catch( err => 
+      {
+        return {
+          token: null,
+          message: err.response? err.response.data.message : 'Connection Error!',
+        };
+      }
+    );
+
+  return data;
+};
+
+export const logout = async () => {
+  await timeout(500);
 }
-
-export const signin = async (
-    name,
-    surname,
-    email,
-    user_name,
-    password,
-    native_language
-  ) => {
-
-    await timeout(3000);
-    if (
-      name === "Mert" &&
-      surname === "Maysallar" &&
-      email === "mmaysallar@gmail.com" &&
-      user_name === "MM" &&
-      password === "12345678" &&
-      native_language === "Turkish"
-    ) {
-      return { token: "this is a signed user token", status: 0 };
-    } else {
-      return { token: null, status: -1 };
-    }
-    
-  };
