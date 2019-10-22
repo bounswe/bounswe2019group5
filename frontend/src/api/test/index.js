@@ -16,7 +16,7 @@ export const get_prof_test = async (token, language) => {
           'Content-Type':'application/json',
           "Authorization": "Token 4024b84ebf75573413c27b1eab3735525aca827a",
         },
-        timeout: 3000,
+        timeout: 10000,
       }
     )
     .then(response => response.data)

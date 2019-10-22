@@ -15,7 +15,7 @@ export const login = async (usernameOrEmail, password) => {
       },
       {
         headers: {'Content-Type':'application/json'},
-        timeout: 3000,
+        timeout: 10000,
       }
     )
     .then(response => response.data)
@@ -53,7 +53,7 @@ export const signup = async (
       },
       {
         headers: {'Content-Type':'application/json'},
-        timeout: 3000,
+        timeout: 10000,
       }
     )
     .then(response => response.data)
