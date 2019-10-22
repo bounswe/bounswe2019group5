@@ -50,11 +50,13 @@ class LanguageSelection extends Component {
         else {
             return (
                 <>
-                    <Grid><Typography component="h1" variant="h2" align='center'>
+                    <Grid><Typography component="h1" variant="h3" align='center'>
                         Select a language to take its proficiency test.
               </Typography>
                     </Grid>
-
+                    <Grid><Typography component="h1" variant="button" align='center'>
+.              </Typography>
+                    </Grid>
                     <Grid container spacing={3} component="main" className={classes.root}>
                         <CssBaseline />
                         <LanguageGrid handleClick={() => this.handleSubmit("turkish")} avatarBg={"https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/turkish-icon-.png?raw=true"} language={"Turkish"} />

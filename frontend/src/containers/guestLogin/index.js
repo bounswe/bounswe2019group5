@@ -9,6 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Form } from 'react-bootstrap';
 import orange from '@material-ui/core/colors/orange';
+import { Redirect } from "react-router";
+import { login } from "../../redux/action-creators/authentication";
+import { connect } from "react-redux";
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,13 +38,23 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-export default function GuestLogin() {
+function GuestLogin(props) {
     const classes = useStyles();
 
     const [state, setState] = useState( {
         nickname: "def-nickname",
         language: "",
     } );
+
+    if (props.authentication.token != null) {
+        return (
+            <Redirect
+                to={{
+                    pathname: "/home"
+                }}
+            />
+        );
+    }
 
     return (<Container component="main" maxWidth="xs" >
         <CssBaseline />
@@ -94,3 +107,9 @@ export default function GuestLogin() {
     </Container>
     )
 }
+const mapStateToProps = ({  authentication }) => ({
+    authentication
+  });
+  export default connect(
+    mapStateToProps,
+  )(GuestLogin);
