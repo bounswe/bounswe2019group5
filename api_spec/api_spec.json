@@ -93,7 +93,7 @@
         statusOfAnswers: ['true', 'false', 'true', 'true', 'false'],
     },
 
-    "/user/profile": // GET REQUEST RESPONSE
+    "/user/profile": // INCOMPLETE!!!!!!!!!!!!!!!!!!!!!!!!!!!
 {
     "username":"kagan43",
     "firstName":"kagan",
