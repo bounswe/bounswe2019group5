@@ -7,6 +7,7 @@ import About from "../about";
 import Login from "../login";
 import SignUp from "../signup";
 import ProfTest from "../profTest";
+import VocabularyTest from "../exercises/vocabularyTest";
 
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -86,6 +87,7 @@ class App extends Component {
           <Route exact path="/test-result" component={TestResult} />
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/vocabulary-test" component={VocabularyTest} />
         </main>
       </div>
     );
