@@ -18,3 +18,6 @@ export const TEST_RESULT_REQUESTED = "test/TEST_RESULT_REQUESTED";
 export const TEST_RESULT = "test/TEST_RESULT";
 
 export const SET_SELECTED_LANGUAGE = "user_info/SET_SELECTED_LANGUAGE";
+
+export const VOCABULARY_TEST_REQUESTED = "exercises/VOCABULARY_TEST_REQUESTED";
+export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
