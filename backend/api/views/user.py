@@ -8,7 +8,7 @@ from ..models import User
 
 
 class RegisterView(generics.CreateAPIView):
-
+    serializer_class = ProfileSerializer
     def create(self, request):
         req = request.data
 
@@ -37,7 +37,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class LoginView(generics.CreateAPIView):
-
+    serializer_class = ProfileSerializer
     def create(self, request):
         if ('email_username' in request.data) and ('password' in request.data):
             user = User.objects.filter(
@@ -76,7 +76,7 @@ class LoginView(generics.CreateAPIView):
 
 
 class GuestView(generics.CreateAPIView):
-
+    serializer_class = ProfileSerializer
     def create(self, request):
         permission_classes = (IsAuthenticated,)
 
@@ -88,7 +88,7 @@ class GuestView(generics.CreateAPIView):
 
 
 class ProfileView(generics.RetrieveAPIView):
-
+    serializer_class = ProfileSerializer
     def retrieve(self, request):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)

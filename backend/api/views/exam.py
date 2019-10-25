@@ -9,8 +9,9 @@ import random
 
 
 class ProficiencyView(generics.RetrieveAPIView):
+    serializer_class = ProficiencyExamSerializer
 
-    def get(self, request):
+    def retrieve(self, request):
         def get_prof_test(language):
             proficiency_exams = ProficiencyExam.objects.filter(language=language)
             return random.sample(list(proficiency_exams), 1)[0]
