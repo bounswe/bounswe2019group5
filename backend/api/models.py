@@ -7,26 +7,22 @@ languageChoices = [
     ('german', 'german')
 ]
 
-
-class Language(models.Model):
-    language = models.CharField(max_length=20, choices=languageChoices)
-
-    def __str__(self):
-        return self.language
-
-
 class User(AbstractUser):
-    #username
-    #password
-    #first_name
-    #last_name
     email = models.EmailField(unique=True)
     native_lang = models.CharField(max_length=20, choices=languageChoices)
+    rating_average = models.FloatField(default=0,blank=True)
     attended_langs = models.ManyToManyField(Language)
-    rating_average = models.FloatField(default=0)
 
     def __str__(self):
         return self.username
+
+
+
+class Language(models.Model):
+    language = models.CharField(max_length=20, choices=languageChoices)
+    def __str__(self):
+        return self.language
+
 
 
 class Comment(models.Model):

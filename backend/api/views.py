@@ -19,12 +19,12 @@ class ProfileView(APIView):
     def get(self, request):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
-        id = request.user.id
-        basic_user = User.objects.filter(id=id)
-        if not basic_user:
+        username = request.data['username']
+        user = User.objects.filter(username=username)
+        if not user:
             return Response({}, status=status.HTTP_402_UNAUTHORIZED)
-        basic_user = basic_user.first()
-        return Response(ProfileSerializer(basic_user).data, status=status.HTTP_200_OK)
+        user = user.first()
+        return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
 
 
 class ProficiencyView(generics.CreateAPIView):

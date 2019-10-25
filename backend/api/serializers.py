@@ -29,6 +29,11 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('username','comment','rate')
 
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ('language')
+
         
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
