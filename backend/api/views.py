@@ -19,7 +19,7 @@ class ProfileView(generics.RetrieveAPIView):
     def get(self, request):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
-        username = request.data['username']
+        username = request.GET['username']
         user = User.objects.filter(username=username)
         if not user:
             return Response({}, status=status.HTTP_402_UNAUTHORIZED)
