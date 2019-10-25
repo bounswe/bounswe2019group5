@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase, APIClient
 
 from ..models import User, Language, Comment
 
-
+root = ''
 class LoginViewTests(APITestCase):
     def setUp(self):
         data = {
@@ -21,7 +21,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'adaLovelace@email.com',
             'password': 'isa21-ad'
         }
-        response = self.client.post('/user/login', req)
+        response = self.client.post(root + '/login', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -30,7 +30,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'isa21-ad'
         }
-        response = self.client.post('/user/login', req)
+        response = self.client.post(root + '/login', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -39,7 +39,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'david',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post('/user/login', req)
+        response = self.client.post(root + '/login', req)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue('token' not in response.data.keys())
@@ -52,11 +52,11 @@ class LoginViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post('/user/login', deficient_req)
+            response = self.client.post(root + '/login', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
 
-        response = self.client.post('/user/login', {})
+        response = self.client.post(root + '/login', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
 
@@ -65,7 +65,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post('/user/login', req)
+        response = self.client.post(root + '/login', req)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertTrue('token' not in response.data.keys())
 
@@ -80,7 +80,7 @@ class RegisterViewTests(APITestCase):
             "password": "isa21-ad",
             "native_language": "english"
         }
-        response = self.client.post('/user/register', req)
+        response = self.client.post(root + '/register', req)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue('token' in response.data.keys())
 
@@ -96,12 +96,12 @@ class RegisterViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post('/user/register', deficient_req)
+            response = self.client.post(root + '/register', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
             self.assertTrue('message' in response.data.keys())
 
-        response = self.client.post('/user/register', {})
+        response = self.client.post(root + '/register', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
         self.assertTrue('message' in response.data.keys())
@@ -155,12 +155,12 @@ class ProfileViewTests(APITestCase):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get('/user/profile?username=ada21')
+        response = self.client.get(root + '/profile?username=ada21')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_other_profile(self):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get('/user/profile?username=alan1')
+        response = self.client.get(root + '/profile?username=alan1')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
