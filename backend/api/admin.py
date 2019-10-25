@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from api.models.comment import Comment
-from api.models.exam import ProficiencyExam
-from api.models.language import Language
-from api.models.question import QuestionOption, Question
-from api.models.user import User
+from .models import Comment, User, ProficiencyExam, Language, QuestionOption, Question
 
 admin.site.register(User)
 admin.site.register(Question)

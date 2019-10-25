@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from api.models.language import Language
+from .language import Language
 
 languageChoices = [
     ('english', 'english'),

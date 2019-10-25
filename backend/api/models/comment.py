@@ -1,6 +1,7 @@
 from django.db import models
 
-from api.models.user import User
+from .user import User
+
 
 class Comment(models.Model):
     commented_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comments')

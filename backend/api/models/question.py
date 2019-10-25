@@ -1,6 +1,6 @@
 from django.db import models
 
-from api.models.exam import Exam
+from ..models import Exam
 
 
 class Question(models.Model):
