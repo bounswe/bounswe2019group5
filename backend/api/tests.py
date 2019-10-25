@@ -1,6 +1,7 @@
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from .models import User, Question
+from rest_framework.authtoken.models import Token
+from .models import *
 
 """
 class ProficiencyTest(APITestCase):
@@ -166,3 +167,63 @@ class RegisterViewTests(APITestCase):
 class GuestViewTests(APITestCase):
     def test_is_token_valid(self):
         pass
+
+
+class ProfileViewTests(APITestCase):
+    def setUp(self):
+        # 1 lang, 2 users and 1 comment is added in setup
+        data = {
+            'language': 'turkish'
+        }
+        lang = Language(**data)
+        lang.save()
+
+        data = {
+            'username': 'ada21',
+            'first_name': 'Ada',
+            'last_name': 'Lovelace',
+            'email': 'adaLovelace@email.com',
+            'native_lang': 'english',
+        }
+        user = User(**data)
+        user.set_password('isa21-ad')
+        user.save()
+        user.attended_langs.add(lang)
+        user.save()
+
+        data = {
+            'username': 'alan1',
+            'first_name': 'Alan',
+            'last_name': 'Turing',
+            'email': 'alanTuring@email.com',
+            'native_lang': 'english',
+        }
+        user = User(**data)
+        user.set_password('turing123')
+        user.save()
+        user.attended_langs.add(lang)
+        user.save()
+
+        data = {
+            'username':'ada21',
+            'comment':'good user',
+            'rate':4,
+        }
+
+        comment = Comment(**data, commented_user=user)
+        comment.save()
+
+    def test_self_profile(self):
+        user = User.objects.get(username='ada21')
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+        response = self.client.get('/user/profile?username=ada21')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_other_profile(self):
+        user = User.objects.get(username='ada21')
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+        response = self.client.get('/user/profile?username=alan1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
