@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Question, QuestionOption, ProficiencyExam
+
+from ..models import QuestionOption, Question
 
 
 class QuestionOptionSerializer(serializers.ModelSerializer):
@@ -14,11 +15,3 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ('id', 'text', 'question_options')
-
-
-class ProficiencyExamSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True)
-
-    class Meta:
-        model = ProficiencyExam
-        fields = ('id', 'language', 'questions')

@@ -1,24 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User as UserBase
 
-languageChoices = [
-    ('english', 'english'),
-    ('turkish', 'turkish'),
-    ('german', 'german')
-]
-
-
-class User(UserBase):
-    nativeLanguage = models.CharField(max_length=20, choices=languageChoices)
-
-
-class Exam(models.Model):
-    class Meta:
-        abstract: True
-
-
-class ProficiencyExam(Exam):
-    language = models.CharField(max_length=20, choices=languageChoices)
+from ..models import Exam
 
 
 class Question(models.Model):
