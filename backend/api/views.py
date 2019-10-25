@@ -19,12 +19,12 @@ class ProfileView(APIView):
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             raise ValidationError("User is not authorized")
-        id=request.user.id
-        basic_user=User.objects.filter(id=id)
+        id = request.user.id
+        basic_user = User.objects.filter(id=id)
         if not basic_user:
             raise ValidationError("User does not exist")
-        basic_user=basic_user.first()
-        serializer=UserProfileSerializer(basic_user)
+        basic_user = basic_user.first()
+        serializer = UserProfileSerializer(basic_user)
         return Response(serializer.data, status=200)
 
 
