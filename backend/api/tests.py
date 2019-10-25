@@ -1,7 +1,10 @@
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from .models import *
+
+
+from api.models.comment import Comment
+from api.models.language import Language
+from api.models.user import User
 
 """
 class ProficiencyTest(APITestCase):

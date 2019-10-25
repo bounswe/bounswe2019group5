@@ -2,15 +2,15 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
-from django.core import serializers
-from rest_framework.exceptions import ValidationError
+
 
 from rest_framework import status
-import numpy as np
+
 import random
 
-from .models import *
+from api.models.exam import ProficiencyExam
+from api.models.user import User
+
 from .serializers import *
 
 

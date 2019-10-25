@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import *
+
+from api.models.comment import Comment
+from api.models.exam import ProficiencyExam
+from api.models.language import Language
+from api.models.question import QuestionOption, Question
+from api.models.user import User
 
 
 class QuestionOptionSerializer(serializers.ModelSerializer):
