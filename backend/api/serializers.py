@@ -30,9 +30,8 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('username','comment','rate')
 
         
-class UserProfileSerializer(serializers.ModelSerializer):
-    user_comments = CommentSerializer(many=True)
-
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id','username','first_name','last_name','native_lang','attended_langs','rating_average')
+    user_comments = CommentSerializer(many=True)

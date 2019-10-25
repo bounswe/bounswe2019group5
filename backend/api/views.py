@@ -16,16 +16,15 @@ from .serializers import *
 
 class ProfileView(APIView):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         if request.user.is_anonymous:
-            raise ValidationError("User is not authorized")
+            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
         id = request.user.id
         basic_user = User.objects.filter(id=id)
         if not basic_user:
-            raise ValidationError("User does not exist")
+            return Response({}, status=status.HTTP_402_UNAUTHORIZED)
         basic_user = basic_user.first()
-        serializer = UserProfileSerializer(basic_user)
-        return Response(serializer.data, status=200)
+        return Response(ProfileSerializer(basic_user).data, status=status.HTTP_200_OK)
 
 
 class ProficiencyView(generics.CreateAPIView):
@@ -102,7 +101,7 @@ class RegisterView(generics.CreateAPIView):
                 last_name=req['surname'],
                 username=req['username'],
                 email=req['email'],
-                nativeLanguage=req['native_language'])
+                native_lang=req['native_language'])
             user.set_password(req['password'])
             user.save()
 
