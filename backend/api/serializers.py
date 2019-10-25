@@ -27,18 +27,12 @@ class ProficiencyExamSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id','commentor','comment','rate')
-
-
-class LanguageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Language
-        fields = ('language')
+        fields = ('username','comment','rate')
 
         
 class UserProfileSerializer(serializers.ModelSerializer):
-    userComments = CommentSerializer(many=True)
-    userAttendedLangs = LanguageSerializer(many=True)
+    user_comments = CommentSerializer(many=True)
+
     class Meta:
         model = User
-        fields = ('id','username','first_name','last_name','nativeLanguage')
+        fields = ('id','username','first_name','last_name','native_lang','attended_langs')

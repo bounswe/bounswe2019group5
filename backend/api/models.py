@@ -13,21 +13,23 @@ class Language(models.Model):
         return self.language
 
 class User(AbstractUser):
-    #username = models.CharField(max_length=20, unique=True)
-    #password = models.CharField(max_length=100)
-    #first_name = models.CharField(max_length=100)
-    #last_name = models.CharField(max_length=100)
+    #username
+    #password
+    #first_name
+    #last_name
     email = models.EmailField(unique=True)
-    nativeLanguage = models.CharField(max_length=20, choices=languageChoices)
-    attendedLanguages = models.ManyToManyField(Language)
+    native_lang = models.CharField(max_length=20, choices=languageChoices)
+    attended_langs = models.ManyToManyField(Language)
+    rating_average = models.FloatField(default=0)
 
     def __str__(self):
         return self.username
 
 
 class Comment(models.Model):
-    commentedUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    commentor = models.CharField(max_length=20)
+    commented_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_comments')
+    #username is username of the commentor
+    username = models.CharField(max_length=20)
     comment = models.CharField(max_length=1000)
     rate = models.IntegerField(choices=[(i,i) for i in range(0,5)])
 
