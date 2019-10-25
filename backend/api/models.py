@@ -7,10 +7,13 @@ languageChoices = [
     ('german', 'german')
 ]
 
+
 class Language(models.Model):
-    language = models.CharField(max_length=20,choices=languageChoices)
+    language = models.CharField(max_length=20, choices=languageChoices)
+
     def __str__(self):
         return self.language
+
 
 class User(AbstractUser):
     #username
@@ -31,11 +34,10 @@ class Comment(models.Model):
     #username is username of the commentor
     username = models.CharField(max_length=20)
     comment = models.CharField(max_length=1000)
-    rate = models.IntegerField(choices=[(i,i) for i in range(0,5)])
+    rate = models.IntegerField(choices=[(i, i) for i in range(0, 5)])
 
     def __str__(self):
         return self.comment
-
 
 
 class Exam(models.Model):
