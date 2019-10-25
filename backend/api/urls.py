@@ -11,7 +11,6 @@ urlpatterns = [
     path('proficiency', views.ProficiencyView.as_view(), name='prof'),
     path('profile', views.ProfileView.as_view(), name='profile'),
 
-
     path('docs/', TemplateView.as_view(
         template_name='swagger-ui.html',
         extra_context={'schema_url': 'openapi-schema'}
@@ -25,7 +24,6 @@ urlpatterns = [
     path('openapi/', get_schema_view(
         title="Bonibon",
         description="Bonibon API Schema",
-    ), name='openapi-schema')
-
+    ), name='openapi-schema'),
 
 ]

@@ -1,11 +1,10 @@
+import random
 
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from ..serializers import ProficiencyExamSerializer
 from ..models import ProficiencyExam
-
-import random
+from ..serializers import ProficiencyExamSerializer
 
 
 class ProficiencyView(generics.RetrieveAPIView):

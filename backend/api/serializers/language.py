@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import  User, ProficiencyExam, Language
+from ..models import Language
 
 
 class LanguageSerializer(serializers.ModelSerializer):

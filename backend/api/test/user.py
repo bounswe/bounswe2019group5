@@ -4,6 +4,8 @@ from rest_framework.test import APITestCase, APIClient
 from ..models import User, Language, Comment
 
 root = ''
+
+
 class LoginViewTests(APITestCase):
     def setUp(self):
         data = {
