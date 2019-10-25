@@ -14,7 +14,7 @@ from .models import *
 from .serializers import *
 
 
-class ProfileView(APIView):
+class ProfileView(generics.RetrieveAPIView):
 
     def get(self, request):
         if request.user.is_anonymous:
@@ -27,7 +27,7 @@ class ProfileView(APIView):
         return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
 
 
-class ProficiencyView(generics.CreateAPIView):
+class ProficiencyView(generics.RetrieveAPIView):
 
     def get(self, request):
         def get_prof_test(language):
