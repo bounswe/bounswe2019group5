@@ -9,7 +9,7 @@ from ..models import User
 
 class RegisterView(generics.CreateAPIView):
 
-    def post(self, request):
+    def create(self, request):
         req = request.data
 
         try:
@@ -38,7 +38,7 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(generics.CreateAPIView):
 
-    def post(self, request):
+    def create(self, request):
         if ('email_username' in request.data) and ('password' in request.data):
             user = User.objects.filter(
                 username=request.data.get('email_username')).first()
@@ -77,7 +77,7 @@ class LoginView(generics.CreateAPIView):
 
 class GuestView(generics.CreateAPIView):
 
-    def post(self, request):
+    def create(self, request):
         permission_classes = (IsAuthenticated,)
 
         # check that registeredUser cannot request as a Guest
@@ -89,7 +89,7 @@ class GuestView(generics.CreateAPIView):
 
 class ProfileView(generics.RetrieveAPIView):
 
-    def get(self, request):
+    def retrieve(self, request):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
         username = request.GET['username']
