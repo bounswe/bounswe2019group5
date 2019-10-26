@@ -12,7 +12,7 @@ languageChoices = [
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    native_lang = models.CharField(max_length=20, choices=languageChoices)
+    native_language = models.CharField(max_length=20, choices=languageChoices)
     rating_average = models.FloatField(default=0, blank=True)
     attended_langs = models.ManyToManyField(Language)
 

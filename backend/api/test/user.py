@@ -123,7 +123,7 @@ class ProfileViewTests(APITestCase):
             'first_name': 'Ada',
             'last_name': 'Lovelace',
             'email': 'adaLovelace@email.com',
-            'native_lang': 'english',
+            'native_language': 'english',
         }
         user = User(**data)
         user.set_password('isa21-ad')
@@ -136,7 +136,7 @@ class ProfileViewTests(APITestCase):
             'first_name': 'Alan',
             'last_name': 'Turing',
             'email': 'alanTuring@email.com',
-            'native_lang': 'english',
+            'native_language': 'english',
         }
         user = User(**data)
         user.set_password('turing123')

@@ -1,2 +1,2 @@
 from .exam import ProficiencyView
-from .user import RegisterView, LoginView, GuestView, ProfileView
+from .user import RegisterView, LoginView, ProfileView

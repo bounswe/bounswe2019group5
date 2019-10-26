@@ -1,35 +1,43 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import User
-from ..serializers import ProfileSerializer
+from ..models import *
+from ..serializers import *
 
 
 class RegisterView(generics.CreateAPIView):
-    serializer_class = ProfileSerializer
+    serializer_class = RegisterSerializer
 
     def create(self, request):
         req = request.data
 
         try:
-            user = User(
+            u = User(
                 first_name=req['name'],
                 last_name=req['surname'],
                 username=req['username'],
                 email=req['email'],
-                native_lang=req['native_language'])
-            user.set_password(req['password'])
-            user.save()
+                native_language=req['native_language'],
+                password=make_password(req['password']))
 
-            token, created = Token.objects.get_or_create(user=user)
+        except:
+            response = {
+                'message': 'required fields missing'
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            u.save()
+            token, _ = Token.objects.get_or_create(user=u)
 
             response = {
-                'token': token.key
+                'token': str(token.key)
             }
-
             return Response(response, status=status.HTTP_201_CREATED)
+
         except:
             response = {
                 'message': 'invalid registration attempt'
@@ -38,7 +46,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class LoginView(generics.CreateAPIView):
-    serializer_class = ProfileSerializer
+    serializer_class = LoginSerializer
 
     def create(self, request):
         if ('email_username' in request.data) and ('password' in request.data):
@@ -77,7 +85,7 @@ class LoginView(generics.CreateAPIView):
                 status=status.HTTP_400_BAD_REQUEST)
 
 
-class GuestView(generics.CreateAPIView):
+"""class GuestView(generics.CreateAPIView):
     serializer_class = ProfileSerializer
 
     def create(self, request):
@@ -87,7 +95,7 @@ class GuestView(generics.CreateAPIView):
         if request.user not in User.objects.all():
             return Response({}, status=status.HTTP_200_OK)
         else:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({}, status=status.HTTP_401_UNAUTHORIZED)"""
 
 
 class ProfileView(generics.RetrieveAPIView):
