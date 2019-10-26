@@ -8,7 +8,8 @@ from ..models import *
 from ..serializers import *
 
 
-class RegisterView(generics.CreateAPIView):
+class RegisterView(mixins.CreateModelMixin,
+                   GenericViewSet):
     serializer_class = RegisterSerializer
 
     def create(self, request):
@@ -45,7 +46,8 @@ class RegisterView(generics.CreateAPIView):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginView(generics.CreateAPIView):
+class LoginView(mixins.CreateModelMixin,
+                GenericViewSet):
     serializer_class = LoginSerializer
 
     def create(self, request):

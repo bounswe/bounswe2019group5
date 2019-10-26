@@ -23,7 +23,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'adaLovelace@email.com',
             'password': 'isa21-ad'
         }
-        response = self.client.post(root + '/login', req)
+        response = self.client.post(root + '/login/', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -32,7 +32,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'isa21-ad'
         }
-        response = self.client.post(root + '/login', req)
+        response = self.client.post(root + '/login/', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -41,7 +41,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'david',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post(root + '/login', req)
+        response = self.client.post(root + '/login/', req)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue('token' not in response.data.keys())
@@ -54,11 +54,11 @@ class LoginViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post(root + '/login', deficient_req)
+            response = self.client.post(root + '/login/', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
 
-        response = self.client.post(root + '/login', {})
+        response = self.client.post(root + '/login/', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
 
@@ -67,7 +67,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post(root + '/login', req)
+        response = self.client.post(root + '/login/', req)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertTrue('token' not in response.data.keys())
 
@@ -82,7 +82,7 @@ class RegisterViewTests(APITestCase):
             "password": "isa21-ad",
             "native_language": "english"
         }
-        response = self.client.post(root + '/register', req)
+        response = self.client.post(root + '/register/', req)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue('token' in response.data.keys())
 
@@ -98,12 +98,12 @@ class RegisterViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post(root + '/register', deficient_req)
+            response = self.client.post(root + '/register/', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
             self.assertTrue('message' in response.data.keys())
 
-        response = self.client.post(root + '/register', {})
+        response = self.client.post(root + '/register/', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
         self.assertTrue('message' in response.data.keys())

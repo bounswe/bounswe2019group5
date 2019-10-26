@@ -95,8 +95,11 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'api.schemas.AutoSchema'
 }
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

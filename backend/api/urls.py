@@ -8,10 +8,11 @@ from .views import *
 router = DefaultRouter()
 router.register(r'profile', ProfileView, basename='profile')
 router.register(r'proficiency', ProficiencyView, basename='proficiency'),
+router.register(r'login', LoginView, basename='login'),
+router.register(r'register', RegisterView, basename='register'),
 
 urlpatterns = [
-    path('login', LoginView.as_view(), name='login'),
-    path('register', RegisterView.as_view(), name='register'),
+
 
 
     path('docs/', TemplateView.as_view(
