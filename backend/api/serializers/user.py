@@ -24,7 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     name = serializers.CharField(write_only=True)
     surname = serializers.CharField(write_only=True)
-    native_language = serializers.CharField(write_only=True)
+    #native_language = serializers.CharField(write_only=True)
     token = serializers.CharField(read_only=True)
 
     class Meta:
@@ -38,7 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             'password': {'write_only': True,  # password is never read
                          'style': {'input_type': 'password'}},
             'email': {'required': True, 'write_only': True},
-            'native_language': {'required': True}
+            'native_language': {'required': True, 'write_only': True}
         }
 
 

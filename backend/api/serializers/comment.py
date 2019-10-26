@@ -4,7 +4,6 @@ from ..models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    rate = serializers.IntegerField()
 
     class Meta:
         model = Comment
