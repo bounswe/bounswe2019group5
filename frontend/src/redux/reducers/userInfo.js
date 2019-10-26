@@ -1,9 +1,17 @@
-import { SET_SELECTED_LANGUAGE } from "../actions";
+import { SET_SELECTED_LANGUAGE, USER_PROFILE_CLEAR, SET_TOKEN } from "../actions";
 
 const initialState = {
-  selectedLanguage: '',
+  selectedLanguage: null,
   username: null,
   email: null,
+  firstName: null,
+  lastName: null,
+  userNativeLang: null,
+  userAttendedLangs: [],
+  userRateAverage: 0,
+  userComments: [],
+  
+  token: null,
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +20,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedLanguage: action.selectedLanguage,
+      };
+
+    case USER_PROFILE_CLEAR:
+      return {
+        ...state,
+        ...initialState,
+      };
+
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.token,
       };
 
     default:

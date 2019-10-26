@@ -1,8 +1,4 @@
-export const INCREMENT_REQUESTED = "counter/INCREMENT_REQUESTED";
-export const INCREMENT = "counter/INCREMENT";
-export const DECREMENT_REQUESTED = "counter/DECREMENT_REQUESTED";
-export const DECREMENT = "counter/DECREMENT";
-
+// Authentication
 export const LOGIN_REQUESTED = "authentication/LOGIN_REQUESTED";
 export const LOGIN = "authentication/LOGIN";
 
@@ -12,12 +8,22 @@ export const SIGNUP = "authentication/SIGNUP";
 export const LOGOUT_REQUESTED = "authentication/LOGOUT_REQUESTED";
 export const LOGOUT = "authentication/LOGOUT";
 
+export const AUTHENTICATION_CLEAR = "authentication/AUTHENTICATION_CLEAR";
+
+// Test
 export const PROF_TEST_REQUESTED = "test/PROF_TEST_REQUESTED";
 export const PROF_TEST = "test/PROF_TEST";
 export const TEST_RESULT_REQUESTED = "test/TEST_RESULT_REQUESTED";
 export const TEST_RESULT = "test/TEST_RESULT";
+export const PROF_TEST_CLEAR = "test/PROF_TEST_CLEAR";
 
-export const SET_SELECTED_LANGUAGE = "user_info/SET_SELECTED_LANGUAGE";
-
+// Exercises
 export const VOCABULARY_TEST_REQUESTED = "exercises/VOCABULARY_TEST_REQUESTED";
 export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
+
+// User Info
+export const USER_PROFILE_REQUESTED = "user_info/USER_PROFILE_REQUESTED";
+export const USER_PROFILE = "user_info/USER_PROFILE";
+export const SET_SELECTED_LANGUAGE = "user_info/SET_SELECTED_LANGUAGE";
+export const SET_TOKEN = "user_info/SET_TOKEN";
+export const USER_PROFILE_CLEAR = "user_info/USER_PROFILE_CLEAR";

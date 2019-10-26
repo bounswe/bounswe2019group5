@@ -28,7 +28,7 @@ class VocabularyTest extends Component {
 
   componentDidMount() {
     this.props.get_vocabulary_test(
-      this.props.authentication.token,
+      this.props.userInfo.token,
       this.props.userInfo.selectedLanguage
     );
     this.state.isAnswersPrepared = false;
@@ -58,7 +58,7 @@ class VocabularyTest extends Component {
   };
 
   render() {
-    if (this.props.authentication.token == null) {
+    if (this.props.userInfo.token == null) {
       return (
         <Redirect
           to={{
@@ -171,7 +171,7 @@ class VocabularyTest extends Component {
                     className={classes.submit}
                     onClick={() =>
                       this.props.get_test_result(
-                        this.props.authentication.token,
+                        this.props.userInfo.token,
                         vocabularyTest,
                         this.state.answers
                       )
@@ -201,8 +201,7 @@ class VocabularyTest extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication, userInfo, exercises }) => ({
-  authentication,
+const mapStateToProps = ({ userInfo, exercises }) => ({
   userInfo,
   exercises
 });

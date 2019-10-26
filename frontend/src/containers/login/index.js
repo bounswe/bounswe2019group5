@@ -10,7 +10,8 @@ import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { login } from "../../redux/action-creators/authentication";
+import { login, clear_authentication } from '../../redux/action-creators/authentication';
+import { clear_user_profile } from '../../redux/action-creators/userInfo';
 import styles from "./styles";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -18,7 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 class Login extends Component {
   constructor (props){
     super(props);
-    console.log(props.authentication.token);
+    console.log(props.userInfo.token);
   }
   state = {
     usernameOrEmail: "",
@@ -33,11 +34,18 @@ class Login extends Component {
     this.props.login(this.state.usernameOrEmail, this.state.password);
   };
 
+  componentDidMount(){
+    console.log(this.props.authentication);
+    console.log("Component kurulurken user profile resetlendi!");
+    this.props.clear_user_profile();
+    this.props.clear_authentication();
+  }
+
   render() {
 
     const {classes} = this.props;
 
-    if (this.props.authentication.token != null){
+    if (this.props.userInfo.token != null){
       return (
         <Redirect
           to={{
@@ -135,14 +143,17 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  authentication
+const mapStateToProps = ({ authentication, userInfo }) => ({
+  authentication,
+  userInfo,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      login
+      login,
+      clear_user_profile,
+      clear_authentication
     },
     dispatch
   );

@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
-  persistState(),
+  persistState('userInfo'),
 )
 
 const store = createStore(

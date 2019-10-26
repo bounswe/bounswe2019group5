@@ -1,4 +1,4 @@
-import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT } from "../actions";
+import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT, SET_TOKEN, USER_PROFILE_CLEAR, AUTHENTICATION_CLEAR } from "../actions";
 
 import { login as login_api } from "../../api/authentication";
 import { signup as signup_api } from "../../api/authentication";
@@ -11,6 +11,10 @@ export const login = (usernameOrEmail, password) => {
     });
 
     login_api(usernameOrEmail, password).then(response => {
+      dispatch({
+        type: SET_TOKEN,
+        token: response.token,
+      });
       dispatch({
         type: LOGIN,
         token: response.token,
@@ -36,6 +40,10 @@ export const signup = (
     signup_api(name, surname, email, username, password, native_language).then(
       response => {
         dispatch({
+          type: SET_TOKEN,
+          token: response.token,
+        });
+        dispatch({
           type: SIGNUP,
           token: response.token,
           message: response.message,
@@ -57,8 +65,19 @@ export const logout = () => {
         token: null,
         message: null,
       });
+      dispatch({
+        type: USER_PROFILE_CLEAR,
+      });
     });
 
 
   }
+}
+
+export const clear_authentication = () => {
+	return dispatch => {
+		dispatch({
+			type : AUTHENTICATION_CLEAR,
+		});
+	}
 }

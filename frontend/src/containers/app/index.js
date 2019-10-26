@@ -52,17 +52,17 @@ class App extends Component {
             </Link>
           </Navbar.Brand>
           <Nav className="mr-auto">
-            {this.props.authentication.token && (
+            {this.props.userInfo.token && (
               <Link to="/" onClick={() => this.props.logout()}>
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
-            {!this.props.authentication.token && (
+            {!this.props.userInfo.token && (
               <Link to="/login">
                 <Button variant="outline-warning">Login</Button>
               </Link>
             )}
-            {!this.props.authentication.token && (
+            {!this.props.userInfo.token && (
               <Link to="/signup">
                 <Button variant="outline-success">Sign-up</Button>
               </Link>
@@ -94,8 +94,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  authentication
+const mapStateToProps = ({ authentication, userInfo }) => ({
+  userInfo,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -20,7 +20,7 @@ class LanguageSelection extends Component {
     state = { isLanguageSelected: false }
     constructor(props) {
         super(props);
-        console.log(props.authentication.token);
+        console.log(props.userInfo.token);
     };
     handleSubmit = (language) => {
         this.props.set_selected_language(language);
@@ -29,7 +29,7 @@ class LanguageSelection extends Component {
 
     render() {
         const { classes } = this.props;
-        if (this.props.authentication.token == null) {
+        if (this.props.userInfo.token == null) {
             return (
                 <Redirect
                     to={{
@@ -69,8 +69,7 @@ class LanguageSelection extends Component {
     }
 }
 
-const mapStateToProps = ({ authentication, userInfo }) => ({
-    authentication,
+const mapStateToProps = ({ userInfo }) => ({
     userInfo
 });
 

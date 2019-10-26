@@ -18,7 +18,7 @@ import { green, purple } from "@material-ui/core/colors";
 
 const TestResult = props => {
   const { classes } = props;
-  if (props.authentication.token != null) {
+  if (props.userInfo.token != null) {
     return (
       <Container
         component="main"
@@ -170,9 +170,10 @@ const TestResult = props => {
   }
 };
 
-const mapStateToProps = ({ test, authentication }) => ({
+const mapStateToProps = ({ test, authentication, userInfo }) => ({
   test,
-  authentication
+  authentication,
+  userInfo,
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(TestResult));

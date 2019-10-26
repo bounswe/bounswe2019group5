@@ -46,7 +46,7 @@ function GuestLogin(props) {
         language: "",
     } );
 
-    if (props.authentication.token != null) {
+    if (props.userInfo.token != null) {
         return (
             <Redirect
                 to={{

@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import Question from "../question";
 import {
   get_prof_test,
-  get_test_result
+  get_test_result,
+  clear_prof_test,
 } from "../../redux/action-creators/test";
 import _ from "lodash";
 import Avatar from "@material-ui/core/Avatar";
@@ -33,8 +34,9 @@ class ProfTest extends Component {
   };
 
   componentDidMount() {
+    this.props.clear_prof_test();
     this.props.get_prof_test(
-      this.props.authentication.token,
+      this.props.userInfo.token,
       this.props.userInfo.selectedLanguage
     );
     this.state.isAnswersPrepared = false;
@@ -47,7 +49,6 @@ class ProfTest extends Component {
         answers[i] = this.props.test.profTest.questions[
           i
         ].question_options[0].text;
-      console.log("YENI" + answers);
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -62,7 +63,7 @@ class ProfTest extends Component {
   };
 
   render() {
-    if (this.props.authentication.token == null) {
+    if (this.props.userInfo.token == null) {
       return (
         <Redirect
           to={{
@@ -101,9 +102,6 @@ class ProfTest extends Component {
       const questionIndex = this.state.questionIndex;
       const question = profTest.questions[questionIndex];
 
-      console.log(
-        "SELAMEDDIN " + questionIndex + " " + this.state.answers[questionIndex]
-      );
       return (
         <Container
           component="main"
@@ -175,7 +173,7 @@ class ProfTest extends Component {
                     className={classes.submit}
                     onClick={() =>
                       this.props.get_test_result(
-                        this.props.authentication.token,
+                        this.props.userInfo.token,
                         profTest,
                         this.state.answers
                       )
@@ -205,9 +203,8 @@ class ProfTest extends Component {
   }
 }
 
-const mapStateToProps = ({ test, authentication, userInfo }) => ({
+const mapStateToProps = ({ test, userInfo }) => ({
   test,
-  authentication,
   userInfo
 });
 
@@ -215,7 +212,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       get_prof_test,
-      get_test_result
+      get_test_result,
+      clear_prof_test,
     },
     dispatch
   );

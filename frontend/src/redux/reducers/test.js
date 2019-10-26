@@ -3,6 +3,7 @@ import {
     PROF_TEST,
     TEST_RESULT_REQUESTED,
     TEST_RESULT,
+    PROF_TEST_CLEAR,
 } from '../actions';
 
 const initialState = {
@@ -33,18 +34,24 @@ export default (state = initialState, action) => {
       }
     
     case TEST_RESULT_REQUESTED:
-        return {
-            ...state,
-            loading: true,
-            testResult: null,
-        }
+      return {
+        ...state,
+        loading: true,
+        testResult: null,
+      }
     
     case TEST_RESULT:
+      return {
+        ...state,
+        loading: false,
+        isFinished: true,
+        testResult: action.testResult,
+      }
+    
+    case PROF_TEST_CLEAR:
         return {
-            ...state,
-            loading: false,
-            isFinished: true,
-            testResult: action.testResult,
+          ...state,
+          ...initialState,
         }
 
     default:
