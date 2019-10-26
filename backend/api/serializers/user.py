@@ -12,7 +12,6 @@ languageChoices = [
 
 class ProfileSerializer(serializers.ModelSerializer):
     user_comments = CommentSerializer(many=True)
-    rating_average = serializers.IntegerField()
 
     class Meta:
         model = User
@@ -24,7 +23,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     name = serializers.CharField(write_only=True)
     surname = serializers.CharField(write_only=True)
-    #native_language = serializers.CharField(write_only=True)
     token = serializers.CharField(read_only=True)
 
     class Meta:
