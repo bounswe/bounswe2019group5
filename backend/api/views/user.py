@@ -1,8 +1,8 @@
 from django.contrib.auth.hashers import make_password
-from rest_framework import generics, status
+from rest_framework import generics, status, mixins
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from ..models import *
 from ..serializers import *
@@ -98,15 +98,16 @@ class LoginView(generics.CreateAPIView):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)"""
 
 
-class ProfileView(generics.RetrieveAPIView):
+class ProfileView(mixins.RetrieveModelMixin,
+                  GenericViewSet):
     serializer_class = ProfileSerializer
 
-    def retrieve(self, request):
+    def retrieve(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
-        username = request.GET['username']
+        username = kwargs.get('pk')
         user = User.objects.filter(username=username)
         if not user:
-            return Response({}, status=status.HTTP_402_UNAUTHORIZED)
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
         user = user.first()
         return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)

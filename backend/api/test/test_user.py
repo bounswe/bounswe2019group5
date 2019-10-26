@@ -157,12 +157,12 @@ class ProfileViewTests(APITestCase):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get(root + '/profile?username=ada21')
+        response = self.client.get(root + '/profile/ada21/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_other_profile(self):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get(root + '/profile?username=alan1')
+        response = self.client.get(root + '/profile/alan1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

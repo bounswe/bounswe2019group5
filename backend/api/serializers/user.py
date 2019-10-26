@@ -12,6 +12,7 @@ languageChoices = [
 
 class ProfileSerializer(serializers.ModelSerializer):
     user_comments = CommentSerializer(many=True)
+    rating_average = serializers.IntegerField()
 
     class Meta:
         model = User

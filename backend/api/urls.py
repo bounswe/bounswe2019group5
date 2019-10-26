@@ -1,14 +1,18 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
+from rest_framework.routers import DefaultRouter
 
 from .views import *
+
+router = DefaultRouter()
+router.register(r'profile', ProfileView, basename='profile')
+router.register(r'proficiency', ProficiencyView, basename='proficiency'),
 
 urlpatterns = [
     path('login', LoginView.as_view(), name='login'),
     path('register', RegisterView.as_view(), name='register'),
-    path('proficiency', ProficiencyView.as_view(), name='prof'),
-    path('profile', ProfileView.as_view(), name='profile'),
+
 
     path('docs/', TemplateView.as_view(
         template_name='swagger-ui.html',
@@ -24,5 +28,7 @@ urlpatterns = [
         title="Bonibon",
         description="Bonibon API Schema",
     ), name='openapi-schema'),
+
+    *router.urls
 
 ]
