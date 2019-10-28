@@ -10,8 +10,8 @@ services:
       - .:/code
     ports:
       - "8000:8000"
-    environment: 
-      - SECRET_KEY=$SECRET_KEY 
+    environment:
+      - SECRET_KEY=$SECRET_KEY
   #   depends_on:
   #     - db
   # db:
