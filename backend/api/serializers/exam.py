@@ -4,8 +4,11 @@ from .question import QuestionSerializer
 from ..models import ProficiencyExam
 
 
-class ProficiencyExamSerializer(serializers.ModelSerializer):
+class ExamSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
+
+
+class ProficiencyExamSerializer(ExamSerializer):
 
     class Meta:
         model = ProficiencyExam
