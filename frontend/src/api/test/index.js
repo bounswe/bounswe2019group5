@@ -7,14 +7,11 @@ function timeout(ms) {
 export const get_prof_test = async (token, language) => {
 
   return await axios
-    .get(parameters.apiUrl+'/user/proficiency',
+    .get(parameters.apiUrl+'/proficiency?language=english',
       {
-        params: {
-          language,
-        },
         headers: {
           'Content-Type':'application/json',
-          "Authorization": "Token 4024b84ebf75573413c27b1eab3735525aca827a",
+          "Authorization": "Token "+token,
         },
         timeout: 10000,
       }
@@ -22,6 +19,7 @@ export const get_prof_test = async (token, language) => {
     .then(response => response.data)
     .catch(err => 
       {
+        console.log("ASdf", err.response);
         return {
           message: err.response? err.response.data.message : 'Connection Error!',
         };

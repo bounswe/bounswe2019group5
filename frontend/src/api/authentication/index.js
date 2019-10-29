@@ -8,7 +8,7 @@ function timeout(ms) {
 export const login = async (usernameOrEmail, password) => {
 
   const data = await axios
-    .post(parameters.apiUrl+'/user/login',
+    .post(parameters.apiUrl+'/login/',
       {
         email_username: usernameOrEmail,
         password: password,
@@ -21,7 +21,6 @@ export const login = async (usernameOrEmail, password) => {
     .then(response => response.data)
     .catch(err => 
       {
-        console.log(err.message);
         return {
           token: null,
           message: err.response? err.response.data.message : 'Connection Error!',
@@ -42,7 +41,7 @@ export const signup = async (
 ) => {
 
   const data = await axios
-    .post(parameters.apiUrl+'/user/register',
+    .post(parameters.apiUrl+'/register/',
       {
         name,
         surname,

@@ -73,6 +73,16 @@ class ProfTest extends Component {
       );
     }
 
+    if (this.props.userInfo.selectedLanguage == null) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/lang-select"
+          }}
+        />
+      );
+    }
+
     const profTest = this.props.test.profTest;
     const { classes } = this.props;
 
