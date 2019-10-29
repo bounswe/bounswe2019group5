@@ -1,5 +1,7 @@
 from django.db import models
 
+from .user import User
+
 
 class Exam(models.Model):
     languageChoices = [
@@ -27,3 +29,9 @@ class Exercise(Exam):
         ('C2', 'C2'),
     ]
     level = models.CharField(choices=levels, max_length=2)
+
+
+class UserExerciseRelation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_exercise_relation')
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='user_exercise_relation')
+    is_completed = models.BooleanField(default=False)
