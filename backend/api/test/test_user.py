@@ -128,7 +128,7 @@ class ProfileViewTests(APITestCase):
         user = User(**data)
         user.set_password('isa21-ad')
         user.save()
-        user.attended_langs.add(lang)
+        user.attended_languages.add(lang)
         user.save()
 
         data = {
@@ -141,7 +141,7 @@ class ProfileViewTests(APITestCase):
         user = User(**data)
         user.set_password('turing123')
         user.save()
-        user.attended_langs.add(lang)
+        user.attended_languages.add(lang)
         user.save()
 
         data = {

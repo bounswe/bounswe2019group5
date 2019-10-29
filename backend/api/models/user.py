@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from .language import Language
-from .exercise import Exercise
 
 languageChoices = [
     ('english', 'english'),
@@ -24,10 +23,9 @@ class User(AbstractUser):
     native_language = models.CharField(max_length=20, choices=languageChoices)
 
     rating_average = models.FloatField(default=0, blank=True)
-    attended_langs = models.ManyToManyField(Language)
+    attended_languages = models.ManyToManyField(Language)
 
     level = models.CharField(choices=levels, max_length=2, default='A1')
-    taken_exercise = models.ManyToManyField(Exercise)
 
     def __str__(self):
         return self.username

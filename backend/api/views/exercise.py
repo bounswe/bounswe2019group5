@@ -1,22 +1,16 @@
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import *
+from rest_framework.permissions import IsAuthenticated
 
-from ..models import Exercise
-from ..serializers import ExerciseSerializer
-from ..filters import ExerciseFilterSet
+from ..serializers import TakeExerciseSerializer
 
 
-class ExerciseView(mixins.ListModelMixin,
+class ExerciseView(mixins.CreateModelMixin,
                    GenericViewSet):
-    serializer_class = ExerciseSerializer
-    queryset = Exercise.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = ExerciseFilterSet
+    serializer_class = TakeExerciseSerializer
+    permission_classes = (IsAuthenticated,)
 
     def check_object_permissions(self, request, obj):
         if request.user.is_anonymous:
             raise NotAuthenticated('Token is needed')
-
-
