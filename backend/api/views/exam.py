@@ -1,20 +1,24 @@
 import random
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, status
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from ..models import ProficiencyExam
-from ..serializers import ProficiencyExamSerializer
+from ..models import Exam
+from ..serializers import ExamSerializer
+from ..filters import ExamFilterSet
 
 
-class ProficiencyView(mixins.RetrieveModelMixin,
+class ProficiencyView(mixins.ListModelMixin,
                       GenericViewSet):
-    serializer_class = ProficiencyExamSerializer
+    serializer_class = ExamSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ExamFilterSet
 
-    def retrieve(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         def get_prof_test(language):
-            proficiency_exams = ProficiencyExam.objects.filter(language=language)
+            proficiency_exams = Exam.objects.filter(language=language, type='proficiency')
 
             if not proficiency_exams:
                 return []
@@ -24,11 +28,11 @@ class ProficiencyView(mixins.RetrieveModelMixin,
         if request.user.is_anonymous:
             return Response({'message': 'session expired'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        prof_test = get_prof_test(kwargs.get('pk'))
+        prof_test = get_prof_test(request.query_params.get('language'))
 
         if not prof_test:
             return Response(
                 {'message': 'database does not have enough questions for proficiency test'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
         else:
-            return Response(ProficiencyExamSerializer(prof_test).data, status=status.HTTP_200_OK)
+            return Response(ExamSerializer(prof_test).data, status=status.HTTP_200_OK)

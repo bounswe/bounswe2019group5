@@ -1,10 +1,11 @@
 from django.contrib import admin
 
-from .models import Comment, User, ProficiencyExam, Language, QuestionOption, Question
+from .models import *
 
 admin.site.register(User)
 admin.site.register(Question)
-admin.site.register(ProficiencyExam)
+admin.site.register(Exam)
+admin.site.register(Exercise)
 admin.site.register(QuestionOption)
 admin.site.register(Language)
 admin.site.register(Comment)

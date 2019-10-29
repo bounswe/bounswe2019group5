@@ -10,6 +10,7 @@ router.register(r'profile', ProfileView, basename='profile')
 router.register(r'proficiency', ProficiencyView, basename='proficiency'),
 router.register(r'login', LoginView, basename='login'),
 router.register(r'register', RegisterView, basename='register'),
+router.register(r'exercise', ExerciseView, basename='exercise'),
 
 urlpatterns = [
 
