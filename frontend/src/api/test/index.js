@@ -7,7 +7,7 @@ function timeout(ms) {
 export const get_prof_test = async (token, language) => {
 
   return await axios
-    .get(parameters.apiUrl+'/proficiency?language=english',
+    .get(parameters.apiUrl+'/proficiency/'+language,
       {
         headers: {
           'Content-Type':'application/json',
