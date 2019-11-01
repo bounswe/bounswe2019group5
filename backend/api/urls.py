@@ -6,11 +6,12 @@ from rest_framework.routers import DefaultRouter
 from .views import *
 
 router = DefaultRouter()
-router.register(r'profile', ProfileView, basename='profile')
-router.register(r'proficiency', ProficiencyView, basename='proficiency'),
-router.register(r'login', LoginView, basename='login'),
-router.register(r'register', RegisterView, basename='register'),
+router.register(r'profile', ProfileView, basename='user')
+router.register(r'proficiency', ProficiencyView, basename='exercise'),
+router.register(r'login', LoginView, basename='user'),
+router.register(r'register', RegisterView, basename='user'),
 router.register(r'exercise', ExerciseView, basename='exercise'),
+router.register(r'result', ResultView, basename='exercise'),
 
 urlpatterns = [
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path('openapi/', get_schema_view(
         title="Bonibon",
         description="Bonibon API Schema",
+        public=True
     ), name='openapi-schema'),
 
     *router.urls

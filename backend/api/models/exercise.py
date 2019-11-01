@@ -18,6 +18,9 @@ class Exam(models.Model):
     type = models.CharField(choices=types, max_length=11, default='vocabulary')
     language = models.CharField(max_length=20, choices=languageChoices)
 
+    class Meta:
+        Abstract: True
+
 
 class Exercise(Exam):
     levels = [
@@ -34,4 +37,13 @@ class Exercise(Exam):
 class UserExerciseRelation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_exercise_relation')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='user_exercise_relation')
-    is_completed = models.BooleanField(default=False)
+
+
+class Result(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='result')
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='result')
+    number_of_true = models.IntegerField()
+    number_of_false = models.IntegerField()
+
+    class Meta:
+        unique_together = ('user', 'exercise')

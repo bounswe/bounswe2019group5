@@ -6,13 +6,13 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from ..models import Exam
-from ..serializers import ExamSerializer
+from ..serializers import ExerciseSerializer
 from ..filters import ExamFilterSet
 
 
 class ProficiencyView(mixins.ListModelMixin,
                       GenericViewSet):
-    serializer_class = ExamSerializer
+    serializer_class = ExerciseSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ExamFilterSet
 
@@ -35,4 +35,4 @@ class ProficiencyView(mixins.ListModelMixin,
                 {'message': 'database does not have enough questions for proficiency test'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
         else:
-            return Response(ExamSerializer(prof_test).data, status=status.HTTP_200_OK)
+            return Response(ExerciseSerializer(prof_test).data, status=status.HTTP_200_OK)

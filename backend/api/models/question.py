@@ -1,10 +1,10 @@
 from django.db import models
 
-from ..models import Exam
+from ..models import Exercise
 
 
 class Question(models.Model):
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='questions')
+    exam = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='questions')
     answer = models.CharField(max_length=1000, default='')
     text = models.CharField(max_length=1000, default='')
 
