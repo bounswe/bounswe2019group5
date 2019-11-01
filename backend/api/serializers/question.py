@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import QuestionOption, Question
+from ..models.question import QuestionOption, Question, QuestionAnswer
 
 
 class QuestionOptionSerializer(serializers.ModelSerializer):
@@ -15,3 +15,9 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ('id', 'text', 'question_options')
+
+class QuestionAnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionAnswer
+        fields = ('answer', 'outcome')

@@ -1,6 +1,7 @@
 from django.db import models
 
 from ..models import Exam
+from .exam_result import ExamResult
 
 
 class Question(models.Model):
@@ -28,3 +29,10 @@ class Question(models.Model):
 class QuestionOption(models.Model):
     text = models.CharField(max_length=1000)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question_options')
+
+
+class QuestionAnswer(models.Model):
+    answer = models.CharField(max_length=1000)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    exam_result = models.ForeignKey(ExamResult, on_delete=models.CASCADE, related_name='answers')
+    outcome = models.BooleanField()
