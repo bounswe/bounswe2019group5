@@ -87,6 +87,6 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
         }
         result, created = Result.objects.get_or_create(**result)
         if not created:
-            raise NotAcceptable('exercise has already solved')
+            raise serializers.ValidationError('exercise has already solved')
 
         return result
