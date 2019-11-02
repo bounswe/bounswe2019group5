@@ -3,4 +3,5 @@ from .exercise import ExerciseSerializer, TakeExerciseSerializer, ResultSerializ
 from .language import LanguageSerializer
 from .question import QuestionOptionSerializer, QuestionSerializer
 from .user import ProfileSerializer, RegisterSerializer, LoginSerializer
+from .message import MessageSerializer
 
