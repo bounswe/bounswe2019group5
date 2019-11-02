@@ -8,6 +8,8 @@ services:
     environment:
       - SECRET_KEY=$SECRET_KEY
     build: .
+    volumes:
+      - migrations:/app/api/migrations
     ports:
       - "80:8000"
   db:
@@ -16,3 +18,4 @@ services:
       - dbdata:/var/lib/postgresql/data
 volumes:
   dbdata:
+  migrations:
