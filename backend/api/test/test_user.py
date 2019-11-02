@@ -23,7 +23,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'adaLovelace@email.com',
             'password': 'isa21-ad'
         }
-        response = self.client.post(root + '/login/', req)
+        response = self.client.post('/login/', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -32,7 +32,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'isa21-ad'
         }
-        response = self.client.post(root + '/login/', req)
+        response = self.client.post('/login/', req)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertTrue('token' in response.data.keys())
 
@@ -41,7 +41,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'david',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post(root + '/login/', req)
+        response = self.client.post('/login/', req)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue('token' not in response.data.keys())
@@ -54,11 +54,11 @@ class LoginViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post(root + '/login/', deficient_req)
+            response = self.client.post('/login/', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
 
-        response = self.client.post(root + '/login/', {})
+        response = self.client.post('/login/', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
 
@@ -67,7 +67,7 @@ class LoginViewTests(APITestCase):
             'email_username': 'ada21',
             'password': 'gHGG-jhj23'
         }
-        response = self.client.post(root + '/login/', req)
+        response = self.client.post('/login/', req)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertTrue('token' not in response.data.keys())
 
@@ -82,7 +82,7 @@ class RegisterViewTests(APITestCase):
             "password": "isa21-ad",
             "native_language": "english"
         }
-        response = self.client.post(root + '/register/', req)
+        response = self.client.post('/register/', req)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue('token' in response.data.keys())
 
@@ -98,12 +98,12 @@ class RegisterViewTests(APITestCase):
         for key in req:
             deficient_req = {**req}
             del deficient_req[key]
-            response = self.client.post(root + '/register/', deficient_req)
+            response = self.client.post('/register/', deficient_req)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertTrue('token' not in response.data.keys())
             self.assertTrue('message' in response.data.keys())
 
-        response = self.client.post(root + '/register/', {})
+        response = self.client.post('/register/', {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue('token' not in response.data.keys())
         self.assertTrue('message' in response.data.keys())
@@ -128,7 +128,7 @@ class ProfileViewTests(APITestCase):
         user = User(**data)
         user.set_password('isa21-ad')
         user.save()
-        user.attended_langs.add(lang)
+        user.attended_languages.add(lang)
         user.save()
 
         data = {
@@ -141,7 +141,7 @@ class ProfileViewTests(APITestCase):
         user = User(**data)
         user.set_password('turing123')
         user.save()
-        user.attended_langs.add(lang)
+        user.attended_languages.add(lang)
         user.save()
 
         data = {
@@ -157,12 +157,12 @@ class ProfileViewTests(APITestCase):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get(root + '/profile/ada21/')
+        response = self.client.get('/profile/?username=ada21')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_other_profile(self):
         user = User.objects.get(username='ada21')
         self.client = APIClient()
         self.client.force_authenticate(user=user)
-        response = self.client.get(root + '/profile/alan1/')
+        response = self.client.get('/profile/?username=alan1')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

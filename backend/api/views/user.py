@@ -1,11 +1,13 @@
 from django.contrib.auth.hashers import make_password
-from rest_framework import generics, status, mixins
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status, mixins
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from ..models import *
 from ..serializers import *
+from ..filters import UserFilterSet
 
 
 class RegisterView(mixins.CreateModelMixin,
@@ -100,14 +102,16 @@ class LoginView(mixins.CreateModelMixin,
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)"""
 
 
-class ProfileView(mixins.RetrieveModelMixin,
+class ProfileView(mixins.ListModelMixin,
                   GenericViewSet):
     serializer_class = ProfileSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UserFilterSet
 
-    def retrieve(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
-        username = kwargs.get('pk')
+        username = request.query_params.get('username')
         user = User.objects.filter(username=username)
         if not user:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
