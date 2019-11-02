@@ -27,3 +27,10 @@ export const USER_PROFILE = "user_info/USER_PROFILE";
 export const SET_SELECTED_LANGUAGE = "user_info/SET_SELECTED_LANGUAGE";
 export const SET_TOKEN = "user_info/SET_TOKEN";
 export const USER_PROFILE_CLEAR = "user_info/USER_PROFILE_CLEAR";
+
+// Chat
+export const SEND_MESSAGE = "chat/SEND_MESSAGE";
+export const GET_ALL_MESSAGES_REQUESTED = "chat/GET_ALL_MESSAGES_REQUESTED";
+export const GET_ALL_MESSAGES = "chat/GET_ALL_MESSAGES";
+export const ACTIVATE_CHAT = "chat/ACTIVATE_CHAT";
+export const DEACTIVATE_CHAT = "chat/DEACTIVATE_CHAT";
