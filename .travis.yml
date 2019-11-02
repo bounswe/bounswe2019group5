@@ -26,4 +26,7 @@ before_script:
   - pip install docker-compose
 
 script:
-  - docker-compose up --build
+  - docker-compose run -d db
+  - docker-compose run web sh -c "python manage.py makemigrations api"
+  - docker-compose run web sh -c "python manage.py migrate"
+  - docker-compose run web sh -c "python manage.py test"
