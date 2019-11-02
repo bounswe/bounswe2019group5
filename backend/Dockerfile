@@ -8,6 +8,7 @@ WORKDIR /app
 
 CMD python manage.py makemigrations api && \
     python manage.py migrate && \
+    python manage.py test && \
     python manage.py runserver 0.0.0.0:8000
 
 EXPOSE 8000
