@@ -16,3 +16,4 @@ admin.site.register(Language)
 
 admin.site.register(Comment)
 
+admin.site.register(Message)
