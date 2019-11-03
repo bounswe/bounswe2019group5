@@ -1,13 +1,78 @@
-from rest_framework.test import APITestCase
+from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
+
+from ..models import Exercise, Result, UserExerciseRelation, Question, QuestionOption, User
+from ..serializers import ExerciseSerializer
+
+
+class ExerciseTest(APITestCase):
+
+    def setUp(self):
+        exercise_data = {
+            "language": "turkish",
+            "level" : "A1",
+            "type" : "vocabulary"
+        }
+        exercise = Exercise(**exercise_data)
+        
+        exercise.save()
+
+        question_data = {
+            "text": "hangisi dorudur?",
+            "answer" : "doru"
+        }
+        question = Question(**question_data, exam=exercise)
+        question.save()
+
+        question_option_data1 = {
+            "text": "doru"
+        }
+        question_option_data2 = {
+            "text": "wrong"
+        }
+        question_option_data3 = {
+            "text": "wrong"
+        }
+        question_option_data4 = {
+            "text": "wrong"
+        }
+        option1 = QuestionOption(**question_option_data1, question=question)
+        option2 = QuestionOption(**question_option_data2, question=question)
+        option3 = QuestionOption(**question_option_data3, question=question)
+        option4 = QuestionOption(**question_option_data4, question=question)
+        option1.save()
+        option2.save()
+        option3.save()
+        option4.save()
+
+        data = {
+            'username': 'ada21',
+            'first_name': 'Ada',
+            'last_name': 'Lovelace',
+            'email': 'adaLovelace@email.com',
+        }
+        user = User(**data)
+        user.set_password('isa21-ad')
+        user.save()
+    
+    def test_true_answer(self):
+        user = User.objects.get(username='ada21')
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+        req = {
+            "id": "1",
+            "answers" : ["doru"]
+        }
+        response = self.client.post('/result/', req)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
 
 class ProficiencyTest(APITestCase):
-
     def setUp(self):
         pass
 
-
-"""
+'''
 class ProficiencyTest(APITestCase):
     def setUp(self):
         q = {
@@ -61,5 +126,4 @@ class ProficiencyTest(APITestCase):
             options.remove(answer)
             self.assertTrue(not answer in options)
 
-
-"""
+'''
