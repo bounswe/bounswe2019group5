@@ -5,4 +5,5 @@ backend/productionSettings.py
 Pipfile
 Pipfile.lock
 **/.idea/
-.DS_Store  
+.DS_Store
+**/grup5.pem

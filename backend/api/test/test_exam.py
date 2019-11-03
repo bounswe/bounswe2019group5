@@ -61,7 +61,7 @@ class ExerciseTest(APITestCase):
         self.client.force_authenticate(user=user)
         req = {
             "id": "1",
-            "answers" : ["doru"]
+            "answers": ["doru"]
         }
         response = self.client.post('/result/', req)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
