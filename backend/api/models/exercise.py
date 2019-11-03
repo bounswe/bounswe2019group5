@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 from .user import User
 
@@ -32,6 +33,8 @@ class Exercise(Exam):
         ('C2', 'C2'),
     ]
     level = models.CharField(choices=levels, max_length=2)
+    tags = ArrayField(models.CharField(max_length=25), size=10, null=True)
+    keywords = ArrayField(models.CharField(max_length=25), size=10, null=True)
 
 
 class UserExerciseRelation(models.Model):
