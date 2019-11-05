@@ -37,11 +37,6 @@ class Exercise(Exam):
     keywords = ArrayField(models.CharField(max_length=25), size=10, null=True)
 
 
-class UserExerciseRelation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_exercise_relation')
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='user_exercise_relation')
-
-
 class Result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='result')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='result')

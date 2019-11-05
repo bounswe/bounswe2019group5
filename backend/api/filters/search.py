@@ -10,10 +10,12 @@ class SearchFilterSet(filters.FilterSet):
 
     language = filters.CharFilter(method='filter_language')
 
+    type = filters.CharFilter(method='filter_type')
+
     @staticmethod
     def filter_tag(queryset, name, value):
-        tagged = Q(tags__contains=[value])
-        return queryset.filter(tagged)
+        tag = Q(tags__contains=[value])
+        return queryset.filter(tag)
 
     @staticmethod
     def filter_keyword(queryset, name, value):
@@ -24,3 +26,8 @@ class SearchFilterSet(filters.FilterSet):
     def filter_language(queryset, name, value):
         language = Q(language=value)
         return queryset.filter(language)
+
+    @staticmethod
+    def filter_type(queryset, name, value):
+        type = Q(type=value)
+        return queryset.filter(type)
