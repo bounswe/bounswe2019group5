@@ -10,7 +10,6 @@ router.register(r'profile', ProfileView, basename='user')
 router.register(r'proficiency', ProficiencyView, basename='exercise'),
 router.register(r'login', LoginView, basename='user'),
 router.register(r'register', RegisterView, basename='user'),
-router.register(r'exercise', ExerciseView, basename='exercise'),
 router.register(r'result', ResultView, basename='exercise'),
 router.register(r'message', MessageView, basename='message'),
 router.register(r'search', SearchView, basename='search'),

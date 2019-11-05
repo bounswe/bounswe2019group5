@@ -5,7 +5,6 @@ from .models import *
 admin.site.register(User)
 
 admin.site.register(Result)
-admin.site.register(UserExerciseRelation)
 
 admin.site.register(Exercise)
 admin.site.register(Question)

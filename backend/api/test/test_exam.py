@@ -1,8 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
-from ..models import Exercise, Result, UserExerciseRelation, Question, QuestionOption, User
-from ..serializers import ExerciseSerializer
+from ..models import Exercise, Question, QuestionOption, User
 
 
 class ExerciseTest(APITestCase):
