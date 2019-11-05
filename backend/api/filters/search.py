@@ -8,6 +8,8 @@ class SearchFilterSet(filters.FilterSet):
                              label='search exercise with tag')
     keyword = filters.CharFilter(method='filter_keyword')
 
+    language = filters.CharFilter(method='filter_language')
+
     @staticmethod
     def filter_tag(queryset, name, value):
         tagged = Q(tags__contains=[value])
@@ -17,3 +19,8 @@ class SearchFilterSet(filters.FilterSet):
     def filter_keyword(queryset, name, value):
         keyword = Q(keywords__contains=[value])
         return queryset.filter(keyword)
+
+    @staticmethod
+    def filter_language(queryset, name, value):
+        language = Q(language=value)
+        return queryset.filter(language)
