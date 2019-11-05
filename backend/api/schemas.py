@@ -11,6 +11,14 @@ class AutoSchema(openapi.AutoSchema):
         result = super()._map_field(field)
         if 'enum' in result:
             result['type'] = 'string' if isinstance(result['enum'][0], str) else 'integer'
+
+        if 'correct_answer' == field.field_name:
+            result = {
+                'type': 'array',
+                'items': {
+                    'type': 'string'
+                }
+            }
         return result
 
     def get_operation(self, path, method):
@@ -18,7 +26,5 @@ class AutoSchema(openapi.AutoSchema):
 
         # add tags for grouping
         operation['tags'] = [self.view.basename]
-
-
 
         return operation
