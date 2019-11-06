@@ -114,6 +114,6 @@ class ProfileView(mixins.ListModelMixin,
         username = request.query_params.get('username')
         user = User.objects.filter(username=username)
         if not user:
-            return Response({}, status=status.HTTP_404_NOT_FOUND)
+            return Response(ProfileSerializer(request.user).data, status=status.HTTP_200_OK)
         user = user.first()
         return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
