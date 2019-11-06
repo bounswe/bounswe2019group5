@@ -23,10 +23,13 @@ export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
 
 // User Info
 export const USER_PROFILE_REQUESTED = "user_info/USER_PROFILE_REQUESTED";
-export const USER_PROFILE = "user_info/USER_PROFILE";
+export const USER_PROFILE_SET = "user_info/USER_PROFILE_SET";
+export const USER_PROFILE_CLEAR = "user_info/USER_PROFILE_CLEAR";
+
+export const OTHER_USER_PROFILE_SET = "user_info/OTHER_USER_PROFILE_SET";
+
 export const SET_SELECTED_LANGUAGE = "user_info/SET_SELECTED_LANGUAGE";
 export const SET_TOKEN = "user_info/SET_TOKEN";
-export const USER_PROFILE_CLEAR = "user_info/USER_PROFILE_CLEAR";
 
 // Chat
 export const SEND_MESSAGE = "chat/SEND_MESSAGE";

@@ -7,7 +7,6 @@ import {
   
 export const send_message = (token, to, message) => {
     return dispatch => {
-        console.log("sdfsadfasdfsadfas");
         send_message_api(token, to, message)
         .then(messages => {
             dispatch({

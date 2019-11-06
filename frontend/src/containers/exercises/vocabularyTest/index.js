@@ -43,7 +43,6 @@ class VocabularyTest extends Component {
         answers[i] = this.props.exercises.vocabularyTest.questions[
           i
         ].question_options[0].text;
-      console.log("YENI" + answers);
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -97,9 +96,6 @@ class VocabularyTest extends Component {
       const questionIndex = this.state.questionIndex;
       const question = vocabularyTest.questions[questionIndex];
 
-      console.log(
-        "SELAMEDDIN " + questionIndex + " " + this.state.answers[questionIndex]
-      );
       return (
         <Container
           component="main"

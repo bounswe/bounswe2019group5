@@ -57,8 +57,6 @@ export class Chat extends Component {
                 {this.props.chat.messages!=null &&
                     <MessageList
                         className='message-list'
-                        lockable={true}
-                        toBottomHeight={100}
                         dataSource={this.props.chat.messages} />
                 }
                 <div style={{ border: '2px solid orange', 'border-radius': '2px', margin: '10px' }}>

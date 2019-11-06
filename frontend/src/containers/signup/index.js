@@ -43,8 +43,6 @@ class SignUp extends Component {
   };
 
   componentDidMount(){
-    console.log(this.props.authentication);
-    console.log("Component kurulurken user profile resetlendi!");
     this.props.clear_user_profile();
     this.props.clear_authentication();
   }
@@ -52,7 +50,6 @@ class SignUp extends Component {
   render() {
 
     const {classes} = this.props;
-    console.log(this.props);
 
     if (this.props.userInfo.token != null) {
       return (

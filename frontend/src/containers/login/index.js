@@ -35,7 +35,6 @@ class Login extends Component {
   };
 
   componentDidMount(){
-    console.log(this.props.authentication);
     this.props.clear_user_profile();
     this.props.clear_authentication();
   }
