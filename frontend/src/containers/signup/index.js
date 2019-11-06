@@ -24,7 +24,7 @@ class SignUp extends Component {
     email: "",
     username: "",
     password: "",
-    native_language: ""
+    native_language: "english",
   };
   handleChange = e => {
     this.setState({
@@ -152,10 +152,11 @@ class SignUp extends Component {
                     <Form.Control
                       as="select"
                       id="native_language"
+                      value="english"
                       onChange={this.handleChange}>
-                      <option>English</option>
-                      <option>Turkish</option>
-                      <option>German</option>
+                      <option>english</option>
+                      <option>turkish</option>
+                      <option>german</option>
                     </Form.Control>
                   </Grid>
 

@@ -12,7 +12,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  console.log("redux");
   console.log(action.type);
   console.log(action.profile);
 
