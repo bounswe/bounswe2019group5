@@ -12,6 +12,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
+  console.log("redux");
+  console.log(action.type);
+  console.log(action.profile);
+
   switch (action.type) {
 
     case SET_SELECTED_LANGUAGE:
@@ -36,7 +40,7 @@ export default (state = initialState, action) => {
     case USER_PROFILE_SET:
       return {
         ...state,
-        myProfile: action.profile,
+        userProfile: action.profile,
       };
 
     case OTHER_USER_PROFILE_SET:

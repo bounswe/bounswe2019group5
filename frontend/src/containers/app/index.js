@@ -58,6 +58,16 @@ class App extends Component {
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
+
+            {
+              // TODO -> Profil Page hazir oldugunda buradan link edilecek
+            }
+            {this.props.userInfo.token && this.props.userInfo.userProfile && (
+              <Link to="/">
+                <Button variant="outline-success">My Profile({this.props.userInfo.userProfile.username})</Button>
+              </Link>
+            )}
+
             {!this.props.userInfo.token && (
               <Link to="/login">
                 <Button variant="outline-warning">Login</Button>
@@ -96,7 +106,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication, userInfo }) => ({
+const mapStateToProps = ({ userInfo }) => ({
   userInfo,
 });
 

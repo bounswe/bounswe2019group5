@@ -7,9 +7,6 @@ function timeout(ms) {
 
 export const get_user_profile = async (token, username) => {
 
-    console.log("GELDIM get_user_profile ");
-    console.log(username);
-
     let profile = await axios
         .get( parameters.apiUrl + "/profile",
             {
@@ -29,8 +26,6 @@ export const get_user_profile = async (token, username) => {
                 message: err.response ? err.response.data.message : "Connection Error!"
             };
         });
-    
-    console.log(profile);
 
     return profile;
         

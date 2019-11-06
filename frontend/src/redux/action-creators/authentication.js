@@ -22,7 +22,6 @@ export const login = (usernameOrEmail, password) => {
 
         get_user_profile_api(response.token, usernameOrEmail)
           .then(profile => {
-
             dispatch({
               type: USER_PROFILE_SET,
               profile,
