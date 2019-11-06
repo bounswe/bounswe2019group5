@@ -22,13 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class Question {
-    int id; // As returned by the backend
-    String text;
-    String options[];
-    String answer;
-}
-
 public class ProfExamActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
@@ -38,8 +31,7 @@ public class ProfExamActivity extends AppCompatActivity {
     Button buttons[] = new Button[4];
     int currentQuestionIndex;
 
-    private int examId; // As returned by the backend
-    private Question[] questions;
+    private Exercise exercise;
     private String[] chosenAnswers;
 
     @Override
@@ -68,7 +60,7 @@ public class ProfExamActivity extends AppCompatActivity {
     }
 
     private void getQuestions(String languageChoice) {
-        final String path = "user/proficiency?language=" + languageChoice.toLowerCase();
+        final String path = "proficiency?language=" + languageChoice.toLowerCase();
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONObject>() {
             @Override
@@ -93,28 +85,14 @@ public class ProfExamActivity extends AppCompatActivity {
     }
 
     private void questionsArrived(JSONObject object) throws JSONException {
-        examId = object.getInt("id");
-        JSONArray jquestions = object.getJSONArray("questions");
-        questions = new Question[jquestions.length()];
-        chosenAnswers = new String[questions.length];
-        for (int i=0; i<questions.length; i++) {
-            JSONObject jquestion = (JSONObject) jquestions.get(i);
-            JSONArray joptions = jquestion.getJSONArray("question_options");
-            String options[] = new String[4];
-            for (int j=0; j<4; j++)
-                options[j] = ((JSONObject)(joptions.get(j))).getString("text");
-            questions[i] = new Question();
-            questions[i].text = jquestion.getString("text");
-            questions[i].options = options;
-            questions[i].id = jquestion.getInt("id");
-            questions[i].answer = jquestion.getString("answer");
-        }
+        exercise = Exercise.fromJSON(object);
+        chosenAnswers = new String[exercise.questions.length];
     }
 
     private void setCurrentQuestion(int index) {
-        question_textview.setText(questions[index].text);
+        question_textview.setText(exercise.questions[index].text);
         for (int i=0; i<4; i++)
-            buttons[i].setText(questions[index].options[i]);
+            buttons[i].setText(exercise.questions[index].options[i]);
     }
 
     /*private int getButtonIndex(Button b) {
@@ -129,7 +107,7 @@ public class ProfExamActivity extends AppCompatActivity {
         chosenAnswers[currentQuestionIndex] = v.getText().toString();
         currentQuestionIndex += 1;
 
-        if (currentQuestionIndex == questions.length) {
+        if (currentQuestionIndex == exercise.questions.length) {
             try {
                 finishTest();
             }
@@ -159,11 +137,11 @@ public class ProfExamActivity extends AppCompatActivity {
 
     private void finishTest() throws JSONException {
         int correctCount = 0;
-        for (int i=0; i<questions.length; i++) {
-            if (chosenAnswers[i].equals(questions[i].answer))
+        for (int i=0; i<exercise.questions.length; i++) {
+            if (chosenAnswers[i].equals(exercise.questions[i].answer))
                 correctCount += 1;
         }
-        showResults(correctCount, questions.length - correctCount); // The get_exam_result API wasn't ready at the time I wrote the code below. It can be turned on once the API becomes functional. No guarantees that it works.
+        showResults(correctCount, exercise.questions.length - correctCount); // The get_exam_result API wasn't ready at the time I wrote the code below. It can be turned on once the API becomes functional. No guarantees that it works.
         /*final String path = "user/get_exam_result";
         JSONObject data = new JSONObject();
         data.put("id", examId);

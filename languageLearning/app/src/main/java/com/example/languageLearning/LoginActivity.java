@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void sendLoginRequest(final String username, String password, RequestQueue reqQ){
 
-        String loginUrl = "http://18.197.149.174:8000/user/login";
+        String loginUrl = MyApplication.SERVER + "login/";
 
         JSONObject json = new JSONObject();
         try{
