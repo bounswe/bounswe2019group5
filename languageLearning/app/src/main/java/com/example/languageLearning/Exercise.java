@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Exercise {
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
     int id; // As returned by the backend
     Question[] questions;
 

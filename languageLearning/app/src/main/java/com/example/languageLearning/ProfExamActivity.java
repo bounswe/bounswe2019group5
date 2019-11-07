@@ -136,30 +136,27 @@ public class ProfExamActivity extends AppCompatActivity {
     }
 
     private void finishTest() throws JSONException {
-        int correctCount = 0;
-        for (int i=0; i<exercise.questions.length; i++) {
-            if (chosenAnswers[i].equals(exercise.questions[i].answer))
-                correctCount += 1;
-        }
-        showResults(correctCount, exercise.questions.length - correctCount); // The get_exam_result API wasn't ready at the time I wrote the code below. It can be turned on once the API becomes functional. No guarantees that it works.
-        /*final String path = "user/get_exam_result";
+        final String path = "result/";
         JSONObject data = new JSONObject();
-        data.put("id", examId);
+        data.put("id", exercise.id);
         JSONArray answers = new JSONArray();
-        for (int i=0; i<questions.length; i++) {
-            JSONObject object = new JSONObject();
-            object.put("id", questions[i].id);
-            object.put("answer", chosenAnswers[i]);
-            answers.put(object);
+        for (int i=0; i<exercise.questions.length; i++) {
+            answers.put(chosenAnswers[i]);
         }
         data.put("answers", answers);
         app.initiateAPICall(Request.Method.POST, path, data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    int trueCount = response.getInt("nuOfTrueAnswers");
-                    int falseCount = response.getInt("nuOfFalseAnswers");
-                    showResults(trueCount, falseCount);
+                    JSONArray answer_key = response.getJSONArray("correct_answer");
+                    int trueCount = 0;
+                    for (int i=0; i<exercise.questions.length; i++) {
+                        if (answer_key.getString(i).equals(chosenAnswers[i]))
+                            trueCount++;
+                    }
+                    int falseCount = exercise.questions.length-trueCount;
+                    String level = response.getString("level");
+                    showResults(trueCount, falseCount, level);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -172,15 +169,15 @@ public class ProfExamActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 finish();
             }
-        });*/
+        });
     }
 
-    private void showResults(int correctCount, int falseCount) {
+    private void showResults(int correctCount, int falseCount, String level) {
         Intent intent = new Intent(this, ProfResultActivity.class);
         Bundle b = new Bundle();
         b.putInt("COUNT_CORRECT", correctCount);
         b.putInt("COUNT_INCORRECT", falseCount);
-        b.putString("LEVEL", calculateLevel(correctCount, correctCount + falseCount));
+        b.putString("LEVEL", level);
         intent.putExtras(b);
         startActivity(intent);
         finish();
