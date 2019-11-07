@@ -20,7 +20,7 @@ export const login = (usernameOrEmail, password) => {
           username: usernameOrEmail, 
         });
 
-        get_user_profile_api(response.token, usernameOrEmail)
+        get_user_profile_api(response.token, "")
           .then(profile => {
             dispatch({
               type: USER_PROFILE_SET,
@@ -70,7 +70,7 @@ export const signup = (
             username, 
           });
 
-          get_user_profile_api(response.token, username)
+          get_user_profile_api(response.token, "")
             .then(profile => {
 
               dispatch({

@@ -29,9 +29,21 @@ export const set_token = (token, username) => {
   };
 }
 
+export const set_user_profile = (token) => {
+  return dispatch => {
+    get_user_profile_api(token, "")
+      .then(profile => {
+        dispatch({
+          type: USER_PROFILE_SET,
+          profile,
+        });
+      });
+  };
+}
+
 export const set_other_user_profile = (token, username) => {
   return dispatch => {
-    get_user_profile_api(token)
+    get_user_profile_api(token, username)
       .then(profile => {
         dispatch({
           type: OTHER_USER_PROFILE_SET,
