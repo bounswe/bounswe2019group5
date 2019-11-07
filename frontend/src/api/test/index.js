@@ -1,12 +1,8 @@
 import parameters from '../parameters';
 import axios from 'axios';
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { AssertionError } from 'assert';
 
 export const get_prof_test = async (token, language) => {
-
-  console.log(language);
 
   return await axios
     .get(parameters.apiUrl+'/search/',
@@ -33,29 +29,47 @@ export const get_prof_test = async (token, language) => {
 
 };
 
-export const get_test_result = async (token, test, answers) => {
-  await timeout(500);
-  const trueOptions = [];
-  const statusOfAnswers = [];
+export const get_test_result = async (token, id, answers) => {
   
-  test.questions.map(question => {
-    trueOptions.push(question.answer);
-    statusOfAnswers.push(false);
-  });
+  let examResult = await axios
+        .post(parameters.apiUrl+'/result/',
+            {
+                id,
+                answers,
+            },
+            {
+                headers: {
+                    'Content-Type':'application/json',
+                    'Authorization': 'Token '+token,
+                },
+                timeout: 10000,
+            }
+        )
+        .then(response => response.data)
+        .catch(err => null);
+    
+  if (!examResult || !examResult.correct_answer)  return null;
+
+  if (examResult.correct_answer.length != answers.length) return null;
 
   const result = {
     nuOfTrueAnswers: 0,
     nuOfFalseAnswers: 0,
-    statusOfAnswers
+    statusOfAnswers: Array(answers.length),
   };
+
   for (let i = 0; i < answers.length; i++) {
-    result.statusOfAnswers[i] = answers[i] === trueOptions[i];
-    if (answers[i] === trueOptions[i]) {
+    result.statusOfAnswers[i] = answers[i] === examResult.correct_answer[i];
+    if (answers[i] === examResult.correct_answer[i]) {
       result.nuOfTrueAnswers++;
     } else {
       result.nuOfFalseAnswers++;
     }
   }
-  console.log(result);
-  return result;
+
+  examResult.result = result;
+
+  console.log(examResult);
+
+  return examResult;
 };

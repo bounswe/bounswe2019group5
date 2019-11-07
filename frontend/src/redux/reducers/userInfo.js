@@ -24,6 +24,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...initialState,
+
+        selectedLanguage: state.selectedLanguage,    // We don't want to clear selected lang
       };
 
     case SET_TOKEN:

@@ -133,7 +133,7 @@ class ProfTest extends Component {
                   selectedOption={this.state.answers[questionIndex]}
                   questionAnswerStatus={
                     this.props.test.testResult
-                      ? this.props.test.testResult.statusOfAnswers[
+                      ? this.props.test.testResult.result.statusOfAnswers[
                           questionIndex
                         ]
                       : null
@@ -185,7 +185,7 @@ class ProfTest extends Component {
                     onClick={() =>
                       this.props.get_test_result(
                         this.props.userInfo.token,
-                        profTest,
+                        profTest.id,
                         this.state.answers
                       )
                     }

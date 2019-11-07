@@ -11,7 +11,7 @@ var lock_for_get_all_messages = false;
 export const send_message = async (token, to, message, messageTextBoxReference) => {
 
     let newMessage = await axios
-        .post('http://35.158.176.194/message/',
+        .post(parameters.apiUrl+'/message/',
             {
                 username: to,
                 text: message,

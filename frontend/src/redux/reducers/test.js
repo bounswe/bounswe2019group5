@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isFinished: true,
+        isFinished: action.testResult!=null,
         testResult: action.testResult,
       }
     
