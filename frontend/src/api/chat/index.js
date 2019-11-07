@@ -5,15 +5,13 @@ function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-// convert 2019-11-07T08:12:22.447584Z TO 
-
 var messages = [];
 var lock_for_get_all_messages = false;
 
 export const send_message = async (token, to, message, messageTextBoxReference) => {
 
     let newMessage = await axios
-        .post(parameters.apiUrl+'/message',
+        .post('http://35.158.176.194/message/',
             {
                 username: to,
                 text: message,
@@ -21,7 +19,7 @@ export const send_message = async (token, to, message, messageTextBoxReference) 
             {
                 headers: {
                     'Content-Type':'application/json',
-                    Authorization: 'Token '+token,
+                    'Authorization': 'Token '+token,
                 },
                 timeout: 10000,
             }
@@ -56,10 +54,10 @@ export const get_all_messages = async (token, _with) => {
     lock_for_get_all_messages = true;
 
     messages = await axios
-        .get(parameters.apiUrl+'/message',
+        .get(parameters.apiUrl+'/message/',
         {
             params: {
-                username: 'enesoncu2',
+                username: _with,
             },
             headers: {
                 'Content-Type':'application/json',

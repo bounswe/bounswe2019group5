@@ -99,7 +99,7 @@ class App extends Component {
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/vocabulary-test" component={VocabularyTest} />
-          <Route exact path="/chat" component={Chat} />
+          <Route exact path="/chat/:chatWith" component={Chat} />
         </main>
       </div>
     );

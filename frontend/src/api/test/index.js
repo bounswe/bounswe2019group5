@@ -6,17 +6,23 @@ function timeout(ms) {
 
 export const get_prof_test = async (token, language) => {
 
+  console.log(language);
+
   return await axios
-    .get(parameters.apiUrl+'/proficiency/'+language,
+    .get(parameters.apiUrl+'/search/',
       {
+        params: {
+          language,
+          type: 'proficiency',
+        },
         headers: {
           'Content-Type':'application/json',
-          "Authorization": "Token "+token,
+          'Authorization': 'Token '+token,
         },
         timeout: 10000,
       }
     )
-    .then(response => response.data)
+    .then(response => response.data[0])
     .catch(err => 
       {
         return {

@@ -14,9 +14,9 @@ import styles from "./styles";
 export class Chat extends Component {
 
     componentDidMount() {
-        this.props.activate_chat(this.props.userInfo.token, this.props.chatWith);
+        this.props.activate_chat(this.props.userInfo.token, this.props.match.params.chatWith);
         const f = () => {
-            this.props.get_all_messages(this.props.userInfo.token, this.props.chatWith || "enesoncu2");
+            this.props.get_all_messages(this.props.userInfo.token, this.props.match.params.chatWith);
             this.timer = setTimeout(f, 3000);
         }
         f();
@@ -39,7 +39,7 @@ export class Chat extends Component {
         }
 
         const {classes} = this.props;
-        let chatWith = this.props.chatWith || "enesoncu2";
+        let chatWith = this.props.match.params.chatWith;
 
         return (
             
@@ -72,7 +72,7 @@ export class Chat extends Component {
                                 onClick={
                                     () => {
                                         this.props.send_message(this.props.userInfo.token,
-                                            this.chatWith,
+                                            chatWith,
                                             this.refs.send_message_text.state.value, 
                                             this.refs.send_message_text
                                         );
