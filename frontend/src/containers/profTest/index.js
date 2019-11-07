@@ -35,10 +35,11 @@ class ProfTest extends Component {
 
   componentDidMount() {
     this.props.clear_prof_test();
-    this.props.get_prof_test(
-      this.props.userInfo.token,
-      this.props.userInfo.selectedLanguage
-    );
+    if (this.props.userInfo.selectedLanguage)
+      this.props.get_prof_test(
+        this.props.userInfo.token,
+        this.props.userInfo.selectedLanguage
+      );
     this.state.isAnswersPrepared = false;
   }
 

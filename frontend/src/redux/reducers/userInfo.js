@@ -12,9 +12,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  console.log(action.type);
-  console.log(action.profile);
-
   switch (action.type) {
 
     case SET_SELECTED_LANGUAGE:

@@ -5,9 +5,9 @@ import {
   import { send_message as send_message_api  } from "../../api/chat";
   import { get_all_messages as get_all_messages_api  } from "../../api/chat";
   
-export const send_message = (token, to, message) => {
+export const send_message = (token, to, message, messageTextBoxReference) => {
     return dispatch => {
-        send_message_api(token, to, message)
+        send_message_api(token, to, message, messageTextBoxReference)
         .then(messages => {
             dispatch({
                 type: SEND_MESSAGE,

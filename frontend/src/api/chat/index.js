@@ -5,7 +5,89 @@ function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-var messages = [
+// convert 2019-11-07T08:12:22.447584Z TO 
+
+var messages = [];
+var lock_for_get_all_messages = false;
+
+export const send_message = async (token, to, message, messageTextBoxReference) => {
+    // api call will be written
+
+    let newMessage = await axios
+        .post(parameters.apiUrl+'/message',
+            {
+                username: to,
+                text: message,
+            },
+            {
+                headers: {
+                    'Content-Type':'application/json',
+                    Authorization: 'Token '+token,
+                },
+                timeout: 10000,
+            }
+        )
+        .then(response => {
+            messageTextBoxReference.clear();
+            return {
+                position: response.data.to_username === to ? 'right' : 'left',
+                type: 'text',
+                text: response.data.text,
+                date: new Date(response.data.date),
+            };
+        })
+        .catch(err => null );
+    
+    if (newMessage && !lock_for_get_all_messages)
+        messages = Array(messages).append(messages, newMessage);
+
+    return messages;
+}
+
+export const get_all_messages = async (token, _with) => {
+
+    lock_for_get_all_messages = true;
+
+    messages = await axios
+        .get(parameters.apiUrl+'/message',
+        {
+            params: {
+                username: 'enesoncu2',
+            },
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': 'Token '+token,
+            },
+            timeout: 10000,
+        }
+        )
+        .then(response => {
+            return response.data
+                .sort((a,b) => (new Date(a.date))-(new Date(b.date)))
+                .map(message => {
+                    return {
+                        position: message.to_username === _with ? 'right' : 'left',
+                        type: 'text',
+                        text: message.text,
+                        date: new Date(message.date),
+                    };
+            });
+        })
+        .catch(err => 
+            {
+                return {
+                    message: err.response? err.response.data.message : 'Connection Error!',
+                };
+            }
+        );
+
+    lock_for_get_all_messages = false;
+
+    return messages;
+}
+
+/*
+[
     {
         position: 'right',
         type: 'text',
@@ -31,78 +113,4 @@ var messages = [
         date: new Date(),
     },
 ];
-
-export const send_message = async (token, to, message) => {
-    // api call will be written
-    
-    const data = await axios
-        .post(parameters.apiUrl+'/login/',
-            {
-                to_username: to,
-                from_username: "enesoncu",
-                text: message,
-                date: new Date(),
-            },
-            {
-                headers: {'Content-Type':'application/json'},
-                timeout: 10000,
-            }
-        )
-        .then(response => response.data)
-        .catch(err => 
-            {
-                return {
-                    token: null,
-                    message: err.response? err.response.data.message : 'Connection Error!',
-                };
-            }
-        );
-
-    /*messages.push(
-        {
-            position: 'right',
-            type: 'text',
-            text: message,
-            date: new Date(),
-        },
-    );*/
-
-}
-
-export const get_all_messages = async (token, to) => {
-    
-    // api call will be written
-
-    let messages = await axios
-        .get(parameters.apiUrl+'/message',
-        {
-            headers: {
-            'Content-Type':'application/json',
-            "Authorization": "Token "+token,
-            },
-            params: {
-                username: to,
-            },
-            timeout: 10000,
-        }
-        )
-        .then(response => response.data)
-        .catch(err => 
-            {
-                return {
-                message: err.response? err.response.data.message : 'Connection Error!',
-                };
-            }
-        );
-    if (to=="reactBot" && Math.random() < 0.9)
-    {
-        messages.push({
-            position: 'left',
-            type: 'text',
-            text: Math.random().toString() + "Message" + "",
-            date: new Date(),
-        });
-    }
-
-    return messages;
-}
+*/

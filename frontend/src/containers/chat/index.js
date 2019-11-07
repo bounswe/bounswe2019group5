@@ -16,7 +16,7 @@ export class Chat extends Component {
     componentDidMount() {
         this.props.activate_chat(this.props.userInfo.token, this.props.chatWith);
         const f = () => {
-            this.props.get_all_messages(this.props.userInfo.token, this.props.chatWith || "reactBot");
+            this.props.get_all_messages(this.props.userInfo.token, this.props.chatWith || "enesoncu2");
             this.timer = setTimeout(f, 3000);
         }
         f();
@@ -39,7 +39,7 @@ export class Chat extends Component {
         }
 
         const {classes} = this.props;
-        let chatWith = this.props.chatWith || "reactBot";
+        let chatWith = this.props.chatWith || "enesoncu2";
 
         return (
             
@@ -73,8 +73,9 @@ export class Chat extends Component {
                                     () => {
                                         this.props.send_message(this.props.userInfo.token,
                                             this.chatWith,
-                                            this.refs.send_message_text.state.value);
-                                        this.refs.send_message_text.clear();
+                                            this.refs.send_message_text.state.value, 
+                                            this.refs.send_message_text
+                                        );
                                 }}
                             />
                     }/>
