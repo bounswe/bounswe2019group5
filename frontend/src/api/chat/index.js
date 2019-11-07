@@ -11,7 +11,6 @@ var messages = [];
 var lock_for_get_all_messages = false;
 
 export const send_message = async (token, to, message, messageTextBoxReference) => {
-    // api call will be written
 
     let newMessage = await axios
         .post(parameters.apiUrl+'/message',
@@ -36,10 +35,18 @@ export const send_message = async (token, to, message, messageTextBoxReference) 
                 date: new Date(response.data.date),
             };
         })
-        .catch(err => null );
+        .catch(err => {
+            messageTextBoxReference.clear();
+            return {
+                position: 'right',
+                type: 'text',
+                text: "Connection Error!",
+                date: new Date(),
+            };
+        });
     
     if (newMessage && !lock_for_get_all_messages)
-        messages = Array(messages).append(messages, newMessage);
+        messages.push(newMessage);
 
     return messages;
 }
