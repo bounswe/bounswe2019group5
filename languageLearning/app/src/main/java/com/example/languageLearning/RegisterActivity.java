@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Submit(JSONObject data) {
         final JSONObject savedata = data;
-        String URL = "http://18.197.149.174:8000/user/register";
+        String URL = MyApplication.SERVER + "register/";
 
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());

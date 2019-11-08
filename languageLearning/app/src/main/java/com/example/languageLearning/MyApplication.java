@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyApplication extends Application {
+    static final String SERVER = "http://35.158.176.194/";
     private String token;
     private RequestQueue requestQueue;
     private String username;
@@ -55,7 +56,7 @@ public class MyApplication extends Application {
                                 @Nullable JSONObject data,
                                 Response.Listener<JSONObject> listener,
                                 @Nullable final Response.ErrorListener errorListener) {
-        String URL = "http://18.197.149.174:8000/" + path;
+        String URL = SERVER + path;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, URL, data, listener, new Response.ErrorListener() {
             @Override
