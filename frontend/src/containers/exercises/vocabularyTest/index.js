@@ -116,7 +116,7 @@ class VocabularyTest extends Component {
                   selectedOption={this.state.answers[questionIndex]}
                   questionAnswerStatus={
                     this.props.exercises.testResult
-                      ? this.props.exercises.testResult.statusOfAnswers[
+                      ? this.props.exercises.testResult.result.statusOfAnswers[
                           questionIndex
                         ]
                       : null
@@ -168,7 +168,7 @@ class VocabularyTest extends Component {
                     onClick={() =>
                       this.props.get_test_result(
                         this.props.userInfo.token,
-                        vocabularyTest,
+                        vocabularyTest.id,
                         this.state.answers
                       )
                     }
