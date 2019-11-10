@@ -21,6 +21,14 @@ class AutoSchema(openapi.AutoSchema):
             }
         return result
 
+    def _get_responses(self, path, method):
+        s = super()._get_responses(path, method)
+        if path == '/profile/':
+            schema = s.get('200').get('content').get('application/json').get('schema')
+            schema = schema.get('items')
+            s.get('200').get('content').get('application/json')['schema'] = schema
+        return s
+
     def get_operation(self, path, method):
         operation = super().get_operation(path, method)
 
