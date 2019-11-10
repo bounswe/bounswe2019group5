@@ -45,3 +45,19 @@ class Result(models.Model):
 
     class Meta:
         unique_together = ('user', 'exercise')
+
+
+class Essay(Exam):
+    type = 'writing'
+
+    writing = models.FileField(upload_to='essays')
+
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='author')
+
+    reviewer = models.ForeignKey(User,
+                                 on_delete=models.CASCADE,
+                                 related_name='reviewer',
+                                 blank=True,
+                                 null=True)
