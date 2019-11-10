@@ -15,6 +15,7 @@ class Exam(models.Model):
         ('grammar', 'grammar'),
         ('reading', 'reading'),
         ('proficiency', 'proficiency'),
+        ('writing', 'writing'),
     ]
     type = models.CharField(choices=types, max_length=11, default='vocabulary')
     language = models.CharField(max_length=20, choices=languageChoices)
@@ -48,7 +49,6 @@ class Result(models.Model):
 
 
 class Essay(Exam):
-    type = 'writing'
 
     writing = models.FileField(upload_to='essays')
 

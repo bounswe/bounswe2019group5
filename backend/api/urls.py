@@ -12,6 +12,7 @@ router.register(r'register', RegisterView, basename='user'),
 router.register(r'result', ResultView, basename='exercise'),
 router.register(r'message', MessageView, basename='message'),
 router.register(r'search', SearchView, basename='exercise'),
+router.register(r'essay', EssayView, basename='writing'),
 
 
 urlpatterns = [
@@ -33,6 +34,8 @@ urlpatterns = [
         description="Bonibon API Schema",
         public=True
     ), name='openapi-schema'),
+
+    path('file', get_file),
 
     *router.urls
 

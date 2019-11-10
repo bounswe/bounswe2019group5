@@ -10,6 +10,7 @@ services:
     build: .
     volumes:
       - migrations:/app/api/migrations
+      - essays:/app/essays
     ports:
       - "80:8000"
   db:

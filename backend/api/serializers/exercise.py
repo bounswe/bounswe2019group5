@@ -47,3 +47,31 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError('exercise has already solved')
 
         return result
+
+
+class EssaySerializer(serializers.HyperlinkedModelSerializer):
+
+    reviewer = serializers.CharField(source='reviewer.username', default=None)
+
+    class Meta:
+        model = Essay
+        fields = ('id', 'type', 'language', 'writing', 'reviewer')
+
+
+class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
+
+    reviewer = serializers.CharField(required=False)
+
+    class Meta:
+        model = Essay
+        fields = ('id', 'type', 'language', 'writing', 'reviewer')
+        read_only_fields = ('type',)
+
+    def validate(self, attrs):
+        request_data = self.context.get('request').data
+        attrs['type'] = 'writing'
+        attrs['author'] = self.context.get('request').user
+        if 'reviewer' in request_data:
+            attrs['reviewer'] = User.objects.get(username=request_data.get('reviewer'))
+        return super().validate(attrs)
+
