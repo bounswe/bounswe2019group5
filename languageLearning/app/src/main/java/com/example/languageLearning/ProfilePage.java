@@ -67,7 +67,7 @@ public class ProfilePage extends AppCompatActivity {
 
         Log.i(TAG, "Profile on create");
 
-        final String path = "profile?username=" + app.getUsername();
+        final String path = "profile/?username=" + app.getUsername();
 
         Log.i(TAG, "path: " + path );
 
