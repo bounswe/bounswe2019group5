@@ -18,6 +18,10 @@
         <activity
             android:name=".ProfExamActivity"
             android:exported="true" />
+        <activity android:name=".ExerciseActivity"/>
+        <activity
+            android:name=".ExerciseActivityTestActivity"
+            android:exported="true" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

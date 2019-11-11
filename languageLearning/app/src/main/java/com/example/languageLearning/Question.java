@@ -4,11 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     int id; // As returned by the backend
     String text;
     String options[];
-    String answer;
 
     public static Question fromJSON(JSONObject jquestion) throws JSONException {
         Question question = new Question();
@@ -19,7 +20,6 @@ public class Question {
         question.text = jquestion.getString("text");
         question.options = options;
         question.id = jquestion.getInt("id");
-        question.answer = jquestion.getString("answer");
         return question;
     }
 }
