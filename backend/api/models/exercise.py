@@ -16,6 +16,7 @@ class Exam(models.Model):
         ('reading', 'reading'),
         ('proficiency', 'proficiency'),
         ('writing', 'writing'),
+        ('listening', 'listening')
     ]
     type = models.CharField(choices=types, max_length=11, default='vocabulary')
     language = models.CharField(max_length=20, choices=languageChoices)
@@ -61,3 +62,8 @@ class Essay(Exam):
                                  related_name='reviewer',
                                  blank=True,
                                  null=True)
+
+
+class ListeningExercise(Exercise):
+    question = models.FileField(upload_to='audio')
+    options = ArrayField(models.CharField(max_length=40), size=4)
