@@ -1,7 +1,7 @@
-from .comment import CommentSerializer
-from .exercise import ExerciseSerializer, ResultSerializer, EssaySerializer, EssayCreateSerializer
-from .language import LanguageSerializer
-from .question import QuestionOptionSerializer, QuestionSerializer
-from .user import ProfileSerializer, RegisterSerializer, LoginSerializer
-from .message import MessageSerializer
-
+from .comment import *
+from .exercise import *
+from .language import *
+from .question import *
+from .user import *
+from .message import *
+from .annotation import *
