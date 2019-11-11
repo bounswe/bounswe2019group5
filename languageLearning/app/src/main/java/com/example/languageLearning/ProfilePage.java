@@ -5,19 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 public class ProfilePage extends AppCompatActivity {
+
+    MyApplication app;
 
     private static final String TAG = "ProfilePage";
 
-    // Dummy JSON
+    JSONObject profileResponse;
+
+    // Dummy JSON creator
     JSONObject createJSON(){
 
         JSONObject json = new JSONObject();
@@ -59,9 +63,30 @@ public class ProfilePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+        app = (MyApplication) getApplication();
 
+        Log.i(TAG, "Profile on create");
 
-        JSONObject json = createJSON();
+        final String path = "profile?username=" + app.getUsername();
+
+        Log.i(TAG, "path: " + path );
+
+        app.initiateAPICall(Request.Method.GET, path, null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i(TAG, "Profile fetched");
+                    profileResponse = response;
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i(TAG, error.getMessage());
+                    finish();
+                }
+        });
+
+        JSONObject json = profileResponse;
 
         // Necessary Profile Fields
         String firstName_s;
@@ -72,12 +97,12 @@ public class ProfilePage extends AppCompatActivity {
 
         // Parse the json and initialize fields
         try{
-            firstName_s = json.getString("firstName");
-            lastName_s = json.getString("lastName");
-            userName_s = json.getString("userName");
-            userNativeLang_s = json.getString("userNativeLang");
+            firstName_s = json.getString("first_name");
+            lastName_s = json.getString("last_name");
+            userName_s = json.getString("username");
+            userNativeLang_s = json.getString("native_language");
 
-            userRateAverage_d = json.getDouble("userRateAverage");
+            userRateAverage_d = json.getDouble("rating_average");
 
             Log.i(TAG, "firstName_s: " + firstName_s);
 
