@@ -1,5 +1,6 @@
-from .exam import ProficiencyView
-from .user import RegisterView, LoginView, ProfileView
-from .exercise import ResultView, EssayView, get_file
-from .message import MessageView
-from .search import SearchView
+from .exam import *
+from .user import *
+from .exercise import *
+from .message import *
+from .search import *
+from .annotation import *
