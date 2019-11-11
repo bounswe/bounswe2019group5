@@ -11,35 +11,41 @@ class Annotation(models.Model):
         ('revision', 'revision')
     ]
 
-    context = models.CharField(max_length=len('http://www.w3.org/ns/anno.jsonld'))
+    context = models.URLField()
+
     type = models.CharField(max_length=len('annotations'))
+
     motivation = models.CharField(max_length=8,
                                   choices=motivation)
+
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
                                 related_name='creator')
+
     created = models.DateTimeField(auto_now_add=True)
 
 
 class AnnotationBody(models.Model):
     purposes = [
-        ('commenting', 'commenting'),
-        ('replying', 'replying')
+        ('commenting', 'commenting')
     ]
 
     type = models.CharField(max_length=len('TextualBody'))
+
     purpose = models.CharField(max_length=len('commenting'),
                                choices=purposes)
+
     value = models.CharField(max_length=1000)
-    annotation = models.ForeignKey(Annotation,
-                                   on_delete=models.CASCADE,
-                                   related_name='annotation_body')
+
+    annotation = models.OneToOneField(Annotation,
+                                      on_delete=models.CASCADE,
+                                      related_name='body')
 
 
 class AnnotationTarget(models.Model):
-    annotation = models.ForeignKey(Annotation,
-                                   on_delete=models.CASCADE,
-                                   related_name='annotation_target')
+    annotation = models.OneToOneField(Annotation,
+                                      on_delete=models.CASCADE,
+                                      related_name='target')
     source = models.ForeignKey(Essay,
                                on_delete=models.CASCADE,
                                related_name='target_essay')
@@ -62,6 +68,6 @@ class AnnotationSelector(models.Model):
     conformsTo = models.CharField(max_length=1000,
                                   choices=SPECIFICATIONS.to_set())
     value = models.CharField(max_length=1000)
-    target = models.ForeignKey(AnnotationTarget,
-                               on_delete=models.CASCADE,
-                               related_name='target_selector')
+    target = models.OneToOneField(AnnotationTarget,
+                                  on_delete=models.CASCADE,
+                                  related_name='selector')

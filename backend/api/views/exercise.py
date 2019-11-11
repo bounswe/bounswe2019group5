@@ -33,7 +33,7 @@ class EssayView(GenericViewSet,
         return Essay.objects.filter(author | reviewer)
 
     def get_serializer_class(self):
-        if self.action == 'create' or 'update':
+        if self.action == 'create' or self.action == 'update':
             return EssayCreateSerializer
         else:
             return EssaySerializer
