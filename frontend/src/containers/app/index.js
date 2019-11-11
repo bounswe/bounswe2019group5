@@ -7,6 +7,7 @@ import About from "../about";
 import Login from "../login";
 import SignUp from "../signup";
 import ProfTest from "../profTest";
+import Profile from "../profile";
 import VocabularyTest from "../exercises/vocabularyTest";
 import Chat from "../chat";
 
@@ -63,7 +64,7 @@ class App extends Component {
               // TODO -> Profil Page hazir oldugunda buradan link edilecek
             }
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
-              <Link to="/">
+              <Link to="/profile">
                 <Button variant="outline-success">My Profile({this.props.userInfo.userProfile.username})</Button>
               </Link>
             )}
@@ -99,6 +100,7 @@ class App extends Component {
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/vocabulary-test" component={VocabularyTest} />
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
         </main>
       </div>
