@@ -29,11 +29,18 @@ class MessageView(mixins.CreateModelMixin,
             raise NotAuthenticated('Token is needed')
 
     def create(self, request, *args, **kwargs):
-        new_message = {
-            'owner': request.user,
-            'username': User.objects.get(username=request.data.get('username')),
-            'text': request.data.get('text')
-        }
+        try:
+            new_message = {
+                'owner': request.user,
+                'username': User.objects.get(username=request.data.get('username')),
+                'text': request.data.get('text')
+            }
+        except:
+            response = {
+                'message': 'username does not exist'
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
         new_message = Message.objects.create(**new_message)
 
         serializer = MessageSerializer(new_message)
