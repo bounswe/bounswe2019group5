@@ -27,6 +27,12 @@ class EssayView(GenericViewSet,
                 mixins.UpdateModelMixin,
                 mixins.RetrieveModelMixin):
 
+    permission_classes = (IsAuthenticated,)
+
+    def check_object_permissions(self, request, obj):
+        if request.user.is_anonymous:
+            raise NotAuthenticated('Token is needed')
+
     def get_queryset(self):
         author = Q(author=self.request.user)
         reviewer = Q(reviewer=self.request.user)
