@@ -135,20 +135,6 @@ public class ProfExamActivity extends AppCompatActivity {
         setCurrentQuestion(currentQuestionIndex);
     }
 
-    private String calculateLevel(int corr, int all) {
-        if (corr < all*18.0/100)
-            return "A1";
-        if (corr < all*36.0/100)
-            return "A2";
-        if (corr < all*54.0/100)
-            return "B1";
-        if (corr < all*72.0/100)
-            return "B2";
-        if (corr < all*90.0/100)
-            return "C1";
-        return "C2";
-    }
-
     private void finishTest() throws JSONException {
         final String path = "result/";
         JSONObject data = new JSONObject();
