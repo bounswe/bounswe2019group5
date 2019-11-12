@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = "TEST";
     private MyApplication app;
-    TextView welcomeMessage;
+    TextView welcomeMessage, currentLanguageView;
     ImageButton profileButton, logoutButton, changeLanguageButton, exerciseButton;
     Dialog popup;
 
@@ -28,6 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         logoutButton = findViewById(R.id.logoutButton);
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         exerciseButton = findViewById(R.id.exerciseButton);
+        currentLanguageView = findViewById(R.id.currentLanguageView);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +61,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
+        currentLanguageView.setText(app.getLanguage().toUpperCase());
 
     }
 
