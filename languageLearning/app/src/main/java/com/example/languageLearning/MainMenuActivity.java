@@ -9,6 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Random;
 
 public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = "TEST";
@@ -75,7 +86,8 @@ public class MainMenuActivity extends AppCompatActivity {
         vocabTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final String path = "search/?type=vocabulary&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
             }
         });
 
@@ -83,7 +95,8 @@ public class MainMenuActivity extends AppCompatActivity {
         grammarTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final String path = "search/?type=grammar&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
             }
         });
 
@@ -91,11 +104,42 @@ public class MainMenuActivity extends AppCompatActivity {
         readingTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
             }
         });
 
         popup.show();
+    }
+
+    public void getAndStartExercise(String path){
+
+        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    if(response.length() == 0){
+                        Toast.makeText(getApplicationContext(), "No unsolved exercise was found in this language", Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    JSONObject jsonExercise = (JSONObject) response.get(new Random().nextInt(response.length()));
+                    Exercise exercise = Exercise.fromJSON(jsonExercise);
+                    Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+                    intent.putExtra("exercise", exercise);
+                    startActivity(intent);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
     }
 
     public void showLogoutPopup(){
