@@ -50,9 +50,21 @@
         android:text="Exercises"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/exerciseButton"
+        app:layout_constraintStart_toStartOf="@+id/exerciseButton"
         app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="89dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="New Essay"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/newEssayButton"
+        app:layout_constraintStart_toStartOf="@+id/newEssayButton"
+        app:layout_constraintTop_toBottomOf="@+id/newEssayButton" />
 
     <TextView
         android:id="@+id/textView2"
@@ -62,8 +74,8 @@
         android:text="Change Language"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/changeLanguageButton"
+        app:layout_constraintStart_toStartOf="@+id/changeLanguageButton"
         app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton" />
 
     <ImageButton
@@ -73,6 +85,7 @@
         android:layout_marginTop="60dp"
         android:background="#00503E3E"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
         app:srcCompat="@drawable/exercises" />
@@ -83,8 +96,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="#00A88E8E"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/exerciseButton"
+        app:layout_constraintStart_toStartOf="@+id/exerciseButton"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/language" />
 
@@ -101,5 +114,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_settings" />
+
+    <ImageButton
+        android:id="@+id/newEssayButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
+        app:srcCompat="@drawable/essay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
