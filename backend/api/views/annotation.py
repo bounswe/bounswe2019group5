@@ -2,16 +2,20 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.exceptions import *
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
 from ..serializers import *
+from ..filters import AnnotationFilterSet
 
 
 class AnnotationView(GenericViewSet,
                      mixins.ListModelMixin,
-                     mixins.RetrieveModelMixin,
                      mixins.CreateModelMixin):
     permission_classes = (IsAuthenticated,)
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AnnotationFilterSet
 
     def check_object_permissions(self, request, obj):
         if request.user.is_anonymous:
