@@ -51,20 +51,22 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
 
 class EssaySerializer(serializers.HyperlinkedModelSerializer):
 
+    author = serializers.CharField(source='author.username', default=None)
     reviewer = serializers.CharField(source='reviewer.username', default=None)
 
     class Meta:
         model = Essay
-        fields = ('id', 'type', 'language', 'writing', 'reviewer')
+        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author')
 
 
 class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
 
+    author = serializers.CharField(required=False)
     reviewer = serializers.CharField(required=False)
 
     class Meta:
         model = Essay
-        fields = ('id', 'type', 'language', 'writing', 'reviewer')
+        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author')
         read_only_fields = ('type',)
 
     def validate(self, attrs):
