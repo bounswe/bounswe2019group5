@@ -55,6 +55,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
+    public void showExerciseSelectPopup(){
+        popup = new Dialog(this);
+        popup.setContentView(R.layout.select_exercise_type_popup);
+        ImageButton vocabTestButton, grammarTestButton, readingTestButton;
+    }
+
     public void showLogoutPopup(){
         popup = new Dialog(this);
         Button logoutYesButton, logoutNoButton;
