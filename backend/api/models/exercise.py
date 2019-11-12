@@ -62,8 +62,3 @@ class Essay(Exam):
                                  related_name='reviewer',
                                  blank=True,
                                  null=True)
-
-
-class ListeningExercise(Exercise):
-    question = models.FileField(upload_to='audio')
-    options = ArrayField(models.CharField(max_length=40), size=4)
