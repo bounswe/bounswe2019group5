@@ -1,5 +1,6 @@
 package com.example.languageLearning;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -28,27 +29,44 @@ public class ExerciseActivity extends AppCompatActivity {
     Button submitButton;
     int currentQuestionIndex;
 
+    private boolean answerKeyMode; // True if we are in the "answer key" mode. The app switches to this mode once the user chooses to see the correct answers at the exercise result overview screen.
     private Exercise exercise;
     private String[] chosenAnswers;
+    private String[] correctAnswers; // Used in the "answer key" mode.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         app = (MyApplication) getApplication();
+        exercise = (Exercise) getIntent().getSerializableExtra("exercise");
+        correctAnswers = getIntent().getStringArrayExtra("correctAnswers");
+        if (correctAnswers == null)
+            answerKeyMode = false;
+        else
+            answerKeyMode = true;
+        if (answerKeyMode == false)
+            chosenAnswers = new String[exercise.questions.length];
+        else
+            chosenAnswers = getIntent().getStringArrayExtra("chosenAnswers");
         question_textview = findViewById(R.id.exercise_question);
         progress_textview = findViewById(R.id.exercise_progress);
         buttons[0] = findViewById(R.id.exercise_option_1);
         buttons[1] = findViewById(R.id.exercise_option_2);
         buttons[2] = findViewById(R.id.exercise_option_3);
         buttons[3] = findViewById(R.id.exercise_option_4);
-        for (int i=0; i<4; i++)
-            buttons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    OptionClicked((Button)v);
-                }
-            });
+        for (int i=0; i<4; i++) {
+            if (answerKeyMode)
+                buttons[i].setEnabled(false);
+            else {
+                buttons[i].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OptionClicked((Button) v);
+                    }
+                });
+            }
+        }
         fabLeft = findViewById(R.id.exerciseFABLeft);
         fabRight = findViewById(R.id.exerciseFABRight);
         fabLeft.setOnClickListener(new View.OnClickListener() {
@@ -66,20 +84,21 @@ public class ExerciseActivity extends AppCompatActivity {
             }
         });
         submitButton = findViewById(R.id.exercise_submit);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    finishTest();
+        if (answerKeyMode)
+            submitButton.setVisibility(View.INVISIBLE);
+        else {
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        finishTest();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                    return ;
-                }
-            }
-        });
-        exercise = (Exercise) getIntent().getSerializableExtra("exercise");
-        chosenAnswers = new String[exercise.questions.length];
+            });
+        }
         setCurrentQuestion(0);
     }
 
@@ -93,6 +112,8 @@ public class ExerciseActivity extends AppCompatActivity {
                 buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
             else
                 buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
+            if (exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex]))
+                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_light));
         }
     }
 
@@ -126,7 +147,18 @@ public class ExerciseActivity extends AppCompatActivity {
         app.initiateAPICall(Request.Method.POST, path, data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //TODO: Use the correct answers we get from the backend to show to the user his correct/incorrect answers.
+                try {
+                    String[] correctAnswers = new String[response.getJSONArray("correct_answer").length()];
+                    Intent intent = new Intent(ExerciseActivity.this, ExerciseResultOverviewActivity.class);
+                    intent.putExtra("exercise", exercise);
+                    intent.putExtra("chosenAnswers", chosenAnswers);
+                    intent.putExtra("correctAnswers", correctAnswers);
+                    startActivity(intent);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                finish();
             }
 
         }, new Response.ErrorListener() {
