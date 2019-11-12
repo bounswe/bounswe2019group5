@@ -16,6 +16,7 @@ class Exam(models.Model):
         ('reading', 'reading'),
         ('proficiency', 'proficiency'),
         ('writing', 'writing'),
+        ('listening', 'listening')
     ]
     type = models.CharField(choices=types, max_length=11, default='vocabulary')
     language = models.CharField(max_length=20, choices=languageChoices)

@@ -1,2 +1,2 @@
-from .test_user import LoginViewTests, RegisterViewTests, ProfileViewTests
-from .test_exam import ExerciseTest
+from .test_user import *
+from .test_exam import *
