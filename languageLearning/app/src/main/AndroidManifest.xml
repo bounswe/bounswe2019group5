@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewEssayActivity"></activity>
+        <activity android:name=".UploadEssayActivity"></activity>
+        <activity android:name=".WriteNewEssayActivity" />
+        <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".MainMenuActivity" />

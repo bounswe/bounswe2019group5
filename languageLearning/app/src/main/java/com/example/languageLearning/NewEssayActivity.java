@@ -22,15 +22,15 @@ public class NewEssayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /*Intent intent = new Intent(NewEssayActivity.this, UploadEssayFromFileActivity.class);
-                startActivity(intent);*/
+                startActivity(intent);*/ // TODO: Enable this
             }
         });
 
         writeNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(NewEssayActivity.this, WriteNewEssayActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(NewEssayActivity.this, WriteNewEssayActivity.class);
+                startActivity(intent);
             }
         });
     }
