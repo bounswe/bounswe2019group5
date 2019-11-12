@@ -10,17 +10,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 public class ProfExamActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class ProfExamActivity extends AppCompatActivity {
     MyApplication app;
     TextView question_textview;
     Button buttons[] = new Button[4];
-    int currentQuestionIndex;
+    int currentQuestionIndex=0;
 
     private Exercise exercise;
     private String[] chosenAnswers;
@@ -37,9 +36,16 @@ public class ProfExamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prof_exam);
         app = (MyApplication) getApplication();
-        currentQuestionIndex = 0;
+        String languageChoice = getIntent().getStringExtra("languageChoice");
+        if (languageChoice == null)
+            languageChoice = "English";
+        Log.d(TAG, "languageChoice: " + languageChoice);
+        getQuestions(languageChoice);
+    }
+
+    private void initLayout() {
+        setContentView(R.layout.activity_prof_exam);
         question_textview = findViewById(R.id.prof_question);
         buttons[0] = findViewById(R.id.prof_option_1);
         buttons[1] = findViewById(R.id.prof_option_2);
@@ -52,21 +58,22 @@ public class ProfExamActivity extends AppCompatActivity {
                     OptionClicked((Button)v);
                 }
             });
-        String languageChoice = getIntent().getStringExtra("languageChoice");
-        if (languageChoice == null)
-            languageChoice = "English";
-        Log.d(TAG, "languageChoice: " + languageChoice);
-        getQuestions(languageChoice);
     }
 
     private void getQuestions(String languageChoice) {
-        final String path = "proficiency?language=" + languageChoice.toLowerCase();
+        final String path = "search/?type=proficiency&language=" + languageChoice.toLowerCase();
 
-        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONObject>() {
+        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 try {
-                    questionsArrived(response);
+                    if (response.length() == 0) {
+                        Toast.makeText(getApplicationContext(), "No unsolved proficiency test was found in this language", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return ;
+                    }
+                    initLayout();
+                    exercisesArrived(response);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -84,15 +91,22 @@ public class ProfExamActivity extends AppCompatActivity {
         });
     }
 
-    private void questionsArrived(JSONObject object) throws JSONException {
-        exercise = Exercise.fromJSON(object);
+    private void exercisesArrived(JSONArray object) throws JSONException {
+        JSONObject jsonExercise = (JSONObject) object.get(new Random().nextInt(object.length())); // Choose a random exercise among those returned by the server
+        exercise = Exercise.fromJSON(jsonExercise);
         chosenAnswers = new String[exercise.questions.length];
     }
 
     private void setCurrentQuestion(int index) {
         question_textview.setText(exercise.questions[index].text);
-        for (int i=0; i<4; i++)
-            buttons[i].setText(exercise.questions[index].options[i]);
+        for (int i=0; i<4; i++) {
+            if (i >= exercise.questions[index].options.length)
+                buttons[i].setVisibility(View.INVISIBLE);
+            else {
+                buttons[i].setVisibility(View.VISIBLE);
+                buttons[i].setText(exercise.questions[index].options[i]);
+            }
+        }
     }
 
     /*private int getButtonIndex(Button b) {

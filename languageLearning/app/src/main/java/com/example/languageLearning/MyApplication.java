@@ -10,8 +10,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,5 +82,36 @@ public class MyApplication extends Application {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void initiateAPICall(int method,
+                                String path,
+                                @Nullable JSONArray data,
+                                Response.Listener<JSONArray> listener,
+                                @Nullable final Response.ErrorListener errorListener) {
+        String URL = SERVER + path;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(method, URL, data, listener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                if (errorListener != null)
+                    errorListener.onErrorResponse(error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                if (getToken() != null)
+                    headers.put("Authorization", "Token " + getToken());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 }
