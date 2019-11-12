@@ -14,7 +14,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = "TEST";
     private MyApplication app;
     TextView welcomeMessage;
-    ImageButton profileButton, logoutButton, changeLanguageButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton, exerciseButton;
     Dialog popup;
 
     @Override
@@ -27,6 +27,7 @@ public class MainMenuActivity extends AppCompatActivity {
         profileButton = findViewById(R.id.profileButton);
         logoutButton = findViewById(R.id.logoutButton);
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
+        exerciseButton = findViewById(R.id.exerciseButton);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +52,13 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        exerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showExerciseSelectPopup();
+            }
+        });
+
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
 
     }
@@ -58,7 +66,34 @@ public class MainMenuActivity extends AppCompatActivity {
     public void showExerciseSelectPopup(){
         popup = new Dialog(this);
         popup.setContentView(R.layout.select_exercise_type_popup);
+
         ImageButton vocabTestButton, grammarTestButton, readingTestButton;
+
+        vocabTestButton = popup.findViewById(R.id.vocabTestButton);
+        vocabTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        grammarTestButton = popup.findViewById(R.id.grammarTestButton);
+        grammarTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        readingTestButton = popup.findViewById(R.id.readingTestButton);
+        readingTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        popup.show();
     }
 
     public void showLogoutPopup(){
