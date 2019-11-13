@@ -17,16 +17,28 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
         fields = super().get_fields()
         view = self.context.get('view')
 
-        if view.action != 'partial_update':
-            del fields['is_published']
-
         if 'SearchView' in str(view):
-            del fields['type']
-            del fields['language']
-            del fields['level']
-            del fields['tags']
-            del fields['keywords']
+
+            for i in list(fields):
+                if i != 'id' and i != 'questions':
+                    fields.pop(i, None)
+            return fields
+
+        if 'update' not in view.action:
+            fields.pop('is_published')
+
         return fields
+
+    def create(self, validated_data):
+
+        questions = validated_data.pop('questions')
+        validated_data['is_published'] = False
+        instance: Exercise = Exercise.objects.create(**validated_data)
+
+        for question_data in questions:
+            question_data['exam'] = instance
+            Question.objects.create(**question_data)
+        return instance
 
 
 class ResultSerializer(serializers.HyperlinkedModelSerializer):

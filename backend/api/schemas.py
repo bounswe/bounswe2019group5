@@ -3,9 +3,6 @@ from rest_framework.schemas import openapi
 
 
 class AutoSchema(openapi.AutoSchema):
-    """
-    Adds tags
-    """
 
     def _map_field(self, field):
         result = super()._map_field(field)
@@ -19,6 +16,7 @@ class AutoSchema(openapi.AutoSchema):
                     'type': 'string'
                 }
             }
+
         return result
 
     def _get_responses(self, path, method):

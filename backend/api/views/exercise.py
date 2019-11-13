@@ -47,7 +47,6 @@ class EssayView(GenericViewSet,
 
 class SuggestView(GenericViewSet,
                   mixins.CreateModelMixin,
-                  mixins.UpdateModelMixin,
                   mixins.ListModelMixin,
                   mixins.RetrieveModelMixin):
 
