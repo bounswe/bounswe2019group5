@@ -63,7 +63,7 @@ public class UploadEssayActivity extends AppCompatActivity {
         File tempFile = null;
         if (essayText != null) {
             try {
-                tempFile = File.createTempFile("essay", null, getCacheDir());
+                tempFile = File.createTempFile("essay", ".txt", getCacheDir());
                 tempFile.deleteOnExit();
                 Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), "utf-8"));
                 writer.write(essayText);
