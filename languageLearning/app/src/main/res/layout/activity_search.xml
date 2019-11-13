@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <EditText
+        android:id="@+id/search_keyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/keyword"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_tag" />
+
+    <EditText
+        android:id="@+id/search_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/tag"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_label" />
+
+    <RadioGroup
+        android:id="@+id/languagesRadioGroup"
+        android:layout_width="91dp"
+        android:layout_height="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/language_label"
+        app:layout_constraintVertical_bias="0.04000002">
+
+        <RadioButton
+            android:id="@+id/englishRadioButton"
+            android:layout_width="91dp"
+            android:layout_height="27dp"
+            android:onClick="checkButton"
+            android:text="@string/english" />
+
+        <RadioButton
+            android:id="@+id/turkishRadioButton"
+            android:layout_width="92dp"
+            android:layout_height="28dp"
+            android:onClick="checkButton"
+            android:text="@string/turkish" />
+
+        <RadioButton
+            android:id="@+id/germanRadioButton"
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
+            android:onClick="checkButton"
+            android:text="@string/german" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/search_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="@string/search"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/language_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/language"
+        android:textColor="#3F51B5"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_keyword" />
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="216dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="128dp"
+        android:background="#3F51B5"
+        android:text="@string/search"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/languagesRadioGroup"
+        app:layout_constraintVertical_bias="0.342" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

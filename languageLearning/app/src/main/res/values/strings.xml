@@ -12,4 +12,8 @@
     <string name="german">German</string>
     <string name="native_language">Native Language</string>
     <string name="create_my_account">Create My Account</string>
+    <string name="language">Language</string>
+    <string name="search">SEARCH</string>
+    <string name="keyword">Keyword</string>
+    <string name="tag">Tag</string>
 </resources>
