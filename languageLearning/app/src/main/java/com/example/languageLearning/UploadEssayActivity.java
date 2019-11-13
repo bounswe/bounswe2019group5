@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class UploadEssayActivity extends AppCompatActivity {
+
+    private final String TAG = getClass().getName();
 
     MyApplication app;
     String essayText;
@@ -86,6 +89,7 @@ public class UploadEssayActivity extends AppCompatActivity {
                 textView.setVisibility(View.GONE);
                 checkCircleView.setVisibility(View.VISIBLE);
                 finishButton.setVisibility(View.VISIBLE);
+                Log.d(TAG, response.toString());
             }
         }, new StringFunction() {
             @Override

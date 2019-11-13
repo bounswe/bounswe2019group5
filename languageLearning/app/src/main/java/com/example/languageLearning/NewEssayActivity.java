@@ -1,8 +1,13 @@
 package com.example.languageLearning;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,9 +23,39 @@ import java.nio.charset.StandardCharsets;
 public class NewEssayActivity extends AppCompatActivity {
 
     private static final int FILE_SELECT_CODE = 1;
+    private static final int PERMISSION_REQUEST_CODE = 2;
     private final String TAG = this.getClass().getName();
 
     ImageButton uploadFromFile, writeNew;
+
+    public Boolean getExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSION_REQUEST_CODE);
+            return null;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "Read external storage permission is required to upload files",
+                        Toast.LENGTH_SHORT).show();
+                return ;
+            }
+            else {
+                showFileChooser();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -89,7 +124,9 @@ public class NewEssayActivity extends AppCompatActivity {
         uploadFromFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+                Boolean permissionResult = getExternalStoragePermission();
+                if (permissionResult != null && permissionResult == true)
+                    showFileChooser();
             }
         });
 
