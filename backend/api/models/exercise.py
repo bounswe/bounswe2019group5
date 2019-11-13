@@ -37,6 +37,7 @@ class Exercise(Exam):
     level = models.CharField(choices=levels, max_length=2)
     tags = ArrayField(models.CharField(max_length=25), size=10, null=True)
     keywords = ArrayField(models.CharField(max_length=25), size=10, null=True)
+    is_published = models.BooleanField(default=True)
 
 
 class Result(models.Model):

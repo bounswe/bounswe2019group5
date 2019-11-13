@@ -9,7 +9,36 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id', 'questions')
+        fields = ('id', 'questions',
+                  'type', 'language', 'level', 'tags', 'keywords', 'is_published')
+        read_only_fields = ('id',)
+
+    def get_fields(self):
+        fields = super().get_fields()
+        view = self.context.get('view')
+
+        if 'SearchView' in str(view):
+
+            for i in list(fields):
+                if i != 'id' and i != 'questions':
+                    fields.pop(i, None)
+            return fields
+
+        if 'update' not in view.action:
+            fields.pop('is_published')
+
+        return fields
+
+    def create(self, validated_data):
+
+        questions = validated_data.pop('questions')
+        validated_data['is_published'] = False
+        instance: Exercise = Exercise.objects.create(**validated_data)
+
+        for question_data in questions:
+            question_data['exam'] = instance
+            Question.objects.create(**question_data)
+        return instance
 
 
 class ResultSerializer(serializers.HyperlinkedModelSerializer):

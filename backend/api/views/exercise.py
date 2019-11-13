@@ -45,5 +45,22 @@ class EssayView(GenericViewSet,
             return EssaySerializer
 
 
+class SuggestView(GenericViewSet,
+                  mixins.CreateModelMixin,
+                  mixins.ListModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.RetrieveModelMixin):
+
+    serializer_class = ExerciseSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def check_object_permissions(self, request, obj):
+        if request.user.is_anonymous:
+            raise NotAuthenticated('Token is needed')
+
+    def get_queryset(self):
+        return Exercise.objects.filter(is_published=False)
+
+
 def get_file(request):
     return redirect(request.path)

@@ -7,7 +7,6 @@ admin.site.register(User)
 admin.site.register(Exercise)
 admin.site.register(Result)
 admin.site.register(Question)
-admin.site.register(ListeningQuestion)
 
 admin.site.register(Essay)
 

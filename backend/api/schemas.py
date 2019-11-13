@@ -2,10 +2,14 @@ import re
 from rest_framework.schemas import openapi
 
 
+class SchemaGenerator(openapi.SchemaGenerator):
+    def get_paths(self, request=None):
+        paths = super().get_paths(request)
+        paths['/suggest/{id}/'].pop('put')
+        return paths
+
+
 class AutoSchema(openapi.AutoSchema):
-    """
-    Adds tags
-    """
 
     def _map_field(self, field):
         result = super()._map_field(field)
@@ -19,6 +23,7 @@ class AutoSchema(openapi.AutoSchema):
                     'type': 'string'
                 }
             }
+
         return result
 
     def _get_responses(self, path, method):
@@ -30,7 +35,14 @@ class AutoSchema(openapi.AutoSchema):
         return s
 
     def get_operation(self, path, method):
+
         operation = super().get_operation(path, method)
+
+        if 'suggest' in path:
+            if method == 'PATCH':
+                for i in list(operation['requestBody']['content']['application/json']['schema']['properties']):
+                    if i != 'is_published':
+                        operation['requestBody']['content']['application/json']['schema']['properties'].pop(i)
 
         # add tags for grouping
         operation['tags'] = [self.view.basename]
