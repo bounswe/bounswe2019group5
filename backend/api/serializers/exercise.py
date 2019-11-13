@@ -10,12 +10,17 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Exercise
         fields = ('id', 'questions',
-                  'type', 'language', 'level', 'tags', 'keywords')
+                  'type', 'language', 'level', 'tags', 'keywords', 'is_published')
         read_only_fields = ('id',)
 
     def get_fields(self):
         fields = super().get_fields()
-        if 'SearchView' in str(self.context.get('view')):
+        view = self.context.get('view')
+
+        if view.action != 'partial_update':
+            del fields['is_published']
+
+        if 'SearchView' in str(view):
             del fields['type']
             del fields['language']
             del fields['level']
