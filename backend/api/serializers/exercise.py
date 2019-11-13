@@ -9,7 +9,19 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id', 'questions')
+        fields = ('id', 'questions',
+                  'type', 'language', 'level', 'tags', 'keywords')
+        read_only_fields = ('id',)
+
+    def get_fields(self):
+        fields = super().get_fields()
+        if 'SearchView' in str(self.context.get('view')):
+            del fields['type']
+            del fields['language']
+            del fields['level']
+            del fields['tags']
+            del fields['keywords']
+        return fields
 
 
 class ResultSerializer(serializers.HyperlinkedModelSerializer):
