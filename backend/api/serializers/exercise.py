@@ -61,7 +61,7 @@ class EssaySerializer(serializers.HyperlinkedModelSerializer):
 
 class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
 
-    author = serializers.CharField(required=False)
+    author = serializers.CharField(read_only=True, required=False)
     reviewer = serializers.CharField(required=False)
 
     class Meta:
