@@ -60,7 +60,7 @@ public class UploadEssayActivity extends AppCompatActivity {
         essayText = getIntent().getStringExtra("essayText");
         essayPath = getIntent().getStringExtra("essayPath");
         HashMap<String, String> textParams = new HashMap<>();
-        textParams.put("language", "english"); // TODO: This should reflect the actual language of the essay
+        textParams.put("language", app.getLanguage());
         textParams.put("reviewer", "kbozdogan"); //TODO: Let the user choose the reviewer
         HashMap<String, File> fileParams = new HashMap<>();
         File tempFile = null;

@@ -84,9 +84,8 @@
         android:layout_height="120dp"
         android:layout_marginTop="60dp"
         android:background="#00503E3E"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/changeLanguageButton"
+        app:layout_constraintStart_toStartOf="@+id/changeLanguageButton"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/exercises" />
 
@@ -97,7 +96,7 @@
         android:layout_marginTop="60dp"
         android:background="#00A88E8E"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
         app:srcCompat="@drawable/language" />
@@ -125,9 +124,9 @@
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
+        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
         app:srcCompat="@drawable/essay" />
 
     <TextView
