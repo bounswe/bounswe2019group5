@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MainMenuActivity extends AppCompatActivity {
-    private final String TAG = "TEST";
+    private final String TAG = getClass().getName();
     private MyApplication app;
     TextView welcomeMessage;
     ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton;

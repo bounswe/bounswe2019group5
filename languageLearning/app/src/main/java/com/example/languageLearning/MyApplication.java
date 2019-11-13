@@ -149,7 +149,15 @@ public class MyApplication extends Application {
         //String URL = "http://httpbin.org/post";
 
         final CloseableHttpClient client = new DefaultHttpClient();
-        RequestBuilder reqbuilder = RequestBuilder.post(URL);
+        RequestBuilder reqbuilder;
+        if (method == Request.Method.POST)
+            reqbuilder = RequestBuilder.post(URL);
+        else if (method == Request.Method.PUT)
+            reqbuilder = RequestBuilder.put(URL);
+        else if (method == Request.Method.PATCH)
+            reqbuilder = RequestBuilder.patch(URL);
+        else
+            throw new IllegalArgumentException("method must be either POST, PUT or PATCH");
 
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
