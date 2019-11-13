@@ -9,12 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Random;
 
 public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
     private MyApplication app;
-    TextView welcomeMessage;
-    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton;
+    TextView welcomeMessage, currentLanguageView;
+    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton;
     Dialog popup;
 
     @Override
@@ -28,6 +39,8 @@ public class MainMenuActivity extends AppCompatActivity {
         logoutButton = findViewById(R.id.logoutButton);
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         newEssayButton = findViewById(R.id.newEssayButton);
+        exerciseButton = findViewById(R.id.exerciseButton);
+        currentLanguageView = findViewById(R.id.currentLanguageView);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +72,82 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        exerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showExerciseSelectPopup();
+            }
+        });
 
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
+        currentLanguageView.setText(app.getLanguage().toUpperCase());
 
+    }
+
+    public void showExerciseSelectPopup(){
+        popup = new Dialog(this);
+        popup.setContentView(R.layout.select_exercise_type_popup);
+
+        ImageButton vocabTestButton, grammarTestButton, readingTestButton;
+
+        vocabTestButton = popup.findViewById(R.id.vocabTestButton);
+        vocabTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String path = "search/?type=vocabulary&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
+            }
+        });
+
+        grammarTestButton = popup.findViewById(R.id.grammarTestButton);
+        grammarTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String path = "search/?type=grammar&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
+            }
+        });
+
+        readingTestButton = popup.findViewById(R.id.readingTestButton);
+        readingTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
+            }
+        });
+
+        popup.show();
+    }
+
+    public void getAndStartExercise(String path){
+
+        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    if(response.length() == 0){
+                        Toast.makeText(getApplicationContext(), "No unsolved exercise was found in this language", Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    JSONObject jsonExercise = (JSONObject) response.get(new Random().nextInt(response.length()));
+                    Exercise exercise = Exercise.fromJSON(jsonExercise);
+                    Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+                    intent.putExtra("exercise", exercise);
+                    startActivity(intent);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
     }
 
     public void showLogoutPopup(){
