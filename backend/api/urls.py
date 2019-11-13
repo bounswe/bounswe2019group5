@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 from rest_framework.routers import DefaultRouter
 
+from api import schemas
 from .views import *
 
 router = DefaultRouter()
@@ -34,7 +35,8 @@ urlpatterns = [
     path('openapi/', get_schema_view(
         title="Bonibon",
         description="Bonibon API Schema",
-        public=True
+        public=True,
+        generator_class=schemas.SchemaGenerator
     ), name='openapi-schema'),
 
     path('file', get_file),

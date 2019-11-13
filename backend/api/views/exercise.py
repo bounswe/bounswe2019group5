@@ -48,6 +48,7 @@ class EssayView(GenericViewSet,
 class SuggestView(GenericViewSet,
                   mixins.CreateModelMixin,
                   mixins.ListModelMixin,
+                  mixins.UpdateModelMixin,
                   mixins.RetrieveModelMixin):
 
     serializer_class = ExerciseSerializer
