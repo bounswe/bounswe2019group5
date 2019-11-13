@@ -20,5 +20,6 @@ class SearchView(mixins.ListModelMixin,
 
         exercise_seen = Result.objects.filter(user=user).values_list('exercise_id')
 
-        exercises = Exercise.objects.filter(level=self.request.user.level).exclude(id__in=exercise_seen)
+        exercises = Exercise.objects.filter(level=self.request.user.level).exclude(id__in=exercise_seen,
+                                                                                   is_published=False)
         return exercises
