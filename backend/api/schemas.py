@@ -6,6 +6,7 @@ class SchemaGenerator(openapi.SchemaGenerator):
     def get_paths(self, request=None):
         paths = super().get_paths(request)
         paths['/suggest/{id}/'].pop('put')
+        paths['/essay/{id}/'].pop('put')
         return paths
 
 
