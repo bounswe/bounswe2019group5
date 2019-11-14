@@ -1,8 +1,10 @@
 package com.example.languageLearning;
 
 import android.app.Application;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -33,15 +36,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 interface StringFunction {
     void invoke(String s);
+}
+
+interface BufferedReaderFunction {
+    void invoke(BufferedReader r);
 }
 
 public class MyApplication extends Application {
@@ -229,10 +239,45 @@ public class MyApplication extends Application {
                 handler.post( new Runnable(){
                     public void run(){
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                        if (errorListener != null)
+                            errorListener.invoke(s);
                     }
                 });
-                if (errorListener != null)
-                    errorListener.invoke(s);
+            }
+        }.execute();
+    }
+
+    public void rawHTTPGetRequest(URI uri, final BufferedReaderFunction callback, @Nullable final StringFunction errorListener) {
+        final HttpClient httpclient = new DefaultHttpClient();
+        final HttpGet request = new HttpGet();
+        request.setURI(uri);
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    HttpResponse response = httpclient.execute(request);
+                    final BufferedReader in = new BufferedReader(new InputStreamReader(
+                            response.getEntity().getContent(), StandardCharsets.UTF_8));
+
+                    Handler handler =  new Handler(getMainLooper());
+                    handler.post( new Runnable(){
+                        public void run(){
+                            callback.invoke(in);
+                        }
+                    });
+                }catch(final Exception e){
+                    Handler handler =  new Handler(getMainLooper());
+                    handler.post( new Runnable() {
+                        public void run() {
+                            String message = "Error in http connection " + e.toString();
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                            if (errorListener != null)
+                                errorListener.invoke(message);
+                        }
+                    });
+                }
+                return null;
             }
         }.execute();
     }
