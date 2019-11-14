@@ -39,7 +39,8 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             essayTextView.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
                 @Override
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    return false;
+                    mode.getMenuInflater().inflate(R.menu.essay_annotation_menu, menu);
+                    return true;
                 }
 
                 @Override
@@ -49,6 +50,11 @@ public class TextEssayDetailActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    if (item.getItemId() == R.id.annotate) {
+                        //TODO: Allow the user to add an annotation here, and contact the backend to save it.
+                        mode.finish();
+                        return true;
+                    }
                     return false;
                 }
 
