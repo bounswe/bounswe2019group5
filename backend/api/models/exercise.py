@@ -52,6 +52,13 @@ class Result(models.Model):
 
 class Essay(Exam):
 
+    status = [
+        ('created', 'created'),
+        ('pending', 'pending'),
+        ('rejected', 'rejected'),
+        ('accepted', 'accepted'),
+    ]
+
     writing = models.FileField(upload_to='essays')
 
     author = models.ForeignKey(User,
@@ -63,3 +70,5 @@ class Essay(Exam):
                                  related_name='reviewer',
                                  blank=True,
                                  null=True)
+
+    status = models.CharField(choices=status, max_length=8, default='created')
