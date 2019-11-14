@@ -56,6 +56,8 @@ interface BufferedReaderFunction {
 
 public class MyApplication extends Application {
     static final String SERVER = "http://35.158.176.194/";
+    private final String TAG = getClass().getName();
+
     private String token;
     private RequestQueue requestQueue;
     private String username;
@@ -106,7 +108,8 @@ public class MyApplication extends Application {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, URL, data, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, error.toString());
                 if (errorListener != null)
                     errorListener.onErrorResponse(error);
             }
@@ -137,7 +140,8 @@ public class MyApplication extends Application {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(method, URL, data, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, error.toString());
                 if (errorListener != null)
                     errorListener.onErrorResponse(error);
             }
@@ -211,7 +215,7 @@ public class MyApplication extends Application {
                     responseString = EntityUtils.toString(httpEntity);
                 }
                 catch (Exception e) {
-                    showToastAndCallErrorListener(e.getMessage());
+                    showToastAndCallErrorListener(e.toString());
                     return null;
                 }
                 if (statusCode < 200 || statusCode >= 300) {
@@ -228,7 +232,7 @@ public class MyApplication extends Application {
                     });
                 }
                 catch (JSONException e) {
-                    showToastAndCallErrorListener(e.getMessage());
+                    showToastAndCallErrorListener(e.toString());
                     return null;
                 }
                 return null;
@@ -239,6 +243,7 @@ public class MyApplication extends Application {
                 handler.post( new Runnable(){
                     public void run(){
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, s);
                         if (errorListener != null)
                             errorListener.invoke(s);
                     }

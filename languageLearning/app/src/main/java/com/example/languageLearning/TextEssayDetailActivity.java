@@ -16,6 +16,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -54,6 +60,8 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     if (item.getItemId() == R.id.annotate) {
+                        final int selStart = essayTextView.getSelectionStart();
+                        final int selEnd = essayTextView.getSelectionEnd();
                         mode.finish();
                         AlertDialog.Builder alert = new AlertDialog.Builder(TextEssayDetailActivity.this);
                         final EditText edittext = new EditText(TextEssayDetailActivity.this);
@@ -62,7 +70,25 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO: Send the annotation to the backend.
+                                JSONObject data = new JSONObject();
+                                JSONObject body = new JSONObject();
+                                JSONObject selector = new JSONObject();
+                                try {
+                                    body.put("source", edittext.getText().toString());
+                                    selector.put("value", "t=" + selStart + "," + selEnd);
+                                    body.put("selector", selector);
+                                    data.put("target", essay.fileUri.toString());
+                                }
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                    return ;
+                                }
+                                app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // pass
+                                    }
+                                }, null);
                             }
                         });
                         alert.show();

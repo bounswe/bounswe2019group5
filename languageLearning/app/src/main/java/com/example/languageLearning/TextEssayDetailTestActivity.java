@@ -27,6 +27,8 @@ public class TextEssayDetailTestActivity extends AppCompatActivity {
         }
         MyApplication app = (MyApplication) getApplication();
         app.setUsername("kbozdogan");
+        app.setLanguage("english");
+        app.setToken("beb9a6ae0bb9ea89f6afa23f6605c41628ae5ec5");
         intent.putExtra("essay", essay);
         startActivity(intent);
         finish();
