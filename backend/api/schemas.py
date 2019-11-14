@@ -49,3 +49,12 @@ class AutoSchema(openapi.AutoSchema):
         operation['tags'] = [self.view.basename]
 
         return operation
+
+    def _get_responses(self, path, method):
+        response = super()._get_responses(path, method)
+        if path == '/result/' and method == 'GET':
+            properties = response['200']['content']['application/json']['schema']['items']['properties']
+            response['200']['content']['application/json']['schema'].pop('type')
+            response['200']['content']['application/json']['schema'].pop('items')
+            response['200']['content']['application/json']['schema']['properties'] = properties
+        return response
