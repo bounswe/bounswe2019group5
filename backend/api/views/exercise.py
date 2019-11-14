@@ -33,6 +33,22 @@ class EssayView(GenericViewSet,
         if request.user.is_anonymous:
             raise NotAuthenticated('Token is needed')
 
+        if 'PATCH' in str(self.request._request):
+
+            if self.request.user == obj.author:
+                if 'status' in self.request.data:
+                    raise PermissionDenied('You are not reviewer for this essay')
+
+            elif self.request.user == obj.reviewer:
+                if 'status' not in self.request.data:
+                    raise ParseError('status is needed')
+                else:
+                    if len(self.request.data) != 1:
+                        raise PermissionDenied('You are not author for this essay')
+
+            else:
+                raise NotAuthenticated('You are not author or reviewer for this essay')
+
     def get_queryset(self):
         author = Q(author=self.request.user)
         reviewer = Q(reviewer=self.request.user)
