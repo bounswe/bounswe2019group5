@@ -28,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 
 public class TextEssayDetailActivity extends AppCompatActivity {
 
@@ -39,9 +38,9 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
     String essayText;
 
-    static SpannableString getSpannableString(String text, TextAnnotation[] annotations) {
+    static SpannableString getSpannableString(String text, AnnotationForTextEssay[] annotations) {
         SpannableString ss = new SpannableString(text);
-        for (TextAnnotation ann : annotations) {
+        for (AnnotationForTextEssay ann : annotations) {
             ss.setSpan(new BackgroundColorSpan(Color.YELLOW), ann.start, ann.end, 0);
         }
         return ss;
@@ -83,14 +82,16 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                JSONObject data = new JSONObject();
-                                JSONObject body = new JSONObject();
-                                JSONObject selector = new JSONObject();
+                                AnnotationForTextEssay ann = new AnnotationForTextEssay();
+                                ann.start = selStart;
+                                ann.end = selEnd;
+                                ann.annotationText = edittext.getText().toString();
+                                ann.essayId = String.valueOf(essay.id);
+                                ann.id = "";
+                                JSONObject data;
                                 try {
-                                    body.put("target", edittext.getText().toString());
-                                    selector.put("value", "char=" + selStart + "," + selEnd);
-                                    body.put("selector", selector);
-                                    data.put("source", essay.fileUri.toString());
+                                    data = ann.toJSON();
+                                    data.remove("id");
                                 }
                                 catch (JSONException e) {
                                     e.printStackTrace();
@@ -142,13 +143,13 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 }
                 essayText = result.toString();
 
-                app.initiateAPICall(Request.Method.GET, "annotation/", null, new Response.Listener<JSONArray>() {
+                app.initiateAPICall(Request.Method.GET, "annotation/?source=" + essay.id, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        TextAnnotation[] annotations = new TextAnnotation[response.length()];
+                        AnnotationForTextEssay[] annotations = new AnnotationForTextEssay[response.length()];
                         try {
                             for (int i = 0; i < annotations.length; i++)
-                                annotations[i] = TextAnnotation.fromJSON(response.getJSONObject(i));
+                                annotations[i] = AnnotationForTextEssay.fromJSON(response.getJSONObject(i));
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
