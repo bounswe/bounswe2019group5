@@ -25,7 +25,8 @@ class EssayView(GenericViewSet,
                 mixins.CreateModelMixin,
                 mixins.ListModelMixin,
                 mixins.UpdateModelMixin,
-                mixins.RetrieveModelMixin):
+                mixins.RetrieveModelMixin,
+                mixins.DestroyModelMixin):
 
     permission_classes = (IsAuthenticated,)
 
