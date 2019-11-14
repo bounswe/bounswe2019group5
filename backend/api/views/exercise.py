@@ -1,23 +1,37 @@
-from django.db.models import Q
+from django.db.models import Q, Sum
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.exceptions import *
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.response import Response
 
 from ..serializers import *
 from ..models import *
+from ..filters import ResultFilterSet
 
 
 class ResultView(mixins.CreateModelMixin,
+                 mixins.ListModelMixin,
                  GenericViewSet):
 
     serializer_class = ResultSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ResultFilterSet
+
+    def get_queryset(self):
+        return Result.objects.filter(user=self.request.user)
 
     def check_object_permissions(self, request, obj):
         if request.user.is_anonymous:
             raise NotAuthenticated('Token is needed')
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.aggregate(number_of_true=Sum('number_of_true'), number_of_false=Sum('number_of_false'))
+        return Response(queryset)
 
 
 class EssayView(GenericViewSet,

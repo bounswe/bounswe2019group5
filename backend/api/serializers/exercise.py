@@ -54,7 +54,19 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Result
-        fields = ('id', 'answers', 'level', 'correct_answer')
+        fields = ('id', 'answers', 'level', 'correct_answer', 'number_of_true', 'number_of_false')
+
+    def get_fields(self):
+        fields = super().get_fields()
+        if self.context.get('view').action == 'create':
+            del fields['number_of_true']
+            del fields['number_of_false']
+        else:
+            del fields['id']
+            del fields['answers']
+            del fields['level']
+            del fields['correct_answer']
+        return fields
 
     def create(self, data):
         if not data.get('id') and not data.get('answers'):
