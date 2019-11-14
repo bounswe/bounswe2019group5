@@ -1,7 +1,9 @@
 package com.example.languageLearning;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +54,18 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     if (item.getItemId() == R.id.annotate) {
-                        //TODO: Allow the user to add an annotation here, and contact the backend to save it.
                         mode.finish();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(TextEssayDetailActivity.this);
+                        final EditText edittext = new EditText(TextEssayDetailActivity.this);
+                        alert.setTitle("Enter Your Annotation");
+                        alert.setView(edittext);
+                        alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //TODO: Send the annotation to the backend.
+                            }
+                        });
+                        alert.show();
                         return true;
                     }
                     return false;
