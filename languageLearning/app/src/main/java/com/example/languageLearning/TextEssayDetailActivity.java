@@ -7,11 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,8 +31,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TextEssayDetailActivity extends AppCompatActivity {
+
+    private final String TAG = getClass().getName();
 
     Essay essay;
     TextView essayTextView;
@@ -37,13 +43,63 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     MyApplication app;
     ProgressBar progressBar;
     String essayText;
+    ArrayList<AnnotationForTextEssay> annotations = new ArrayList<>();
 
-    static SpannableString getSpannableString(String text, AnnotationForTextEssay[] annotations) {
+    static SpannableString getSpannableString(String text, ArrayList<AnnotationForTextEssay> annotations) {
         SpannableString ss = new SpannableString(text);
         for (AnnotationForTextEssay ann : annotations) {
             ss.setSpan(new BackgroundColorSpan(Color.YELLOW), ann.start, ann.end, 0);
         }
         return ss;
+    }
+
+    private void drawAnnotations() {
+        SpannableString ss = getSpannableString(essayText, annotations);
+        essayTextView.setText(ss);
+    }
+
+    private AnnotationForTextEssay getAnnotationFromXYPosition(int line, int offset) {
+        final int RADIUS = 2;
+        AnnotationForTextEssay closestAnnotation = null;
+        double closestAnnotationDist = 1e9;
+        Layout layout = essayTextView.getLayout();
+
+        for (int curLine = line-RADIUS; curLine <= line+RADIUS; curLine++) {
+            if (curLine < 0 || curLine >= layout.getLineCount())
+                continue;
+            for (int curOffset = offset - RADIUS; curOffset <= offset + RADIUS; curOffset++) {
+                if (curOffset < 0 || curOffset >= layout.getLineWidth(curLine))
+                    continue;
+                int curCharPosition = essayTextView.getLayout().getLineStart(curLine) + curOffset;
+                for (AnnotationForTextEssay ann : annotations)
+                    if (ann.start <= curCharPosition && ann.end > curCharPosition) {
+                        double dist = (curLine-line)*(curLine-line)+(curOffset-offset)*(curOffset-offset);
+                        if (dist < closestAnnotationDist) {
+                            closestAnnotation = ann;
+                            closestAnnotationDist = dist;
+                        }
+                    }
+            }
+        }
+
+        return closestAnnotation;
+    }
+
+    private boolean essayTextViewOnTouch(View v, MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_UP)
+            return false;
+        Layout layout = ((TextView) v).getLayout();
+        int x = (int)event.getX();
+        int y = (int)event.getY();
+        if (layout!=null){
+            int line = layout.getLineForVertical(y);
+            int offset = layout.getOffsetForHorizontal(line, x);
+            AnnotationForTextEssay ann = getAnnotationFromXYPosition(line, offset);
+            if (ann != null)
+                Toast.makeText(this, ann.annotationText, Toast.LENGTH_SHORT).show();
+        }
+        //return true;
+        return false; // This allows the default touch handler of Android (that shows the actions as a floating bar) appear
     }
 
     @Override
@@ -82,7 +138,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                AnnotationForTextEssay ann = new AnnotationForTextEssay();
+                                final AnnotationForTextEssay ann = new AnnotationForTextEssay();
                                 ann.start = selStart;
                                 ann.end = selEnd;
                                 ann.annotationText = edittext.getText().toString();
@@ -100,7 +156,8 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                                 app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject response) {
-                                        // pass
+                                        annotations.add(ann);
+                                        drawAnnotations();
                                     }
                                 }, null);
                             }
@@ -146,21 +203,26 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 app.initiateAPICall(Request.Method.GET, "annotation/?source=" + essay.id, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        AnnotationForTextEssay[] annotations = new AnnotationForTextEssay[response.length()];
                         try {
-                            for (int i = 0; i < annotations.length; i++)
-                                annotations[i] = AnnotationForTextEssay.fromJSON(response.getJSONObject(i));
+                            for (int i = 0; i < response.length(); i++)
+                                annotations.add(AnnotationForTextEssay.fromJSON(response.getJSONObject(i)));
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                             finish();
                             return ;
                         }
-                        SpannableString spannableString = getSpannableString(essayText, annotations);
                         progressBar.setVisibility(View.GONE);
-                        essayTextView.setText(spannableString);
+                        drawAnnotations();
                         essayTextView.setVisibility(View.VISIBLE);
                         finishButton.setVisibility(View.VISIBLE);
+                        essayTextView.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                return essayTextViewOnTouch(v, event);
+                            }
+                        });
+
                     }
                 }, null);
             }
