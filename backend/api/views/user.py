@@ -8,9 +8,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from ..models import *
 from ..serializers import *
-from ..filters import UserFilterSet
+from ..filters import UserFilterSet, RecommendationFilterSet
 
 
 class RegisterView(mixins.CreateModelMixin,
@@ -126,10 +125,12 @@ class RecommendationView(GenericViewSet,
                          mixins.CreateModelMixin,
                          mixins.ListModelMixin):
     permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = RecommendationFilterSet
 
     def get_queryset(self):
         if self.action == 'list':
-            return User.objects.all()
+            return User.objects.filter(rating_average__gte=3)
         else:
             return Comment.objects.all()
 
