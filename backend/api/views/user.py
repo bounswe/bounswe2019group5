@@ -1,13 +1,15 @@
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status, mixins
+from rest_framework import mixins
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import *
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import IsAuthenticated
 
-from ..models import *
 from ..serializers import *
-from ..filters import UserFilterSet
+from ..filters import UserFilterSet, RecommendationFilterSet
 
 
 class RegisterView(mixins.CreateModelMixin,
@@ -117,3 +119,47 @@ class ProfileView(mixins.ListModelMixin,
             return Response(ProfileSerializer(request.user).data, status=status.HTTP_200_OK)
         user = user.first()
         return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
+
+
+class RecommendationView(GenericViewSet,
+                         mixins.CreateModelMixin,
+                         mixins.ListModelMixin):
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = RecommendationFilterSet
+
+    def get_queryset(self):
+        if self.action == 'list':
+            return User.objects.filter(rating_average__gte=3)
+        else:
+            return Comment.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProfileSerializer
+        else:
+            return CommentSerializer
+
+    def create(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            raise NotAuthenticated('Token is needed')
+
+        commented_user = User.objects.get(username=self.request.data['username'])
+        author = Q(author=self.request.user,
+                   reviewer=commented_user,
+                   status='accepted')
+
+        reviewer = Q(reviewer=self.request.user,
+                     author=commented_user,
+                     status='accepted')
+
+        approved_essays = Essay.objects.filter(author | reviewer)
+        if len(approved_essays) == 0:
+            raise PermissionDenied("You didn't send or accept an essay")
+
+        previous = Comment.objects.filter(username=self.request.user.username,
+                                          commented_user=commented_user)
+        if len(previous) != 0:
+            raise PermissionDenied('you cannot edit comment with post method')
+
+        return super().create(request, *args, **kwargs)
