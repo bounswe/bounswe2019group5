@@ -125,5 +125,8 @@ class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data):
-        validated_data['status'] = 'created'
+        if 'reviewer' not in validated_data:
+            validated_data['status'] = 'created'
+        else:
+            validated_data['status'] = 'pending'
         return super().create(validated_data)

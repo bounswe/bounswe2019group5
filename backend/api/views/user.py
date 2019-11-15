@@ -158,7 +158,7 @@ class RecommendationView(GenericViewSet,
 
         previous = Comment.objects.filter(username=self.request.user.username,
                                           commented_user=commented_user)
-        '''if len(previous) != 0:
-            raise PermissionDenied('you cannot edit comment with post method')'''
+        if len(previous) != 0:
+            raise PermissionDenied('you cannot edit comment with post method')
 
         return super().create(request, *args, **kwargs)
