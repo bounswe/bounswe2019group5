@@ -8,7 +8,7 @@ class Comment(models.Model):
     # username is username of the commentor
     username = models.CharField(max_length=20)
     comment = models.CharField(max_length=1000)
-    rate = models.IntegerField(choices=[(i, i) for i in range(0, 5)])
+    rate = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
 
     def __str__(self):
         return self.comment

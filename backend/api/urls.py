@@ -16,6 +16,7 @@ router.register(r'search', SearchView, basename='exercise'),
 router.register(r'essay', EssayView, basename='writing'),
 router.register(r'annotation', AnnotationView, basename='annotation'),
 router.register(r'suggest', SuggestView, basename='suggest exercise'),
+router.register(r'recommendation', RecommendationView, basename='recommendation'),
 
 
 urlpatterns = [
