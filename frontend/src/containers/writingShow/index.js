@@ -22,77 +22,19 @@ import { upload_writing } from "../../api/writing/uploadWriting";
 import styles from "../writingShow/styles";
 import { withStyles } from "@material-ui/core/styles";
 
-class WritingUpload extends Component {
+class WritingShow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        file: null,
-        isUploaded: false,
-        reviewer: '',
-        message: null,
     };
-  }
 
-  onChange(e){
-
-    if (e.target.id==='reviewer')
-    {
-      this.setState({reviewer: e.target.value});
-    }
-
-    if (e.target.id==='file')
-    {
-      this.setState({file: e.target.files[0]});
-    }
-
-  }
-
-  onSubmit(e){
-    if(this.state.file)
-    {
-        upload_writing(this.props.userInfo.token, 
-                       this.props.userInfo.selectedLanguage,
-                       this.state.file,
-                       this.props.match.params.reviewer)
-          .then(essay => {
-            if (!essay.message)
-            {
-              this.setState({message: essay.message});
-            } else
-            {
-              this.setState({
-                id: essay.id,
-                language: essay.language,
-                reviewer: essay.reviewer,
-                isUploaded: true,
-              })
-            }
-          });
-    }
+    this.id = this.props.match.params.id;
+    this.language = this.props.match.params.language;
+    this.reviewer = this.props.match.params.reviewer;
   }
 
   render() {
     if (this.props.userInfo.token == null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/home"
-          }}
-        />
-      );
-    }
-
-    if (this.props.userInfo.selectedLanguage == null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/lang-select"
-          }}
-        />
-      );
-    }
-
-    if (this.state.isUploaded){
       return (
         <Redirect
           to={{
@@ -150,5 +92,5 @@ export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(WritingUpload)
+  )(WritingShow)
 );
