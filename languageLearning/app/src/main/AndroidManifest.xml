@@ -11,8 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TextEssayDetailTestActivity" android:exported="true"/>
+        <activity android:name=".TextEssayDetailTestActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ImageEssayDetailTestActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".TextEssayDetailActivity"/>
+        <activity android:name=".ImageEssayDetailActivity"/>
         <activity android:name=".UploadEssayActivity" />
         <activity android:name=".WriteNewEssayActivity" />
         <activity android:name=".NewEssayActivity" />

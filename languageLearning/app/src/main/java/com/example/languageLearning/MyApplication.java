@@ -50,6 +50,10 @@ interface StringFunction {
     void invoke(String s);
 }
 
+interface InputStreamFunction {
+    void invoke(InputStream s);
+}
+
 interface BufferedReaderFunction {
     void invoke(BufferedReader r);
 }
@@ -252,7 +256,7 @@ public class MyApplication extends Application {
         }.execute();
     }
 
-    public void rawHTTPGetRequest(URI uri, final BufferedReaderFunction callback, @Nullable final StringFunction errorListener) {
+    public void rawHTTPGetRequest(URI uri, final InputStreamFunction callback, @Nullable final StringFunction errorListener) {
         final HttpClient httpclient = new DefaultHttpClient();
         final HttpGet request = new HttpGet();
         request.setURI(uri);
@@ -261,16 +265,9 @@ public class MyApplication extends Application {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    HttpResponse response = httpclient.execute(request);
-                    final BufferedReader in = new BufferedReader(new InputStreamReader(
-                            response.getEntity().getContent(), StandardCharsets.UTF_8));
-
-                    Handler handler =  new Handler(getMainLooper());
-                    handler.post( new Runnable(){
-                        public void run(){
-                            callback.invoke(in);
-                        }
-                    });
+                    final HttpResponse response = httpclient.execute(request);
+                    final InputStream s = response.getEntity().getContent();
+                    callback.invoke(s);
                 }catch(final Exception e){
                     Handler handler =  new Handler(getMainLooper());
                     handler.post( new Runnable() {
@@ -285,5 +282,15 @@ public class MyApplication extends Application {
                 return null;
             }
         }.execute();
+    }
+
+    public void rawHTTPGetRequest(URI uri, final BufferedReaderFunction callback, @Nullable final StringFunction errorListener) {
+        rawHTTPGetRequest(uri, new InputStreamFunction() {
+            @Override
+            public void invoke(InputStream s) {
+                final BufferedReader in = new BufferedReader(new InputStreamReader(s, StandardCharsets.UTF_8));
+                callback.invoke(in);
+            }
+        }, errorListener);
     }
 }

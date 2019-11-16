@@ -194,8 +194,14 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         result.append(line);
                     }
                 }
-                catch (IOException e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                catch (final IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
                     return ;
                 }
                 essayText = result.toString();

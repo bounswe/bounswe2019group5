@@ -6,16 +6,15 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TextEssayDetailTestActivity extends AppCompatActivity {
+public class ImageEssayDetailTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String dummy_response = "{\"id\":6,\"type\":\"writing\",\"language\":\"english\",\"writing\":\"http:\\/\\/35.158.176.194\\/media\\/essays\\/essay7682758399012681542.txt\",\"reviewer\":\"kbozdogan\",\"author\":\"notme\",\"status\":\"created\"}";
+        final String dummy_response = "{\"id\":16,\"type\":\"writing\",\"language\":\"english\",\"writing\":\"http:\\/\\/35.158.176.194\\/media\\/essays\\/essay.png\",\"reviewer\":\"kbozdogan\",\"author\":\"kbozdogan\",\"status\":\"pending\"}";
         Essay essay;
-        Intent intent = new Intent(this, TextEssayDetailActivity.class);
+        Intent intent = new Intent(this, ImageEssayDetailActivity.class);
         try {
             JSONObject jsonEssay = new JSONObject(dummy_response);
             essay = Essay.fromJSON(jsonEssay);
