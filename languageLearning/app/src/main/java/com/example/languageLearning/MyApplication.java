@@ -25,6 +25,15 @@ public class MyApplication extends Application {
     private String token;
     private RequestQueue requestQueue;
     private String username;
+    private String language = "english";
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
     public String getUsername() {
         return username;
