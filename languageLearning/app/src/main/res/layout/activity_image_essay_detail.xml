@@ -32,6 +32,29 @@
         app:layout_constraintWidth_percent=".8"
         android:adjustViewBounds="true"/>
 
+    <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20999998"
+        app:layout_constraintWidth_percent=".8" />
+
+    <Button
+        android:id="@+id/annotateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Annotate"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/essayImageView"
+        app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
+
     <Button
         android:id="@+id/finishButton"
         android:layout_width="wrap_content"
@@ -40,5 +63,5 @@
         android:text="Finish"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/essayImageView"
-        app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/annotateButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

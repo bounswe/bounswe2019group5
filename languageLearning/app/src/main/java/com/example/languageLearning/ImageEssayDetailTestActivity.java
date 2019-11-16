@@ -12,7 +12,7 @@ public class ImageEssayDetailTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String dummy_response = "{\"id\":16,\"type\":\"writing\",\"language\":\"english\",\"writing\":\"http:\\/\\/35.158.176.194\\/media\\/essays\\/essay.png\",\"reviewer\":\"kbozdogan\",\"author\":\"kbozdogan\",\"status\":\"pending\"}";
+        final String dummy_response = "{\"id\":16,\"type\":\"writing\",\"language\":\"english\",\"writing\":\"http:\\/\\/35.158.176.194\\/media\\/essays\\/essay.png\",\"reviewer\":\"kbozdogan\",\"author\":\"notme\",\"status\":\"pending\"}";
         Essay essay;
         Intent intent = new Intent(this, ImageEssayDetailActivity.class);
         try {

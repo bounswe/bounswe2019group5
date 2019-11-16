@@ -9,10 +9,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +44,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ImageEssayDetailActivity extends AppCompatActivity {
 
@@ -47,11 +53,13 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
 
     Essay essay;
     ImageView essayImageView;
-    Button finishButton;
+    Button finishButton, annotateButton;
     MyApplication app;
     ProgressBar progressBar;
     Bitmap essayImage;
+    CropImageView cropImageView;
     ArrayList<AnnotationForImageEssay> annotations = new ArrayList<>();
+    boolean currentlyCroppingForAnnotation=false;
 
     Bitmap getOverlayBitmap() {
         Bitmap bmp=Bitmap.createBitmap(essayImage.getWidth(), essayImage.getHeight(),essayImage.getConfig());
@@ -139,19 +147,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         app = (MyApplication) getApplication();
         essay = (Essay)getIntent().getSerializableExtra("essay");
         essayImageView = findViewById(R.id.essayImageView);
+        annotateButton = findViewById(R.id.annotateButton);
         finishButton = findViewById(R.id.finishButton);
         progressBar = findViewById(R.id.downloadProgressBar);
-        if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
-            //TODO: Enable the user to add new annotations by selecting parts of the image
-        }
-
-        essayImageView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return essayImageViewOnTouch(v, event);
-            }
-        });
-
+        cropImageView = findViewById(R.id.cropImageView);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,7 +190,78 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         drawAnnotations();
                         essayImageView.setVisibility(View.VISIBLE);
+
+                        if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
+                            annotateButton.setVisibility(View.VISIBLE);
+                            annotateButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (currentlyCroppingForAnnotation == false) {
+                                        essayImageView.setVisibility(View.INVISIBLE);
+                                        cropImageView.setImageBitmap(Bitmap.createScaledBitmap(essayImage, essayImageView.getWidth(), essayImageView.getHeight(), false));
+                                        cropImageView.setVisibility(View.VISIBLE);
+                                        currentlyCroppingForAnnotation = true;
+                                    }
+                                    else {
+                                        final Rect rect = cropImageView.getCropRect();
+                                        Log.d(TAG, "crop image complete: " + rect.left + " " + rect.right + " " + rect.top + " " + rect.bottom);
+
+
+
+
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(ImageEssayDetailActivity.this);
+                                        final EditText edittext = new EditText(ImageEssayDetailActivity.this);
+                                        alert.setTitle("Enter Your Annotation");
+                                        alert.setView(edittext);
+                                        alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                essayImageView.setVisibility(View.VISIBLE);
+                                                cropImageView.setVisibility(View.INVISIBLE);
+                                                currentlyCroppingForAnnotation = false;
+
+                                                final AnnotationForImageEssay ann = new AnnotationForImageEssay();
+
+                                                final int resizedW = essayImageView.getWidth();
+                                                final int resizedH = essayImageView.getHeight();
+                                                final double xResizeFactor = ((float)resizedW)/essayImage.getWidth();
+                                                final double yResizeFactor = ((float)resizedH)/essayImage.getHeight();
+
+                                                ann.x = (int)(rect.left / xResizeFactor);
+                                                ann.y = (int)(rect.top / yResizeFactor);
+                                                ann.w = (int)((rect.right-rect.left) / xResizeFactor);
+                                                ann.h = (int)((rect.bottom-rect.top) / yResizeFactor);
+                                                ann.annotationText = edittext.getText().toString();
+                                                ann.essayId = String.valueOf(essay.id);
+                                                ann.id = "";
+                                                JSONObject data;
+                                                try {
+                                                    data = ann.toJSON();
+                                                    data.remove("id");
+                                                }
+                                                catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                    return ;
+                                                }
+                                                app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        annotations.add(ann);
+                                                        drawAnnotations();
+                                                    }
+                                                }, null);
+                                            }
+                                        });
+                                        alert.show();
+                                    }
+                                }
+                            });
+
+                        }
+
+
                         finishButton.setVisibility(View.VISIBLE);
+
                         essayImageView.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
