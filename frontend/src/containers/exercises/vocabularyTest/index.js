@@ -42,7 +42,7 @@ class VocabularyTest extends Component {
       for (let i = 0; i < answers.length; i++)
         answers[i] = this.props.exercises.vocabularyTest.questions[
           i
-        ].question_options[0].text;
+        ].options[0];
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -108,11 +108,11 @@ class VocabularyTest extends Component {
             <div className={classes.paper}>
               <div className="d-flex flex-column">
                 <Typography component="h1" variant="h5">
-                  {question.text}
+                  {question.body}
                 </Typography>
 
                 <Question
-                  questionOptions={question.question_options}
+                  questionOptions={question.options}
                   selectedOption={this.state.answers[questionIndex]}
                   questionAnswerStatus={
                     this.props.exercises.testResult
@@ -212,8 +212,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(VocabularyTest)
+  connect(mapStateToProps, mapDispatchToProps)(VocabularyTest)
 );
