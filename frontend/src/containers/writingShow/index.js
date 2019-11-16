@@ -72,13 +72,13 @@ class WritingShow extends Component {
     }
 
     return (
-        <div>
+      <Grid container component="main" className={classes.root}>
             {!this.state.essay.writing.endsWith('.txt') &&
                 <ImageEssay
                     essay = {this.state.essay}
                 />
             }
-        </div>
+      </Grid>
     );
 
   }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styles from "./styles";
-import {Container, Box, Grid} from '@material-ui/core';
+import {Container, Box, Grid, Paper} from '@material-ui/core';
 import {send_annotation, get_annotations} from '../../../api/annotation'
 
 import Annotation, {defaultProps} from 'react-image-annotation/lib';
@@ -13,6 +14,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+const {View} = React;
 
 class ImageEssay extends Component {
 
@@ -21,8 +23,9 @@ class ImageEssay extends Component {
         this.state = {
             annotation: {},
             annotations: [],
+            height: 1,
+            width: 1,
         };
-        this._extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
     }
     
     content (props) {
@@ -59,10 +62,10 @@ class ImageEssay extends Component {
     }
 
     webAnnotationModel2annotation(webAnnotationModel) {
-        var x = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[0] );
-        var y = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[1] );
-        var width = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[2] );
-        var height = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[3] );
+        var x = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[0] );
+        var y = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[1] );
+        var width = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[2] );
+        var height = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[3] );
         var annotation = {
             data: {
                 text: webAnnotationModel.creator+": "+webAnnotationModel.body.value,
@@ -92,7 +95,7 @@ class ImageEssay extends Component {
             target:{
                 source: this.props.essay.id,
                 selector: {
-                    value: "xywh="+x+","+y+","+w+","+h,
+                    value: "xywh=percent:"+x+","+y+","+w+","+h,
                 },
             },
         };
@@ -105,6 +108,9 @@ class ImageEssay extends Component {
     }
 
     onSubmit(annotation){
+
+        send_annotation(this.props.userInfo.token,
+            this.annotation2webAnnotationModel(annotation));
 
         const { geometry, data } = annotation
 
@@ -121,31 +127,36 @@ class ImageEssay extends Component {
             })
         });
 
-        send_annotation(this.props.userInfo.token,
-                         this.annotation2webAnnotationModel(annotation));
-
     }
 
     render() {
 
         console.log(this.state.annotations);
 
+        const {classes} = this.props;
+
         let essay = this.props.essay;
+
         return (
-            <div>
-                <Annotation
-                    src = {this.props.essay.writing}
-                    type = {RectangleSelector.type}
-                    annotations = {this.state.annotations}
-                    value = {this.state.annotation}
-                    onChange = {this.onChange.bind(this)}
-                    onSubmit = {this.onSubmit.bind(this)}
-                    disableSelector = {
-                        !(essay.status==='accepted' || essay.author===this.props.userInfo.username)
-                    }
-                    renderContent = {this.content}
-                />
-            </div>
+            
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Annotation
+                        src = {this.props.essay.writing}
+                        type = {RectangleSelector.type}
+                        annotations = {this.state.annotations}
+                        value = {this.state.annotation}
+                        onChange = {this.onChange.bind(this)}
+                        onSubmit = {this.onSubmit.bind(this)}
+                        disableSelector = {
+                            !(essay.status==='accepted' || essay.author===this.props.userInfo.username)
+                        }
+                        renderContent = {this.content}
+                        style={{flex:1}}
+                        resizeMode={"contain"}
+                    />
+                </div>
+            </Grid>
         );
     }
 }
