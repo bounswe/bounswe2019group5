@@ -38,8 +38,6 @@ public class ProfilePage extends AppCompatActivity {
         getProfile();
 
 
-
-
     }
 
     public void getProfile(){
@@ -127,42 +125,6 @@ public class ProfilePage extends AppCompatActivity {
             Log.i(TAG, "Error: " + e.getMessage().toString());
             //e.printStackTrace();
         }
-    }
-
-    // Dummy JSON creator
-    JSONObject createJSON(){
-
-        JSONObject json = new JSONObject();
-        JSONArray commentArray = new JSONArray();
-        JSONObject comment1 = new JSONObject();
-        JSONArray langArray = new JSONArray();
-
-        try {
-            json.put("userName", "halil02");
-            json.put("firstName", "Halil");
-            json.put("lastName", "Yılmaz");
-            json.put("userNativeLang", "Turkish");
-            json.put("userRateAverage", 4.9);
-
-
-            comment1.put("username", "Lolo");
-            comment1.put("comment", "Best teacher!");
-            comment1.put("rate", 5);
-
-            commentArray.put(comment1);
-
-            json.put("userComments", commentArray);
-
-
-            langArray.put("English");
-            langArray.put("French");
-
-            json.put("userAttendedLangs", langArray);
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return  json;
     }
 
 }
