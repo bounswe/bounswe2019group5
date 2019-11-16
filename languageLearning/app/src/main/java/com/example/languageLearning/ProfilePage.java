@@ -37,7 +37,7 @@ public class ProfilePage extends AppCompatActivity {
 
         getProfile();
 
-        fillScreen();
+
 
 
     }
@@ -54,7 +54,8 @@ public class ProfilePage extends AppCompatActivity {
                         Log.i(TAG, "onResponse: " + response.toString());
 
                         Toast.makeText(ProfilePage.this,"Profile fetched successfully",Toast.LENGTH_LONG).show();
-
+                        profileResponse = response;
+                        fillScreen();
                     }
                 },
                 new Response.ErrorListener() {
