@@ -26,7 +26,7 @@ export const upload_writing = async (token, language, file, reviewer) => {
     .catch(err => 
     {
         return {
-            message: 'File cannot Uploaded!'
+            message: 'File cannot Uploaded!',
         };
     });
     

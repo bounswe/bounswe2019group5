@@ -18,22 +18,36 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import { upload_writing } from "../../api/writing/uploadWriting";
-import styles from "../writingShow/styles";
+import { get_essay } from "../../api/writing/getEssay";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import ImageEssay from './imageEssay';
 
 class WritingShow extends Component {
-  constructor(props) {
+  
+    constructor(props) {
     super(props);
     this.state = {
+        message: "LOADING...",
+        essay: null,
     };
 
     this.id = this.props.match.params.id;
-    this.language = this.props.match.params.language;
-    this.reviewer = this.props.match.params.reviewer;
+  }
+
+  componentDidMount() {
+    get_essay(this.props.userInfo.token, this.id)
+        .then(essay => {
+            console.log(essay);
+            if (essay.message)
+                this.setState({message: essay.message});
+            else
+                this.setState({essay, message: null});
+        });
   }
 
   render() {
+    
     if (this.props.userInfo.token == null) {
       return (
         <Redirect
@@ -43,33 +57,26 @@ class WritingShow extends Component {
         />
       );
     }
+    
+    console.log(this.state.message);
+    console.log(this.state.essay);
 
     const { classes } = this.props;
 
+    if (this.state.message) {
+        return (
+            <div>
+                <h1>{this.state.message}</h1>
+            </div>
+          );
+    }
+
     return (
         <div>
-            <h1>Upload Your Writing Here!</h1>
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <input 
-                  type="file" 
-                  id="file"
-                  accept="image/*"
-                  onChange={this.onChange.bind(this)} />
-                <button type="submit">Upload Essay</button>
-            </form>
-            { 
-            this.props.match.params.reviewer &&
-                <text>
-                    Reviewer is: {this.props.match.params.reviewer}
-                </text>
-            }
-            {
-            !this.props.match.params.reviewer &&
-              <textarea 
-                id="reviewer"
-                value={this.state.reviewer}
-                onChange={this.onChange.bind(this)}
-              />
+            {!this.state.essay.writing.endsWith('.txt') &&
+                <ImageEssay
+                    essay = {this.state.essay}
+                />
             }
         </div>
     );

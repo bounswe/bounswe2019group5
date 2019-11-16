@@ -19,7 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { upload_writing } from "../../api/writing/uploadWriting";
-import styles from "../writingShow/styles";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
 class WritingUpload extends Component {
@@ -50,20 +50,20 @@ class WritingUpload extends Component {
   onSubmit(e){
     if(this.state.file)
     {
+      console.log("asdfasd");
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
                        this.state.file,
                        this.props.match.params.reviewer)
           .then(essay => {
-            if (!essay.message)
+            console.log(essay);
+            if (essay.message)
             {
               this.setState({message: essay.message});
             } else
             {
               this.setState({
                 id: essay.id,
-                language: essay.language,
-                reviewer: essay.reviewer,
                 isUploaded: true,
               })
             }
@@ -96,7 +96,7 @@ class WritingUpload extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/home"
+            pathname: "/show-writing/"+this.state.id
           }}
         />
       );
@@ -107,14 +107,23 @@ class WritingUpload extends Component {
     return (
         <div>
             <h1>Upload Your Writing Here!</h1>
-            <form onSubmit={this.onSubmit.bind(this)}>
+            <div>
+              <div>
                 <input 
                   type="file" 
                   id="file"
                   accept="image/*"
                   onChange={this.onChange.bind(this)} />
-                <button type="submit">Upload Essay</button>
-            </form>
+              </div>
+              {this.state.message &&
+                <div>
+                  <label style={{color: 'red'}}>{this.state.message}</label>
+                </div>
+              }
+              <div>
+                <button onClick={this.onSubmit.bind(this)}>Upload Essay</button>
+              </div>
+            </div>
             { 
             this.props.match.params.reviewer &&
                 <text>
