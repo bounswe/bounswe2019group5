@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { Button} from 'react-chat-elements';
+import { Link } from 'react-router-dom'
 
 import { get_user_recommendations, set_recommendation_language } from '../../redux/action-creators/recommendation';
 
@@ -37,6 +38,20 @@ class Recommendation extends Component {
                         this.props.get_user_recommendations(this.props.userInfo.token, this.props.recommendation.language);
                 }}
             />
+
+            <ul>
+                {this.props.recommendation.recommended_users.map(item => (
+                <li key={item.id}>
+                    <div>Name: {item.first_name}</div>
+                    <div>Surname: {item.last_name}</div>
+                    <div>Rating: {item.rating_average}</div>
+                    <Link to={ {
+                        pathname: "/chat/" + item.username
+                    } 
+                    }>Chat With {item.first_name}</Link>
+                </li>
+                ))}
+            </ul>
         </div>
         
         )
