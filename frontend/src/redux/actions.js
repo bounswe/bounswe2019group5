@@ -20,6 +20,8 @@ export const PROF_TEST_CLEAR = "test/PROF_TEST_CLEAR";
 // Exercises
 export const VOCABULARY_TEST_REQUESTED = "exercises/VOCABULARY_TEST_REQUESTED";
 export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
+export const GRAMMAR_TEST_REQUESTED = "exercises/GRAMMAR_TEST_REQUESTED";
+export const GRAMMAR_TEST = "exercises/GRAMMAR_TEST";
 
 // User Info
 export const USER_PROFILE_REQUESTED = "user_info/USER_PROFILE_REQUESTED";
