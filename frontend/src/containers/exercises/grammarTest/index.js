@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Question from "../../question";
-import { get_vocabulary_test } from "../../../redux/action-creators/exercises";
+import { get_grammar_test } from "../../../redux/action-creators/exercises";
 import { get_test_result } from "../../../redux/action-creators/test";
 import _ from "lodash";
 import { Button } from "react-bootstrap";
@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
-class VocabularyTest extends Component {
+class GrammarTest extends Component {
   constructor(props) {
     super(props);
   }
@@ -27,7 +27,7 @@ class VocabularyTest extends Component {
   };
 
   componentDidMount() {
-    this.props.get_vocabulary_test(
+    this.props.get_grammar_test(
       this.props.userInfo.token,
       this.props.userInfo.selectedLanguage
     );
@@ -35,14 +35,12 @@ class VocabularyTest extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.exercises.vocabularyTest && !this.state.isAnswersPrepared) {
+    if (this.props.exercises.grammarTest && !this.state.isAnswersPrepared) {
       const answers = new Array(
-        this.props.exercises.vocabularyTest.questions.length
+        this.props.exercises.grammarTest.questions.length
       );
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.exercises.vocabularyTest.questions[
-          i
-        ].options[0];
+        answers[i] = this.props.exercises.grammarTest.questions[i].options[0];
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -67,7 +65,7 @@ class VocabularyTest extends Component {
       );
     }
 
-    const vocabularyTest = this.props.exercises.vocabularyTest;
+    const grammarTest = this.props.exercises.grammarTest;
     const { classes } = this.props;
 
     if (this.props.exercises.loading) {
@@ -92,9 +90,9 @@ class VocabularyTest extends Component {
       );
     }
 
-    if (vocabularyTest) {
+    if (grammarTest) {
       const questionIndex = this.state.questionIndex;
-      const question = vocabularyTest.questions[questionIndex];
+      const question = grammarTest.questions[questionIndex];
 
       return (
         <Container
@@ -151,7 +149,7 @@ class VocabularyTest extends Component {
                   onClick={() =>
                     this.setState({
                       questionIndex:
-                        questionIndex < vocabularyTest.questions.length - 1
+                        questionIndex < grammarTest.questions.length - 1
                           ? questionIndex + 1
                           : questionIndex
                     })
@@ -168,7 +166,7 @@ class VocabularyTest extends Component {
                     onClick={() =>
                       this.props.get_test_result(
                         this.props.userInfo.token,
-                        vocabularyTest.id,
+                        grammarTest.id,
                         this.state.answers
                       )
                     }
@@ -205,12 +203,12 @@ const mapStateToProps = ({ userInfo, exercises }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      get_vocabulary_test,
+      get_grammar_test,
       get_test_result
     },
     dispatch
   );
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(VocabularyTest)
+  connect(mapStateToProps, mapDispatchToProps)(GrammarTest)
 );
