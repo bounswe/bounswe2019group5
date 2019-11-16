@@ -11,6 +11,7 @@ import Profile from "../profile";
 import VocabularyTest from "../exercises/vocabularyTest";
 import Chat from "../chat";
 import WritingUpload from "../writingUpload";
+import Recommendation from "../recommendation";
 
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -104,6 +105,7 @@ class App extends Component {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
           <Route exact path="/upload-writing/:reviewer?" component={WritingUpload} />
+          <Route exact path="/recommendation" component={Recommendation} />
         </main>
       </div>
     );
