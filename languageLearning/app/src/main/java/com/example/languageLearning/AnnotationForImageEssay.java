@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class AnnotationForImageEssay {
     public String id, annotationText, essayId;
-    int x,y,w,h;
+    double x,y,w,h; // In percentages
 
     static AnnotationForImageEssay fromJSON(JSONObject object) throws JSONException {
         AnnotationForImageEssay ta = new AnnotationForImageEssay();
@@ -16,14 +16,14 @@ public class AnnotationForImageEssay {
         ta.annotationText = object.getJSONObject("body").getString("value");
         ta.essayId = object.getJSONObject("target").getString("source");
         String selectorValue = object.getJSONObject("target").getJSONObject("selector").getString("value");
-        Pattern pat = Pattern.compile("xywh=(\\d*),(\\d*),(\\d*),(\\d*)");
+        Pattern pat = Pattern.compile("xywh=percent:(.*),(.*),(.*),(.*)");
         Matcher mat = pat.matcher(selectorValue);
         if (mat.find() == false)
             throw new RuntimeException("Invalid selector value");
-        ta.x = Integer.valueOf(mat.group(1));
-        ta.y = Integer.valueOf(mat.group(2));
-        ta.w = Integer.valueOf(mat.group(3));
-        ta.h = Integer.valueOf(mat.group(4));
+        ta.x = Double.valueOf(mat.group(1));
+        ta.y = Double.valueOf(mat.group(2));
+        ta.w = Double.valueOf(mat.group(3));
+        ta.h = Double.valueOf(mat.group(4));
         return ta;
     }
 
@@ -34,7 +34,7 @@ public class AnnotationForImageEssay {
         JSONObject selector = new JSONObject();
         body.put("value", annotationText);
         target.put("source", essayId);
-        selector.put("value", "xywh="+x+","+y+","+w+","+h);
+        selector.put("value", String.format("xywh=percent:%.3f,%.3f,%.3f,%.3f",x,y,w,h));
         target.put("selector", selector);
         jo.put("body", body);
         jo.put("target", target);

@@ -70,10 +70,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         paint.setAlpha(64);
 
         for (AnnotationForImageEssay ann : annotations) {
-            int x = ann.x;
-            int y = ann.y;
-            int right = ann.x+ann.w;
-            int bottom = ann.y+ann.h;
+            int x = (int)(ann.x*essayImage.getWidth());
+            int y = (int)(ann.y*essayImage.getHeight());
+            int right = (int)((ann.x+ann.w)*essayImage.getWidth());
+            int bottom = (int)((ann.y+ann.h)*essayImage.getHeight());
             cnvs.drawRect(x, y,right,bottom , paint);
         }
 
@@ -108,10 +108,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                 if (curY < 0 || curY >= essayImageView.getHeight())
                     continue;
                 for (AnnotationForImageEssay ann : annotations) {
-                    int left = (int)(ann.x*xResizeFactor);
-                    int top = (int)(ann.y*yResizeFactor);
-                    int right = (int)((ann.x+ann.w)*xResizeFactor);
-                    int bottom = (int)((ann.y+ann.h)*yResizeFactor);
+                    int left = (int)(ann.x*essayImage.getWidth()*xResizeFactor);
+                    int top = (int)(ann.y*essayImage.getHeight()*yResizeFactor);
+                    int right = (int)((ann.x+ann.w)*essayImage.getWidth()*xResizeFactor);
+                    int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()*yResizeFactor);
 
                     if (left <= curX && right > curX && top <= curY && bottom > curY) {
                         double dist = (curX - left) * (curX - left) + (curY - top) * (curY - top); //TODO: Here and in TextEssayDetailsActivity, calculate distance to the middle point of annotations, not to their top-left corner.
@@ -227,10 +227,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                                 final double xResizeFactor = ((float)resizedW)/essayImage.getWidth();
                                                 final double yResizeFactor = ((float)resizedH)/essayImage.getHeight();
 
-                                                ann.x = (int)(rect.left / xResizeFactor);
-                                                ann.y = (int)(rect.top / yResizeFactor);
-                                                ann.w = (int)((rect.right-rect.left) / xResizeFactor);
-                                                ann.h = (int)((rect.bottom-rect.top) / yResizeFactor);
+                                                ann.x = rect.left / xResizeFactor / essayImage.getWidth();
+                                                ann.y = rect.top / yResizeFactor / essayImage.getHeight();
+                                                ann.w = (rect.right-rect.left) / xResizeFactor / essayImage.getWidth();
+                                                ann.h = (rect.bottom-rect.top) / yResizeFactor / essayImage.getHeight();
                                                 ann.annotationText = edittext.getText().toString();
                                                 ann.essayId = String.valueOf(essay.id);
                                                 ann.id = "";
