@@ -1,10 +1,10 @@
 import parameters from '../../parameters'
 import axios from 'axios';
 
-export const get_essay = async (token, id) => {
+export const delete_essay = async (token, id) => {
 
-    let profile = await axios
-        .get( parameters.apiUrl + "/essay/" + id,
+    await axios
+        .delete( parameters.apiUrl + "/essay/" + id,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -13,13 +13,10 @@ export const get_essay = async (token, id) => {
                 timeout: 10000
             }
         )
-        .then(response => response.data)
         .catch(err => {
             return {
-                message: "Essay Cannot Find"
+                message: "Connection Error!"
             };
         });
-
-    return profile;
         
 };

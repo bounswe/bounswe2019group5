@@ -19,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { get_essay } from "../../api/writing/getEssay";
+import { delete_essay } from "../../api/writing/deleteEssay";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import ImageEssay from './imageEssay';
@@ -30,6 +31,7 @@ class WritingShow extends Component {
     this.state = {
         message: "LOADING...",
         essay: null,
+        isDeleted: false,
     };
 
     this.id = this.props.match.params.id;
@@ -57,6 +59,16 @@ class WritingShow extends Component {
         />
       );
     }
+
+    if (this.state.isDeleted) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/home"
+          }}
+        />
+      );
+    }
     
     console.log(this.state.message);
     console.log(this.state.essay);
@@ -73,11 +85,15 @@ class WritingShow extends Component {
 
     return (
       <Grid container component="main" className={classes.root}>
-            {!this.state.essay.writing.endsWith('.txt') &&
-                <ImageEssay
-                    essay = {this.state.essay}
-                />
-            }
+        <button onClick={()=>{
+          delete_essay(this.props.userInfo.token, this.state.essay.id);
+          this.setState({isDeleted: true});
+        }}>DELETE ESSAY</button>
+        {!this.state.essay.writing.endsWith('.txt') &&
+            <ImageEssay
+                essay = {this.state.essay}
+            />
+        }
       </Grid>
     );
 
