@@ -36,7 +36,6 @@ public class ListEssaysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_essays);
         listView = findViewById(R.id.listView);
         app = (MyApplication)getApplication();
-        Log.d(TAG, "HERE");
         String path = "essay/";
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -48,7 +47,7 @@ public class ListEssaysActivity extends AppCompatActivity {
                         return ;
                     }
 
-                    EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, response);
+                    EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, response);
                     if(response.length() != 0){
                         listView.setAdapter(essayAdapter);
                     }

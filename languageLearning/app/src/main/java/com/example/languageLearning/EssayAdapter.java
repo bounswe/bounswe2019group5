@@ -2,6 +2,8 @@ package com.example.languageLearning;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,12 @@ public class EssayAdapter extends BaseAdapter {
 
     private LayoutInflater layoutInflater;
     private JSONArray essays;
+    private Context context;
 
-    public EssayAdapter(Activity activity, JSONArray jessays){
+    public EssayAdapter(Context context, Activity activity, JSONArray jessays){
         this.layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.essays = jessays;
+        this.context = context;
     }
 
     @Override
@@ -70,11 +74,20 @@ public class EssayAdapter extends BaseAdapter {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        final Essay essay1 = essay;
         essayID.setText(essayID.getText() + String.valueOf(essay.id));
         language.setText(language.getText() + essay.language);
         author.setText(author.getText() + essay.author);
         reviewer.setText(reviewer.getText() + essay.reviewer);
         status.setText(status.getText() + essay.status);
+        essayElementView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TextEssayDetailActivity.class);
+                intent.putExtra("essay", essay1);
+                context.startActivity(intent);
+            }
+        });
 
         return essayElementView;
     }
