@@ -28,23 +28,46 @@ class WritingUpload extends Component {
     this.state = {
         file: null,
         isUploaded: false,
+        reviewer: '',
+        message: null,
     };
   }
 
   onChange(e){
-    console.log(e.target.files[0]);
-    this.setState({file: e.target.files[0]});
+
+    if (e.target.id==='reviewer')
+    {
+      this.setState({reviewer: e.target.value});
+    }
+
+    if (e.target.id==='file')
+    {
+      this.setState({file: e.target.files[0]});
+    }
+
   }
 
   onSubmit(e){
     if(this.state.file)
     {
+      console.log("asdfasd");
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
                        this.state.file,
-                       this.props.match.params.reviewer);
-
-        this.setState({isUploaded: true});
+                       this.props.match.params.reviewer)
+          .then(essay => {
+            console.log(essay);
+            if (essay.message)
+            {
+              this.setState({message: essay.message});
+            } else
+            {
+              this.setState({
+                id: essay.id,
+                isUploaded: true,
+              })
+            }
+          });
     }
   }
 
@@ -69,20 +92,51 @@ class WritingUpload extends Component {
       );
     }
 
+    if (this.state.isUploaded){
+      return (
+        <Redirect
+          to={{
+            pathname: "/show-writing/"+this.state.id
+          }}
+        />
+      );
+    }
+
     const { classes } = this.props;
 
     return (
         <div>
             <h1>Upload Your Writing Here!</h1>
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <input type="file" onChange={this.onChange.bind(this)} />
-                <button type="submit">Upload Essay</button>
-            </form>
+            <div>
+              <div>
+                <input 
+                  type="file" 
+                  id="file"
+                  accept="image/*"
+                  onChange={this.onChange.bind(this)} />
+              </div>
+              {this.state.message &&
+                <div>
+                  <label style={{color: 'red'}}>{this.state.message}</label>
+                </div>
+              }
+              <div>
+                <button onClick={this.onSubmit.bind(this)}>Upload Essay</button>
+              </div>
+            </div>
             { 
             this.props.match.params.reviewer &&
                 <text>
                     Reviewer is: {this.props.match.params.reviewer}
                 </text>
+            }
+            {
+            !this.props.match.params.reviewer &&
+              <textarea 
+                id="reviewer"
+                value={this.state.reviewer}
+                onChange={this.onChange.bind(this)}
+              />
             }
         </div>
     );

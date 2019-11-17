@@ -6,7 +6,7 @@ import Question from "../question";
 import {
   get_prof_test,
   get_test_result,
-  clear_prof_test,
+  clear_prof_test
 } from "../../redux/action-creators/test";
 import _ from "lodash";
 import Avatar from "@material-ui/core/Avatar";
@@ -47,9 +47,7 @@ class ProfTest extends Component {
     if (this.props.test.profTest && !this.state.isAnswersPrepared) {
       const answers = new Array(this.props.test.profTest.questions.length);
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.test.profTest.questions[
-          i
-        ].question_options[0].text;
+        answers[i] = this.props.test.profTest.questions[i].options[0];
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -125,11 +123,11 @@ class ProfTest extends Component {
             <div className={classes.paper}>
               <div className="d-flex flex-column">
                 <Typography component="h1" variant="h5">
-                  {question.text}
+                  {question.body}
                 </Typography>
 
                 <Question
-                  questionOptions={question.question_options}
+                  questionOptions={question.options}
                   selectedOption={this.state.answers[questionIndex]}
                   questionAnswerStatus={
                     this.props.test.testResult
@@ -176,8 +174,8 @@ class ProfTest extends Component {
                 >
                   NEXT
                 </Button>
-                
-                {!this.props.test.isFinished &&
+
+                {!this.props.test.isFinished && (
                   <Button
                     variant="success"
                     fullWidth
@@ -192,9 +190,9 @@ class ProfTest extends Component {
                   >
                     Complete the Test!
                   </Button>
-                }
+                )}
 
-                {this.props.test.isFinished &&
+                {this.props.test.isFinished && (
                   <Button
                     variant="warning"
                     fullWidth
@@ -203,7 +201,7 @@ class ProfTest extends Component {
                   >
                     Congratulations, let's go to see the test results!
                   </Button>
-                }
+                )}
               </div>
             </div>
           </Grid>
@@ -224,14 +222,11 @@ const mapDispatchToProps = dispatch =>
     {
       get_prof_test,
       get_test_result,
-      clear_prof_test,
+      clear_prof_test
     },
     dispatch
   );
 
 export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ProfTest)
+  connect(mapStateToProps, mapDispatchToProps)(ProfTest)
 );

@@ -24,7 +24,7 @@ export class Question extends Component {
   }
   findColorOfText = option => {
     if (
-      option.text != this.props.selectedOption ||
+      option != this.props.selectedOption ||
       this.props.questionAnswerStatus == undefined
     )
       return { color: "black" };
@@ -34,7 +34,7 @@ export class Question extends Component {
 
   findColorOfRadioButton = option => {
     if (
-      option.text != this.props.selectedOption ||
+      option != this.props.selectedOption ||
       this.props.questionAnswerStatus == undefined
     )
       return { color: "orange" };
@@ -51,11 +51,11 @@ export class Question extends Component {
             {this.props.questionOptions.map(option => (
               <FormControlLabel
                 control={<Radio style={this.findColorOfRadioButton(option)} />}
-                label={option.text}
-                checked={this.props.selectedOption === option.text}
+                label={option}
+                checked={this.props.selectedOption === option}
                 onChange={() => {
                   if (this.props.questionAnswerStatus == undefined)
-                    this.props.onChange(option.text);
+                    this.props.onChange(option);
                 }}
                 style={this.findColorOfText(option)}
               />

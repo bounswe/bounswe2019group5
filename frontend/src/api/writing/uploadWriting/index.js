@@ -1,6 +1,10 @@
 import parameters from '../../parameters'
 import axios from 'axios';
 
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 export const upload_writing = async (token, language, file, reviewer) => {
 
     var bodyFormData = new FormData();
@@ -8,8 +12,6 @@ export const upload_writing = async (token, language, file, reviewer) => {
     if (reviewer)
         bodyFormData.set('reviewer', reviewer);
     bodyFormData.set('writing', file);
-
-    console.log(token);
 
     const data = await axios({
         method: 'post',
@@ -24,12 +26,12 @@ export const upload_writing = async (token, language, file, reviewer) => {
     .catch(err => 
     {
         return {
-        token: null,
-        message: err.response? err.response.data.message : 'Connection Error!',
+            message: 'File cannot Uploaded!',
         };
     });
     
     console.log(data);
+    timeout(10000);
   
     return data;
   };
