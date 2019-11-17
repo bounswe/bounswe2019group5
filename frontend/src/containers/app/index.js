@@ -12,7 +12,9 @@ import VocabularyTest from "../exercises/vocabularyTest";
 import GrammarTest from "../exercises/grammarTest";
 import Chat from "../chat";
 import WritingUpload from "../writingUpload";
+import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
+
 
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -108,12 +110,10 @@ class App extends Component {
           <Route exact path="/grammar-test" component={GrammarTest} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
-          <Route
-            exact
-            path="/upload-writing/:reviewer?"
-            component={WritingUpload}
-          />
+          <Route exact path="/upload-writing/:reviewer?" component={WritingUpload} />
+          <Route exact path="/recommendation" component={Recommendation} />
           <Route exact path="/show-writing/:id" component={WritingShow} />
+
         </main>
       </div>
     );
