@@ -17,6 +17,7 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".BridgeActivity" />
         <activity android:name=".ProfilePage" />
+        <activity android:name=".ExerciseResultOverviewActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity

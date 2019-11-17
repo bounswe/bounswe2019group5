@@ -46,6 +46,8 @@ public class SearchResultActivity extends AppCompatActivity {
         String searchLanguage = intent.getStringExtra("searchLanguage");
 
 
+
+
         try {
 
              arrayExercises = new JSONArray(jsonArray);
@@ -130,4 +132,6 @@ public class SearchResultActivity extends AppCompatActivity {
             return row;
         }
     }
+
+
 }
