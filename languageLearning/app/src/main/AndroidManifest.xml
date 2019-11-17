@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.languageLearning">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -11,9 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TextEssayDetailTestActivity" android:exported="true"/>
-        <activity android:name=".TextEssayDetailActivity"/>
-        <activity android:name=".ImageEssayDetailActivity"/>
+        <activity android:name=".ListEssaysActivity"></activity>
+        <activity
+            android:name=".TextEssayDetailTestActivity"
+            android:exported="true" />
+        <activity android:name=".TextEssayDetailActivity" />
+        <activity android:name=".ImageEssayDetailActivity" />
         <activity android:name=".UploadEssayActivity" />
         <activity android:name=".WriteNewEssayActivity" />
         <activity android:name=".NewEssayActivity" />
@@ -37,8 +43,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -26,7 +26,7 @@ public class NewEssayActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 2;
     private final String TAG = this.getClass().getName();
 
-    ImageButton uploadFromFile, writeNew;
+    ImageButton uploadFromFile, writeNew, myEssays;
 
     public Boolean getExternalStoragePermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -120,6 +120,14 @@ public class NewEssayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_essay);
         uploadFromFile = findViewById(R.id.uploadFileButton);
         writeNew = findViewById(R.id.writeButton);
+        myEssays = findViewById(R.id.myEssaysButton);
+
+        myEssays.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(NewEssayActivity.this, )
+            }
+        });
 
         uploadFromFile.setOnClickListener(new View.OnClickListener() {
             @Override
