@@ -13,6 +13,7 @@ public class Essay implements Serializable {
     public URI fileUri;
     public String reviewer;
     public String author;
+    public String status;
 
     public static Essay fromJSON(JSONObject jessay) throws JSONException, URISyntaxException {
         Essay essay = new Essay();
@@ -21,6 +22,7 @@ public class Essay implements Serializable {
         essay.fileUri = new URI(jessay.getString("writing"));
         essay.reviewer = jessay.getString("reviewer");
         essay.author = jessay.getString("author");
+        essay.status = jessay.getString("status");
         return essay;
     }
 }
