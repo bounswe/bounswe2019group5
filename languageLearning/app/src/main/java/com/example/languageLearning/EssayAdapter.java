@@ -83,7 +83,14 @@ public class EssayAdapter extends BaseAdapter {
         essayElementView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, TextEssayDetailActivity.class);
+                Intent intent;
+                if(essay1.fileUri.toString().endsWith("txt")) {
+                    intent = new Intent(context, TextEssayDetailActivity.class);
+                    Log.d("TEST", "TEXT ESSAY");
+                }else {
+                    Log.d("TEST", "IMAGE ESSAY");
+                    intent = new Intent(context, ImageEssayDetailActivity.class);
+                }
                 intent.putExtra("essay", essay1);
                 context.startActivity(intent);
             }
