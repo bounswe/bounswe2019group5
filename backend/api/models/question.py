@@ -9,4 +9,4 @@ class Question(models.Model):
     answer = models.CharField(max_length=1000, default='')
     options = ArrayField(models.CharField(max_length=100, blank=True),
                          size=5, default=list)
-    body = models.CharField(max_length=1000, default='')
+    body = models.CharField(max_length=10000000, default='')
