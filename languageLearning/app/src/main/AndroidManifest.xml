@@ -11,14 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BridgeActivity"></activity>
-        <activity android:name=".ProfilePage"></activity>
-        <activity android:name=".MainMenuActivity"></activity>
+        <activity android:name=".UploadEssayActivity"></activity>
+        <activity android:name=".WriteNewEssayActivity" />
+        <activity android:name=".NewEssayActivity" />
+        <activity android:name=".BridgeActivity" />
+        <activity android:name=".ProfilePage" />
+        <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
             android:name=".ProfExamActivity"
             android:exported="true" />
-        <activity android:name=".ExerciseActivity"/>
+        <activity android:name=".ExerciseActivity" />
         <activity
             android:name=".ExerciseActivityTestActivity"
             android:exported="true" />
@@ -33,5 +36,6 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>
