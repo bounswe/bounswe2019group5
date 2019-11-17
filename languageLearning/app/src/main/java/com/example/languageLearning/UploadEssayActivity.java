@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class UploadEssayActivity extends AppCompatActivity {
     MyApplication app;
     String essayText;
     String essayPath;
+    UserProfile reviewerProfile;
     ProgressBar progressBar;
     ImageView checkCircleView;
     Button finishButton;
@@ -59,9 +61,10 @@ public class UploadEssayActivity extends AppCompatActivity {
         });
         essayText = getIntent().getStringExtra("essayText");
         essayPath = getIntent().getStringExtra("essayPath");
+        reviewerProfile = (UserProfile)getIntent().getSerializableExtra("reviewerProfile");
         HashMap<String, String> textParams = new HashMap<>();
         textParams.put("language", app.getLanguage());
-        textParams.put("reviewer", "kbozdogan"); //TODO: Let the user choose the reviewer
+        textParams.put("reviewer", reviewerProfile.username);
         HashMap<String, File> fileParams = new HashMap<>();
         File tempFile = null;
         if (essayText != null) {

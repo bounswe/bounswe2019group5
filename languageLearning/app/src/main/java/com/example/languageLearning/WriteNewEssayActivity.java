@@ -26,7 +26,7 @@ public class WriteNewEssayActivity extends AppCompatActivity {
                 String essayText = essayEditText.getText().toString();
                 if (essayText.length() == 0)
                     return ;
-                Intent intent = new Intent(WriteNewEssayActivity.this, UploadEssayActivity.class);
+                Intent intent = new Intent(WriteNewEssayActivity.this, SelectEssayReviewerActivity.class);
                 intent.putExtra("essayText", essayEditText.getText().toString());
                 startActivity(intent);
             }

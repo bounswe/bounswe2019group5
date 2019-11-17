@@ -105,7 +105,7 @@ public class NewEssayActivity extends AppCompatActivity {
                         return ;
                     }
                     Log.d(TAG, "File Path: " + path);
-                    Intent intent = new Intent(NewEssayActivity.this, UploadEssayActivity.class);
+                    Intent intent = new Intent(NewEssayActivity.this, SelectEssayReviewerActivity.class);
                     intent.putExtra("essayPath", path);
                     startActivity(intent);
                 }
