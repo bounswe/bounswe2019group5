@@ -13,11 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".SearchResultActivity"></activity>
         <activity android:name=".SearchActivity" />
+        <activity android:name=".ExerciseResultOverviewActivity" />
+        <activity android:name=".TextEssayDetailTestActivity" android:exported="true"/>
+        <activity android:name=".TextEssayDetailActivity"/>
+        <activity android:name=".ImageEssayDetailActivity"/>
+        <activity android:name=".UploadEssayActivity" />
+        <activity android:name=".WriteNewEssayActivity" />
+        <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
         <activity android:name=".ProfilePage" />
-        <activity android:name=".ExerciseResultOverviewActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
@@ -36,5 +43,6 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
