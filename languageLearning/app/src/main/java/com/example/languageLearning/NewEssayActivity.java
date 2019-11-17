@@ -125,7 +125,8 @@ public class NewEssayActivity extends AppCompatActivity {
         myEssays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(NewEssayActivity.this, )
+                Intent intent = new Intent(NewEssayActivity.this, ListEssaysActivity.class);
+                startActivity(intent);
             }
         });
 
