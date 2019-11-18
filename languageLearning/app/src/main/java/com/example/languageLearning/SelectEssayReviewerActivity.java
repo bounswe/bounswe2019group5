@@ -1,6 +1,7 @@
 package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,7 +107,10 @@ public class SelectEssayReviewerActivity extends AppCompatActivity {
                     return;
                 }
                 adapter = new SelectEssayReviewerRecycleViewAdapter(app, SelectEssayReviewerActivity.this, profiles, essayText, essayPath);
-                recyclerView.setLayoutManager(new LinearLayoutManager(SelectEssayReviewerActivity.this));
+                LinearLayoutManager lm = new LinearLayoutManager(SelectEssayReviewerActivity.this);
+                recyclerView.setLayoutManager(lm);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), lm.getOrientation());
+                recyclerView.addItemDecoration(dividerItemDecoration);
                 recyclerView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
