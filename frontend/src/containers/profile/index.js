@@ -96,21 +96,11 @@ class Profile extends Component {
           </Grid>
           <Grid item component={Paper}>
             <div className={classes.paper}>
-              {this.state.selfProfile ? (
+              {this.state.selfProfile && (
                 <LangTab
-                  selfProfile={this.state.selfProfile}
                   attendedLang={
                     this.props.userInfo.userProfile.attended_languages
                   }
-                  userProfile={this.props.userInfo.userProfile}
-                />
-              ) : (
-                <LangTab
-                  selfProfile={this.state.selfProfile}
-                  attendedLang={
-                    this.props.userInfo.otherUserProfile.attended_languages
-                  }
-                  userProfile={this.props.userInfo.otherUserProfile}
                 />
               )}
             </div>
