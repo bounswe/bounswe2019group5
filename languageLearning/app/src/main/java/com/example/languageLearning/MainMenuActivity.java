@@ -173,4 +173,11 @@ public class MainMenuActivity extends AppCompatActivity {
         });
         popup.show();
     }
+
+    public void onClickChat(View view){
+
+        Intent i = new Intent(this, ChatNewMessageActivity.class);
+        startActivity(i);
+
+    }
 }
