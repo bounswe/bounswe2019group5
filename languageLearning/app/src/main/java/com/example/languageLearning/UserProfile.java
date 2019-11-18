@@ -26,6 +26,7 @@ public class UserProfile implements Serializable {
     public static UserProfile fromJSON(JSONObject jessay) throws JSONException {
         UserProfile profile = new UserProfile();
         profile.id = jessay.getInt("id");
+        profile.username = jessay.getString("username");
         profile.first_name = jessay.getString("first_name");
         profile.last_name = jessay.getString("last_name");
         profile.native_language = jessay.getString("native_language");
