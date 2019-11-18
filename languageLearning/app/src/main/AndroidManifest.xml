@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatNewMessage"></activity>
+        <activity android:name=".ChatNewMessageActivity"></activity>
         <activity android:name=".BridgeActivity" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".MainMenuActivity" />

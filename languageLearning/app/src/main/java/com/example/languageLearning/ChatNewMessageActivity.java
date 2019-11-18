@@ -2,11 +2,9 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,11 +17,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChatNewMessage extends AppCompatActivity {
+public class ChatNewMessageActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
 
@@ -70,7 +67,7 @@ public class ChatNewMessage extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         */
-                        Toast.makeText(ChatNewMessage.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChatNewMessageActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
 
                     }
                 },
