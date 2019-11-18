@@ -46,6 +46,7 @@
             android:id="@+id/englishRadioButton"
             android:layout_width="91dp"
             android:layout_height="27dp"
+            android:checked="true"
             android:onClick="checkButton"
             android:text="@string/english" />
 
