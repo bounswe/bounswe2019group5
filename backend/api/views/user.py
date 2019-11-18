@@ -114,9 +114,14 @@ class ProfileView(mixins.ListModelMixin,
         if request.user.is_anonymous:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
         username = request.query_params.get('username')
+
+        if username == '':
+            return Response(ProfileSerializer(request.user).data, status=status.HTTP_200_OK)
+
         user = User.objects.filter(username=username)
         if not user:
-            return Response(ProfileSerializer(request.user).data, status=status.HTTP_200_OK)
+            raise NotFound('User not found')
+
         user = user.first()
         return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
 
