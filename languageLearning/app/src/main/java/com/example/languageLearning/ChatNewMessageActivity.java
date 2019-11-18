@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,8 +43,7 @@ public class ChatNewMessageActivity extends AppCompatActivity {
 
 
     public void onClickSend(View view){
-
-        String url = "http://35.158.176.194/message/";
+        String path = "message/";
 
         JSONObject json = new JSONObject();
         try {
@@ -54,49 +54,21 @@ public class ChatNewMessageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, json,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        Log.i(TAG, "onResponse: " + response.toString());
-                        /*
-                        try {
-                            uploadedImageName = response.getString("imageName");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        */
-                        Toast.makeText(ChatNewMessageActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Could not sent the message", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: " + error.getMessage());
-                        error.printStackTrace();
-                    }
-                })
-
-        {
+        app.initiateAPICall(Request.Method.POST, path, json, new Response.Listener<JSONObject>() {
             @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, "onResponse: " + response.toString());
+                Toast.makeText(ChatNewMessageActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
             }
 
+        }, new Response.ErrorListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String token = app.getToken();
-                if (token != null)
-                    headers.put("Authorization", "Token " + token);
-                return headers;
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Could not sent the message", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "onErrorResponse: " + error.getMessage());
+                error.printStackTrace();
             }
-        };
-
-        Volley.newRequestQueue(this).add(jsonRequest);
+        });
     }
 
 }
