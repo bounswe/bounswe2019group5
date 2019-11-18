@@ -87,6 +87,11 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
         if not created:
             raise serializers.ValidationError('exercise has already solved')
 
+        exercise_language, _ = Language.objects.get_or_create(language=result.exercise.language)
+
+        if exercise_language not in result.user.attended_languages.all():
+            result.user.attended_languages.add(exercise_language)
+
         return result
 
 
