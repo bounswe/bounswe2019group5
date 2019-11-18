@@ -3,6 +3,7 @@ package com.example.languageLearning;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -108,12 +109,20 @@ public class ExerciseActivity extends AppCompatActivity {
         question_textview.setText(exercise.questions[index].text);
         for (int i=0; i<4; i++) {
             buttons[i].setText(exercise.questions[index].options[i]);
-            if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
-                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
-            else
-                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
-            if (exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex]))
-                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_light));
+                if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
+                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
+                else
+                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
+                if(correctAnswers!=null) {
+                if(exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) {
+                    if (!chosenAnswers[currentQuestionIndex].equals(correctAnswers[currentQuestionIndex]))
+                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_light));
+                    else if (exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) {
+                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_green_light));
+                    }
+                }
+
+            }
         }
     }
 
@@ -135,6 +144,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private void finishTest() throws JSONException {
         final String path = "result/";
         JSONObject data = new JSONObject();
+        String id = exercise.id + "";
         data.put("id", exercise.id);
         JSONArray answers = new JSONArray();
         for (int i=0; i<exercise.questions.length; i++) {
@@ -144,11 +154,15 @@ public class ExerciseActivity extends AppCompatActivity {
                 answers.put(JSONObject.NULL);
         }
         data.put("answers", answers);
+        Log.d("RESSPONNSEEEE1111", data.toString(2));
         app.initiateAPICall(Request.Method.POST, path, data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.d("RESSPONNSEEEE", response.toString(2));
                     String[] correctAnswers = new String[response.getJSONArray("correct_answer").length()];
+                    correctAnswers = toStringArray(response.getJSONArray("correct_answer"));
+                    Log.d("HEYHEEEEEY", correctAnswers[0]);
                     Intent intent = new Intent(ExerciseActivity.this, ExerciseResultOverviewActivity.class);
                     intent.putExtra("exercise", exercise);
                     intent.putExtra("chosenAnswers", chosenAnswers);
@@ -167,5 +181,16 @@ public class ExerciseActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public static String[] toStringArray(JSONArray array) {
+        if(array==null)
+            return null;
+
+        String[] arr=new String[array.length()];
+        for(int i=0; i<arr.length; i++) {
+            arr[i]=array.optString(i);
+        }
+        return arr;
     }
 }
