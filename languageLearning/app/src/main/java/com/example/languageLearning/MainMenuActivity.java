@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import java.util.Random;
 
 public class MainMenuActivity extends AppCompatActivity {
-    private final String TAG = "TEST";
+    private final String TAG = getClass().getName();
     private MyApplication app;
     TextView welcomeMessage, currentLanguageView;
-    ImageButton profileButton, logoutButton, changeLanguageButton, exerciseButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton;
     Dialog popup;
 
     @Override
@@ -38,6 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
         profileButton = findViewById(R.id.profileButton);
         logoutButton = findViewById(R.id.logoutButton);
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
+        newEssayButton = findViewById(R.id.newEssayButton);
         exerciseButton = findViewById(R.id.exerciseButton);
         currentLanguageView = findViewById(R.id.currentLanguageView);
 
@@ -64,6 +65,13 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        newEssayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, NewEssayActivity.class);
+                startActivity(intent);
+            }
+        });
         exerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
