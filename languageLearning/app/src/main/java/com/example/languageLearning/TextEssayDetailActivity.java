@@ -40,7 +40,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
 
     Essay essay;
     TextView essayTextView;
-    Button finishButton, rejectButton;
+    Button rejectButton;
     MyApplication app;
     ProgressBar progressBar;
     String essayText;
@@ -134,7 +134,6 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         app = (MyApplication) getApplication();
         essay = (Essay)getIntent().getSerializableExtra("essay");
         essayTextView = findViewById(R.id.essayTextView);
-        finishButton = findViewById(R.id.finishButton);
         rejectButton = findViewById(R.id.rejectButton);
         progressBar = findViewById(R.id.downloadProgressBar);
         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
@@ -201,15 +200,6 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             });
         }
 
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(TextEssayDetailActivity.this, MainMenuActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
         app.rawHTTPGetRequest(essay.fileUri, new BufferedReaderFunction() {
             @Override
             public void invoke(BufferedReader r) {
@@ -247,7 +237,6 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         drawAnnotations();
                         essayTextView.setVisibility(View.VISIBLE);
-                        finishButton.setVisibility(View.VISIBLE);
                         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
                             rejectButton.setVisibility(View.VISIBLE);
                             rejectButton.setOnClickListener(new View.OnClickListener() {

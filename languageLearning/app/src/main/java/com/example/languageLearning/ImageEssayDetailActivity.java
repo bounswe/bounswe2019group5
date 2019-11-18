@@ -54,7 +54,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
 
     Essay essay;
     ImageView essayImageView;
-    Button finishButton, annotateButton, rejectButton;
+    Button annotateButton, rejectButton;
     MyApplication app;
     ProgressBar progressBar;
     Bitmap essayImage;
@@ -174,18 +174,9 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         essay = (Essay)getIntent().getSerializableExtra("essay");
         essayImageView = findViewById(R.id.essayImageView);
         annotateButton = findViewById(R.id.annotateButton);
-        finishButton = findViewById(R.id.finishButton);
         rejectButton = findViewById(R.id.rejectButton);
         progressBar = findViewById(R.id.downloadProgressBar);
         cropImageView = findViewById(R.id.cropImageView);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ImageEssayDetailActivity.this, MainMenuActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         app.rawHTTPGetRequest(essay.fileUri, new InputStreamFunction() {
             @Override
@@ -292,9 +283,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             });
 
                         }
-
-
-                        finishButton.setVisibility(View.VISIBLE);
 
                         essayImageView.setOnTouchListener(new View.OnTouchListener() {
                             @Override
