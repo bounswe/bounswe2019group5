@@ -25,21 +25,20 @@ class Profile extends Component {
   }
   componentDidMount() {
     if (
-      this.props.match.params.user !=
-      ":" + this.props.userInfo.userProfile.username
+      this.props.match.params.user != this.props.userInfo.userProfile.username
     ) {
       this.props.set_other_user_profile(
         this.props.userInfo.token,
-        this.props.match.params.user.substring(1)
+        this.props.match.params.user
       );
       this.setState({ selfProfile: false });
       console.log("other profile");
-      console.log("SELF PROFILE" + this.state.selfProfile);
 
     } else  {
       this.props.set_user_profile(this.props.userInfo.token);
       console.log("self profile");
     }
+    
   }
   render() {
     const { classes } = this.props;

@@ -69,7 +69,7 @@ class App extends Component {
               // TODO -> Profil Page hazir oldugunda buradan link edilecek
             }
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
-              <Link to={"/profile:"+ this.props.userInfo.userProfile.username}>
+              <Link to={"/profile/"+ this.props.userInfo.userProfile.username}>
                 <Button variant="outline-success">
                   My Profile({this.props.userInfo.userProfile.username})
                 </Button>
@@ -108,7 +108,7 @@ class App extends Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/vocabulary-test" component={VocabularyTest} />
           <Route exact path="/grammar-test" component={GrammarTest} />
-          <Route exact path="/profile:user" component={Profile} />
+          <Route exact path="/profile/:user" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
           <Route exact path="/upload-writing/:reviewer?" component={WritingUpload} />
           <Route exact path="/recommendation" component={Recommendation} />
