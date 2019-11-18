@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .comment import CommentSerializer
-from ..models import User
+from ..models import User, Language
 
 languageChoices = [
     ('english', 'english'),
@@ -11,7 +11,14 @@ languageChoices = [
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+
+    class LanguageSerializer(serializers.HyperlinkedModelSerializer):
+        class Meta:
+            model = Language
+            fields = ('language',)
+
     user_comments = CommentSerializer(many=True)
+    attended_languages = LanguageSerializer(many=True)
 
     class Meta:
         model = User
