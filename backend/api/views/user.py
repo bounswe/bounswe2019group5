@@ -163,3 +163,12 @@ class RecommendationView(GenericViewSet,
             raise PermissionDenied('you cannot edit comment with post method')
 
         return super().create(request, *args, **kwargs)
+
+
+class UserSearchView(GenericViewSet,
+                     mixins.ListModelMixin):
+    serializer_class = ProfileSerializer
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = RecommendationFilterSet
+    queryset = User.objects.all()
