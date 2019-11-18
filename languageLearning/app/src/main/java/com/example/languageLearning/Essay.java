@@ -25,4 +25,21 @@ public class Essay implements Serializable {
         essay.status = jessay.getString("status");
         return essay;
     }
+
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        try {
+            o.put("id", id);
+            o.put("language", language);
+            o.put("writing", fileUri.toString());
+            o.put("reviewer", reviewer);
+            o.put("author", author);
+            o.put("status", status);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return o;
+    }
 }

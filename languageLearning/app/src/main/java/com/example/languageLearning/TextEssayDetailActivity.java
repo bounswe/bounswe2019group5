@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
 
     Essay essay;
     TextView essayTextView;
-    Button finishButton;
+    Button finishButton, rejectButton;
     MyApplication app;
     ProgressBar progressBar;
     String essayText;
@@ -85,6 +86,30 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         return closestAnnotation;
     }
 
+    private void reject() {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("status", "rejected");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            finish();
+            return ;
+        }
+        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(TextEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
+    }
+
     private boolean essayTextViewOnTouch(View v, MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_UP)
             return false;
@@ -110,6 +135,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         essay = (Essay)getIntent().getSerializableExtra("essay");
         essayTextView = findViewById(R.id.essayTextView);
         finishButton = findViewById(R.id.finishButton);
+        rejectButton = findViewById(R.id.rejectButton);
         progressBar = findViewById(R.id.downloadProgressBar);
         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
             essayTextView.setTextIsSelectable(true);
@@ -222,6 +248,15 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                         drawAnnotations();
                         essayTextView.setVisibility(View.VISIBLE);
                         finishButton.setVisibility(View.VISIBLE);
+                        if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
+                            rejectButton.setVisibility(View.VISIBLE);
+                            rejectButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    reject();
+                                }
+                            });
+                        }
                         essayTextView.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
