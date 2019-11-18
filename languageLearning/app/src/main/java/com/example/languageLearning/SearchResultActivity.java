@@ -56,7 +56,7 @@ public class SearchResultActivity extends AppCompatActivity {
             for(int i = 0 ; i < arrayExercises.length(); i++){
                 JSONObject jsonExercise = (JSONObject) arrayExercises.get(i);
                 int a = jsonExercise.getInt("id");
-                titles1[i]=searchLanguage+" Exercises with Tag: "+searchTag.toUpperCase()+ " & Keywordsss: " + searchKeyword.toUpperCase() + " : "+ a;
+                titles1[i]=searchLanguage+" Exercises with Tag: "+searchTag.toUpperCase()+ " & Keywords: " + searchKeyword.toUpperCase() + " : "+ a;
             }
             titles = titles1;
             MyAdapter adapter = new MyAdapter(this, titles);
