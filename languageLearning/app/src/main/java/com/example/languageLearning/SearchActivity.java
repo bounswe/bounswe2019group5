@@ -62,8 +62,10 @@ public class SearchActivity extends AppCompatActivity {
                  */
                 tag1 = tag.getText().toString();
                 keyword1 = keyword.getText().toString();
-                language1 = language.toLowerCase();
-                Log.d("LOGGGG1 :",tag1);
+                 if(language!=null)
+                    language1 = language.toLowerCase();
+                else
+                    language1="english";
                 getQuestions(tag1,keyword1,language1);
             }
         });
