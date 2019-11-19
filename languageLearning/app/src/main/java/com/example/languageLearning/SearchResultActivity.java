@@ -61,25 +61,6 @@ public class SearchResultActivity extends AppCompatActivity {
             titles = titles1;
             MyAdapter adapter = new MyAdapter(this, titles);
             list.setAdapter(adapter);
-            //Log.d("LOG SearchResult :",arrayExercises.get(1).toString());
-            //JSONArray array2 = new JSONArray(arrayExercises.get(0).toString());
-            //Log.d("LOG SearchResult222 :",array2.toString());
-            //JSONObject jsonExercise = (JSONObject) arrayExercises.get(1);
-            //JSONArray a2 = new JSONArray();
-           // jsonExercise.toJSONArray(a2);
-           /* JSONObject jsonExercise = (JSONObject) arrayExercises.get(0);
-
-            Log.d("LOG SearchResult2 :",jsonExercise.toString(2));
-             Exercise exercise = Exercise.fromJSON(jsonExercise);
-            Intent intent1 = new Intent(SearchResultActivity.this, ExerciseActivity.class);
-            intent1.putExtra("exercise", exercise);
-            startActivity(intent1);
-
-
-            */
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,7 +76,6 @@ public class SearchResultActivity extends AppCompatActivity {
                     Exercise exercise = Exercise.fromJSON(jsonExercise);
                     Intent intent1 = new Intent(SearchResultActivity.this, ExerciseActivity.class);
                     intent1.putExtra("exercise", exercise);
-                    Log.d("LOG123",""+exercise.id);
                     startActivity(intent1);
 
                 } catch (JSONException e) {

@@ -77,7 +77,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getQuestions(String tag1, String keyword1, String language1) {
         final String path = "search/?tag=" + tag1 + "&keyword=" + keyword1 + "&language=" + language1;
-        Log.d("LOGGGG :",path);
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
