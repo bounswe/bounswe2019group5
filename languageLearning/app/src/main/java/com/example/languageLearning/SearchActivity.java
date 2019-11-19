@@ -54,17 +54,12 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* JSONObject jsonObject = new JSONObject();
-
-                 jsonObject.put("tag", tag.getText().toString());
-                 jsonObject.put("keyword", keyword.getText().toString());
-                 jsonObject.put("language", language.toString());
-                 */
                 tag1 = tag.getText().toString();
                 keyword1 = keyword.getText().toString();
                  if(language!=null)
                     language1 = language.toLowerCase();
                 else
+                    language="english";
                     language1="english";
                 getQuestions(tag1,keyword1,language1);
             }
@@ -92,16 +87,9 @@ public class SearchActivity extends AppCompatActivity {
                     return;
                 }
 
-                try {
-                    Log.d("LOGGGG2223 :",response.get(0).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 JSONArray searchResults = (JSONArray) response ;
-                Log.d("LOGGGG222 :",searchResults.toString());
 
                 Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-                Log.d("LOGGGG222 :",searchResults.toString());
                 intent.putExtra("searchTag", tag.getText().toString());
                 intent.putExtra("searchKeyword", keyword.getText().toString());
                 intent.putExtra("searchLanguage", language);
