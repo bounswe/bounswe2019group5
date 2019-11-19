@@ -23,7 +23,7 @@ class Recommendation extends Component {
             <select
                 className="input form-control"
                 onChange={this.handleChange}
-                value={this.props.userInfo.selectedLanguage}>
+                value={this.props.recommendation.language}>
                 <option value=''></option>
                 <option value='english'>English</option>
                 <option value='german'>German</option>
@@ -74,7 +74,7 @@ class Recommendation extends Component {
                                 <div>Name: {item.first_name}</div>
                                 <div>Surname: {item.last_name}</div>
                                 <div>Rating: {item.rating_average}</div>
-                                    <Button onClick={() => this.props.onSelect(item.first_name)}
+                                    <Button onClick={() => this.props.onSelect(item.username)}
                                             text = {"Select "+item.first_name+" as Reviewer"}/>
                             </li>
                         );
@@ -84,7 +84,6 @@ class Recommendation extends Component {
         
         )
     }
-
 }
 
 const mapStateToProps = ({ userInfo, recommendation }) => ({
