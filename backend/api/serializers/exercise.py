@@ -83,14 +83,23 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
             'number_of_true': number_of_true,
             'number_of_false': number_of_false
         }
-        result, created = Result.objects.get_or_create(**result)
+
+        created = len(Result.objects.filter(user=result['user'], exercise=result['exercise'])) == 0
+
         if not created:
             raise serializers.ValidationError('exercise has already solved')
+
+        result = Result.objects.create(**result)
 
         exercise_language, _ = Language.objects.get_or_create(language=result.exercise.language)
 
         if exercise_language not in result.user.attended_languages.all():
             result.user.attended_languages.add(exercise_language)
+
+        if result.exercise.type == 'proficiency' and number_of_true >= 2*number_of_false:
+            new_level = levels[levels.index((result.user.level, result.user.level)) + 1][0]
+            User.objects.filter(username=result.user.username).update(level=new_level)
+            result.user.level = new_level
 
         return result
 
