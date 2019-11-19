@@ -34,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
@@ -53,7 +54,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
 
     Essay essay;
     ImageView essayImageView;
-    Button finishButton, annotateButton;
+    Button annotateButton, rejectButton;
     MyApplication app;
     ProgressBar progressBar;
     Bitmap essayImage;
@@ -127,6 +128,31 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         return closestAnnotation;
     }
 
+    private void reject() {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("status", "rejected");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            finish();
+            return ;
+        }
+        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(ImageEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
+    }
+
+
     private boolean essayImageViewOnTouch(View v, MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_UP)
             return true;
@@ -148,17 +174,9 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         essay = (Essay)getIntent().getSerializableExtra("essay");
         essayImageView = findViewById(R.id.essayImageView);
         annotateButton = findViewById(R.id.annotateButton);
-        finishButton = findViewById(R.id.finishButton);
+        rejectButton = findViewById(R.id.rejectButton);
         progressBar = findViewById(R.id.downloadProgressBar);
         cropImageView = findViewById(R.id.cropImageView);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ImageEssayDetailActivity.this, MainMenuActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         app.rawHTTPGetRequest(essay.fileUri, new InputStreamFunction() {
             @Override
@@ -192,6 +210,13 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         essayImageView.setVisibility(View.VISIBLE);
 
                         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
+                            rejectButton.setVisibility(View.VISIBLE);
+                            rejectButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    reject();
+                                }
+                            });
                             annotateButton.setVisibility(View.VISIBLE);
                             annotateButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -258,9 +283,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             });
 
                         }
-
-
-                        finishButton.setVisibility(View.VISIBLE);
 
                         essayImageView.setOnTouchListener(new View.OnTouchListener() {
                             @Override

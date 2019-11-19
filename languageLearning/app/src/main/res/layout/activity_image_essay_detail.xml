@@ -51,17 +51,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Annotate"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/essayImageView"
         app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
 
     <Button
-        android:id="@+id/finishButton"
+        android:id="@+id/rejectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Finish"
+        android:layout_marginEnd="16dp"
+        android:text="Reject"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/essayImageView"
-        app:layout_constraintTop_toBottomOf="@+id/annotateButton" />
+        app:layout_constraintEnd_toStartOf="@+id/annotateButton"
+        app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
