@@ -153,4 +153,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
+    <ImageButton
+        android:id="@+id/chatButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:background="#00FFFFFF"
+        android:onClick="onClickChat"
+        android:text="Chat"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/newEssayButton"
+        app:layout_constraintStart_toStartOf="@+id/newEssayButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/ic_chat_black_24dp" />
+
+    <TextView
+        android:id="@+id/chatButtonExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/chatButton"
+        app:layout_constraintStart_toStartOf="@+id/chatButton"
+        app:layout_constraintTop_toBottomOf="@+id/chatButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

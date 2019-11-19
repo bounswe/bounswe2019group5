@@ -124,11 +124,12 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
+                /* Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
                         + "\nStatus Code " + error.networkResponse.statusCode
                         + "\nCause " + error.getCause()
                         + "\nnetworkResponse " + error.networkResponse.data.toString()
-                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show(); */
+                Toast.makeText(getApplicationContext(), "This username is taken", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

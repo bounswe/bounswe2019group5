@@ -12,10 +12,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".SelectEssayReviewerActivity"></activity>
-        <activity
-            android:name=".ImageEssayDetailTestActivity"
-            android:exported="true" />
-        <activity android:name=".ListEssaysTestActivity" />
+        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".ExerciseResultOverviewActivity" />
+        <activity android:name=".ChatNewMessageActivity"></activity>
+        <activity android:name=".ImageEssayDetailTestActivity" android:exported="true"/>
+        <activity android:name=".ListEssaysTestActivity"/>
         <activity android:name=".ListEssaysActivity" />
         <activity
             android:name=".TextEssayDetailTestActivity"
