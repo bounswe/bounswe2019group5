@@ -18,4 +18,5 @@
     <string name="tag">Tag</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="search_lowercase">Search</string>
 </resources>

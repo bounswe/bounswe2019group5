@@ -25,7 +25,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
     private MyApplication app;
     TextView welcomeMessage, currentLanguageView;
-    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton, searchButton;
     Dialog popup;
 
     @Override
@@ -40,6 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         newEssayButton = findViewById(R.id.newEssayButton);
         exerciseButton = findViewById(R.id.exerciseButton);
+        searchButton = findViewById(R.id.searchButton);
         currentLanguageView = findViewById(R.id.currentLanguageView);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +77,13 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showExerciseSelectPopup();
+            }
+        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -54,17 +54,12 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* JSONObject jsonObject = new JSONObject();
-
-                 jsonObject.put("tag", tag.getText().toString());
-                 jsonObject.put("keyword", keyword.getText().toString());
-                 jsonObject.put("language", language.toString());
-                 */
                 tag1 = tag.getText().toString();
                 keyword1 = keyword.getText().toString();
                  if(language!=null)
                     language1 = language.toLowerCase();
                 else
+                    language="english";
                     language1="english";
                 getQuestions(tag1,keyword1,language1);
             }
@@ -82,7 +77,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getQuestions(String tag1, String keyword1, String language1) {
         final String path = "search/?tag=" + tag1 + "&keyword=" + keyword1 + "&language=" + language1;
-        Log.d("LOGGGG :",path);
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -92,26 +86,9 @@ public class SearchActivity extends AppCompatActivity {
                     return;
                 }
 
-                try {
-                    Log.d("LOGGGG2223 :",response.get(0).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 JSONArray searchResults = (JSONArray) response ;
-                Log.d("LOGGGG222 :",searchResults.toString());
-                   /* Exercise[] exercises = new Exercise[response.length()];
-                    for (int i = 0 ; i <= response.length() ; i++){
-                        JSONObject jsonExercise = (JSONObject) response.get(i);
-                        exercises[i] =Exercise.fromJSON(jsonExercise);
 
-                    }
-
-                    //JSONObject[] jsonExercise =  (JSONObject[]) response.get(new Random().nextInt(response.length()));
-                    //Exercise exercise = Exercise.fromJSON(jsonExercise);
-
-                    */
                 Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-                Log.d("LOGGGG222 :",searchResults.toString());
                 intent.putExtra("searchTag", tag.getText().toString());
                 intent.putExtra("searchKeyword", keyword.getText().toString());
                 intent.putExtra("searchLanguage", language);
@@ -126,19 +103,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-
-
-   /* private void showSearchResults(int correctCount, int falseCount, String level) {
-        Intent intent = new Intent(this, ProfResultActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("COUNT_CORRECT", correctCount);
-        b.putInt("COUNT_INCORRECT", falseCount);
-        b.putString("LEVEL", level);
-        intent.putExtras(b);
-        startActivity(intent);
-        finish();
-    }
-   */
 
 
 }
