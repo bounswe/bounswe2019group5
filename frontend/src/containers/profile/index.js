@@ -16,6 +16,8 @@ import LangTab from "./langTab";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Paper from "@material-ui/core/Paper";
 import Ratings from "./ratings";
+import _ from "lodash"
+
 
 class Profile extends Component {
   state = { selfProfile: true };
@@ -33,14 +35,36 @@ class Profile extends Component {
       );
       this.setState({ selfProfile: false });
       console.log("other profile");
-
     } else  {
       this.props.set_user_profile(this.props.userInfo.token);
       console.log("self profile");
     }
     
   }
+
+  componentDidUpdate() {
+    if (
+      this.props.match.params.user != this.props.userInfo.userProfile.username
+    ) {
+      this.props.set_other_user_profile(
+        this.props.userInfo.token,
+        this.props.match.params.user
+      );
+      this.setState({ selfProfile: false });
+      console.log("other profile");
+    } else  {
+      this.props.set_user_profile(this.props.userInfo.token);
+      console.log("self profileuu");
+      this.setState({ selfProfile: true });
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state)
+  }
+
   render() {
+    console.log("a")
     const { classes } = this.props;
     if (this.props.userInfo.token == null) {
       return (
