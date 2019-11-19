@@ -43,6 +43,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -169,7 +170,7 @@ public class MyApplication extends Application {
     public void initiateMultiPartAPICall(int method,
                                 String path,
                                 Map<String, String> textParams,
-                                Map<String, File> fileParams,
+                                FormBodyPart[] fileParams,
                                 final Response.Listener<JSONObject> listener,
                                 @Nullable final StringFunction errorListener) {
         String URL = SERVER + path;
@@ -193,8 +194,8 @@ public class MyApplication extends Application {
             entityBuilder.addTextBody(param.getKey(), param.getValue());
         }
 
-        for (Map.Entry<String, File> param : fileParams.entrySet())
-            entityBuilder.addBinaryBody(param.getKey(), param.getValue());
+        for (FormBodyPart part : fileParams)
+            entityBuilder.addPart(part);
 
         //entityBuilder.setContentType(ContentType.APPLICATION_JSON);
         entityBuilder.setCharset(Charset.forName("UTF-8"));

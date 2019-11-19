@@ -72,24 +72,6 @@ public class NewEssayActivity extends AppCompatActivity {
         }
     }
 
-    public String getPath(Uri uri) {
-        String uris=uri.toString();
-        try {
-            uris = URLDecoder.decode(uris, StandardCharsets.UTF_8.name());
-        }
-        catch (Exception e) {
-            return null;
-        }
-        Log.d(TAG, "Decoded uri: " + uris);
-        if (uris.startsWith("content://com.android.externalstorage.documents/document/primary")) {
-            int delimPos = uris.indexOf(':');
-            delimPos = uris.indexOf(':', delimPos+1);
-            uris = uris.substring(delimPos+1);
-            return "/sdcard/" + uris;
-        }
-        return null;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -98,15 +80,8 @@ public class NewEssayActivity extends AppCompatActivity {
                     // Get the Uri of the selected file
                     Uri uri = data.getData();
                     Log.d(TAG, "File Uri: " + uri.toString());
-                    // Get the path
-                    String path = getPath(uri);
-                    if (path == null) {
-                        Toast.makeText(getApplicationContext(), "Unable to get real path", Toast.LENGTH_SHORT).show();
-                        return ;
-                    }
-                    Log.d(TAG, "File Path: " + path);
                     Intent intent = new Intent(NewEssayActivity.this, SelectEssayReviewerActivity.class);
-                    intent.putExtra("essayPath", path);
+                    intent.putExtra("essayPath", uri.toString());
                     startActivity(intent);
                 }
                 break;
