@@ -14,3 +14,10 @@ class QuestionSerializer(serializers.ModelSerializer):
         if 'SearchView' in str(self.context.get('view')):
             del fields['answer']
         return fields
+
+
+class FileSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = File
+        fields = ('file',)

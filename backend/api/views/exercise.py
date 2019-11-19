@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
+from django.views import generic
 
 from ..serializers import *
 from ..models import *
@@ -90,6 +91,18 @@ class SuggestView(GenericViewSet,
 
     def get_queryset(self):
         return Exercise.objects.filter(is_published=False)
+
+
+class UploadView(GenericViewSet,
+                 mixins.CreateModelMixin):
+
+    serializer_class = FileSerializer
+
+    def create(self, request):
+        if request.user.is_anonymous:
+            raise NotAuthenticated('Token is needed')
+        
+        return super().create(request)
 
 
 def get_file(request):
