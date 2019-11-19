@@ -99,17 +99,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 JSONArray searchResults = (JSONArray) response ;
                 Log.d("LOGGGG222 :",searchResults.toString());
-                   /* Exercise[] exercises = new Exercise[response.length()];
-                    for (int i = 0 ; i <= response.length() ; i++){
-                        JSONObject jsonExercise = (JSONObject) response.get(i);
-                        exercises[i] =Exercise.fromJSON(jsonExercise);
 
-                    }
-
-                    //JSONObject[] jsonExercise =  (JSONObject[]) response.get(new Random().nextInt(response.length()));
-                    //Exercise exercise = Exercise.fromJSON(jsonExercise);
-
-                    */
                 Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
                 Log.d("LOGGGG222 :",searchResults.toString());
                 intent.putExtra("searchTag", tag.getText().toString());
@@ -126,19 +116,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-
-
-   /* private void showSearchResults(int correctCount, int falseCount, String level) {
-        Intent intent = new Intent(this, ProfResultActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("COUNT_CORRECT", correctCount);
-        b.putInt("COUNT_INCORRECT", falseCount);
-        b.putString("LEVEL", level);
-        intent.putExtras(b);
-        startActivity(intent);
-        finish();
-    }
-   */
 
 
 }
