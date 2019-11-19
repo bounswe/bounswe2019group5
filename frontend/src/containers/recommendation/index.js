@@ -45,10 +45,24 @@ class Recommendation extends Component {
                     <div>Name: {item.first_name}</div>
                     <div>Surname: {item.last_name}</div>
                     <div>Rating: {item.rating_average}</div>
-                    <Link to={ {
-                        pathname: "/chat/" + item.username
-                    } 
-                    }>Chat With {item.first_name}</Link>
+                    <div>
+                        <Link to={ {
+                            pathname: "/chat/" + item.username
+                        }
+                        }>Chat With {item.first_name}</Link>
+                    </div>
+                    <div>
+                        <Link to={ {
+                            pathname: "/upload-writing/" + item.username
+                        }
+                        }>Send Essay Reviewing Request to {item.first_name}</Link>
+                    </div>
+                    <div>
+                        <Link to={ {
+                            pathname: "/profile/" + item.username
+                        }
+                        }>See Profile of {item.first_name}</Link>
+                    </div>
                 </li>
                 ))}
             </ul>
