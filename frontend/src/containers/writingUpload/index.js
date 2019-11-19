@@ -17,10 +17,14 @@ import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
+import Modal from "@material-ui/core/Modal";
 import { upload_writing } from "../../api/writing/uploadWriting";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+
+import Recommendation from '../recommendation';
+
+import Popup from 'reactjs-popup';
 
 class WritingUpload extends Component {
   constructor(props) {
@@ -28,17 +32,20 @@ class WritingUpload extends Component {
     this.state = {
         file: null,
         isUploaded: false,
-        reviewer: '',
+        reviewer: props.match.params ? props.match.params.reviewer : null,
         message: null,
+        isOnSelectReviewer: false,
     };
   }
 
-  onChange(e){
+  onSelectReviewer(username) {
+    this.setState({
+      reviewer: username,
+      isOnSelectReviewer: false,
+    });
+  }
 
-    if (e.target.id==='reviewer')
-    {
-      this.setState({reviewer: e.target.value});
-    }
+  onChange(e){
 
     if (e.target.id==='file')
     {
@@ -50,7 +57,6 @@ class WritingUpload extends Component {
   onSubmit(e){
     if(this.state.file)
     {
-      console.log("asdfasd");
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
                        this.state.file,
@@ -103,9 +109,26 @@ class WritingUpload extends Component {
     }
 
     const { classes } = this.props;
-
+    console.log(this.state.isOnSelectReviewer);
     return (
         <div>
+            <Modal
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+              style={{
+                minHeight: '50vh',
+                maxHeight: '50vh',
+                minWidth: '50vw',
+                maxWidth: '50vw',
+                display:'flex',alignItems:'center',justifyContent:'center',
+                backgroundColor: "white"
+              }}
+              open={this.state.isOnSelectReviewer}
+              onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
+              <Recommendation 
+                      mode="callback(username)"
+                      onSelect={this.onSelectReviewer.bind(this)}/>
+            </Modal>
             <h1>Upload Your Writing Here!</h1>
             <div>
               <div>
@@ -121,23 +144,25 @@ class WritingUpload extends Component {
                 </div>
               }
               <div>
+                { 
+                this.state.reviewer &&
+                  this.state.reviewer ?
+                        <text>Selected reviewer is: {this.state.reviewer}</text>
+                        :
+                        <text>No reviewer selected, you can select later or now..</text>
+                }
+              </div>
+
+              <div>
+                <button onClick={() => {
+                  this.setState({isOnSelectReviewer: true});
+                }}>Select or Change Reviewer</button>
+              </div>
+
+              <div>
                 <button onClick={this.onSubmit.bind(this)}>Upload Essay</button>
               </div>
             </div>
-            { 
-            this.props.match.params.reviewer &&
-                <text>
-                    Reviewer is: {this.props.match.params.reviewer}
-                </text>
-            }
-            {
-            !this.props.match.params.reviewer &&
-              <textarea 
-                id="reviewer"
-                value={this.state.reviewer}
-                onChange={this.onChange.bind(this)}
-              />
-            }
         </div>
     );
 
