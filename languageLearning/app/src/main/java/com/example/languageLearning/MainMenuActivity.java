@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -96,6 +97,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup = new Dialog(this);
         popup.setContentView(R.layout.select_exercise_type_popup);
 
+        final TextView suggestNewExercise;
         ImageButton vocabTestButton, grammarTestButton, readingTestButton;
 
         vocabTestButton = popup.findViewById(R.id.vocabTestButton);
@@ -124,6 +126,17 @@ public class MainMenuActivity extends AppCompatActivity {
                 getAndStartExercise(path);
             }
         });
+
+        suggestNewExercise = popup.findViewById(R.id.suggestNewExercise);
+        suggestNewExercise.setPaintFlags(suggestNewExercise.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        suggestNewExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                suggestNewExercise.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
 
         popup.show();
     }
