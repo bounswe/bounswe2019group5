@@ -3,6 +3,8 @@ package com.example.languageLearning;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,10 +12,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.FormBodyPart;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -27,6 +33,7 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.HashMap;
 
 public class UploadEssayActivity extends AppCompatActivity {
@@ -65,27 +72,26 @@ public class UploadEssayActivity extends AppCompatActivity {
         HashMap<String, String> textParams = new HashMap<>();
         textParams.put("language", app.getLanguage());
         textParams.put("reviewer", reviewerProfile.username);
-        HashMap<String, File> fileParams = new HashMap<>();
-        File tempFile = null;
+        FormBodyPart[] filePart = new FormBodyPart[1];
         if (essayText != null) {
+            filePart[0] = new FormBodyPart("writing", new InputStreamBody(new ByteArrayInputStream(essayText.getBytes(StandardCharsets.UTF_8)), ContentType.TEXT_PLAIN, "essay.txt"));
+        }
+        else {
             try {
-                tempFile = File.createTempFile("essay", ".txt", getCacheDir());
-                tempFile.deleteOnExit();
-                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), "utf-8"));
-                writer.write(essayText);
-                writer.flush();
-                fileParams.put("writing", tempFile);
+                Cursor result = getContentResolver().query(Uri.parse(essayPath), null, null, null, null);
+                result.moveToFirst();
+                String fileName = result.getString(result.getColumnIndexOrThrow("_display_name"));
+                String mimeType = result.getString(result.getColumnIndexOrThrow("mime_type"));
+                filePart[0] = new FormBodyPart("writing", new InputStreamBody(getContentResolver().openInputStream(Uri.parse(essayPath)), ContentType.create(mimeType), fileName));
             }
-            catch (Exception e) {
+            catch (FileNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
                 finish();
                 return;
             }
         }
-        else {
-            fileParams.put("writing", new File(essayPath));
-        }
-        app.initiateMultiPartAPICall(Request.Method.POST, "essay/", textParams, fileParams, new Response.Listener<JSONObject>() {
+        app.initiateMultiPartAPICall(Request.Method.POST, "essay/", textParams, filePart, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 progressBar.setVisibility(View.GONE);

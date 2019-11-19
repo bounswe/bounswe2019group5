@@ -71,10 +71,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         paint.setAlpha(64);
 
         for (AnnotationForImageEssay ann : annotations) {
-            int x = (int)(ann.x*essayImage.getWidth());
-            int y = (int)(ann.y*essayImage.getHeight());
-            int right = (int)((ann.x+ann.w)*essayImage.getWidth());
-            int bottom = (int)((ann.y+ann.h)*essayImage.getHeight());
+            int x = (int)(ann.x*essayImage.getWidth()/100);
+            int y = (int)(ann.y*essayImage.getHeight()/100);
+            int right = (int)((ann.x+ann.w)*essayImage.getWidth()/100);
+            int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()/100);
             cnvs.drawRect(x, y,right,bottom , paint);
         }
 
@@ -109,10 +109,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                 if (curY < 0 || curY >= essayImageView.getHeight())
                     continue;
                 for (AnnotationForImageEssay ann : annotations) {
-                    int left = (int)(ann.x*essayImage.getWidth()*xResizeFactor);
-                    int top = (int)(ann.y*essayImage.getHeight()*yResizeFactor);
-                    int right = (int)((ann.x+ann.w)*essayImage.getWidth()*xResizeFactor);
-                    int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()*yResizeFactor);
+                    int left = (int)(ann.x*essayImage.getWidth()*xResizeFactor/100);
+                    int top = (int)(ann.y*essayImage.getHeight()*yResizeFactor/100);
+                    int right = (int)((ann.x+ann.w)*essayImage.getWidth()*xResizeFactor/100);
+                    int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()*yResizeFactor/100);
 
                     if (left <= curX && right > curX && top <= curY && bottom > curY) {
                         double dist = (curX - left) * (curX - left) + (curY - top) * (curY - top); //TODO: Here and in TextEssayDetailsActivity, calculate distance to the middle point of annotations, not to their top-left corner.
@@ -252,10 +252,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                                 final double xResizeFactor = ((float)resizedW)/essayImage.getWidth();
                                                 final double yResizeFactor = ((float)resizedH)/essayImage.getHeight();
 
-                                                ann.x = rect.left / xResizeFactor / essayImage.getWidth();
-                                                ann.y = rect.top / yResizeFactor / essayImage.getHeight();
-                                                ann.w = (rect.right-rect.left) / xResizeFactor / essayImage.getWidth();
-                                                ann.h = (rect.bottom-rect.top) / yResizeFactor / essayImage.getHeight();
+                                                ann.x = rect.left / xResizeFactor / essayImage.getWidth() * 100;
+                                                ann.y = rect.top / yResizeFactor / essayImage.getHeight() * 100;
+                                                ann.w = (rect.right-rect.left) / xResizeFactor / essayImage.getWidth() * 100;
+                                                ann.h = (rect.bottom-rect.top) / yResizeFactor / essayImage.getHeight() * 100;
                                                 ann.annotationText = edittext.getText().toString();
                                                 ann.essayId = String.valueOf(essay.id);
                                                 ann.id = "";
