@@ -6,25 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".TextEssayDetailActivity">
 
-    <ProgressBar
-        android:id="@+id/downloadProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".6"
-        app:layout_constraintHeight_percent=".4" />
-
     <TextView
         android:id="@+id/essayTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:singleLine="false"
         android:text="TextView"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".8"
@@ -39,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Reject"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/essayTextView"
         app:layout_constraintTop_toBottomOf="@+id/essayTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
