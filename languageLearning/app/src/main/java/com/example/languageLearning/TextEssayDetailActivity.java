@@ -2,8 +2,10 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Layout;
@@ -16,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +40,9 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
 
     Essay essay;
-    TextView essayTextView;
+    ConstraintLayout reviewerInfoLayout;
+    TextView essayTextView, reviewerInfoTextView;
+    ImageButton reviewerProfileButton;
     Button rejectButton;
     MyApplication app;
     ProgressBar progressBar;
@@ -146,8 +151,11 @@ public class TextEssayDetailActivity extends AppCompatActivity {
 
     private void annotationsLoaded(JSONArray response) {
         TextEssayDetailActivity.this.setContentView(R.layout.activity_text_essay_detail_loaded);
+        reviewerInfoLayout = findViewById(R.id.reviewerInfoLayout);
         essayTextView = findViewById(R.id.essayTextView);
         rejectButton = findViewById(R.id.rejectButton);
+        reviewerInfoTextView = findViewById(R.id.reviewerInfoTextView);
+        reviewerProfileButton = findViewById(R.id.reviewerProfileButton);
         progressBar = null;
         try {
             for (int i = 0; i < response.length(); i++)
@@ -160,6 +168,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         }
         drawAnnotations();
         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
+            reviewerInfoLayout.setVisibility(View.GONE);
             rejectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -197,6 +206,13 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         }
         else { // We are the author
             rejectButton.setVisibility(View.INVISIBLE);
+            reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
+            reviewerProfileButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reviewerProfileButtonClicked();
+                }
+            });
         }
         essayTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -204,6 +220,12 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 return essayTextViewOnTouch(v, event);
             }
         });
+    }
+
+    private void reviewerProfileButtonClicked() {
+        Intent intent = new Intent(this, ProfilePageActivity.class);
+        intent.putExtra("username", essay.reviewer);
+        startActivity(intent);
     }
 
     private boolean essayTextViewOnTouch(View v, MotionEvent event) {
