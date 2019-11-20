@@ -24,16 +24,19 @@ import java.util.Map;
 public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
-
     private final String TAG = getClass().getName();
-
     TextView firstName_lastName, userName, nativeLang, averageRate;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         app = (MyApplication) getApplication();
+
+        username = getIntent().getStringExtra("username");
+        if (username == null) // Default to the current user
+            username = app.getUsername();
 
         firstName_lastName = findViewById(R.id.firstName_lastName);
         userName = findViewById(R.id.userName);
@@ -45,13 +48,12 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     public void getProfile(){
 
-        String path = "profile/?username=" + app.getUsername();
+        String path = "profile/?username=" + username;
 
         app.initiateAPICall(Request.Method.GET, path,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.i(TAG, "Backend returned profile: " + response.toString());
                         fillScreen(response);
                     }
