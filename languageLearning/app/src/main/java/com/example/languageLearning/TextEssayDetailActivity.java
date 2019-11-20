@@ -151,11 +151,11 @@ public class TextEssayDetailActivity extends AppCompatActivity {
 
     private void annotationsLoaded(JSONArray response) {
         TextEssayDetailActivity.this.setContentView(R.layout.activity_text_essay_detail_loaded);
-        reviewerInfoLayout = findViewById(R.id.reviewerInfoLayout);
+        reviewerInfoLayout = findViewById(R.id.detail_header_layout_include);
+        reviewerInfoTextView = reviewerInfoLayout.findViewById(R.id.reviewerInfoTextView);
+        reviewerProfileButton = reviewerInfoLayout.findViewById(R.id.reviewerProfileButton);
         essayTextView = findViewById(R.id.essayTextView);
         rejectButton = findViewById(R.id.rejectButton);
-        reviewerInfoTextView = findViewById(R.id.reviewerInfoTextView);
-        reviewerProfileButton = findViewById(R.id.reviewerProfileButton);
         progressBar = null;
         try {
             for (int i = 0; i < response.length(); i++)

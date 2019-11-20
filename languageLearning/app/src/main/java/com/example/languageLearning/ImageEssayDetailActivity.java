@@ -1,6 +1,7 @@
 package com.example.languageLearning;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,12 +15,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,6 +42,9 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
 
     Essay essay;
+    ConstraintLayout reviewerInfoLayout;
+    TextView reviewerInfoTextView;
+    ImageButton reviewerProfileButton;
     ImageView essayImageView;
     Button annotateButton, rejectButton;
     MyApplication app;
@@ -151,6 +158,12 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    private void reviewerProfileButtonClicked() {
+        Intent intent = new Intent(this, ProfilePageActivity.class);
+        intent.putExtra("username", essay.reviewer);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +201,9 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         }
 
                         ImageEssayDetailActivity.this.setContentView(R.layout.activity_image_essay_detail_loaded);
+                        reviewerInfoLayout = findViewById(R.id.detail_header_layout_include);
+                        reviewerInfoTextView = reviewerInfoLayout.findViewById(R.id.reviewerInfoTextView);
+                        reviewerProfileButton = reviewerInfoLayout.findViewById(R.id.reviewerProfileButton);
                         essayImageView = findViewById(R.id.essayImageView);
                         annotateButton = findViewById(R.id.annotateButton);
                         rejectButton = findViewById(R.id.rejectButton);
@@ -198,8 +214,16 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         if (app.getUsername().equals(essay.author)) { // We are the author
                             annotateButton.setVisibility(View.INVISIBLE);
                             rejectButton.setVisibility(View.INVISIBLE);
+                            reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
+                            reviewerProfileButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    reviewerProfileButtonClicked();
+                                }
+                            });
                         }
                         else { // We are the reviewer
+                            reviewerInfoLayout.setVisibility(View.GONE);
                             rejectButton.setVisibility(View.VISIBLE);
                             rejectButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
