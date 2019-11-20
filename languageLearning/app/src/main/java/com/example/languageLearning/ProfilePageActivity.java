@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
     private final String TAG = getClass().getName();
+    LinearLayout linearLayout;
     TextView firstName_lastName, userName, nativeLang, averageRate;
     String username;
 
@@ -38,6 +43,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         if (username == null) // Default to the current user
             username = app.getUsername();
 
+        linearLayout = findViewById(R.id.linearLayout);
         firstName_lastName = findViewById(R.id.firstName_lastName);
         userName = findViewById(R.id.userName);
         nativeLang = findViewById(R.id.nativeLang);
@@ -77,6 +83,13 @@ public class ProfilePageActivity extends AppCompatActivity {
         userName.setText("@" + profile.username);
         nativeLang.setText(profile.native_language);
         averageRate.setText(profile.rating_average + " / 5.0");
+
+        /*for (UserComment comment : profile.comments) {
+            LayoutInflater factory = LayoutInflater.from(this);
+            View commentView = factory.inflate(R.layout.profile_comment, null);
+            ...
+            linearLayout.addView(commentView);
+        }*/
     }
 
 }
