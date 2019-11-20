@@ -10,6 +10,7 @@ import ProfTest from "../profTest";
 import Profile from "../profile";
 import VocabularyTest from "../exercises/vocabularyTest";
 import GrammarTest from "../exercises/grammarTest";
+import ListeningTest from "../exercises/listeningTest";
 import Chat from "../chat";
 import WritingUpload from "../writingUpload";
 import WritingShow from "../writingShow";
@@ -106,6 +107,7 @@ class App extends Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/vocabulary-test" component={VocabularyTest} />
           <Route exact path="/grammar-test" component={GrammarTest} />
+          <Route exact path="/listening-test" component={ListeningTest} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
           <Route
