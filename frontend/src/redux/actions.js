@@ -22,6 +22,8 @@ export const VOCABULARY_TEST_REQUESTED = "exercises/VOCABULARY_TEST_REQUESTED";
 export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
 export const GRAMMAR_TEST_REQUESTED = "exercises/GRAMMAR_TEST_REQUESTED";
 export const GRAMMAR_TEST = "exercises/GRAMMAR_TEST";
+export const LISTENING_TEST_REQUESTED = "exercises/LISTENING_TEST_REQUESTED";
+export const LISTENING_TEST = "exercises/LISTENING_TEST";
 
 // User Info
 export const USER_PROFILE_REQUESTED = "user_info/USER_PROFILE_REQUESTED";
