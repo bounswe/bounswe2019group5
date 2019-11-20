@@ -13,6 +13,7 @@ import GrammarTest from "../exercises/grammarTest";
 import ListeningTest from "../exercises/listeningTest";
 import Chat from "../chat";
 import WritingUpload from "../writingUpload";
+import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
 
 import TestResult from "../testResult";
@@ -68,7 +69,7 @@ class App extends Component {
               // TODO -> Profil Page hazir oldugunda buradan link edilecek
             }
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
-              <Link to="/profile">
+              <Link to={"/profile/" + this.props.userInfo.userProfile.username}>
                 <Button variant="outline-success">
                   My Profile({this.props.userInfo.userProfile.username})
                 </Button>
@@ -108,13 +109,14 @@ class App extends Component {
           <Route exact path="/vocabulary-test" component={VocabularyTest} />
           <Route exact path="/grammar-test" component={GrammarTest} />
           <Route exact path="/listening-test" component={ListeningTest} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile/:user" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
           <Route
             exact
             path="/upload-writing/:reviewer?"
             component={WritingUpload}
           />
+          <Route exact path="/recommendation" component={Recommendation} />
           <Route exact path="/show-writing/:id" component={WritingShow} />
         </main>
       </div>

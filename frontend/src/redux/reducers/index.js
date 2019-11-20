@@ -4,13 +4,15 @@ import test from "./test";
 import userInfo from "./userInfo";
 import exercises from "./exercises";
 import chat from "./chat";
+import recommendation from "./recommendation";
 
 const rootReducer = combineReducers({
   authentication,
   test,
   userInfo,
   exercises,
-  chat
+  chat,
+  recommendation
 });
 
 export default rootReducer;
