@@ -1,8 +1,6 @@
 package com.example.languageLearning;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,22 +9,13 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Layout;
-import android.text.SpannableString;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,12 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ImageEssayDetailActivity extends AppCompatActivity {
 
@@ -169,14 +154,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_essay_detail);
+        setContentView(R.layout.activity_essay_detail_loading);
         app = (MyApplication) getApplication();
         essay = (Essay)getIntent().getSerializableExtra("essay");
-        essayImageView = findViewById(R.id.essayImageView);
-        annotateButton = findViewById(R.id.annotateButton);
-        rejectButton = findViewById(R.id.rejectButton);
         progressBar = findViewById(R.id.downloadProgressBar);
-        cropImageView = findViewById(R.id.cropImageView);
 
         app.rawHTTPGetRequest(essay.fileUri, new InputStreamFunction() {
             @Override
@@ -205,11 +186,20 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             finish();
                             return ;
                         }
-                        progressBar.setVisibility(View.GONE);
-                        drawAnnotations();
-                        essayImageView.setVisibility(View.VISIBLE);
 
-                        if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
+                        ImageEssayDetailActivity.this.setContentView(R.layout.activity_image_essay_detail_loaded);
+                        essayImageView = findViewById(R.id.essayImageView);
+                        annotateButton = findViewById(R.id.annotateButton);
+                        rejectButton = findViewById(R.id.rejectButton);
+                        cropImageView = findViewById(R.id.cropImageView);
+                        progressBar = null;
+                        drawAnnotations();
+
+                        if (app.getUsername().equals(essay.author)) { // We are the author
+                            annotateButton.setVisibility(View.INVISIBLE);
+                            rejectButton.setVisibility(View.INVISIBLE);
+                        }
+                        else { // We are the reviewer
                             rejectButton.setVisibility(View.VISIBLE);
                             rejectButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -229,11 +219,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                     }
                                     else {
                                         final Rect rect = cropImageView.getCropRect();
-                                        Log.d(TAG, "crop image complete: " + rect.left + " " + rect.right + " " + rect.top + " " + rect.bottom);
-
-
-
-
                                         AlertDialog.Builder alert = new AlertDialog.Builder(ImageEssayDetailActivity.this);
                                         final EditText edittext = new EditText(ImageEssayDetailActivity.this);
                                         alert.setTitle("Enter Your Annotation");
@@ -281,7 +266,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
                         }
 
                         essayImageView.setOnTouchListener(new View.OnTouchListener() {
