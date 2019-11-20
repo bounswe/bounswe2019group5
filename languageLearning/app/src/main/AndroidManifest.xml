@@ -28,7 +28,7 @@
         <activity android:name=".WriteNewEssayActivity" />
         <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
-        <activity android:name=".ProfilePage" />
+        <activity android:name=".ProfilePageActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
