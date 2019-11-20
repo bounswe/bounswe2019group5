@@ -3,6 +3,8 @@ import {
   VOCABULARY_TEST,
   GRAMMAR_TEST_REQUESTED,
   GRAMMAR_TEST,
+  LISTENING_TEST_REQUESTED,
+  LISTENING_TEST,
   TEST_RESULT_REQUESTED,
   TEST_RESULT
 } from "../actions";
@@ -11,6 +13,7 @@ const initialState = {
   loading: false,
   vocabularyTest: null,
   grammarTest: null,
+  listeningTest: null,
   isFinished: false,
   testResult: null
 };
@@ -47,6 +50,22 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         grammarTest: action.grammarTest
+      };
+
+    case LISTENING_TEST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+        isFinished: false,
+        listeningTest: null,
+        testResult: null
+      };
+
+    case LISTENING_TEST:
+      return {
+        ...state,
+        loading: false,
+        listeningTest: action.listeningTest
       };
 
     case TEST_RESULT_REQUESTED:
