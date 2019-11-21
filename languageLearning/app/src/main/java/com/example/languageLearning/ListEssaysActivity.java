@@ -36,6 +36,11 @@ public class ListEssaysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_essays);
         listView = findViewById(R.id.listView);
         app = (MyApplication)getApplication();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         String path = "essay/";
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -64,8 +69,5 @@ public class ListEssaysActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
 }
