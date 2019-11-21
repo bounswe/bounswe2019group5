@@ -89,10 +89,10 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         return closestAnnotation;
     }
 
-    private void reject() {
+    private void acceptOrReject(final boolean accept) {
         JSONObject data = new JSONObject();
         try {
-            data.put("status", "rejected");
+            data.put("status", accept?"accepted":"rejected");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -102,8 +102,10 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(TextEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
-                finish();
+                if (accept == false) {
+                    Toast.makeText(TextEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -111,6 +113,14 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void accept() {
+        acceptOrReject(true);
+    }
+
+    private void reject() {
+        acceptOrReject(false);
     }
 
     private boolean annotateClicked(final int selStart, final int selEnd) {
@@ -135,6 +145,11 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 catch (JSONException e) {
                     e.printStackTrace();
                     return ;
+                }
+                if (essay.status.equals("accepted") == false) {
+                    accept();
+                    essay.status = "accepted";
+                    rejectButton.setVisibility(View.INVISIBLE);
                 }
                 app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
                     @Override
@@ -169,12 +184,17 @@ public class TextEssayDetailActivity extends AppCompatActivity {
         drawAnnotations();
         if (app.getUsername().equals(essay.author) == false) { // We are the reviewer
             reviewerInfoLayout.setVisibility(View.GONE);
-            rejectButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    reject();
-                }
-            });
+            if (essay.status.equals("accepted")) {
+                rejectButton.setVisibility(View.INVISIBLE);
+            }
+            else {
+                rejectButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        reject();
+                    }
+                });
+            }
             essayTextView.setTextIsSelectable(true);
             essayTextView.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
                 @Override
