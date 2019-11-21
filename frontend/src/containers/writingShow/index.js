@@ -23,6 +23,7 @@ import { delete_essay } from "../../api/writing/deleteEssay";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import ImageEssay from './imageEssay';
+import TextEssay from './textEssay';
 
 class WritingShow extends Component {
   
@@ -85,12 +86,23 @@ class WritingShow extends Component {
 
     return (
       <Grid container component="main" className={classes.root}>
-        <button onClick={()=>{
-          delete_essay(this.props.userInfo.token, this.state.essay.id);
-          this.setState({isDeleted: true});
-        }}>DELETE ESSAY</button>
+
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <button onClick={()=>{
+              delete_essay(this.props.userInfo.token, this.state.essay.id);
+              this.setState({isDeleted: true});
+            }}>DELETE ESSAY</button>
+          </div>
+        </Grid>
+
         {!this.state.essay.writing.endsWith('.txt') &&
             <ImageEssay
+                essay = {this.state.essay}
+            />
+        }
+        {this.state.essay.writing.endsWith('.txt') &&
+            <TextEssay
                 essay = {this.state.essay}
             />
         }
