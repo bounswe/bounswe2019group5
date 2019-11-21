@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,12 +85,24 @@ public class ProfilePageActivity extends AppCompatActivity {
         nativeLang.setText(profile.native_language);
         averageRate.setText(profile.rating_average + " / 5.0");
 
-        /*for (UserComment comment : profile.comments) {
+        for (UserComment comment : profile.comments) {
             LayoutInflater factory = LayoutInflater.from(this);
             View commentView = factory.inflate(R.layout.profile_comment, null);
-            ...
+            TextView commenterUserName = commentView.findViewById(R.id.commenterUserName);
+            commenterUserName.setText("@" + comment.username);
+            LinearLayout commentStarsLayout = commentView.findViewById(R.id.commentStarsLayout);
+            ImageView stars[] = new ImageView[5];
+            stars[0] = commentStarsLayout.findViewById(R.id.commentStar0);
+            stars[1] = commentStarsLayout.findViewById(R.id.commentStar1);
+            stars[2] = commentStarsLayout.findViewById(R.id.commentStar2);
+            stars[3] = commentStarsLayout.findViewById(R.id.commentStar3);
+            stars[4] = commentStarsLayout.findViewById(R.id.commentStar4);
+            for (int i=0; i<comment.rate; i++)
+                stars[i].setImageResource(android.R.drawable.star_on);
+            TextView commentText = commentView.findViewById(R.id.commentText);
+            commentText.setText(comment.comment);
             linearLayout.addView(commentView);
-        }*/
+        }
     }
 
 }
