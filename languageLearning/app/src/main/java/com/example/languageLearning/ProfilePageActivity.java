@@ -2,6 +2,7 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -127,6 +128,23 @@ public class ProfilePageActivity extends AppCompatActivity {
         }
         else if (ourComment == null) {
             yourCommentLayout.setVisibility(View.GONE);
+            for (int i=0; i<5; i++)
+                stars[i].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int starIndex = -1;
+                        for (int i=0;i<5;i++) {
+                            if (v == stars[i]) {
+                                starIndex = i;
+                                break;
+                            }
+                        }
+                        Intent intent = new Intent(ProfilePageActivity.this, LeaveRatingActivity.class);
+                        intent.putExtra("rating", starIndex+1);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
+                    }
+                });
         }
         else {
             leaveRatingLayout.setVisibility(View.GONE);
