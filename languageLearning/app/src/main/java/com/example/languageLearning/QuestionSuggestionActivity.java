@@ -53,6 +53,7 @@ public class QuestionSuggestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (areTextEditsValid()) {
                     addQuestion();
+                    Toast.makeText(getApplicationContext(), "Question has been saved.", Toast.LENGTH_SHORT).show();
                     clearTextEdits();
                 }else {
                     Toast.makeText(getApplicationContext(), "All fields must be filled to create a question.", Toast.LENGTH_SHORT).show();
@@ -80,9 +81,7 @@ public class QuestionSuggestionActivity extends AppCompatActivity {
 
     private void sendSuggestion() throws JSONException {
         suggestion.questions = questions;
-        Log.d("ASD",String.valueOf(suggestion.keywords.length));
         JSONObject JSONSuggestion = suggestion.toJsonObject();
-        Log.d("ASD", JSONSuggestion.toString());
         String path = "suggest/";
         app.initiateAPICall(Request.Method.POST, path, JSONSuggestion, new Response.Listener<JSONObject>() {
             @Override

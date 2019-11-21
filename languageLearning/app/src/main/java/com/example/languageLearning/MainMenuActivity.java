@@ -134,6 +134,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this, ExerciseSuggestionActivity.class);
                 startActivity(intent);
+                popup.cancel();
             }
         });
 

@@ -73,6 +73,7 @@ public class ExerciseSuggestionActivity extends AppCompatActivity {
                 Intent intent = new Intent(ExerciseSuggestionActivity.this, QuestionSuggestionActivity.class);
                 intent.putExtra("suggestion", suggestion);
                 startActivity(intent);
+                finish();
 
 
             }
