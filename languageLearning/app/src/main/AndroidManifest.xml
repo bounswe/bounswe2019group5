@@ -11,13 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SelectEssayReviewerActivity"></activity>
-        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".LeaveRatingActivity"></activity>
+        <activity android:name=".SelectEssayReviewerActivity" />
+        <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ExerciseResultOverviewActivity" />
-        <activity android:name=".ChatNewMessageActivity"></activity>
-        <activity android:name=".ImageEssayDetailTestActivity" android:exported="true"/>
-        <activity android:name=".ListEssaysTestActivity"/>
+        <activity android:name=".ChatNewMessageActivity" />
+        <activity
+            android:name=".ImageEssayDetailTestActivity"
+            android:exported="true" />
+        <activity android:name=".ListEssaysTestActivity" />
         <activity android:name=".ListEssaysActivity" />
         <activity
             android:name=".TextEssayDetailTestActivity"
@@ -28,7 +31,7 @@
         <activity android:name=".WriteNewEssayActivity" />
         <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
-        <activity android:name=".ProfilePage" />
+        <activity android:name=".ProfilePageActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
@@ -47,8 +50,8 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
