@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-class UserComment {
+class UserComment implements Serializable {
     public String username;
     public String comment;
     public double rate;
