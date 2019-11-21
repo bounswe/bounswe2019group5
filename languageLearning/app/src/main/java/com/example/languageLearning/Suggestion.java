@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Suggestion implements Serializable {
-    ArrayList<Question> questions;
+    ArrayList<Question> questions = new ArrayList<Question>();
     String type;
     String language;
     String level;
@@ -23,6 +23,7 @@ public class Suggestion implements Serializable {
         this.tags = tags;
         this.keywords = keywords;
     }
+
     public JSONObject toJsonObject() throws JSONException {
         JSONObject suggestion = new JSONObject();
         suggestion.put("language", language);
@@ -37,7 +38,7 @@ public class Suggestion implements Serializable {
 
         JSONArray jsonKeywords = new JSONArray();
         for (int i = 0 ; i < keywords.length; i++) {
-            jsonTags.put(keywords[i]);
+            jsonKeywords.put(keywords[i]);
         }
         suggestion.put("keywords", jsonKeywords);
 
