@@ -30,9 +30,11 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
     private final String TAG = getClass().getName();
-    LinearLayout linearLayout;
+    LinearLayout linearLayout, yourCommentLayout, leaveRatingLayout;
+    ImageView stars[] = new ImageView[5];
     TextView firstName_lastName, userName, nativeLang, averageRate;
     String username;
+    UserComment ourComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,13 @@ public class ProfilePageActivity extends AppCompatActivity {
         userName = findViewById(R.id.userName);
         nativeLang = findViewById(R.id.nativeLang);
         averageRate = findViewById(R.id.averageRate);
+        yourCommentLayout = findViewById(R.id.yourCommentLayout);
+        leaveRatingLayout = findViewById(R.id.leaveRatingLayout);
+        stars[0] = findViewById(R.id.star0);
+        stars[1] = findViewById(R.id.star1);
+        stars[2] = findViewById(R.id.star2);
+        stars[3] = findViewById(R.id.star3);
+        stars[4] = findViewById(R.id.star4);
 
         getProfile();
     }
@@ -65,6 +74,24 @@ public class ProfilePageActivity extends AppCompatActivity {
                         fillScreen(response);
                     }
                 }, null);
+    }
+
+    View createCommentViewFromComment(UserComment comment) {
+        LayoutInflater factory = LayoutInflater.from(this);
+        View commentView = factory.inflate(R.layout.profile_comment, null);
+        TextView commenterUserName = commentView.findViewById(R.id.commenterUserName);
+        commenterUserName.setText("@" + comment.username);
+        ImageView stars[] = new ImageView[5];
+        stars[0] = commentView.findViewById(R.id.commentStar0);
+        stars[1] = commentView.findViewById(R.id.commentStar1);
+        stars[2] = commentView.findViewById(R.id.commentStar2);
+        stars[3] = commentView.findViewById(R.id.commentStar3);
+        stars[4] = commentView.findViewById(R.id.commentStar4);
+        for (int i=0; i<comment.rate; i++)
+            stars[i].setImageResource(android.R.drawable.star_on);
+        TextView commentText = commentView.findViewById(R.id.commentText);
+        commentText.setText(comment.comment);
+        return commentView;
     }
 
     public void fillScreen(JSONObject response){
@@ -86,22 +113,24 @@ public class ProfilePageActivity extends AppCompatActivity {
         averageRate.setText(profile.rating_average + " / 5.0");
 
         for (UserComment comment : profile.comments) {
-            LayoutInflater factory = LayoutInflater.from(this);
-            View commentView = factory.inflate(R.layout.profile_comment, null);
-            TextView commenterUserName = commentView.findViewById(R.id.commenterUserName);
-            commenterUserName.setText("@" + comment.username);
-            LinearLayout commentStarsLayout = commentView.findViewById(R.id.commentStarsLayout);
-            ImageView stars[] = new ImageView[5];
-            stars[0] = commentStarsLayout.findViewById(R.id.commentStar0);
-            stars[1] = commentStarsLayout.findViewById(R.id.commentStar1);
-            stars[2] = commentStarsLayout.findViewById(R.id.commentStar2);
-            stars[3] = commentStarsLayout.findViewById(R.id.commentStar3);
-            stars[4] = commentStarsLayout.findViewById(R.id.commentStar4);
-            for (int i=0; i<comment.rate; i++)
-                stars[i].setImageResource(android.R.drawable.star_on);
-            TextView commentText = commentView.findViewById(R.id.commentText);
-            commentText.setText(comment.comment);
-            linearLayout.addView(commentView);
+            if (comment.username.equals(app.getUsername())) {
+                ourComment = comment;
+            }
+            else {
+                linearLayout.addView(createCommentViewFromComment(comment));
+            }
+        }
+
+        if (username.equals(app.getUsername())) { // We are viewing our own profile
+            yourCommentLayout.setVisibility(View.GONE);
+            leaveRatingLayout.setVisibility(View.GONE);
+        }
+        else if (ourComment == null) {
+            yourCommentLayout.setVisibility(View.GONE);
+        }
+        else {
+            leaveRatingLayout.setVisibility(View.GONE);
+            yourCommentLayout.addView(createCommentViewFromComment(ourComment), 1);
         }
     }
 
