@@ -131,11 +131,12 @@ class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
         return fields
 
     def validate(self, attrs):
-        request_data = self.context.get('request').data
-        attrs['type'] = 'writing'
-        attrs['author'] = self.context.get('request').user
-        if 'reviewer' in request_data:
-            attrs['reviewer'] = User.objects.get(username=request_data.get('reviewer'))
+        if self.context.get('view').action != 'partial_update':
+            request_data = self.context.get('request').data
+            attrs['type'] = 'writing'
+            attrs['author'] = self.context.get('request').user
+            if 'reviewer' in request_data:
+                attrs['reviewer'] = User.objects.get(username=request_data.get('reviewer'))
         return super().validate(attrs)
 
     def create(self, validated_data):
