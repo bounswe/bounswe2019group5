@@ -27,11 +27,12 @@
         android:textColor="@android:color/secondary_text_light"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/languageGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -74,11 +75,12 @@
         android:textColor="@android:color/secondary_text_light"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/exerciseTypeGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -130,12 +132,98 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/proceedToQuestions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
         android:text="Continue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Level"
+        android:textColor="@android:color/secondary_text_light"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@+id/languageGroup"
+        app:layout_constraintStart_toStartOf="@+id/languageGroup"
+        app:layout_constraintTop_toBottomOf="@+id/languageGroup" />
+
+    <RadioGroup
+        android:id="@+id/levelGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+        <RadioButton
+            android:id="@+id/radioButton9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="A1" />
+
+        <RadioButton
+            android:id="@+id/radioButton10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A2" />
+
+        <RadioButton
+            android:id="@+id/radioButton11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="B1" />
+
+        <RadioButton
+            android:id="@+id/radioButton12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="B2" />
+
+        <RadioButton
+            android:id="@+id/radioButton13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="C1" />
+
+        <RadioButton
+            android:id="@+id/radioButton14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="C2" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/suggestionTags"
+        android:layout_width="180dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="Tags"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/levelGroup"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseTypeGroup" />
+
+    <EditText
+        android:id="@+id/suggestionKeywords"
+        android:layout_width="180dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="Keywords"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/levelGroup"
+        app:layout_constraintTop_toBottomOf="@+id/suggestionTags" />
 </androidx.constraintlayout.widget.ConstraintLayout>

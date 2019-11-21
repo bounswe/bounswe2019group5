@@ -132,7 +132,8 @@ public class MainMenuActivity extends AppCompatActivity {
         suggestNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                suggestNewExercise.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(MainMenuActivity.this, ExerciseSuggestionActivity.class);
+                startActivity(intent);
             }
         });
 
