@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,10 +24,10 @@ import org.json.JSONObject;
 import java.util.Random;
 
 public class MainMenuActivity extends AppCompatActivity {
-    private final String TAG = "TEST";
+    private final String TAG = getClass().getName();
     private MyApplication app;
     TextView welcomeMessage, currentLanguageView;
-    ImageButton profileButton, logoutButton, changeLanguageButton, exerciseButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton, searchButton;
     Dialog popup;
 
     @Override
@@ -38,13 +40,15 @@ public class MainMenuActivity extends AppCompatActivity {
         profileButton = findViewById(R.id.profileButton);
         logoutButton = findViewById(R.id.logoutButton);
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
+        newEssayButton = findViewById(R.id.newEssayButton);
         exerciseButton = findViewById(R.id.exerciseButton);
+        searchButton = findViewById(R.id.searchButton);
         currentLanguageView = findViewById(R.id.currentLanguageView);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ProfilePage.class);
+                Intent intent = new Intent(MainMenuActivity.this, ProfilePageActivity.class);
                 startActivity(intent);
             }
         });
@@ -64,22 +68,41 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        newEssayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, NewEssayActivity.class);
+                startActivity(intent);
+            }
+        });
         exerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showExerciseSelectPopup();
             }
         });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
-        currentLanguageView.setText(app.getLanguage().toUpperCase());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentLanguageView.setText(app.getLanguage().toUpperCase());
     }
 
     public void showExerciseSelectPopup(){
         popup = new Dialog(this);
         popup.setContentView(R.layout.select_exercise_type_popup);
 
+        final TextView suggestNewExercise;
         ImageButton vocabTestButton, grammarTestButton, readingTestButton;
 
         vocabTestButton = popup.findViewById(R.id.vocabTestButton);
@@ -108,6 +131,19 @@ public class MainMenuActivity extends AppCompatActivity {
                 getAndStartExercise(path);
             }
         });
+
+        suggestNewExercise = popup.findViewById(R.id.suggestNewExercise);
+        suggestNewExercise.setPaintFlags(suggestNewExercise.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        suggestNewExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, ExerciseSuggestionActivity.class);
+                startActivity(intent);
+                popup.cancel();
+            }
+        });
+
+
 
         popup.show();
     }
@@ -164,5 +200,12 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
         popup.show();
+    }
+
+    public void onClickChat(View view){
+
+        Intent i = new Intent(this, ChatNewMessageActivity.class);
+        startActivity(i);
+
     }
 }

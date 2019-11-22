@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.languageLearning">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -12,8 +15,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ChatHistory"></activity>
+        <activity android:name=".QuestionSuggestionActivity"></activity>
+        <activity android:name=".ExerciseSuggestionActivity" />
+        <activity android:name=".LeaveRatingActivity"></activity>
+        <activity android:name=".SelectEssayReviewerActivity" />
+        <activity android:name=".SearchResultActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".ExerciseResultOverviewActivity" />
+        <activity android:name=".ChatNewMessageActivity" />
+        <activity
+            android:name=".ImageEssayDetailTestActivity"
+            android:exported="true" />
+        <activity android:name=".ListEssaysTestActivity" />
+        <activity android:name=".ListEssaysActivity" />
+        <activity
+            android:name=".TextEssayDetailTestActivity"
+            android:exported="true" />
+        <activity android:name=".TextEssayDetailActivity" />
+        <activity android:name=".ImageEssayDetailActivity" />
+        <activity android:name=".UploadEssayActivity" />
+        <activity android:name=".WriteNewEssayActivity" />
+        <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
-        <activity android:name=".ProfilePage" />
+        <activity android:name=".ProfilePageActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
@@ -32,7 +56,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

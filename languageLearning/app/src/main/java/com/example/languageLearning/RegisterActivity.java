@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton radioButton;
     RequestQueue requestQueue;
     String native_language;
+    String default_language;
 
 
 
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         radioGroup = findViewById(R.id.languagesRadioGroup);
-
+        default_language = "English";
 
 
 
@@ -74,8 +75,11 @@ public class RegisterActivity extends AppCompatActivity {
                     jsonObject.put("email", email.getText().toString());
                     jsonObject.put("username", username.getText().toString());
                     jsonObject.put("password", password.getText().toString());
-                    jsonObject.put("native_language", native_language.toString());
-
+                    if(native_language!=null) {
+                        jsonObject.put("native_language", native_language.toString());
+                    }else{
+                        jsonObject.put("native_language",default_language);
+                    }
                     Submit(jsonObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -124,11 +128,12 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
+                /* Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
                         + "\nStatus Code " + error.networkResponse.statusCode
                         + "\nCause " + error.getCause()
                         + "\nnetworkResponse " + error.networkResponse.data.toString()
-                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show(); */
+                Toast.makeText(getApplicationContext(), "This username is taken", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

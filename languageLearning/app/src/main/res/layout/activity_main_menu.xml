@@ -7,6 +7,18 @@
     tools:context=".MainMenuActivity">
 
     <TextView
+        android:id="@+id/textView10"
+        android:layout_width="89dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Search"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/searchButton"
+        app:layout_constraintStart_toStartOf="@+id/searchButton"
+        app:layout_constraintTop_toBottomOf="@+id/searchButton" />
+
+    <TextView
         android:id="@+id/welcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,9 +62,21 @@
         android:text="Exercises"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/exerciseButton"
+        app:layout_constraintStart_toStartOf="@+id/exerciseButton"
         app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="89dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Essay"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/newEssayButton"
+        app:layout_constraintStart_toStartOf="@+id/newEssayButton"
+        app:layout_constraintTop_toBottomOf="@+id/newEssayButton" />
 
     <TextView
         android:id="@+id/textView2"
@@ -62,29 +86,31 @@
         android:text="Change Language"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/changeLanguageButton"
+        app:layout_constraintStart_toStartOf="@+id/changeLanguageButton"
         app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton" />
 
     <ImageButton
         android:id="@+id/exerciseButton"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="55dp"
         android:background="#00503E3E"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/changeLanguageButton"
+        app:layout_constraintStart_toStartOf="@+id/changeLanguageButton"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/exercises" />
 
     <ImageButton
         android:id="@+id/changeLanguageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="36dp"
         android:background="#00A88E8E"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
         app:srcCompat="@drawable/language" />
@@ -102,6 +128,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_settings" />
+
+
+    <ImageButton
+        android:id="@+id/newEssayButton"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="36dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
+        app:srcCompat="@drawable/essay" />
 
     <TextView
         android:id="@+id/textView6"
@@ -126,5 +166,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <ImageButton
+        android:id="@+id/chatButton"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="55dp"
+        android:background="#00FFFFFF"
+        android:onClick="onClickChat"
+        android:scaleType="fitCenter"
+        android:text="Chat"
+        app:layout_constraintEnd_toEndOf="@+id/newEssayButton"
+        app:layout_constraintStart_toStartOf="@+id/newEssayButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/ic_chat_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="328dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="TODO"
+        android:scaleType="fitCenter"
+        android:text="@string/search_lowercase"
+        app:layout_constraintEnd_toStartOf="@+id/chatButtonExplanation"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
+        app:srcCompat="@drawable/search_button" />
+
+    <TextView
+        android:id="@+id/chatButtonExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/chatButton"
+        app:layout_constraintStart_toStartOf="@+id/chatButton"
+        app:layout_constraintTop_toBottomOf="@+id/chatButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

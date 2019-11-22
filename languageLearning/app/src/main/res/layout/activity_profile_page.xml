@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <RelativeLayout
@@ -8,40 +17,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/grad"
-            android:paddingBottom="1dp">
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_settings" />
 
             <RelativeLayout
                 android:id="@+id/imgUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/circle_border"
-                android:layout_centerHorizontal="true">
+                android:background="@drawable/circle_border">
 
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_margin="9dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_person"
                     android:adjustViewBounds="true"
+                    android:background="@drawable/circle"
+                    android:padding="5dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/circle">
+                    app:srcCompat="@drawable/ic_person">
 
                 </ImageView>
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/firstName_lastName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgUser"
-                android:layout_centerHorizontal="true"
-                android:text="Joey Tribbiani"
-                android:textSize="38sp"
-                android:textColor="@color/white"
-                android:fontFamily="sans-serif-light"
-                android:layout_marginTop="32sp"/>
 
             <TextView
                 android:id="@+id/userName"
@@ -49,99 +56,40 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/firstName_lastName"
                 android:layout_centerHorizontal="true"
-                android:text="New york"
-                android:textSize="24sp"
-                android:textColor="@color/address"
+                android:layout_marginTop="14sp"
                 android:fontFamily="sans-serif-light"
-                android:layout_marginTop="14sp"/>
+                android:text="@dummy"
+                android:textColor="@color/address"
+                android:textSize="24sp" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_settings"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"/>
-
+            <TextView
+                android:id="@+id/firstName_lastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgUser"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32sp"
+                android:fontFamily="sans-serif-light"
+                android:text="Joey Tribbiani"
+                android:textColor="@color/white"
+                android:textSize="38sp" />
 
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/linlay1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/rellay1">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/followersBg"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <Button
-                    android:id="@+id/button2"
-                    style="@android:style/Widget.Material.Button.Inset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View Comments" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal "
-                    android:orientation="vertical" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@color/followingBg">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"/>
-
-                <Button
-                    android:id="@+id/button3"
-                    style="@android:style/Widget.DeviceDefault.Button.Inset"
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:text="View Attended Languages" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/linlay1">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="joey@gmail.com"
+                        android:text="@string/english"
                         android:textColor="#000000"
                         android:textSize="25sp" />
 
@@ -168,8 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/grey"/>
-
+                        android:background="@color/grey" />
 
 
                 </LinearLayout>
@@ -177,8 +124,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,12 +147,104 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/grey"/>
-
+                        android:background="@color/grey" />
 
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/yourCommentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Your Comment"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/leaveRatingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Leave a rating and comment"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/starsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/star0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/star_big_off" />
+
+                        <ImageView
+                            android:id="@+id/star1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/star_big_off" />
+
+                        <ImageView
+                            android:id="@+id/star2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/star_big_off" />
+
+                        <ImageView
+                            android:id="@+id/star3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/star_big_off" />
+
+                        <ImageView
+                            android:id="@+id/star4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/star_big_off" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -213,4 +252,6 @@
 
         </RelativeLayout>
 
-</RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>
