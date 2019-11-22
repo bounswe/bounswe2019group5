@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 
 //
@@ -32,6 +34,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class ChatHistory extends AppCompatActivity {
 
@@ -47,15 +51,63 @@ public class ChatHistory extends AppCompatActivity {
     private List<ChatBubble> ChatBubbles;
     private ArrayAdapter<ChatBubble> adapter;
 
+    HashSet<HashSet<String>> conversation_pairs;
+
+    JSONObject classified_conversations;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_history);
         app = (MyApplication) getApplication();
 
-        arrange();
+        conversation_pairs = new HashSet<HashSet<String>>();
+        classified_conversations = new JSONObject();
 
-        //getHistory();
+        //arrange();
+
+        getHistory();
+    }
+
+    public void classifyJSON(JSONArray messages){
+
+        for(int i=0; i < messages.length(); i++){
+
+            try {
+                String to = messages.getJSONObject(i).getString("to_username");
+                String from = messages.getJSONObject(i).getString("from_username");
+
+                HashSet<String> current_pair = new HashSet<String>();
+                current_pair.add(to);
+                current_pair.add(from);
+                String talker = getTalker(current_pair);
+                if(conversation_pairs.contains(current_pair)) {
+
+                    classified_conversations.getJSONArray(talker).put(messages.getJSONObject(i));
+                }
+                else{
+                    JSONArray ja = new JSONArray();
+                    ja.put(messages.getJSONObject(i));
+
+                    classified_conversations.put(talker, ja);
+                    conversation_pairs.add(current_pair);
+                }
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getTalker(HashSet<String> pair){
+        Iterator<String> i = pair.iterator();
+        while(i.hasNext()){
+            String curr = i.next();
+            if(i.next() != app.getUsername()) {
+                return curr;
+            }
+        }
+        return "ola";
     }
 
     public void arrange(){
@@ -100,6 +152,10 @@ public class ChatHistory extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         Log.i(TAG, "onResponse: " + response.toString());
+
+                        classifyJSON(response);
+
+                        Log.i(TAG,"classify:" + classified_conversations.toString());
                         /*
                         try {
                             uploadedImageName = response.getString("imageName");
@@ -107,14 +163,14 @@ public class ChatHistory extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         */
-                        Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Could not sent the message", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
                         Log.i(TAG, "onErrorResponse: " + error.getMessage());
                         error.printStackTrace();
                     }
