@@ -10,9 +10,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class BridgeActivity extends AppCompatActivity {
 
-
+    MyApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,36 +33,32 @@ public class BridgeActivity extends AppCompatActivity {
         catch (NullPointerException e){}
 
         setContentView(R.layout.activity_bridge);
+        app = (MyApplication) getApplication();
     }
 
-    public void onClickTurkish(View view){
-
-        Intent i = new Intent(this, ProfExamActivity.class);
+    public void onClickLanguageButton(View view){
         Button b = (Button) view;
-        String buttonText = b.getText().toString();
-        i.putExtra("languageChoice", buttonText);
-        startActivity(i);
+        final String language = b.getText().toString().toLowerCase();
+        app.setLanguage(language);
+
+        app.initiateAPICall(Request.Method.GET, "result/?type=proficiency&language=" + language, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                int numTrue = response.optInt("number_of_true"); // The backend can return null, which means 0.
+                int numFalse = response.optInt("number_of_false");
+                if (numTrue == 0 && numFalse == 0) { // The user needs to solve a proficiency test first
+                    Intent i = new Intent(BridgeActivity.this, ProfExamActivity.class);
+                    i.putExtra("languageChoice", language);
+                    startActivity(i);
+                }
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
 
     }
-
-    public void onClickEnglish(View view){
-
-        Intent i = new Intent(this, ProfExamActivity.class);
-        Button b = (Button) view;
-        String buttonText = b.getText().toString();
-        i.putExtra("languageChoice", buttonText);
-        startActivity(i);
-
-    }
-
-    public void onClickGerman(View view){
-
-        Intent i = new Intent(this, ProfExamActivity.class);
-        Button b = (Button) view;
-        String buttonText = b.getText().toString();
-        i.putExtra("languageChoice", buttonText);
-        startActivity(i);
-
-    }
-
 }

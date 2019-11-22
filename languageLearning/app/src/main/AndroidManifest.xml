@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".QuestionSuggestionActivity"></activity>
         <activity android:name=".ExerciseSuggestionActivity" />
+        <activity android:name=".LeaveRatingActivity"></activity>
         <activity android:name=".SelectEssayReviewerActivity" />
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchActivity" />
@@ -35,7 +36,7 @@
         <activity android:name=".WriteNewEssayActivity" />
         <activity android:name=".NewEssayActivity" />
         <activity android:name=".BridgeActivity" />
-        <activity android:name=".ProfilePage" />
+        <activity android:name=".ProfilePageActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ProfResultActivity" />
         <activity
