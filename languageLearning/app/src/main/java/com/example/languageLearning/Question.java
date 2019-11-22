@@ -12,6 +12,15 @@ public class Question implements Serializable {
     int id; // As returned by the backend
     String text;
     String options[];
+    String answer;
+
+    public Question(String text, String[] options, String answer) {
+        this.text = text;
+        this.options = options;
+        this.answer = answer;
+    }
+
+    public Question() {}
 
     public static Question fromJSON(JSONObject jquestion) throws JSONException {
         Question question = new Question();
@@ -30,4 +39,5 @@ public class Question implements Serializable {
         question.id = jquestion.getInt("id");
         return question;
     }
+
 }

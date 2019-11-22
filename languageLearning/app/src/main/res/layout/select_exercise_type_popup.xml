@@ -13,7 +13,7 @@
         android:id="@+id/vocabTestButton"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,15 +28,15 @@
         android:text="Vocabulary Test"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/vocabTestButton"
+        app:layout_constraintStart_toStartOf="@+id/vocabTestButton"
         app:layout_constraintTop_toBottomOf="@+id/vocabTestButton" />
 
     <ImageButton
         android:id="@+id/grammarTestButton"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,16 +52,16 @@
         android:text="Grammar Test"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/grammarTestButton"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/grammarTestButton"
         app:layout_constraintTop_toBottomOf="@+id/grammarTestButton" />
 
     <ImageButton
         android:id="@+id/readingTestButton"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +77,22 @@
         android:text="Reading Test"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/readingTestButton"
+        app:layout_constraintStart_toStartOf="@+id/readingTestButton"
         app:layout_constraintTop_toBottomOf="@+id/readingTestButton" />
+
+    <TextView
+        android:id="@+id/suggestNewExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Suggest New Exercise"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
