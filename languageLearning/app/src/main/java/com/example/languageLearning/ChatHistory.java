@@ -55,11 +55,17 @@ public class ChatHistory extends AppCompatActivity {
 
     JSONObject classified_conversations;
 
+    EditText username;
+    EditText message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_history);
         app = (MyApplication) getApplication();
+
+        username = (EditText) findViewById(R.id.username);
+        message = (EditText) findViewById(R.id.message);
 
         conversation_pairs = new HashSet<HashSet<String>>();
         classified_conversations = new JSONObject();
@@ -67,7 +73,180 @@ public class ChatHistory extends AppCompatActivity {
         //arrange();
 
         getHistory();
+
+
     }
+
+    public void getHistory(){
+        String url = "http://35.158.176.194/message/";
+
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        Log.i(TAG, "onResponse: " + response.toString());
+
+                        classifyJSON(response);
+
+                        Log.i(TAG,"classify:" + classified_conversations.toString());
+
+                        setter();
+                        Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: " + error.getMessage());
+                        error.printStackTrace();
+                    }
+                })
+
+        {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String token = app.getToken();
+                if (token != null)
+                    headers.put("Authorization", "Token " + token);
+                return headers;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(jsonRequest);
+    }
+
+
+
+    public void arrange(){
+        ChatBubbles = new ArrayList<>();
+
+        listView = (ListView) findViewById(R.id.list_msg);
+        btnSend = findViewById(R.id.btn_chat_send);
+        editText = (EditText) findViewById(R.id.msg_type);
+
+        //set ListView adapter first
+        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
+        listView.setAdapter(adapter);
+
+        //event for button SEND
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().toString().trim().equals("")) {
+                    Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+                } else {
+                    //add message to list
+                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
+                    ChatBubbles.add(ChatBubble);
+                    adapter.notifyDataSetChanged();
+                    editText.setText("");
+
+                    if (myMessage) {
+                        myMessage = false;
+                    } else {
+                        myMessage = true;
+                    }
+                }
+            }
+        });
+    }
+
+    public void onClickSend(View view){
+        String path = "message/";
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put("username",username.getText());
+            json.put("text",message.getText());
+        } catch (JSONException e) {
+            Log.i(TAG, "Could not create request body");
+            e.printStackTrace();
+        }
+
+        app.initiateAPICall(Request.Method.POST, path, json, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, "onResponse: " + response.toString());
+                Toast.makeText(ChatNewMessageActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Could not sent the message", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "onErrorResponse: " + error.getMessage());
+                error.printStackTrace();
+            }
+        });
+    }
+
+    public void setter(){
+
+        ChatBubbles = new ArrayList<>();
+
+        listView = (ListView) findViewById(R.id.list_msg);
+        btnSend = findViewById(R.id.btn_chat_send);
+        editText = (EditText) findViewById(R.id.msg_type);
+
+        //set ListView adapter first
+        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
+        listView.setAdapter(adapter);
+        //add message to list
+        JSONArray arr;
+        try{
+            arr = classified_conversations.getJSONArray("tom");
+            Log.i(TAG, "TOM: " + arr.toString());
+
+            for(int i=0;i < arr.length(); i++){
+
+                String from = arr.getJSONObject(i).getString("from_username");
+                String text = arr.getJSONObject(i).getString("text");
+                Log.i(TAG, "from: " + from);
+                Log.i(TAG, "text: " + text);
+
+                if(Objects.equals(from, app.getUsername())){
+                    myMessage = false;
+                }
+                else{
+                    myMessage = true;
+                }
+                Log.i(TAG, "message: " + myMessage);
+
+                ChatBubble ChatBubble = new ChatBubble(text, myMessage);
+                ChatBubbles.add(ChatBubble);
+                adapter.notifyDataSetChanged();
+                editText.setText("");
+
+
+
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        //while(int i=0; i < arr.
+        /*
+        ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
+        ChatBubbles.add(ChatBubble);
+        adapter.notifyDataSetChanged();
+        editText.setText("");
+
+        if (myMessage) {
+            myMessage = false;
+        } else {
+            myMessage = true;
+        }*/
+    }
+
+
 
     public void classifyJSON(JSONArray messages){
 
@@ -109,90 +288,4 @@ public class ChatHistory extends AppCompatActivity {
         }
         return "ola";
     }
-
-    public void arrange(){
-        ChatBubbles = new ArrayList<>();
-
-        listView = (ListView) findViewById(R.id.list_msg);
-        btnSend = findViewById(R.id.btn_chat_send);
-        editText = (EditText) findViewById(R.id.msg_type);
-
-        //set ListView adapter first
-        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
-        listView.setAdapter(adapter);
-
-        //event for button SEND
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText.getText().toString().trim().equals("")) {
-                    Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
-                } else {
-                    //add message to list
-                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
-                    ChatBubbles.add(ChatBubble);
-                    adapter.notifyDataSetChanged();
-                    editText.setText("");
-                    if (myMessage) {
-                        myMessage = false;
-                    } else {
-                        myMessage = true;
-                    }
-                }
-            }
-        });
-    }
-
-    public void getHistory(){
-        String url = "http://35.158.176.194/message/";
-
-        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url,null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        Log.i(TAG, "onResponse: " + response.toString());
-
-                        classifyJSON(response);
-
-                        Log.i(TAG,"classify:" + classified_conversations.toString());
-                        /*
-                        try {
-                            uploadedImageName = response.getString("imageName");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        */
-                        Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: " + error.getMessage());
-                        error.printStackTrace();
-                    }
-                })
-
-        {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String token = app.getToken();
-                if (token != null)
-                    headers.put("Authorization", "Token " + token);
-                return headers;
-            }
-        };
-
-        Volley.newRequestQueue(this).add(jsonRequest);
-    }
-
 }
