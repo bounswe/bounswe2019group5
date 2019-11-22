@@ -58,6 +58,8 @@ public class ChatHistory extends AppCompatActivity {
     EditText username;
     EditText message;
 
+    String person;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,18 @@ public class ChatHistory extends AppCompatActivity {
 
         conversation_pairs = new HashSet<HashSet<String>>();
         classified_conversations = new JSONObject();
+
+        person = getIntent().getStringExtra("Person");
+
+        ChatBubbles = new ArrayList<>();
+
+        listView = (ListView) findViewById(R.id.list_msg);
+        btnSend = findViewById(R.id.btn_chat_send);
+        editText = (EditText) findViewById(R.id.msg_type);
+
+        //set ListView adapter first
+        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
+        listView.setAdapter(adapter);
 
         //arrange();
 
@@ -127,6 +141,7 @@ public class ChatHistory extends AppCompatActivity {
 
 
     public void arrange(){
+        /*
         ChatBubbles = new ArrayList<>();
 
         listView = (ListView) findViewById(R.id.list_msg);
@@ -136,7 +151,7 @@ public class ChatHistory extends AppCompatActivity {
         //set ListView adapter first
         adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
         listView.setAdapter(adapter);
-
+           */
         //event for button SEND
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,12 +176,16 @@ public class ChatHistory extends AppCompatActivity {
     }
 
     public void onClickSend(View view){
+
+
+
         String path = "message/";
 
         JSONObject json = new JSONObject();
         try {
-            json.put("username",username.getText());
-            json.put("text",message.getText());
+            json.put("username",person);
+            json.put("text",editText.getText().toString());
+            //Log.i(TAG, "postJson: " + json.toString() );
         } catch (JSONException e) {
             Log.i(TAG, "Could not create request body");
             e.printStackTrace();
@@ -175,7 +194,8 @@ public class ChatHistory extends AppCompatActivity {
         app.initiateAPICall(Request.Method.POST, path, json, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i(TAG, "onResponse: " + response.toString());
+                //Log.i(TAG, "onResponse: " + response.toString());
+                flyMessage();
                 Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
             }
 
@@ -183,14 +203,32 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Could not sent the message", Toast.LENGTH_LONG).show();
-                Log.i(TAG, "onErrorResponse: " + error.getMessage());
+                //Log.i(TAG, "onErrorResponse: " + error.getMessage());
                 error.printStackTrace();
             }
         });
     }
 
-    public void setter(){
+    public void flyMessage(){
+        if (editText.getText().toString().trim().equals("")) {
+            Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+        } else {
+            //add message to list
+            ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), false);
+            ChatBubbles.add(ChatBubble);
+            adapter.notifyDataSetChanged();
+            editText.setText("");
+            /*
+            if (myMessage) {
+                myMessage = false;
+            } else {
+                myMessage = true;
+            }*/
+        }
+    }
 
+    public void setter(){
+        /*
         ChatBubbles = new ArrayList<>();
 
         listView = (ListView) findViewById(R.id.list_msg);
@@ -199,19 +237,20 @@ public class ChatHistory extends AppCompatActivity {
 
         //set ListView adapter first
         adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
         //add message to list
         JSONArray arr;
         try{
-            arr = classified_conversations.getJSONArray("tom");
-            Log.i(TAG, "TOM: " + arr.toString());
+            //arr = classified_conversations.getJSONArray("tom");
+            arr = classified_conversations.getJSONArray(person);
+            //Log.i(TAG, "TOM: " + arr.toString());
 
             for(int i=0;i < arr.length(); i++){
 
                 String from = arr.getJSONObject(i).getString("from_username");
                 String text = arr.getJSONObject(i).getString("text");
-                Log.i(TAG, "from: " + from);
-                Log.i(TAG, "text: " + text);
+                //Log.i(TAG, "from: " + from);
+                //Log.i(TAG, "text: " + text);
 
                 if(Objects.equals(from, app.getUsername())){
                     myMessage = false;
@@ -219,7 +258,8 @@ public class ChatHistory extends AppCompatActivity {
                 else{
                     myMessage = true;
                 }
-                Log.i(TAG, "message: " + myMessage);
+
+                Log.i(TAG, "from: " + from +" :text: " + text);
 
                 ChatBubble ChatBubble = new ChatBubble(text, myMessage);
                 ChatBubbles.add(ChatBubble);
@@ -282,7 +322,7 @@ public class ChatHistory extends AppCompatActivity {
         Iterator<String> i = pair.iterator();
         while(i.hasNext()){
             String curr = i.next();
-            if(i.next() != app.getUsername()) {
+            if(!Objects.equals(curr,app.getUsername())) {
                 return curr;
             }
         }

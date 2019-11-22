@@ -28,6 +28,7 @@
             android:layout_alignParentRight="true"
             android:background="@color/background_floating_material_dark"
             android:text="Send"
+            android:onClick="onClickSend"
             android:textColor="@color/background_material_light" />
 
         <ListView

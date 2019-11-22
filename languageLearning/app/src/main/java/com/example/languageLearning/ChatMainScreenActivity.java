@@ -2,6 +2,7 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChatMainScreenActivity extends AppCompatActivity {
 
@@ -61,8 +63,11 @@ public class ChatMainScreenActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String family = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(ChatMainScreenActivity.this,family,Toast.LENGTH_LONG).show();
+                        String person = String.valueOf(adapterView.getItemAtPosition(i));
+                        Intent intent = new Intent(ChatMainScreenActivity.this, ChatHistory.class);
+                        intent.putExtra("Person", person);
+                        startActivity(intent);
+                        Toast.makeText(ChatMainScreenActivity.this,person,Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -119,7 +124,8 @@ public class ChatMainScreenActivity extends AppCompatActivity {
         Iterator<String> i = pair.iterator();
         while(i.hasNext()){
             String curr = i.next();
-            if(i.next() != app.getUsername()) {
+            //if(i.next() != app.getUsername()) {
+            if(!Objects.equals(curr,app.getUsername())){
                 return curr;
             }
         }
