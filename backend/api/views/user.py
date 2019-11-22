@@ -19,6 +19,8 @@ class RegisterView(mixins.CreateModelMixin,
     def create(self, request):
         req = request.data
 
+
+
         try:
             u = User(
                 first_name=req['name'],
@@ -27,6 +29,12 @@ class RegisterView(mixins.CreateModelMixin,
                 email=req['email'],
                 native_language=req['native_language'],
                 password=make_password(req['password']))
+
+            if (req['native_language'],req['native_language']) not in languageChoices:
+                response = {
+                    'message': 'native language should be lower-case'
+                }
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
         except:
             response = {
@@ -89,19 +97,6 @@ class LoginView(mixins.CreateModelMixin,
                     'message': 'missing fields in request body'
                 },
                 status=status.HTTP_400_BAD_REQUEST)
-
-
-"""class GuestView(generics.CreateAPIView):
-    serializer_class = ProfileSerializer
-
-    def create(self, request):
-        permission_classes = (IsAuthenticated,)
-
-        # check that registeredUser cannot request as a Guest
-        if request.user not in User.objects.all():
-            return Response({}, status=status.HTTP_200_OK)
-        else:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)"""
 
 
 class ProfileView(mixins.ListModelMixin,
