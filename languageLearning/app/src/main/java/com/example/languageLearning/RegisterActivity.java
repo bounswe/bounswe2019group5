@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         radioGroup = findViewById(R.id.languagesRadioGroup);
-        default_language = "English";
+        default_language = "english";
 
 
 
@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                     jsonObject.put("username", username.getText().toString());
                     jsonObject.put("password", password.getText().toString());
                     if(native_language!=null) {
-                        jsonObject.put("native_language", native_language.toString());
+                        jsonObject.put("native_language", native_language);
                     }else{
                         jsonObject.put("native_language",default_language);
                     }
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void checkButton(View v){
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        String str = radioButton.getText().toString();
+        String str = radioButton.getText().toString().toLowerCase();
         native_language = str;
     }
 
