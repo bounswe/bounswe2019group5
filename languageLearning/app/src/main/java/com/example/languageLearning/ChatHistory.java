@@ -176,7 +176,7 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i(TAG, "onResponse: " + response.toString());
-                Toast.makeText(ChatNewMessageActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
             }
 
         }, new Response.ErrorListener() {
