@@ -84,6 +84,6 @@ public class UserAdapter extends BaseAdapter {
         });
 
 
-        return null;
+        return userElementView;
     }
 }
