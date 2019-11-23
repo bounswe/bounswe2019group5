@@ -30,9 +30,7 @@ import java.util.Objects;
 public class ChatMainScreenActivity extends AppCompatActivity {
 
     HashSet<HashSet<String>> conversation_pairs;
-
     JSONObject classified_conversations;
-
     MyApplication app;
 
     private final String TAG = this.getClass().getName();
@@ -75,14 +73,13 @@ public class ChatMainScreenActivity extends AppCompatActivity {
 
     public String[] getPeople(){
 
+        // Be generic!
         String[] people = new String[20];
-
         Iterator keys = classified_conversations.keys();
 
         int i=0;
         while(keys.hasNext()){
             String person = (String)keys.next();
-            Log.i(TAG, "person: " + person);
             people[i] = person;
             i++;
         }
@@ -129,57 +126,30 @@ public class ChatMainScreenActivity extends AppCompatActivity {
                 return curr;
             }
         }
-        return "ola";
+        return "Could not get the person";
     }
 
     public void getHistory(){
-        String url = "http://35.158.176.194/message/";
 
-        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url,null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+        String path = "message/";
 
-                        Log.i(TAG, "onResponse: " + response.toString());
-
-                        classifyJSON(response);
-
-                        Log.i(TAG,"classify:" + classified_conversations.toString());
-
-                        //getPeople();
-
-                        createListView();
-
-                        Toast.makeText(ChatMainScreenActivity.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: " + error.getMessage());
-                        error.printStackTrace();
-                    }
-                })
-
-        {
+        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
+            public void onResponse(JSONArray response) {
+                classifyJSON(response);
+                createListView();
+                Toast.makeText(ChatMainScreenActivity.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
+
             }
 
+        }, new Response.ErrorListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String token = app.getToken();
-                if (token != null)
-                    headers.put("Authorization", "Token " + token);
-                return headers;
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "onErrorResponse: " + error.getMessage());
+                error.printStackTrace();
             }
-        };
-
-        Volley.newRequestQueue(this).add(jsonRequest);
+        });
     }
 
 }
