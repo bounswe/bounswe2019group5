@@ -9,6 +9,8 @@ export const upload_writing = async (token, language, file, reviewer) => {
 
     var bodyFormData = new FormData();
     bodyFormData.set('language', language);
+    console.log("rev");
+    console.log(reviewer);
     if (reviewer)
         bodyFormData.set('reviewer', reviewer);
     bodyFormData.set('writing', file);

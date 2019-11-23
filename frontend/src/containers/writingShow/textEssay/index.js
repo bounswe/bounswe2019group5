@@ -139,7 +139,7 @@ class TextEssay extends Component {
     }
 
     onTextHighlightedCallback(selection) {
-        console.log("ONTEXT");
+        console.log(selection);
         this.setState({selection, openPopup: true});
     }
 

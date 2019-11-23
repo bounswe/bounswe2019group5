@@ -60,7 +60,7 @@ class WritingUpload extends Component {
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
                        this.state.file,
-                       this.props.match.params.reviewer)
+                       this.state.reviewer)
           .then(essay => {
             console.log(essay);
             if (essay.message)
