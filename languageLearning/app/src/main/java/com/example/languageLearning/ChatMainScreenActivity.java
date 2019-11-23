@@ -33,6 +33,8 @@ public class ChatMainScreenActivity extends AppCompatActivity {
     JSONObject classified_conversations;
     MyApplication app;
 
+    int people_num;
+
     private final String TAG = this.getClass().getName();
 
 
@@ -73,8 +75,8 @@ public class ChatMainScreenActivity extends AppCompatActivity {
 
     public String[] getPeople(){
 
-        // Be generic!
-        String[] people = new String[20];
+        people_num = conversation_pairs.size();
+        String[] people = new String[people_num];
         Iterator keys = classified_conversations.keys();
 
         int i=0;
