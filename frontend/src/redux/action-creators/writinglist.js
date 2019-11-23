@@ -10,7 +10,7 @@ export const get_essays = (token) => {
     get_essays_api(token).then(response => {
       dispatch({
         type: GET_WRITINGS,
-        writing: response
+        writings: response
       });
     });
   };

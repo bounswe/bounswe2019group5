@@ -1,4 +1,4 @@
-import parameters from "../parameters";
+import parameters from "../../parameters";
 import axios from "axios";
 
 export const get_essays = async (token) => {

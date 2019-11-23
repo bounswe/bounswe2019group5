@@ -5,6 +5,7 @@ import userInfo from "./userInfo";
 import exercises from "./exercises";
 import chat from "./chat";
 import recommendation from "./recommendation";
+import writinglist from "./writinglist";
 
 const rootReducer = combineReducers({
   authentication,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   userInfo,
   exercises,
   chat,
-  recommendation
+  recommendation,
+  writinglist,
 });
 
 export default rootReducer;
