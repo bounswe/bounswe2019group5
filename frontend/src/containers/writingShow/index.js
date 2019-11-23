@@ -13,7 +13,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { Button } from "react-bootstrap";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import { Link } from 'react-router-dom';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -33,6 +33,7 @@ class WritingShow extends Component {
         message: "LOADING...",
         essay: null,
         isDeleted: false,
+        annotation: null,
     };
 
     this.id = this.props.match.params.id;
@@ -41,7 +42,6 @@ class WritingShow extends Component {
   componentDidMount() {
     get_essay(this.props.userInfo.token, this.id)
         .then(essay => {
-            console.log(essay);
             if (essay.message)
                 this.setState({message: essay.message});
             else
@@ -70,9 +70,6 @@ class WritingShow extends Component {
         />
       );
     }
-    
-    console.log(this.state.message);
-    console.log(this.state.essay);
 
     const { classes } = this.props;
 
@@ -88,6 +85,21 @@ class WritingShow extends Component {
       <Grid container component="main" className={classes.root}>
 
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          {this.state.annotation &&
+            <div>
+              <div>
+                <Link to={{
+                  pathname: "/profile/" + this.state.annotation.username
+                }}>{this.state.annotation.username}</Link>
+              </div>
+              <div>
+                <mark style={{backgroundColor: this.state.annotation.highlightColor}}>{this.state.annotation.text}</mark>
+              </div>
+              <div>
+                <label>    {this.state.annotation.annotationText}</label>
+              </div>
+            </div>
+          }
           <div className={classes.paper}>
             <button onClick={()=>{
               delete_essay(this.props.userInfo.token, this.state.essay.id);
@@ -104,6 +116,7 @@ class WritingShow extends Component {
         {this.state.essay.writing.endsWith('.txt') &&
             <TextEssay
                 essay = {this.state.essay}
+                setAnnotation = {(annotation) => {this.setState({annotation})}}
             />
         }
       </Grid>

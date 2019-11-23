@@ -135,7 +135,7 @@ class WritingUpload extends Component {
                 <input 
                   type="file" 
                   id="file"
-                  accept="image/*"
+                  accept="image/*,.txt"
                   onChange={this.onChange.bind(this)} />
               </div>
               {this.state.message &&

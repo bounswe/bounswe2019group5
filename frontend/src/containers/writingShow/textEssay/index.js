@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import styles from "./styles";
 import {Container, Box, Grid, Paper} from '@material-ui/core';
 import {send_annotation, get_annotations} from '../../../api/annotation'
+import Highlightable from '../../highlighter';
+import Popup from 'reactjs-popup';
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -21,29 +23,47 @@ class TextEssay extends Component {
             height: 1,
             width: 1,
             text: '',
-            top: 1,
-            left: 1,
-            height: 1,
-            width: 1,
-            scrollTop: 0,
             selection: null,
+            ranges: [],
+            annotationText: '',
+            openPopup: false,
         };
-        this.markDivRef = React.createRef();
+    }
+
+    randomColor(){
+        var res="#";
+        var i;
+        for(i=0; i<6;i++){
+            var x = parseInt((Math.random()*12).toString())+4;
+            if (x<10)   res = res + x;
+            else if (x==10)  res = res + 'A';
+            else if (x==11)  res = res + 'B';
+            else if (x==12)  res = res + 'C';
+            else if (x==13)  res = res + 'D';
+            else if (x==14)  res = res + 'E';
+            else if (x==15)  res = res + 'F';
+        }
+        return res;
     }
 
     componentDidMount() {
         get_annotations(this.props.userInfo.token, this.props.essay.id)
             .then(annotations => {
-                console.log("Annotations");
-                console.log(annotations);
+
+                annotations = annotations.map( annotation => {
+                    return this.webAnnotationModel2range(annotation)
+                });
+
                 this.setState({
-                    annotations,
+                    ranges: annotations,
                 });
             });
+
         var reader = new FileReader();
         reader.loadend = (event) => {
             this.setState({text: event.target.result});
         }
+
         fetch(this.props.essay.writing)
             .then(response => {
                 response.text()
@@ -53,47 +73,84 @@ class TextEssay extends Component {
             });
     }
 
-    onChange(annotation){
-        this.setState({annotation});
+    webAnnotationModel2range(webAnnotationModel) {
+        var start = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[0] );
+        var end = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[1] );
+        var range = {
+            start,
+            end,
+            text: webAnnotationModel.creator+": "+webAnnotationModel.body.value,
+            highlightStyle: {
+                backgroundColor: this.randomColor(),
+            },
+        };
+        return range;
     }
 
-    onSubmit(selection){
+    onSubmit(){
 
-        console.log(selection);
+        let {selection} = this.state;
 
-        //send_annotation(this.props.userInfo.token,
-        //    annotation);
+        if (selection===null || !this.state.annotationText || this.state.annotationText.length==0)   return;
 
-    }
+        this.setState({ranges: this.state.ranges.concat([
+            { 
+                ...selection,
+                text: this.props.userInfo.username+': '+this.state.annotationText,
+                highlightStyle: {
+                    backgroundColor: this.randomColor(),
+                },
+            }
+        ])});
 
-    onMouseMove() {
-        var text = document
-                    .getElementById('textarea')
-                    .value;
+        let annotation = {
+            body: {
+                value: this.state.annotationText,
+            },
+            target: {
+                source: this.props.essay.id,
+                selector: {
+                    value: "char="+selection.start+","+selection.end,
+                },
+            },
+        };
+
+        send_annotation(this.props.userInfo.token,
+            annotation)
+            .then(() => {
+                this.setState({
+                    selection: null,
+                    annotationText: '',
+                    openPopup: false,});
+            });
         
-        var top = document.getElementById('textarea').offsetTop;
-        var left = document.getElementById('textarea').offsetLeft;
-        var height = document.getElementById('textarea').offsetHeight;
-        var width = document.getElementById('textarea').offsetWidth;
 
-        this.setState({
-            top,
-            left,
-            height,
-            width,
-            insideMarkDiv: (
-                <mark style={{color: 'transparent', backgroundColor: '#d4e9ab'}}>
-                    {text}
-                </mark>
-            )
-        });
-        
     }
 
-    handleScroll() {
-        var scrollTop = document.getElementById('textarea').scrollTop;
-        this.markDivRef.current.scrollTop = scrollTop;
-        this.setState({scrollTop});
+    onMouseOverHighlightedWordCallback(selection) {
+        if(selection && selection.highlightStyle){
+            this.props.setAnnotation({
+                username: selection.text.split(':')[0],
+                annotationText: selection.text.split(':')[1],
+                text: this.state.text.substring(selection.start, selection.end+1),
+                highlightColor: selection.highlightStyle.backgroundColor,
+            });
+        }
+    }
+
+    onTextHighlightedCallback(selection) {
+        console.log("ONTEXT");
+        this.setState({selection, openPopup: true});
+    }
+
+    rangeRenderer(currentRenderedNodes, currentRenderedRange, currentRenderedIndex, onMouseOverHighlightedWord) {
+        return currentRenderedNodes
+                .map(node => {
+                    return {
+                        ...node,
+                        onClick: onMouseOverHighlightedWord,
+                    };
+                });
     }
 
     render() {
@@ -102,42 +159,52 @@ class TextEssay extends Component {
 
         let essay = this.props.essay;
 
+        if (this.state.text==='') return (<div/>);
+
+        let ranges = this.state.selection ? [...this.state.ranges, {
+                                                                start: this.state.selection.start,
+                                                                end:   this.state.selection.end,
+                                                                text:  this.state.selection.text,
+                                                                }] : this.state.ranges;
+        
         return (
             
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+
+                <Popup open={this.state.openPopup} 
+                    position="right center"
+                    onClose={() => {this.setState({openPopup: false, selection: null, annotationText: ''})}}>
+                    <div>
+                        <label>Enter Annotation Text Here:</label>
+                    </div>
+                    <div>
+                        <textarea 
+                            id="annotationText"
+                            value={this.state.annotationText} 
+                            onChange={(e) => this.setState({annotationText: e.target.value})}/>
+                    </div>
+
+                    <div>
+                        <button onClick={this.onSubmit.bind(this)}>
+                            Send Annotation!
+                        </button>
+                    </div>
+
+                </Popup>
+
                 <div className={classes.paper}>
 
-                    <button onClick={()=>this.onSubmit(this.state.selection)} text="Annotate"/>
-
-                    <div class="container" style={{'background-color': 'red'}}>
-                        <div class="backdrop" 
-                                id="backdrop"
-                                ref={this.markDivRef} 
-                                style={{overflowY: "scroll", 
-                                        color: '#fff', 
-                                        position: 'absolute', 
-                                        top: this.state.top, 
-                                        left: this.state.left, 
-                                        height: this.state.height, 
-                                        width: this.state.width}}>
-                            <div class="highlights" ref={this.markDivRef} style={{'white-space': 'pre-wrap', 'word-wrap': 'break-word'}}>
-                                {this.state.insideMarkDiv}
-                            </div>
-                        </div>
-                        <textarea
-                            style={{position: 'absolute', margin: 0, borderRadius: 0, color: '#444', backgroundColor: 'transparent', width: '50vw', height: '100vh'}}
-                            value={this.state.text}
-                            id='textarea'
-                            name='textarea'
-                            onSelect={(e)=>{this.setState({
-                                selection: {
-                                    start: e.target.selectionStart,
-                                    end: e.target.selectionEnd,
-                                },
-                            });}}
-                            onScroll={() => this.handleScroll()}
-                            onMouseMove={() => this.onMouseMove()}/>
-                    </div>
+                    <Highlightable  ranges={ranges}
+                                    enabled={true}
+                                    onTextHighlighted={this.onTextHighlightedCallback.bind(this)}
+                                    id="highlightable"
+                                    onMouseOverHighlightedWord={this.onMouseOverHighlightedWordCallback.bind(this)}
+                                    highlightStyle={{
+                                        backgroundColor: '#B3D8FD',
+                                    }}
+                                    text={this.state.text}
+                                    rangeRenderer = {this.rangeRenderer.bind(this)}
+                    />
                 </div>
             </Grid>
         );
