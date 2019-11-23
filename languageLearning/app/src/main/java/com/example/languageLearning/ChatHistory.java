@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -53,6 +54,8 @@ public class ChatHistory extends AppCompatActivity {
 
     EditText username;
     EditText message;
+    TextView meLabel;
+    TextView friendLabel;
 
     String person;
 
@@ -64,6 +67,9 @@ public class ChatHistory extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username);
         message = (EditText) findViewById(R.id.message);
+
+        meLabel = findViewById(R.id.meLabel);
+        friendLabel = findViewById(R.id.friendLabel);
 
         conversation_pairs = new HashSet<HashSet<String>>();
         classified_conversations = new JSONObject();
@@ -95,8 +101,9 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 classifyJSON(response);
+                setUserLabels();
                 fillChatHistory();
-                Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
+                //Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
 
             }
 
@@ -177,6 +184,11 @@ public class ChatHistory extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             editText.setText("");
         }
+    }
+
+    public void setUserLabels(){
+        meLabel.setText(person);
+        friendLabel.setText(app.getUsername());
     }
 
     public void fillChatHistory(){

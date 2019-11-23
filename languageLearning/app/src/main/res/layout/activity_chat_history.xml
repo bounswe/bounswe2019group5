@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="false"
             android:layout_alignParentTop="false"
-            android:layout_below="@+id/meLbl"
+            android:layout_below="@+id/meLabel"
             android:layout_marginBottom="20dp"
             android:layout_above="@+id/msg_type"
             android:layout_marginTop="10dp"
@@ -46,11 +46,11 @@
             android:divider="@null" />
 
         <TextView
-            android:id="@+id/meLbl"
+            android:id="@+id/meLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
-            android:text="User 1"
+
             android:textSize="20dp" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="User 2"
+
             android:textSize="20dp" />
 
     </RelativeLayout>

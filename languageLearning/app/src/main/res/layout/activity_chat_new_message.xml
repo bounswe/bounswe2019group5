@@ -27,7 +27,7 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/username"
+        android:hint="Username"
         app:layout_constraintStart_toEndOf="@+id/sendTo"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -62,6 +62,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:ems="10"
+        android:hint="Message..."
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/username" />
