@@ -47,3 +47,7 @@ export const GET_RECOMMENDATIONS_REQUESTED = "recommendation/GET_RECOMMENDATIONS
 export const GET_RECOMMENDATIONS = "recommendation/GET_RECOMMENDATIONS";
 export const SET_RECOMMENDATION_LANGUAGE = "recommendation/SET_RECOMMENDATION_LANGUAGE";
 
+//Writing
+export const GET_WRITINGS_REQUESTED = "writinglist/GET_WRITINGS_REQUESTED";
+export const GET_WRITINGS = "writinglist/GET_WRITINGS";
+
