@@ -54,10 +54,6 @@ public class UserSearchActivity extends AppCompatActivity {
                 userListView.setVisibility(View.VISIBLE);
                 userLanguageView.setText("Language: " + searchUserLanguage);
 
-                app.setUsername("kbozdogan");
-                app.setLanguage("english");
-                app.setToken("beb9a6ae0bb9ea89f6afa23f6605c41628ae5ec5");
-
                 String path = "users/?";
                 if (!usernameSearch.getText().toString().equals("")) {
                     path += "&username=" + usernameSearch.getText().toString();
