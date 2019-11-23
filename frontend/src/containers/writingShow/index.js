@@ -49,6 +49,10 @@ class WritingShow extends Component {
         });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state);
+  }
+
   render() {
     
     if (this.props.userInfo.token == null) {
@@ -92,11 +96,13 @@ class WritingShow extends Component {
                   pathname: "/profile/" + this.state.annotation.username
                 }}>{this.state.annotation.username}</Link>
               </div>
+              { this.state.annotation.text && this.state.annotation.text.length>0 &&
+                <div>
+                  <mark style={{backgroundColor: this.state.annotation.highlightColor}}>{this.state.annotation.text}</mark>
+                </div>
+              }
               <div>
-                <mark style={{backgroundColor: this.state.annotation.highlightColor}}>{this.state.annotation.text}</mark>
-              </div>
-              <div>
-                <label>    {this.state.annotation.annotationText}</label>
+                <label>{this.state.annotation.annotationText}</label>
               </div>
             </div>
           }
@@ -111,6 +117,7 @@ class WritingShow extends Component {
         {!this.state.essay.writing.endsWith('.txt') &&
             <ImageEssay
                 essay = {this.state.essay}
+                setAnnotation = {(annotation) => {this.setState({annotation})}}
             />
         }
         {this.state.essay.writing.endsWith('.txt') &&

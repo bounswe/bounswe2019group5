@@ -29,21 +29,16 @@ class ImageEssay extends Component {
     }
     
     content (props) {
-        var geometry = props.annotation.geometry;
-      
-        if (!geometry) return null;
-
-        console.log("asdfads");
+        
+        this.props.setAnnotation({
+            username: props.annotation.data.text.split(':')[0],
+            annotationText: props.annotation.data.text.split(':')[1],
+            text: "",
+            highlightColor: "#aabbcc",
+        });
 
         return (
-            
-                <Grid style = {{
-                        position: 'absolute',
-                        left: geometry.x + '%',
-                        top: geometry.y + geometry.height + '%'
-                    }}>
-                    {props.annotation.data.text}
-                </Grid>
+            <div/>
         );
       }
 
@@ -151,7 +146,7 @@ class ImageEssay extends Component {
                         disableSelector = {
                             !(essay.status==='accepted' || essay.author===this.props.userInfo.username)
                         }
-                        renderContent = {this.content}
+                        renderContent = {this.content.bind(this)}
                         style={{flex:1}}
                         resizeMode={"contain"}
                     />

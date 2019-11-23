@@ -51,6 +51,7 @@ class TextEssay extends Component {
             .then(annotations => {
 
                 annotations = annotations.map( annotation => {
+                    console.log(annotation.target.selector.value);
                     return this.webAnnotationModel2range(annotation)
                 });
 
@@ -74,7 +75,7 @@ class TextEssay extends Component {
     }
 
     webAnnotationModel2range(webAnnotationModel) {
-        var start = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[0] );
+        var start = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[0] )+1;
         var end = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[1] );
         var range = {
             start,
@@ -110,7 +111,7 @@ class TextEssay extends Component {
             target: {
                 source: this.props.essay.id,
                 selector: {
-                    value: "char="+selection.start+","+selection.end,
+                    value: "char="+(selection.start-1)+","+selection.end,
                 },
             },
         };
