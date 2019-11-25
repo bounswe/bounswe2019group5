@@ -1,12 +1,14 @@
 import parameters from '../../parameters'
 import axios from 'axios';
 
+// https://chrome.google.com/webstore/detail/access-control-allow-cred/hmcjjmkppmkpobeokkhgkecjlaobjldi should be added to chrome
+
 export const respond_to_essay = async (token, status, id) => {
 
-    await axios
-        .patch(parameters.apiUrl+'/essay/' + id,
+    let essay = await axios
+        .patch(parameters.apiUrl+'/essay/' + id + '/',
             {
-                status: status
+                status,
             },
             {
                 headers: {
@@ -23,5 +25,5 @@ export const respond_to_essay = async (token, status, id) => {
             };
         });
     
-    return newAnnotation;
+    return essay;
 }
