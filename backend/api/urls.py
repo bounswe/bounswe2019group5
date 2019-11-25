@@ -19,6 +19,7 @@ router.register(r'annotation', AnnotationView, basename='annotation'),
 router.register(r'suggest', SuggestView, basename='suggest exercise'),
 router.register(r'recommendation', RecommendationView, basename='recommendation'),
 router.register(r'upload', UploadView, basename='file'),
+router.register(r'progress', ProgressView, basename='progress'),
 
 
 urlpatterns = [

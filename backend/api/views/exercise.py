@@ -13,6 +13,41 @@ from ..models import *
 from ..filters import ResultFilterSet
 
 
+class ProgressView(GenericViewSet,
+                   mixins.ListModelMixin):
+    serializer_class = ResultSerializer
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ResultFilterSet
+
+    def get_queryset(self):
+        return Result.objects.filter(user=self.request.user)
+
+    def check_object_permissions(self, request, obj):
+        if request.user.is_anonymous:
+            raise NotAuthenticated('Token is needed')
+
+    def list(self, request, *args, **kwargs):
+
+        queryset = self.filter_queryset(self.get_queryset())
+        filtered_exercise = Exercise.objects.all()
+        if 'language' in request.query_params:
+            filtered_exercise = filtered_exercise.filter(language=request.query_params['language'])
+        if 'level' in request.query_params:
+            filtered_exercise = filtered_exercise.filter(language=request.query_params['level'])
+        if 'type' in request.query_params:
+            filtered_exercise = filtered_exercise.filter(language=request.query_params['type'])
+
+        r = {
+            'number_of_test_completed': len(queryset),
+            'number_of_test': len(filtered_exercise),
+            'completed_exercise_current_level': len(queryset.filter(exercise__level=self.request.user.level)),
+            'exercise_in_current_level': len(filtered_exercise.filter(level=self.request.user.level))
+        }
+
+        return Response(r)
+
+
 class ResultView(mixins.CreateModelMixin,
                  mixins.ListModelMixin,
                  GenericViewSet):
