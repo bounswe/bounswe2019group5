@@ -10,6 +10,14 @@ import { Button, Card, CardDeck, Image, ListGroup, ListGroupItem } from 'react-b
 export default function Statistics({ userInfo, language, writings}) {
   const [key, setKey] = React.useState("General");
 
+  const correctAnswerRate = (n_of_true, n_of_false) => {
+    if (n_of_false === null || n_of_true === null) {
+      return 0
+    } else {
+      return n_of_true / (n_of_false + n_of_true)
+    }
+  }
+
   return (
     <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
       <Tab eventKey="General" title="General">
@@ -26,18 +34,11 @@ export default function Statistics({ userInfo, language, writings}) {
         </Typography>       */}
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
-          {console.log(userInfo)}
           {language == "english"
-            ? userInfo.english_general_test_result.number_of_true /
-              (userInfo.english_general_test_result.number_of_true +
-                userInfo.english_general_test_result.number_of_false)
+            ? correctAnswerRate(userInfo.english_general_test_result.number_of_true, userInfo.english_general_test_result.number_of_false)
             : language == "turkish"
-            ? userInfo.turkish_general_test_result.number_of_true /
-              (userInfo.turkish_general_test_result.number_of_true +
-                userInfo.turkish_general_test_result.number_of_false)
-            : userInfo.german_general_test_result.number_of_true /
-              (userInfo.german_general_test_result.number_of_true +
-                userInfo.german_general_test_result.number_of_false)}
+            ? correctAnswerRate(userInfo.turkish_general_test_result.number_of_true, userInfo.turkish_general_test_result.number_of_false)
+            : correctAnswerRate(userInfo.german_general_test_result.number_of_true, userInfo.german_general_test_result.number_of_false)}
         </Typography>
       </Tab>
       <Tab eventKey="Grammar" title="Grammar">
@@ -53,16 +54,10 @@ export default function Statistics({ userInfo, language, writings}) {
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
           {language == "english"
-            ? userInfo.english_grammar.number_of_true /
-              (userInfo.english_grammar.number_of_true +
-                userInfo.english_grammar.number_of_false)
+            ? correctAnswerRate(userInfo.english_grammar.number_of_true, userInfo.english_grammar.number_of_false)
             : language == "turkish"
-            ? userInfo.turkish_grammar.number_of_true /
-              (userInfo.turkish_grammar.number_of_true +
-                userInfo.turkish_grammar.number_of_false)
-            : userInfo.german_grammar.number_of_true /
-              (userInfo.german_grammar.number_of_true +
-                userInfo.german_grammar.number_of_false)}
+            ? correctAnswerRate(userInfo.turkish_grammar.number_of_true, userInfo.turkish_grammar.number_of_false)
+            : correctAnswerRate(userInfo.german_grammar.number_of_true, userInfo.german_grammar.number_of_false)}
         </Typography>
       </Tab>
       <Tab eventKey="Vocabulary" title="Vocabulary">
@@ -77,16 +72,10 @@ export default function Statistics({ userInfo, language, writings}) {
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
           {language == "english"
-            ? userInfo.english_voc.number_of_true /
-              (userInfo.english_voc.number_of_true +
-                userInfo.english_voc.number_of_false)
+            ? correctAnswerRate(userInfo.english_voc.number_of_true, userInfo.english_voc.number_of_false)
             : language == "turkish"
-            ? userInfo.turkish_voc.number_of_true /
-              (userInfo.turkish_voc.number_of_true +
-                userInfo.turkish_voc.number_of_false)
-            : userInfo.german_voc.number_of_true /
-              (userInfo.german_voc.number_of_true +
-                userInfo.german_voc.number_of_false)}{" "}
+            ? correctAnswerRate(userInfo.turkish_voc.number_of_true, userInfo.turkish_voc.number_of_false)
+            : correctAnswerRate(userInfo.german_voc.number_of_true, userInfo.german_voc.number_of_false)}
         </Typography>
       </Tab>
       <Tab eventKey="Reading" title="Reading">
@@ -101,16 +90,10 @@ export default function Statistics({ userInfo, language, writings}) {
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
           {language == "english"
-            ? userInfo.english_read.number_of_true /
-              (userInfo.english_read.number_of_true +
-                userInfo.english_read.number_of_false)
+            ? correctAnswerRate(userInfo.english_read.number_of_true, userInfo.english_read.number_of_false)
             : language == "turkish"
-            ? userInfo.turkish_read.number_of_true /
-              (userInfo.turkish_read.number_of_true +
-                userInfo.turkish_read.number_of_false)
-            : userInfo.german_read.number_of_true /
-              (userInfo.german_read.number_of_true +
-                userInfo.german_read.number_of_false)}
+            ? correctAnswerRate(userInfo.turkish_read.number_of_true, userInfo.turkish_read.number_of_false)
+            : correctAnswerRate(userInfo.german_read.number_of_true, userInfo.german_read.number_of_false)}
         </Typography>
       </Tab>
       <Tab eventKey="Writing" title="Writing">
@@ -158,16 +141,10 @@ export default function Statistics({ userInfo, language, writings}) {
         <Typography variant="h4" gutterBottom>
         Average correct answer rate: 
           {language == "english"
-            ? userInfo.english_listen.number_of_true /
-              (userInfo.english_listen.number_of_true +
-                userInfo.english_listen.number_of_false)
+            ? correctAnswerRate(userInfo.english_listen.number_of_true, userInfo.english_listen.number_of_false)
             : language == "turkish"
-            ? userInfo.turkish_listen.number_of_true /
-              (userInfo.turkish_listen.number_of_true +
-                userInfo.turkish_listen.number_of_false)
-            : userInfo.german_listen.number_of_true /
-              (userInfo.german_listen.number_of_true +
-                userInfo.german_listen.number_of_false)}
+            ? correctAnswerRate(userInfo.turkish_listen.number_of_true, userInfo.turkish_listen.number_of_false)
+            : correctAnswerRate(userInfo.german_listen.number_of_true, userInfo.german_listen.number_of_false)}
         </Typography>
       </Tab>
     </Tabs>

@@ -31,7 +31,7 @@ export const get_user_profile = async (token, username) => {
         
 };
 
-export const get_user_test_results = async (token, language, type) => {
+export const get_user_test_results = async (token, language, type, level) => {
 
     let test_statistics = await axios
         .get( parameters.apiUrl + "/result",
@@ -39,6 +39,7 @@ export const get_user_test_results = async (token, language, type) => {
                 params: {
                     language,
                     type,
+                    level,
                 },
                 headers: {
                     "Content-Type": "application/json",

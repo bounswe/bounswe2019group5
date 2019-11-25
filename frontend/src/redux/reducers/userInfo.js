@@ -31,21 +31,66 @@ const initialState = {
   overallRating: null,
   userProfile: null,
   otherUserProfile: null,
-  english_grammar: null,
-  english_voc: null,
-  english_listen: null,
-  english_read: null,
-  turkish_grammar: null,
-  turkish_voc: null,
-  turkish_listen: null,
-  turkish_read: null,
-  german_grammar: null,
-  german_voc: null,
-  german_listen: null,
-  german_read: null,
-  english_general_test_result: null,
-  turkish_general_test_result: null,
-  german_general_test_result: null,
+  english_grammar: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  english_voc: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  english_listen: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  english_read: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  turkish_grammar: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  turkish_voc: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  turkish_listen: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  turkish_read: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  german_grammar: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  german_voc: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  german_listen: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  german_read: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  english_general_test_result: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  turkish_general_test_result: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
+  german_general_test_result: {
+    "number_of_true": 0,
+    "number_of_false": 0
+  },
 };
 
 export default (state = initialState, action) => {

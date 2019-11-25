@@ -54,6 +54,8 @@ export const set_token = (token, username) => {
 };
 
 export const set_user_profile = token => {
+  console.log('setting user profile')
+
   return dispatch => {
     dispatch({ type: USER_PROFILE_REQUESTED });
 
@@ -66,7 +68,6 @@ export const set_user_profile = token => {
       return [total_rate, no_of_rates];
     }
     get_user_profile_api(token, "").then(profile => {
-      console.log('profile', profile)
       dispatch({
         type: USER_PROFILE_SET,
         profile,
@@ -75,6 +76,7 @@ export const set_user_profile = token => {
     });
     get_user_test_results_api(token, "english", "grammar", "").then(
       english_grammar => {
+        console.log('setting english grammer', english_grammar)
         dispatch({
           type: SET_ENGLISH_GRAMMAR_RESULT,
           english_grammar
