@@ -15,6 +15,7 @@ import Chat from "../chat";
 import WritingUpload from "../writingUpload";
 import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
+import WritingList from "../WritingList";
 
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -118,6 +119,7 @@ class App extends Component {
           />
           <Route exact path="/recommendation" component={Recommendation} />
           <Route exact path="/show-writing/:id" component={WritingShow} />
+          <Route exact path="/writing-list" component={WritingList} />
         </main>
       </div>
     );

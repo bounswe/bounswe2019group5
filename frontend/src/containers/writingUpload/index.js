@@ -117,11 +117,12 @@ class WritingUpload extends Component {
               aria-describedby="simple-modal-description"
               style={{
                 minHeight: '50vh',
-                maxHeight: '50vh',
+                maxHeight: '2000vh',
                 minWidth: '50vw',
                 maxWidth: '50vw',
-                display:'flex',alignItems:'center',justifyContent:'center',
-                backgroundColor: "white"
+                display:'flex',alignItems:'top',justifyContent:'center',
+                backgroundColor: "white",
+                'overflow-y': 'auto'
               }}
               open={this.state.isOnSelectReviewer}
               onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
