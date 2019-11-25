@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {
   set_user_profile,
-  set_other_user_profile
+  set_other_user_profile,
 } from "../../redux/action-creators/userInfo";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -17,6 +17,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Paper from "@material-ui/core/Paper";
 import Ratings from "./ratings";
 import _ from "lodash"
+import { get_essays } from '../../redux/action-creators/writinglist';
+
 
 
 class Profile extends Component {
@@ -37,6 +39,7 @@ class Profile extends Component {
       console.log("other profile");
     } else  {
       this.props.set_user_profile(this.props.userInfo.token);
+      this.props.get_essays(this.props.userInfo.token);
       console.log("self profile");
     }
     
@@ -64,15 +67,24 @@ class Profile extends Component {
   }
 
   render() {
+
     console.log("a")
     const { classes } = this.props;
+
     if (this.props.userInfo.token == null) {
       return (
         <Redirect
           to={{
-            pathname: "/home"
+            pathname: "/login"
           }}
         />
+      );
+    }
+    else if (this.props.userInfo.loading) {
+      return (
+        <div>
+          <h1>LOADING</h1>
+        </div>
       );
     } else {
       return (
@@ -102,15 +114,27 @@ class Profile extends Component {
                   )}
                   <Card.Text>
                     {this.state.selfProfile ? (
+                      <>
                       <Typography variant="h4" gutterBottom>
                         {this.props.userInfo.userProfile.first_name}{" "}
                         {this.props.userInfo.userProfile.last_name}
                       </Typography>
+                      <Typography variant="h3" gutterBottom>
+                      Overall rating: 
+                      {this.props.userInfo.overallRating[0] / this.props.userInfo.overallRating[1]} out of {this.props.userInfo.overallRating[1]} ratings.
+                    </Typography>  
+                    </>                    
                     ) : (
+                      <>
                       <Typography variant="h4" gutterBottom>
                         {this.props.userInfo.otherUserProfile.first_name}{" "}
                         {this.props.userInfo.otherUserProfile.last_name}
                       </Typography>
+                      <Typography variant="h3" gutterBottom>
+                      Overall rating: 
+                      {this.props.userInfo.overallRating[0] / this.props.userInfo.overallRating[1]} out of {this.props.userInfo.overallRating[1]} ratings.
+                    </Typography>   
+                    </>
                     )}
                   </Card.Text>
                 </Card.Body>
@@ -121,14 +145,17 @@ class Profile extends Component {
             <div className={classes.paper}>
               {this.state.selfProfile && (
                 <LangTab
-                  attendedLang={
-                    this.props.userInfo.userProfile.attended_languages
-                  }
+                  userInfo= {this.props.userInfo}
+                  attendedLang= {this.props.userInfo.userProfile.attended_languages}
+                  writings = {this.props.writinglist.writings}
                 />
               )}
             </div>
             <Grid>
             <div className={classes.paper}>
+            <Typography variant="h3" gutterBottom>
+                     User ratings and comments:
+            </Typography>  
               {this.state.selfProfile ? (
                 <Ratings userProfile={this.props.userInfo.userProfile} />
               ) : (
@@ -150,7 +177,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       set_user_profile,
-      set_other_user_profile
+      set_other_user_profile,
+      get_essays
     },
     dispatch
   );

@@ -6,7 +6,8 @@ import {
   LISTENING_TEST_REQUESTED,
   LISTENING_TEST,
   TEST_RESULT_REQUESTED,
-  TEST_RESULT
+  TEST_RESULT,
+  SEARCH_TEST,
 } from "../actions";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   grammarTest: null,
   listeningTest: null,
   isFinished: false,
-  testResult: null
+  testResult: null,
+  searchedTest: null,
 };
 
 export default (state = initialState, action) => {
