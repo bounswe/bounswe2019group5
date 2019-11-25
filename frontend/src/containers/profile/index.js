@@ -42,22 +42,24 @@ class Profile extends Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log("userprofile is: ", this.props.userInfo.userProfile);
-    return;
+  componentDidUpdate(prevProps, prevState) {
     if (
       this.props.match.params.user != this.props.userInfo.userProfile.username
     ) {
-      this.props.set_other_user_profile(
-        this.props.userInfo.token,
-        this.props.match.params.user
-      );
-      this.setState({ selfProfile: false });
-      console.log("other profile");
+      if (prevState.selfProfile) {
+        this.props.set_other_user_profile(
+          this.props.userInfo.token,
+          this.props.match.params.user
+        );
+        this.setState({ selfProfile: false });
+      }
     } else {
-      this.props.set_user_profile(this.props.userInfo.token);
+      
       console.log("self profileuu");
-      this.setState({ selfProfile: true });
+      if (!prevState.selfProfile) {
+        this.props.set_user_profile(this.props.userInfo.token);
+        this.setState({ selfProfile: true });
+      }
     }
   }
 
