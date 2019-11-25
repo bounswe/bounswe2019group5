@@ -75,11 +75,11 @@ public class EssayAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         final Essay essay1 = essay;
-        essayID.setText(essayID.getText() + String.valueOf(essay.id));
-        language.setText(language.getText() + essay.language);
-        author.setText(author.getText() + essay.author);
-        reviewer.setText(reviewer.getText() + essay.reviewer);
-        status.setText(status.getText() + essay.status);
+        essayID.setText(essayID.getText().toString() + String.valueOf(essay.id));
+        language.setText(language.getText().toString() + essay.language);
+        author.setText(author.getText().toString() + essay.author);
+        reviewer.setText(reviewer.getText().toString() + essay.reviewer);
+        status.setText(status.getText().toString() + essay.status);
         essayElementView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

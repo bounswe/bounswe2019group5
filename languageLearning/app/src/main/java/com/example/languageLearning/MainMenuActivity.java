@@ -84,12 +84,41 @@ public class MainMenuActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, SearchActivity.class);
-                startActivity(intent);
+                showSearchTypePopup();
             }
         });
 
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
+    }
+
+    private void showSearchTypePopup() {
+        popup = new Dialog(this);
+        popup.setContentView(R.layout.search_type_popup);
+
+        ImageButton searchUserButton;
+        searchUserButton = popup.findViewById(R.id.userSearchButtonMainMenu);
+        ImageButton searchExerciseButton;
+        searchExerciseButton = popup.findViewById(R.id.exersizeSearchButton);
+
+        searchUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, UserSearchActivity.class);
+                startActivity(intent);
+                popup.cancel();
+            }
+        });
+
+        searchExerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, SearchActivity.class);
+                startActivity(intent);
+                popup.cancel();
+            }
+        });
+
+        popup.show();
     }
 
     @Override

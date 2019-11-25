@@ -1,39 +1,35 @@
 package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
     private final String TAG = getClass().getName();
+    ConstraintLayout rateDistributionLayout;
     LinearLayout linearLayout, yourCommentLayout, leaveRatingLayout;
-    ImageView stars[] = new ImageView[5];
-    TextView firstName_lastName, userName, nativeLang, averageRate;
+    ImageView commentStars[] = new ImageView[5];
+    ImageView averageRateStars[] = new ImageView[5];
+    ProgressBar progressBars[] = new ProgressBar[5];
+    TextView firstName_lastName, userName, nativeLang, averageRate, reviewCount;
     String username;
     UserComment ourComment;
 
@@ -47,18 +43,30 @@ public class ProfilePageActivity extends AppCompatActivity {
         if (username == null) // Default to the current user
             username = app.getUsername();
 
+        rateDistributionLayout = findViewById(R.id.rateDistributionLayout);
         linearLayout = findViewById(R.id.linearLayout);
         firstName_lastName = findViewById(R.id.firstName_lastName);
         userName = findViewById(R.id.userName);
-        nativeLang = findViewById(R.id.nativeLang);
         averageRate = findViewById(R.id.averageRate);
+        nativeLang = findViewById(R.id.nativeLang);
         yourCommentLayout = findViewById(R.id.yourCommentLayout);
         leaveRatingLayout = findViewById(R.id.leaveRatingLayout);
-        stars[0] = findViewById(R.id.star0);
-        stars[1] = findViewById(R.id.star1);
-        stars[2] = findViewById(R.id.star2);
-        stars[3] = findViewById(R.id.star3);
-        stars[4] = findViewById(R.id.star4);
+        commentStars[0] = findViewById(R.id.star0);
+        commentStars[1] = findViewById(R.id.star1);
+        commentStars[2] = findViewById(R.id.star2);
+        commentStars[3] = findViewById(R.id.star3);
+        commentStars[4] = findViewById(R.id.star4);
+        averageRateStars[0] = findViewById(R.id.averageRateStar1);
+        averageRateStars[1] = findViewById(R.id.averageRateStar2);
+        averageRateStars[2] = findViewById(R.id.averageRateStar3);
+        averageRateStars[3] = findViewById(R.id.averageRateStar4);
+        averageRateStars[4] = findViewById(R.id.averageRateStar5);
+        progressBars[0] = findViewById(R.id.progressBar1);
+        progressBars[1] = findViewById(R.id.progressBar2);
+        progressBars[2] = findViewById(R.id.progressBar3);
+        progressBars[3] = findViewById(R.id.progressBar4);
+        progressBars[4] = findViewById(R.id.progressBar5);
+        reviewCount = findViewById(R.id.reviewCount);
 
         getProfile();
     }
@@ -111,7 +119,28 @@ public class ProfilePageActivity extends AppCompatActivity {
         firstName_lastName.setText(profile.first_name+ " " + profile.last_name);
         userName.setText("@" + profile.username);
         nativeLang.setText(profile.native_language);
-        averageRate.setText(profile.rating_average + " / 5.0");
+
+        if (profile.comments.size() == 0) {
+            rateDistributionLayout.setVisibility(View.GONE);
+        }
+        else {
+            averageRate.setText(String.format("%.1f", profile.rating_average));
+            reviewCount.setText("(" + profile.comments.size() + ")");
+            for (int i=0; i<5; i++) {
+                int numberOfRatings = 0;
+                for (UserComment comment : profile.comments) {
+                    if ((int) Math.round(comment.rate) - 1 == i)
+                        numberOfRatings += 1;
+                }
+                progressBars[i].setProgress((int)((float)numberOfRatings / profile.comments.size() * 100));
+            }
+            for (int i=0; i<5; i++) {
+                if (i+1 <= profile.rating_average)
+                    averageRateStars[i].setImageResource(android.R.drawable.star_big_on);
+                else
+                    averageRateStars[i].setImageResource(android.R.drawable.star_big_off);
+            }
+        }
 
         for (UserComment comment : profile.comments) {
             if (comment.username.equals(app.getUsername())) {
@@ -129,12 +158,12 @@ public class ProfilePageActivity extends AppCompatActivity {
         else if (ourComment == null) {
             yourCommentLayout.setVisibility(View.GONE);
             for (int i=0; i<5; i++)
-                stars[i].setOnClickListener(new View.OnClickListener() {
+                commentStars[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int starIndex = -1;
                         for (int i=0;i<5;i++) {
-                            if (v == stars[i]) {
+                            if (v == commentStars[i]) {
                                 starIndex = i;
                                 break;
                             }

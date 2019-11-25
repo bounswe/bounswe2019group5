@@ -99,7 +99,7 @@
         android:layout_height="42dp"
         android:layout_marginBottom="128dp"
         android:background="#3F51B5"
-        android:text="@string/search"
+        android:text="SEARCH"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
