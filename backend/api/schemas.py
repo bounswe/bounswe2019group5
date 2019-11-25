@@ -57,4 +57,15 @@ class AutoSchema(openapi.AutoSchema):
             response['200']['content']['application/json']['schema'].pop('type')
             response['200']['content']['application/json']['schema'].pop('items')
             response['200']['content']['application/json']['schema']['properties'] = properties
+
+        if path == '/progress/' and method == 'GET':
+            properties = {
+                "number_of_test_completed": {'type': 'integer'},
+                "number_of_test": {'type': 'integer'},
+                "completed_exercise_current_level": {'type': 'integer'},
+                "exercise_in_current_level": {'type': 'integer'}
+            }
+            response['200']['content']['application/json']['schema'].pop('type')
+            response['200']['content']['application/json']['schema'].pop('items')
+            response['200']['content']['application/json']['schema']['properties'] = properties
         return response
