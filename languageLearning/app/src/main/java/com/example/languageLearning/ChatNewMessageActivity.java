@@ -2,6 +2,7 @@ package com.example.languageLearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,6 +70,15 @@ public class ChatNewMessageActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    public void onClickChat(View view){
+        Intent i = new Intent(ChatNewMessageActivity.this, ChatHistory.class);
+        startActivity(i);
+    }
+    public void onClickMain(View view){
+        Intent i = new Intent(ChatNewMessageActivity.this, ChatMainScreenActivity.class);
+        startActivity(i);
     }
 
 }
