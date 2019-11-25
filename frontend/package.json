@@ -16,6 +16,7 @@
     "react-chat-widget": "^2.1.5",
     "react-dom": "^16.10.1",
     "react-image-annotation": "^0.9.10",
+    "react-list": "^0.8.13",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",

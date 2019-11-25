@@ -25,12 +25,13 @@ class Profile extends Component {
   state = { selfProfile: true };
   constructor(props) {
     super(props);
-    console.log(props.userInfo.token);
+    console.log(props.userInfo);
   }
   componentDidMount() {
     if (
       this.props.match.params.user != this.props.userInfo.userProfile.username
     ) {
+      console.log("other user profile")
       this.props.set_other_user_profile(
         this.props.userInfo.token,
         this.props.match.params.user
@@ -68,7 +69,7 @@ class Profile extends Component {
 
   render() {
 
-    console.log("a")
+    console.log(this.props.userInfo)
     const { classes } = this.props;
 
     if (this.props.userInfo.token == null) {
@@ -121,7 +122,7 @@ class Profile extends Component {
                       </Typography>
                       <Typography variant="h3" gutterBottom>
                       Overall rating: 
-                      {this.props.userInfo.overallRating[0] / this.props.userInfo.overallRating[1]} out of {this.props.userInfo.overallRating[1]} ratings.
+                      {this.props.userInfo.overallRating && (this.props.userInfo.overallRating[0] / this.props.userInfo.overallRating[1])} out of {this.props.userInfo.overallRating && this.props.userInfo.overallRating[1]} ratings.
                     </Typography>  
                     </>                    
                     ) : (
@@ -147,7 +148,7 @@ class Profile extends Component {
                 <LangTab
                   userInfo= {this.props.userInfo}
                   attendedLang= {this.props.userInfo.userProfile.attended_languages}
-                  writings = {this.props.writinglist.writings}
+                  writings = {this.props.writinglist && this.props.writinglist.writings}
                 />
               )}
             </div>
@@ -169,9 +170,11 @@ class Profile extends Component {
     }
   }
 }
-const mapStateToProps = ({ userInfo }) => ({
+const mapStateToProps = ({ userInfo }) => {
+  console.log('test', userInfo)
+  return ({
   userInfo
-});
+})};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

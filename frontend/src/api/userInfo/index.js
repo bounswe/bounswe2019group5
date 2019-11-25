@@ -39,7 +39,6 @@ export const get_user_test_results = async (token, language, type) => {
                 params: {
                     language,
                     type,
-                    level,
                 },
                 headers: {
                     "Content-Type": "application/json",

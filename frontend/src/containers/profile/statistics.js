@@ -25,7 +25,8 @@ export default function Statistics({ userInfo, language, writings}) {
           Number of tests you've completed: 12
         </Typography>       */}
         <Typography variant="h4" gutterBottom>
-          Average correct answer rate:{" "}
+          Average correct answer rate: 
+          {console.log(userInfo)}
           {language == "english"
             ? userInfo.english_general_test_result.number_of_true /
               (userInfo.english_general_test_result.number_of_true +
@@ -50,7 +51,7 @@ export default function Statistics({ userInfo, language, writings}) {
         </Typography>
       */}
         <Typography variant="h4" gutterBottom>
-          Average correct answer rate:{" "}
+          Average correct answer rate: 
           {language == "english"
             ? userInfo.english_grammar.number_of_true /
               (userInfo.english_grammar.number_of_true +
@@ -62,7 +63,7 @@ export default function Statistics({ userInfo, language, writings}) {
             : userInfo.german_grammar.number_of_true /
               (userInfo.german_grammar.number_of_true +
                 userInfo.german_grammar.number_of_false)}
-        </Typography>{" "}
+        </Typography>
       </Tab>
       <Tab eventKey="Vocabulary" title="Vocabulary">
         {/*
@@ -74,7 +75,7 @@ export default function Statistics({ userInfo, language, writings}) {
         </Typography>
       */}
         <Typography variant="h4" gutterBottom>
-          Average correct answer rate:{" "}
+          Average correct answer rate: 
           {language == "english"
             ? userInfo.english_voc.number_of_true /
               (userInfo.english_voc.number_of_true +
@@ -86,7 +87,7 @@ export default function Statistics({ userInfo, language, writings}) {
             : userInfo.german_voc.number_of_true /
               (userInfo.german_voc.number_of_true +
                 userInfo.german_voc.number_of_false)}{" "}
-        </Typography>{" "}
+        </Typography>
       </Tab>
       <Tab eventKey="Reading" title="Reading">
         {/*
@@ -98,7 +99,7 @@ export default function Statistics({ userInfo, language, writings}) {
         </Typography>
       */}
         <Typography variant="h4" gutterBottom>
-          Average correct answer rate:{" "}
+          Average correct answer rate: 
           {language == "english"
             ? userInfo.english_read.number_of_true /
               (userInfo.english_read.number_of_true +
@@ -110,7 +111,7 @@ export default function Statistics({ userInfo, language, writings}) {
             : userInfo.german_read.number_of_true /
               (userInfo.german_read.number_of_true +
                 userInfo.german_read.number_of_false)}
-        </Typography>{" "}
+        </Typography>
       </Tab>
       <Tab eventKey="Writing" title="Writing">
         {/*
@@ -121,7 +122,7 @@ export default function Statistics({ userInfo, language, writings}) {
           Number of tests you've completed: 12
         </Typography>
       */}
-        {writings.map(item => {
+        {writings && (writings.map(item => {
           if (item.author === this.props.userInfo.username)
             return (
               <div>
@@ -143,7 +144,7 @@ export default function Statistics({ userInfo, language, writings}) {
                 <br />
               </div>
             );
-        })}
+        }))}
       </Tab>
       <Tab eventKey="Listening" title="Listening">
         {/*
@@ -155,7 +156,7 @@ export default function Statistics({ userInfo, language, writings}) {
         </Typography>
       */}
         <Typography variant="h4" gutterBottom>
-        Average correct answer rate:{" "}
+        Average correct answer rate: 
           {language == "english"
             ? userInfo.english_listen.number_of_true /
               (userInfo.english_listen.number_of_true +
@@ -167,7 +168,7 @@ export default function Statistics({ userInfo, language, writings}) {
             : userInfo.german_listen.number_of_true /
               (userInfo.german_listen.number_of_true +
                 userInfo.german_listen.number_of_false)}
-        </Typography>{" "}
+        </Typography>
       </Tab>
     </Tabs>
   );

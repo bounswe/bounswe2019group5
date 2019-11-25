@@ -8,6 +8,7 @@ export default function LangTab({userInfo, attendedLang, writings}) {
     const [key, setKey] = React.useState('');
     var langs = [];
     var json;
+    console.log(attendedLang);
     for (json of attendedLang) {
       langs.push(json.language)
     }
@@ -16,15 +17,15 @@ export default function LangTab({userInfo, attendedLang, writings}) {
       <Tabs bg="secondary" text="white"  id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
         <Tab eventKey="ENGLISH" title="ENGLISH" disabled={!langs.includes('english') }
          >
-           {<Statistics userProfile={userInfo} language={"english"} writings={writings}/> }
+           {<Statistics userInfo={userInfo} language={"english"} writings={writings}/> }
         </Tab>
         <Tab eventKey="TURKISH" title="TURKISH" disabled={!langs.includes('turkish')  } 
         >
-           {<Statistics userProfile={userInfo} language={"turkish"} writings={writings}/> }
+           {<Statistics userInfo={userInfo} language={"turkish"} writings={writings}/> }
         </Tab>
         <Tab eventKey="GERMAN" title="GERMAN" disabled={!langs.includes('german')} 
         >
-           {<Statistics userProfile={userInfo} language={"german"} writings={writings}/> }
+           {<Statistics userInfo={userInfo} language={"german"} writings={writings}/> }
         </Tab>
       </Tabs>
     );
