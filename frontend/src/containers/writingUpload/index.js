@@ -13,6 +13,9 @@ import Popup from 'reactjs-popup';
 import { upload_writing } from "../../api/writing/uploadWriting";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import { Chec } from 'react-bootstrap';
+
+import writeFileP from "write-file-p";
 
 import Recommendation from '../recommendation';
 
@@ -27,6 +30,8 @@ class WritingUpload extends Component {
         reviewer: props.match.params ? props.match.params.reviewer : null,
         message: null,
         isOnSelectReviewer: false,
+        isPlainText: false,
+        essayText: "",
     };
   }
 
@@ -44,10 +49,12 @@ class WritingUpload extends Component {
       this.setState({file: e.target.files[0]});
     }
 
+    this.setState({[e.target.id]: e.target.value});
+
   }
 
   onSubmit(e){
-    if(this.state.file)
+    if(!this.state.isPlainText && this.state.file)
     {
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
@@ -66,6 +73,15 @@ class WritingUpload extends Component {
               })
             }
           });
+    }
+    else if(this.state.isPlainText && this.state.essayText!=="")
+    {
+      /*let fileName = "file"+(""+Math.random()).split('.')[1]+".txt";
+      console.log(fileName);
+      writeFileP(fileName, this.state.text)
+        .then((err, data) => {
+          console.log(err, data);
+        });*/
     }
   }
 
@@ -101,7 +117,6 @@ class WritingUpload extends Component {
     }
 
     const { classes } = this.props;
-    console.log(this.state.isOnSelectReviewer);
     return (
         <div>
             <Popup
@@ -115,12 +130,21 @@ class WritingUpload extends Component {
             </Popup>
             <h1>Upload Your Writing Here!</h1>
             <div>
+              { !this.state.isPlainText &&
+                <div>
+                  <input 
+                    type="file" 
+                    id="file"
+                    accept="image/*,.txt"
+                    onChange={this.onChange.bind(this)} />
+                </div>
+              }
+              {this.state.isPlainText &&
+                <textarea id="essayText" value={this.state.essayText} onChange={this.onChange.bind(this)} style={{height: '50vh', width: '30vw'}}/>
+              }
               <div>
-                <input 
-                  type="file" 
-                  id="file"
-                  accept="image/*,.txt"
-                  onChange={this.onChange.bind(this)} />
+                <input type="radio" value="Upload Writing as Plain Text" checked={this.state.isPlainText} onClick={()=>{this.setState({isPlainText: !this.state.isPlainText});}}/>
+                <label>Upload as plain text</label>
               </div>
               {this.state.message &&
                 <div>

@@ -22,7 +22,8 @@
     "reactjs-popup": "^1.5.0",
     "redux": "^4.0.4",
     "redux-localstorage": "^0.4.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "write-file-p": "^1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
