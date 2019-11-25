@@ -9,22 +9,14 @@ import {
   clear_prof_test,
 } from "../../redux/action-creators/test";
 import _ from "lodash";
-import Avatar from "@material-ui/core/Avatar";
-import { Button } from "react-bootstrap";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import Modal from "@material-ui/core/Modal";
+import Popup from 'reactjs-popup';
 import { upload_writing } from "../../api/writing/uploadWriting";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
 import Recommendation from '../recommendation';
 
-import Popup from 'reactjs-popup';
+import ScrollArea from "react-scrollbar";
 
 class WritingUpload extends Component {
   constructor(props) {
@@ -112,24 +104,15 @@ class WritingUpload extends Component {
     console.log(this.state.isOnSelectReviewer);
     return (
         <div>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              style={{
-                minHeight: '50vh',
-                maxHeight: '2000vh',
-                minWidth: '50vw',
-                maxWidth: '50vw',
-                display:'flex',alignItems:'top',justifyContent:'center',
-                backgroundColor: "white",
-                'overflow-y': 'auto'
-              }}
+            <Popup
+              position="center center"
+              lockScroll={true}
               open={this.state.isOnSelectReviewer}
               onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
-              <Recommendation 
-                      mode="callback(username)"
-                      onSelect={this.onSelectReviewer.bind(this)}/>
-            </Modal>
+                <Recommendation 
+                        mode="callback(username)"
+                        onSelect={this.onSelectReviewer.bind(this)}/>
+            </Popup>
             <h1>Upload Your Writing Here!</h1>
             <div>
               <div>

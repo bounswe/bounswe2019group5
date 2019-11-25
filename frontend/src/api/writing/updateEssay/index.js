@@ -27,3 +27,28 @@ export const respond_to_essay = async (token, status, id) => {
     
     return essay;
 }
+
+export const change_reviewer_of_essay = async (token, reviewer, id) => {
+
+    let essay = await axios
+        .patch(parameters.apiUrl+'/essay/' + id + '/',
+            {
+                reviewer,
+            },
+            {
+                headers: {
+                    'Content-Type':'application/json',
+                    'Authorization': 'Token '+token,
+                },
+                timeout: 10000,
+            }
+        )
+        .then(response => response.data)
+        .catch(err => {
+            return {
+                message: 'Error',
+            };
+        });
+    
+    return essay;
+}
