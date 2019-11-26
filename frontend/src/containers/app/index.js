@@ -16,6 +16,7 @@ import WritingUpload from "../writingUpload";
 import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
 import WritingList from "../WritingList";
+import Exercises from "../exercises"
 
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -112,6 +113,7 @@ class App extends Component {
           <Route exact path="/listening-test" component={ListeningTest} />
           <Route exact path="/profile/:user" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
+          <Route exact path="/exercises" component={Exercises} />
           <Route
             exact
             path="/upload-writing/:reviewer?"

@@ -6,7 +6,8 @@ import {
   LISTENING_TEST_REQUESTED,
   LISTENING_TEST,
   TEST_RESULT_REQUESTED,
-  TEST_RESULT
+  TEST_RESULT,
+  SEARCH_TEST,
 } from "../actions";
 
 const initialState = {
@@ -15,7 +16,13 @@ const initialState = {
   grammarTest: null,
   listeningTest: null,
   isFinished: false,
-  testResult: null
+  testResult: null,
+  searchedTest: {
+    grammar: null,
+    vocabulary: null,
+    listening: null,
+    reading: null,
+  }
 };
 
 export default (state = initialState, action) => {
@@ -82,6 +89,12 @@ export default (state = initialState, action) => {
         isFinished: action.testResult != null,
         testResult: action.testResult
       };
+
+    case SEARCH_TEST:
+      return {
+        ...state,
+        searchedTest: {...state.searchedTest, [action.exercise_type]: action.searchedTest}
+      }
 
     default:
       return state;

@@ -47,7 +47,7 @@ class Login extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/prof-test",
+            pathname: "/home"
           }}
         />
       );
