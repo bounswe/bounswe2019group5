@@ -20,10 +20,14 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { get_essay } from "../../api/writing/getEssay";
 import { delete_essay } from "../../api/writing/deleteEssay";
+import { respond_to_essay, change_reviewer_of_essay } from "../../api/writing/updateEssay";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import ImageEssay from './imageEssay';
 import TextEssay from './textEssay';
+import Popup from 'reactjs-popup';
+
+import Recommendation from '../recommendation';
 
 class WritingShow extends Component {
   
@@ -34,6 +38,8 @@ class WritingShow extends Component {
         essay: null,
         isDeleted: false,
         annotation: null,
+        isRejected: false,
+        isOnSelectReviewer: false,
     };
 
     this.id = this.props.match.params.id;
@@ -47,6 +53,17 @@ class WritingShow extends Component {
             else
                 this.setState({essay, message: null});
         });
+  }
+
+  onSelectReviewer(username) {
+    this.setState({
+      isOnSelectReviewer: false,
+    });
+    change_reviewer_of_essay(this.props.userInfo.token, username, this.state.essay.id)
+      .then(essay => {
+        if (!essay.message)
+          this.setState({essay});
+      });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -69,7 +86,17 @@ class WritingShow extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/home"
+            pathname: "/writing-list"
+          }}
+        />
+      );
+    }
+
+    if (this.state.isRejected) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/writing-list"
           }}
         />
       );
@@ -89,6 +116,63 @@ class WritingShow extends Component {
       <Grid container component="main" className={classes.root}>
 
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <h4>
+            Author:
+            <Link to={{
+                pathname: "/profile/" + this.state.essay.author
+              }}>{this.state.essay.author}</Link>
+          </h4>
+
+          {this.state.essay.reviewer && 
+            <h4>
+            Reviewer:
+            <Link to={{
+                pathname: "/profile/" + this.state.essay.reviewer
+              }}>{this.state.essay.reviewer}</Link>
+            </h4>
+          ||
+            <h4>
+              There is no reviewer yet!
+            </h4>
+          }
+
+          {
+            <h4>
+              Status: {this.state.essay.status}
+            </h4>
+          }
+
+          { this.state.essay.reviewer && this.props.userInfo.username === this.state.essay.reviewer && this.state.essay.status === 'pending' &&
+            <div>
+              <button onClick={()=>{
+                respond_to_essay(this.props.userInfo.token, 'accepted', this.state.essay.id)
+                  .then(essay => {
+                    if(!essay.message)
+                      this.setState({essay});
+                  })
+              }}>
+                Accept Essay
+              </button>
+              <button onClick={()=>{
+                respond_to_essay(this.props.userInfo.token, 'rejected', this.state.essay.id)
+                  .then(essay => {
+                    if(!essay.message)
+                      this.setState({isRejected: true});
+                  })
+              }}>
+                Reject Essay
+              </button>
+            </div>
+          }
+
+          { this.state.essay.author === this.props.userInfo.username && this.state.essay.status!=='accepted' &&
+            <div>
+              <button onClick={() => {
+                this.setState({isOnSelectReviewer: true});
+              }}>Select or Change Reviewer</button>
+            </div>
+          }
+
           {this.state.annotation &&
             <div>
               <div>
@@ -106,12 +190,25 @@ class WritingShow extends Component {
               </div>
             </div>
           }
-          <div className={classes.paper}>
-            <button onClick={()=>{
-              delete_essay(this.props.userInfo.token, this.state.essay.id);
-              this.setState({isDeleted: true});
-            }}>DELETE ESSAY</button>
-          </div>
+
+          <Popup
+            position="center center"
+            lockScroll={true}
+            open={this.state.isOnSelectReviewer}
+            onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
+              <Recommendation 
+                      mode="callback(username)"
+                      onSelect={this.onSelectReviewer.bind(this)}/>
+          </Popup>
+
+          { this.state.essay.author === this.props.userInfo.username &&
+            <div className={classes.paper}>
+              <button onClick={()=>{
+                delete_essay(this.props.userInfo.token, this.state.essay.id);
+                this.setState({isDeleted: true});
+              }}>DELETE ESSAY</button>
+            </div>
+          }
         </Grid>
 
         {!this.state.essay.writing.endsWith('.txt') &&
