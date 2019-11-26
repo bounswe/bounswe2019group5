@@ -19,8 +19,6 @@ import writeFileP from "write-file-p";
 
 import Recommendation from '../recommendation';
 
-import ScrollArea from "react-scrollbar";
-
 class WritingUpload extends Component {
   constructor(props) {
     super(props);
