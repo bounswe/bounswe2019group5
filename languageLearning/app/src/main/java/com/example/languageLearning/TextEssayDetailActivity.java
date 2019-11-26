@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -249,8 +250,13 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     }
 
     private boolean essayTextViewOnTouch(View v, MotionEvent event) {
-        if (event.getAction() != MotionEvent.ACTION_UP)
-            return false;
+        Log.d(TAG, "Action:" + event.getAction());
+        if (event.getAction() != MotionEvent.ACTION_UP) {
+            if (essay.author.equals(app.getUsername()) == false)
+                return false;
+            else
+                return true; // On the reviwer side, we need to return false because otherwise Android doesn't pass the touch event to the defaut handler that shows the action bar, including the "Annotate" button. But on the author side, we need to return true because otherwise Android doesn't tell us about the corresponding ACTIOB_UP event. Why does this not happen on the reviewer side, I don't know.
+        }
         Layout layout = ((TextView) v).getLayout();
         int x = (int)event.getX();
         int y = (int)event.getY();
