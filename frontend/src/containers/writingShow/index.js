@@ -27,6 +27,8 @@ import ImageEssay from './imageEssay';
 import TextEssay from './textEssay';
 import Popup from 'reactjs-popup';
 
+import Modal from "@material-ui/core/Modal";
+
 import Recommendation from '../recommendation';
 
 class WritingShow extends Component {
@@ -191,15 +193,24 @@ class WritingShow extends Component {
             </div>
           }
 
-          <Popup
-            position="center center"
-            lockScroll={true}
+        <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            style={{
+              minHeight: '50vh',
+              maxHeight: '2000vh',
+              minWidth: '50vw',
+              maxWidth: '50vw',
+              display:'flex',alignItems:'top',justifyContent:'center',
+              backgroundColor: "white",
+              'overflow-y': 'auto'
+            }}
             open={this.state.isOnSelectReviewer}
             onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
-              <Recommendation 
-                      mode="callback(username)"
-                      onSelect={this.onSelectReviewer.bind(this)}/>
-          </Popup>
+            <Recommendation 
+                    mode="callback(username)"
+                    onSelect={this.onSelectReviewer.bind(this)}/>
+          </Modal>
 
           { this.state.essay.author === this.props.userInfo.username &&
             <div className={classes.paper}>

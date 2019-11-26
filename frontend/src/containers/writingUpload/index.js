@@ -15,6 +15,8 @@ import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import { Chec } from 'react-bootstrap';
 
+import Modal from "@material-ui/core/Modal";
+
 import writeFileP from "write-file-p";
 
 import Recommendation from '../recommendation';
@@ -46,8 +48,6 @@ class WritingUpload extends Component {
     {
       this.setState({file: e.target.files[0]});
     }
-
-    this.setState({[e.target.id]: e.target.value});
 
   }
 
@@ -117,15 +117,24 @@ class WritingUpload extends Component {
     const { classes } = this.props;
     return (
         <div>
-            <Popup
-              position="center center"
-              lockScroll={true}
+            <Modal
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+              style={{
+                minHeight: '50vh',
+                maxHeight: '2000vh',
+                minWidth: '50vw',
+                maxWidth: '50vw',
+                display:'flex',alignItems:'top',justifyContent:'center',
+                backgroundColor: "white",
+                'overflow-y': 'auto'
+              }}
               open={this.state.isOnSelectReviewer}
               onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
-                <Recommendation 
-                        mode="callback(username)"
-                        onSelect={this.onSelectReviewer.bind(this)}/>
-            </Popup>
+              <Recommendation 
+                      mode="callback(username)"
+                      onSelect={this.onSelectReviewer.bind(this)}/>
+            </Modal>
             <h1>Upload Your Writing Here!</h1>
             <div>
               { !this.state.isPlainText &&
