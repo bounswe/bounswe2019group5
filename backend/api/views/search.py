@@ -2,6 +2,7 @@ from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import *
 
 from ..serializers import ExerciseSerializer
 from ..models import Exercise, Result
@@ -22,7 +23,13 @@ class SearchView(mixins.ListModelMixin,
         exercise_seen = [i[0] for i in exercise_seen]
 
         exercises = (Exercise.objects
-                     .filter(level=self.request.user.level)
                      .exclude(id__in=exercise_seen)
                      .exclude(is_published=False))
+
+        if 'language' not in self.request.query_params:
+            raise ParseError('language parameter is necessary')
+        else:
+            exercises = exercises.filter(level=self.request.user.levels[
+                self.request.query_params['language']
+            ])
         return exercises

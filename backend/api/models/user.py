@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.postgres.fields import JSONField
+
 
 from .language import Language
 
@@ -25,7 +27,7 @@ class User(AbstractUser):
     rating_average = models.FloatField(default=0, blank=True)
     attended_languages = models.ManyToManyField(Language)
 
-    level = models.CharField(choices=levels, max_length=2, default='A1')
+    levels = JSONField(default={'english': 'A1', 'turkish': 'A1', 'german': 'A1'})
 
     def __str__(self):
         return self.username

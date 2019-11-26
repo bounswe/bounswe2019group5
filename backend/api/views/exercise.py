@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
-from django.views import generic
 
 from ..serializers import *
 from ..models import *
@@ -34,16 +33,21 @@ class ProgressView(GenericViewSet,
         if 'language' in request.query_params:
             filtered_exercise = filtered_exercise.filter(language=request.query_params['language'])
         if 'level' in request.query_params:
-            filtered_exercise = filtered_exercise.filter(language=request.query_params['level'])
+            filtered_exercise = filtered_exercise.filter(level=request.query_params['level'])
         if 'type' in request.query_params:
-            filtered_exercise = filtered_exercise.filter(language=request.query_params['type'])
+            filtered_exercise = filtered_exercise.filter(type=request.query_params['type'])
 
         r = {
             'number_of_test_completed': len(queryset),
             'number_of_test': len(filtered_exercise),
-            'completed_exercise_current_level': len(queryset.filter(exercise__level=self.request.user.level)),
-            'exercise_in_current_level': len(filtered_exercise.filter(level=self.request.user.level))
+            'completed_exercise_current_level': len(queryset.filter(exercise__level=self.request.user.level))
         }
+        if 'language' not in self.request.query_params:
+            raise ParseError('language parameter is necessary')
+        else:
+            r['exercise_in_current_level'] = len(filtered_exercise.filter(level=self.request.user.levels[
+                self.request.query_params['language']
+            ]))
 
         return Response(r)
 

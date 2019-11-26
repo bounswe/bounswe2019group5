@@ -47,10 +47,14 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
     def answers_to_array(result):
         return [i.answer for i in result.exercise.questions.all()]
 
+    @staticmethod
+    def level_serializer(result):
+        return result.user.levels[result.exercise.language]
+
     id = serializers.IntegerField(write_only=True)
     answers = serializers.ListField(write_only=True, child=serializers.CharField())
     correct_answer = serializers.SerializerMethodField('answers_to_array')
-    level = serializers.CharField(read_only=True, source='user.level')
+    level = serializers.SerializerMethodField('level_serializer')
 
     class Meta:
         model = Result
@@ -97,7 +101,8 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
             result.user.attended_languages.add(exercise_language)
 
         if result.exercise.type == 'proficiency' and number_of_true >= 2*number_of_false:
-            new_level = levels[levels.index((result.user.level, result.user.level)) + 1][0]
+            level = result.user.levels[result.exercise.language]
+            new_level = levels[levels.index((level, level)) + 1][0]
             User.objects.filter(username=result.user.username).update(level=new_level)
             result.user.level = new_level
 
