@@ -77,7 +77,13 @@ class App extends Component {
                 </Button>
               </Link>
             )}
-
+            {this.props.userInfo.token && (
+              <Link to="/exercises/">
+                <Button variant="outline-warning">
+                  Solve Exercise
+                </Button>
+              </Link>
+            )}
             {!this.props.userInfo.token && (
               <Link to="/login">
                 <Button variant="outline-warning">Login</Button>
