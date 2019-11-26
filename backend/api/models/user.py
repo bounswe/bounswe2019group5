@@ -27,7 +27,7 @@ class User(AbstractUser):
     rating_average = models.FloatField(default=0, blank=True)
     attended_languages = models.ManyToManyField(Language)
 
-    levels = JSONField(default={'english': 'A1', 'turkish': 'A1', 'german': 'A1'})
+    levels = JSONField(default=lambda: {'english': 'A1', 'turkish': 'A1', 'german': 'A1'})
 
     def __str__(self):
         return self.username
