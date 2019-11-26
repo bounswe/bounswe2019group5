@@ -152,11 +152,11 @@ class SignUp extends Component {
                     <Form.Control
                       as="select"
                       id="native_language"
-                      value="english"
-                      onChange={this.handleChange}>
-                      <option>english</option>
-                      <option>turkish</option>
-                      <option>german</option>
+                      value={this.state.native_language}
+                      onChange={this.handleChange.bind(this)}>
+                      <option value="english">english</option>
+                      <option value="turkish">turkish</option>
+                      <option value="german">german</option>
                     </Form.Control>
                   </Grid>
 
