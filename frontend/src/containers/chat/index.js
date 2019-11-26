@@ -11,6 +11,8 @@ import { activate_chat, deactivate_chat, get_all_messages, send_message } from '
 import {Paper, Grid, CssBaseline, withStyles } from '@material-ui/core';
 import styles from "./styles";
 
+import { Link } from 'react-router-dom';
+
 export class Chat extends Component {
 
     componentDidMount() {
@@ -51,7 +53,12 @@ export class Chat extends Component {
                 }
                 {
                     <div>
-                        <h1 style={{color: "red"}}>Chat With {chatWith}</h1>
+                        <h1 style={{color: "red"}}>
+                            Chat With
+                            <Link to={{
+                                pathname: "/profile/" + chatWith
+                            }}> {chatWith}</Link>
+                        </h1>
                     </div>
                 }
                 {this.props.chat.messages!=null &&
