@@ -18,6 +18,7 @@ import Paper from "@material-ui/core/Paper";
 import Ratings from "./ratings";
 import _ from "lodash";
 import { get_essays } from "../../redux/action-creators/writinglist";
+import Divider from '@material-ui/core/Divider';
 
 class Profile extends Component {
   state = { selfProfile: true };
@@ -120,14 +121,15 @@ class Profile extends Component {
                           {this.props.userInfo.userProfile.first_name}{" "}
                           {this.props.userInfo.userProfile.last_name}
                         </Typography>
-                        <Typography variant="h3" gutterBottom>
+                        <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
-                          {this.props.userInfo.overallRating &&
-                            this.props.userInfo.overallRating[0] /
-                              this.props.userInfo.overallRating[1]}{" "}
+                          {console.log("overall rating",this.props.userInfo.overallRating)}
+                          {this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
+                            (this.props.userInfo.overallRating[0] /
+                              this.props.userInfo.overallRating[1] ) ) : 0 }{" "}
                           out of{" "}
-                          {this.props.userInfo.overallRating &&
-                            this.props.userInfo.overallRating[1]}{" "}
+                          {this.props.userInfo.overallRating ?
+                            this.props.userInfo.overallRating[1] : 0}{" "} 
                           ratings.
                         </Typography>
                       </>
@@ -137,11 +139,16 @@ class Profile extends Component {
                           {this.props.userInfo.otherUserProfile.first_name}{" "}
                           {this.props.userInfo.otherUserProfile.last_name}
                         </Typography>
-                        <Typography variant="h3" gutterBottom>
+                        <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
-                          {this.props.userInfo.overallRating[0] /
-                            this.props.userInfo.overallRating[1]}{" "}
-                          out of {this.props.userInfo.overallRating[1]} ratings.
+                          {console.log("overall rating",this.props.userInfo.overallRating)}
+                          {this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
+                            (this.props.userInfo.overallRating[0] /
+                              this.props.userInfo.overallRating[1] ) ) : 0 }{" "}
+                          out of{" "}
+                          {this.props.userInfo.overallRating ?
+                            this.props.userInfo.overallRating[1] : 0}{" "} 
+                          ratings.
                         </Typography>
                       </>
                     )}
@@ -165,6 +172,8 @@ class Profile extends Component {
               )}
             </div>
             <Grid>
+            <Divider variant="inset" component="li" />     
+
               <div className={classes.paper}>
                 <Typography variant="h3" gutterBottom>
                   User ratings and comments:

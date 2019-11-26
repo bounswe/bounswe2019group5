@@ -57,10 +57,11 @@ export const get_listening_test = (token, selectedLanguage) => {
 
 export const search_test = (token, tag, keyword, language, type) => {
   return dispatch =>  {
-    search_test_api(token, tag, keyword, language, type).then(response => {
+    search_test_api(token, tag, keyword, language, type).then(data => {
       dispatch({
         type: SEARCH_TEST,
-        searchedTest: response,    
+        searchedTest: data,
+        exercise_type: type   
       });
     });
   };

@@ -74,15 +74,15 @@ export const search_test = async (token, tag, keyword, language, type) => {
         type
       },
       headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + token
-    },
-    timeout: 10000
-  })
-  .then(response => response.data[0])
-  .catch(err => {
-    return {
-      message: err.response ? err.response.data.message : "Connection Error!"
-    };
-  });
+        "Content-Type": "application/json",
+        Authorization: "Token " + token
+      },
+      timeout: 10000
+    })
+    .then(response => response.data)
+    .catch(err => {
+      return {
+        message: err.response ? err.response.data.message : "Connection Error!"
+      };
+    });
 };

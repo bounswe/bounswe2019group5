@@ -17,7 +17,12 @@ const initialState = {
   listeningTest: null,
   isFinished: false,
   testResult: null,
-  searchedTest: null,
+  searchedTest: {
+    grammar: null,
+    vocabulary: null,
+    listening: null,
+    reading: null,
+  }
 };
 
 export default (state = initialState, action) => {
@@ -84,6 +89,12 @@ export default (state = initialState, action) => {
         isFinished: action.testResult != null,
         testResult: action.testResult
       };
+
+    case SEARCH_TEST:
+      return {
+        ...state,
+        searchedTest: {...state.searchedTest, [action.exercise_type]: action.searchedTest}
+      }
 
     default:
       return state;
