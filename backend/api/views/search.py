@@ -9,7 +9,8 @@ from ..models import Exercise, Result
 from ..filters import SearchFilterSet
 
 
-class SearchView(mixins.ListModelMixin,
+class SearchView(mixins.RetrieveModelMixin,
+                 mixins.ListModelMixin,
                  GenericViewSet):
     serializer_class = ExerciseSerializer
     permission_classes = (IsAuthenticated,)
@@ -26,10 +27,12 @@ class SearchView(mixins.ListModelMixin,
                      .exclude(id__in=exercise_seen)
                      .exclude(is_published=False))
 
-        if 'language' not in self.request.query_params:
-            raise ParseError('language parameter is necessary')
-        else:
-            exercises = exercises.filter(level=self.request.user.levels[
-                self.request.query_params['language']
-            ])
+        if self.action != 'retrieve':
+            if 'language' not in self.request.query_params:
+                raise ParseError('language parameter is necessary')
+            else:
+                exercises = exercises.filter(level=self.request.user.levels[
+                    self.request.query_params['language']
+                ])
+
         return exercises
