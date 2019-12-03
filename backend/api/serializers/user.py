@@ -24,7 +24,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'first_name', 'last_name',
                   'native_language', 'attended_languages',
-                  'rating_average', 'user_comments')
+                  'rating_average', 'user_comments', 'levels')
+        read_only_fields = ('levels',)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
