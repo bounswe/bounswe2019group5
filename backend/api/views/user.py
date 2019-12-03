@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from ..serializers import *
 from ..filters import UserFilterSet, RecommendationFilterSet
-
+import collections
 
 class RegisterView(mixins.CreateModelMixin,
                    GenericViewSet):
@@ -130,7 +130,19 @@ class RecommendationView(GenericViewSet,
 
     def get_queryset(self):
         if self.action == 'list':
-            return User.objects.filter(rating_average__gte=3)
+            popular = Q(rating_average__gte=3)
+            new_user = Q(rating_average=0)
+
+            candidates = Essay.objects.filter(status='accepted').values_list('reviewer__id')
+            candidates = [i[0] for i in candidates]
+
+            ctr = collections.Counter(candidates)
+            busy = []
+            for i in ctr:
+                if ctr[i] > 4:
+                    busy.append(i)
+
+            return User.objects.filter(popular | new_user).exclude(id__in=busy)
         else:
             return Comment.objects.all()
 

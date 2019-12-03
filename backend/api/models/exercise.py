@@ -57,6 +57,7 @@ class Essay(Exam):
         ('pending', 'pending'),
         ('rejected', 'rejected'),
         ('accepted', 'accepted'),
+        ('completed', 'completed'),
     ]
 
     writing = models.FileField(upload_to='essays')
