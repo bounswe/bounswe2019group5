@@ -100,10 +100,13 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
         if exercise_language not in result.user.attended_languages.all():
             result.user.attended_languages.add(exercise_language)
 
-        if result.exercise.type == 'proficiency' and number_of_true >= 2*number_of_false:
+        if result.exercise.type == 'proficiency' and number_of_true > 2*number_of_false:
             level = result.user.levels[result.exercise.language]
             new_level = levels[levels.index((level, level)) + 1][0]
-            User.objects.filter(username=result.user.username).update(level=new_level)
+
+            u_levels = User.objects.get(username=result.user.username).levels
+            u_levels[result.exercise.language] = new_level
+            User.objects.filter(username=result.user.username).update(levels=u_levels)
             result.user.level = new_level
 
         return result
