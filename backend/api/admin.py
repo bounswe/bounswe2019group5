@@ -12,6 +12,5 @@ admin.site.register(File)
 admin.site.register(Essay)
 
 
-admin.site.register(Language)
 admin.site.register(Comment)
 admin.site.register(Message)
