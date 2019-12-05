@@ -250,7 +250,6 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     }
 
     private boolean essayTextViewOnTouch(View v, MotionEvent event) {
-        Log.d(TAG, "Action:" + event.getAction());
         if (event.getAction() != MotionEvent.ACTION_UP) {
             if (essay.author.equals(app.getUsername()) == false)
                 return false;
