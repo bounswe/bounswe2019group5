@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,7 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
     private MyApplication app;
     TextView welcomeMessage, currentLanguageView;
-    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton, searchButton;
+    ImageButton profileButton, logoutButton, changeLanguageButton, newEssayButton, exerciseButton, searchButton, notificationButton;
     Dialog popup;
 
     @Override
@@ -44,6 +43,7 @@ public class MainMenuActivity extends AppCompatActivity {
         exerciseButton = findViewById(R.id.exerciseButton);
         searchButton = findViewById(R.id.searchButton);
         currentLanguageView = findViewById(R.id.currentLanguageView);
+        notificationButton = findViewById(R.id.notificationButton);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +87,55 @@ public class MainMenuActivity extends AppCompatActivity {
                 showSearchTypePopup();
             }
         });
-
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
+
+    }
+
+    private void checkNotification() {
+        app.initiateAPICall(Request.Method.GET, "essay/", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if(response.length() > 0){
+                    final JSONArray pendings = new JSONArray();
+                    for(int i = 0 ; i < response.length() ; i++) {
+                        try {
+                            JSONObject essay = (JSONObject) response.get(i);
+                            String status = essay.getString("status");
+                            String reviewer = essay.getString("reviewer");
+                            if(status.equals("pending") && reviewer.equals(app.getUsername())) {
+                                pendings.put(essay);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(pendings.length() > 0) {
+                        notificationButton.setImageResource(R.drawable.notification_active);
+                        notificationButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MainMenuActivity.this, ListEssaysActivity.class);
+                                intent.putExtra("pendings", pendings.toString());
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        notificationButton.setImageResource(R.drawable.notification_inactive);
+                        notificationButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
     }
 
     private void showSearchTypePopup() {
@@ -125,6 +172,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         currentLanguageView.setText(app.getLanguage().toUpperCase());
+        checkNotification();
     }
 
     public void showExerciseSelectPopup(){
