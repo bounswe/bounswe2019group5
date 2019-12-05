@@ -89,6 +89,10 @@ public class MainMenuActivity extends AppCompatActivity {
         });
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
 
+        checkNotification();
+    }
+
+    private void checkNotification() {
         app.initiateAPICall(Request.Method.GET, "essay/", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -98,8 +102,8 @@ public class MainMenuActivity extends AppCompatActivity {
                         try {
                             JSONObject essay = (JSONObject) response.get(i);
                             String status = essay.getString("status");
-                            String author = essay.getString("author");
-                            if(status.equals("pending") && author.equals(app.getUsername())) {
+                            String reviewer = essay.getString("reviewer");
+                            if(status.equals("pending") && reviewer.equals(app.getUsername())) {
                                 pendings.put(essay);
                             }
                         } catch (JSONException e) {
@@ -159,6 +163,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         currentLanguageView.setText(app.getLanguage().toUpperCase());
+        checkNotification();
     }
 
     public void showExerciseSelectPopup(){
