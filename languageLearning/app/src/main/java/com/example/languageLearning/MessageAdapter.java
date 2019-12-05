@@ -5,48 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class MessageAdapter extends ArrayAdapter<ChatBubble> {
+public class MessageAdapter extends BaseAdapter {
 
     private Activity activity;
-    private List<ChatBubble> messages;
+    List<ChatBubble> messages;
 
-    public MessageAdapter(Activity context, int resource, List<ChatBubble> objects) {
-        super(context, resource, objects);
+    public MessageAdapter(Activity context, List<ChatBubble> objects) {
         this.activity = context;
         this.messages = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-
-        int layoutResource = 0; // determined by view type
-        ChatBubble ChatBubble = getItem(position);
-        int viewType = getItemViewType(position);
-
-        if (ChatBubble.myMessage()) {
-            layoutResource = R.layout.left_chat_bubble;
+        ChatBubble chatBubble = messages.get(position);
+        View view;
+        if (convertView != null && (boolean)convertView.getTag(R.id.TAG_MINE) == chatBubble.myMessage()) { // Do not use convertView if it is of wrong type
+            view = convertView;
         } else {
-            layoutResource = R.layout.right_chat_bubble;
-        }
-
-        if (convertView != null) {
-            holder = (ViewHolder) convertView.getTag();
-        } else {
-            convertView = inflater.inflate(layoutResource, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            int layoutResource = chatBubble.myMessage()?R.layout.right_chat_bubble:R.layout.left_chat_bubble;
+            view = inflater.inflate(layoutResource, parent, false);
+            view.setTag(R.id.TAG_MINE, chatBubble.myMessage());
         }
 
         //set message content
-        holder.msg.setText(ChatBubble.getContent());
+        ((TextView)view.findViewById(R.id.txt_msg)).setText(chatBubble.getContent());
 
-        return convertView;
+        return view;
     }
 
     @Override
@@ -57,16 +47,22 @@ public class MessageAdapter extends ArrayAdapter<ChatBubble> {
     }
 
     @Override
-    public int getItemViewType(int position) {
-        // return a value between 0 and (getViewTypeCount - 1)
-        return position % 2;
+    public int getCount() {
+        return messages.size();
     }
 
-    private class ViewHolder {
-        private TextView msg;
+    @Override
+    public Object getItem(int position) {
+        return messages.get(position);
+    }
 
-        public ViewHolder(View v) {
-            msg = (TextView) v.findViewById(R.id.txt_msg);
-        }
+    @Override
+    public long getItemId(int position) {
+        return -1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return messages.get(position).myMessage()?0:1;
     }
 }

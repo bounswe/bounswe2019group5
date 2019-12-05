@@ -1,2 +1,2 @@
-include ':app', ':mylibrary', ':photoview'
+include ':app', ':photoview'
 rootProject.name='languageLearning'

@@ -10,29 +10,20 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-
 //
 
 //import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,12 +38,8 @@ public class ChatHistory extends AppCompatActivity {
     private View btnSend;
     private EditText editText;
     boolean myMessage = true;
-    private List<ChatBubble> ChatBubbles;
-    private ArrayAdapter<ChatBubble> adapter;
-
-    HashSet<HashSet<String>> conversation_pairs;
-
-    JSONObject classified_conversations;
+    private List<ChatBubble> chatBubbles;
+    private MessageAdapter adapter;
 
     EditText username;
     EditText message;
@@ -73,19 +60,19 @@ public class ChatHistory extends AppCompatActivity {
         meLabel = findViewById(R.id.meLabel);
         friendLabel = findViewById(R.id.friendLabel);
 
-        conversation_pairs = new HashSet<HashSet<String>>();
-        classified_conversations = new JSONObject();
-
         person = getIntent().getStringExtra("Person");
 
-        ChatBubbles = new ArrayList<>();
+        chatBubbles = new ArrayList<>();
 
-        listView = (ListView) findViewById(R.id.list_msg);
+        listView = findViewById(R.id.list_msg);
         btnSend = findViewById(R.id.btn_chat_send);
-        editText = (EditText) findViewById(R.id.msg_type);
+        editText = findViewById(R.id.msg_type);
+
+        meLabel.setText(person);
+        friendLabel.setText(app.getUsername());
 
         //set ListView adapter first
-        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
+        adapter = new MessageAdapter(this, chatBubbles);
         listView.setAdapter(adapter);
 
         //arrange();
@@ -100,14 +87,12 @@ public class ChatHistory extends AppCompatActivity {
 
     public void getHistory(){
 
-        String path = "message/";
+        String path = "message/?username="+person;
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                classifyJSON(response);
-                setUserLabels();
-                fillChatHistory();
+                refreshHistory(response);
                 //Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
 
             }
@@ -123,31 +108,6 @@ public class ChatHistory extends AppCompatActivity {
 
     }
 
-
-    // Keep for further improvement
-    public void arrange(){
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText.getText().toString().trim().equals("")) {
-                    Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
-                } else {
-                    //add message to list
-                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
-                    ChatBubbles.add(ChatBubble);
-                    adapter.notifyDataSetChanged();
-                    editText.setText("");
-
-                    if (myMessage) {
-                        myMessage = false;
-                    } else {
-                        myMessage = true;
-                    }
-                }
-            }
-        });
-    }
-
     public void onClickSend(View view){
 
         String path = "message/";
@@ -156,6 +116,7 @@ public class ChatHistory extends AppCompatActivity {
         try {
             json.put("username",person);
             json.put("text",editText.getText().toString());
+            editText.setText("");
             //Log.i(TAG, "postJson: " + json.toString() );
         } catch (JSONException e) {
             Log.i(TAG, "Could not create request body");
@@ -184,85 +145,26 @@ public class ChatHistory extends AppCompatActivity {
             //Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
         } else {
             //add message to list
-            ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), false);
-            ChatBubbles.add(ChatBubble);
+            ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), true);
+            chatBubbles.add(ChatBubble);
             adapter.notifyDataSetChanged();
             editText.setText("");
         }
     }
 
-    public void setUserLabels(){
-        meLabel.setText(person);
-        friendLabel.setText(app.getUsername());
-    }
-
-    public void fillChatHistory(){
-        ChatBubbles.clear();
+    public void refreshHistory(JSONArray response){
+        chatBubbles.clear();
         try{
-            JSONArray arr = classified_conversations.getJSONArray(person);
-
-            for(int i=0;i < arr.length(); i++){
-
-                String from = arr.getJSONObject(i).getString("from_username");
-                String text = arr.getJSONObject(i).getString("text");
-
-                if(Objects.equals(from, app.getUsername())){
-                    myMessage = false;
-                }
-                else{
-                    myMessage = true;
-                }
-
+            for(int i=0;i < response.length(); i++){
+                String from = response.getJSONObject(i).getString("from_username");
+                String text = response.getJSONObject(i).getString("text");
+                myMessage = from.equals(app.getUsername());
                 ChatBubble ChatBubble = new ChatBubble(text, myMessage);
-                ChatBubbles.add(ChatBubble);
-                editText.setText("");
+                chatBubbles.add(ChatBubble);
             }
             adapter.notifyDataSetChanged();
         }catch (JSONException e){
             e.printStackTrace();
         }
-    }
-
-
-
-    public void classifyJSON(JSONArray messages){
-
-        for(int i=0; i < messages.length(); i++){
-
-            try {
-                String to = messages.getJSONObject(i).getString("to_username");
-                String from = messages.getJSONObject(i).getString("from_username");
-
-                HashSet<String> current_pair = new HashSet<String>();
-                current_pair.add(to);
-                current_pair.add(from);
-                String talker = getTalker(current_pair);
-                if(conversation_pairs.contains(current_pair)) {
-
-                    classified_conversations.getJSONArray(talker).put(messages.getJSONObject(i));
-                }
-                else{
-                    JSONArray ja = new JSONArray();
-                    ja.put(messages.getJSONObject(i));
-
-                    classified_conversations.put(talker, ja);
-                    conversation_pairs.add(current_pair);
-                }
-
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public String getTalker(HashSet<String> pair){
-        Iterator<String> i = pair.iterator();
-        while(i.hasNext()){
-            String curr = i.next();
-            if(!Objects.equals(curr,app.getUsername())) {
-                return curr;
-            }
-        }
-        return "Could not get the person!";
     }
 }
