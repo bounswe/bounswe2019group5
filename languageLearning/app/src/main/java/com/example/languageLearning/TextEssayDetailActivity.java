@@ -64,7 +64,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
     }
 
     private AnnotationForTextEssay getAnnotationFromXYPosition(int line, int lineOffset) {
-        final int RADIUS = 2;
+        final int RADIUS = 0;
         AnnotationForTextEssay closestAnnotation = null;
         double closestAnnotationDist = 1e9;
         Layout layout = essayTextView.getLayout();
@@ -256,6 +256,8 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             else
                 return true; // On the reviwer side, we need to return false because otherwise Android doesn't pass the touch event to the defaut handler that shows the action bar, including the "Annotate" button. But on the author side, we need to return true because otherwise Android doesn't tell us about the corresponding ACTIOB_UP event. Why does this not happen on the reviewer side, I don't know.
         }
+        if (event.getEventTime()-event.getDownTime() > app.TOUCH_AND_HOLD_DELAY_MS)
+            return false; // This allows the default touch handler of Android (that shows the actions as a floating bar) appear
         Layout layout = ((TextView) v).getLayout();
         int x = (int)event.getX();
         int y = (int)event.getY();
@@ -264,11 +266,15 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             int offset = layout.getOffsetForHorizontal(line, x);
             int lineOffset = offset-layout.getLineStart(line);
             AnnotationForTextEssay ann = getAnnotationFromXYPosition(line, lineOffset);
-            if (ann != null)
+            if (ann != null) {
                 AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        //return true;
-        return false; // This allows the default touch handler of Android (that shows the actions as a floating bar) appear
+        return false;
     }
 
     @Override

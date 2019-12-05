@@ -62,6 +62,7 @@ interface BufferedReaderFunction {
 public class MyApplication extends Application {
     static final String SERVER = "http://35.158.176.194/";
     private final String TAG = getClass().getName();
+    public final int TOUCH_AND_HOLD_DELAY_MS = 500;
 
     private String token;
     private RequestQueue requestQueue;
