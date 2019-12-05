@@ -119,6 +119,14 @@ public class MainMenuActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
+                    } else {
+                        notificationButton.setImageResource(R.drawable.notification_inactive);
+                        notificationButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
                     }
                 }
             }

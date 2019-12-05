@@ -93,6 +93,7 @@ public class EssayAdapter extends BaseAdapter {
                 }
                 intent.putExtra("essay", essay1);
                 context.startActivity(intent);
+                ((ListEssaysActivity)context).finish();
             }
         });
 
