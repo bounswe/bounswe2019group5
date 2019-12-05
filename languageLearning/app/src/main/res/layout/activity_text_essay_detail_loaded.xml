@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:singleLine="false"
-            android:text="This is where the essay will be. It will potentially be very long, perhaps many paragraphs." />
+            android:text="This is where the essay will be. It will potentially be very long, perhaps many paragraphs."
+            android:textSize="20sp" />
 
     </ScrollView>
 
