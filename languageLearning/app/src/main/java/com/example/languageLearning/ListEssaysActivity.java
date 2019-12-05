@@ -36,38 +36,53 @@ public class ListEssaysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_essays);
         listView = findViewById(R.id.listView);
         app = (MyApplication)getApplication();
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String path = "essay/";
-        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
+        String pendingsString = getIntent().getStringExtra("pendings");
+        if(pendingsString == null) {
+            String path = "essay/";
+            app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    try {
 
-                    if(response.length() == 0){
-                        Toast.makeText(getApplicationContext(), "No Essays", Toast.LENGTH_SHORT).show();
-                        return ;
-                    }
+                        if (response.length() == 0) {
+                            Toast.makeText(getApplicationContext(), "No Essays", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                    EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, response);
-                    if(response.length() != 0){
-                        listView.setAdapter(essayAdapter);
+                        EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, response);
+                        if (response.length() != 0) {
+                            listView.setAdapter(essayAdapter);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
                     }
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-            }
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                finish();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    finish();
+                }
+            });
+        }else {
+            try {
+                JSONArray pendings = new JSONArray(pendingsString);
+                TextView title = findViewById(R.id.listEssaysTitle);
+                title.setText("Your Review Pending Essays");
+                EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, pendings);
+                listView.setAdapter(essayAdapter);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 }

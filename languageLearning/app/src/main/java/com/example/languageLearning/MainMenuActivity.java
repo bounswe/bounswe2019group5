@@ -89,7 +89,6 @@ public class MainMenuActivity extends AppCompatActivity {
         });
         welcomeMessage.setText("Hello " + app.getUsername() + "!");
 
-        checkNotification();
     }
 
     private void checkNotification() {
@@ -97,7 +96,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 if(response.length() > 0){
-                    JSONArray pendings = new JSONArray();
+                    final JSONArray pendings = new JSONArray();
                     for(int i = 0 ; i < response.length() ; i++) {
                         try {
                             JSONObject essay = (JSONObject) response.get(i);
@@ -115,7 +114,9 @@ public class MainMenuActivity extends AppCompatActivity {
                         notificationButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                Intent intent = new Intent(MainMenuActivity.this, ListEssaysActivity.class);
+                                intent.putExtra("pendings", pendings.toString());
+                                startActivity(intent);
                             }
                         });
                     }
