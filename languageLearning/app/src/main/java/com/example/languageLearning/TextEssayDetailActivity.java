@@ -265,7 +265,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             int lineOffset = offset-layout.getLineStart(line);
             AnnotationForTextEssay ann = getAnnotationFromXYPosition(line, lineOffset);
             if (ann != null)
-                Toast.makeText(this, ann.annotationText, Toast.LENGTH_SHORT).show();
+                AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
         }
         //return true;
         return false; // This allows the default touch handler of Android (that shows the actions as a floating bar) appear

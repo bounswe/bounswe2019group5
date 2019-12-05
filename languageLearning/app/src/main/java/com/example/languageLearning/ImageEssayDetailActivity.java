@@ -158,7 +158,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         int y_pix = (int)(y*essayImage.getHeight());
         AnnotationForImageEssay ann = getAnnotationFromXYPosition(x_pix, y_pix);
         if (ann != null)
-            Toast.makeText(this, ann.annotationText, Toast.LENGTH_SHORT).show();
+            AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
         return true;
     }
 
