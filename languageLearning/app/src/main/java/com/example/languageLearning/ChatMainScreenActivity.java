@@ -67,7 +67,6 @@ public class ChatMainScreenActivity extends AppCompatActivity {
                         Intent intent = new Intent(ChatMainScreenActivity.this, ChatHistory.class);
                         intent.putExtra("Person", person);
                         startActivity(intent);
-                        Toast.makeText(ChatMainScreenActivity.this,person,Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -140,7 +139,6 @@ public class ChatMainScreenActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 classifyJSON(response);
                 createListView();
-                Toast.makeText(ChatMainScreenActivity.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
 
             }
 
@@ -150,6 +148,7 @@ public class ChatMainScreenActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Could not take the messages", Toast.LENGTH_LONG).show();
                 Log.i(TAG, "onErrorResponse: " + error.getMessage());
                 error.printStackTrace();
+                finish();
             }
         });
     }

@@ -33,14 +33,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatHistory extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
+    private static final int MESSAGE_POLL_PERIOD_MS = 5000;
 
     MyApplication app;
 
-    ///***
     private ListView listView;
     private View btnSend;
     private EditText editText;
@@ -65,8 +67,8 @@ public class ChatHistory extends AppCompatActivity {
         setContentView(R.layout.activity_chat_history);
         app = (MyApplication) getApplication();
 
-        username = (EditText) findViewById(R.id.username);
-        message = (EditText) findViewById(R.id.message);
+        username = findViewById(R.id.username);
+        message = findViewById(R.id.message);
 
         meLabel = findViewById(R.id.meLabel);
         friendLabel = findViewById(R.id.friendLabel);
@@ -88,9 +90,12 @@ public class ChatHistory extends AppCompatActivity {
 
         //arrange();
 
-        getHistory();
-
-
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                getHistory();
+            }
+        }, 0, MESSAGE_POLL_PERIOD_MS);
     }
 
     public void getHistory(){
@@ -161,7 +166,7 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 placeNewMessage();
-                Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+                //Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
             }
 
         }, new Response.ErrorListener() {
@@ -176,7 +181,7 @@ public class ChatHistory extends AppCompatActivity {
 
     public void placeNewMessage(){
         if (editText.getText().toString().trim().equals("")) {
-            Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
         } else {
             //add message to list
             ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), false);
@@ -192,9 +197,9 @@ public class ChatHistory extends AppCompatActivity {
     }
 
     public void fillChatHistory(){
-        JSONArray arr;
+        ChatBubbles.clear();
         try{
-            arr = classified_conversations.getJSONArray(person);
+            JSONArray arr = classified_conversations.getJSONArray(person);
 
             for(int i=0;i < arr.length(); i++){
 
@@ -210,9 +215,9 @@ public class ChatHistory extends AppCompatActivity {
 
                 ChatBubble ChatBubble = new ChatBubble(text, myMessage);
                 ChatBubbles.add(ChatBubble);
-                adapter.notifyDataSetChanged();
                 editText.setText("");
             }
+            adapter.notifyDataSetChanged();
         }catch (JSONException e){
             e.printStackTrace();
         }
