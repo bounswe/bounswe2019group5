@@ -22,7 +22,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,7 +46,7 @@ public class ChatHistory extends AppCompatActivity {
     private View btnSend;
     private EditText editText;
     boolean myMessage = true;
-    private List<ChatBubble> chatBubbles;
+    private List<ChatMessage> chatMessages;
     private MessageAdapter adapter;
 
     EditText username;
@@ -62,7 +70,7 @@ public class ChatHistory extends AppCompatActivity {
 
         person = getIntent().getStringExtra("Person");
 
-        chatBubbles = new ArrayList<>();
+        chatMessages = new ArrayList<>();
 
         listView = findViewById(R.id.list_msg);
         btnSend = findViewById(R.id.btn_chat_send);
@@ -72,7 +80,7 @@ public class ChatHistory extends AppCompatActivity {
         friendLabel.setText(app.getUsername());
 
         //set ListView adapter first
-        adapter = new MessageAdapter(this, chatBubbles);
+        adapter = new MessageAdapter(this, chatMessages);
         listView.setAdapter(adapter);
 
         //arrange();
@@ -145,26 +153,35 @@ public class ChatHistory extends AppCompatActivity {
             //Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
         } else {
             //add message to list
-            ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), true);
-            chatBubbles.add(ChatBubble);
+            ChatMessage ChatMessage = new ChatMessage(app.getUsername(), person, editText.getText().toString(), Calendar.getInstance().getTime(), true);
+            chatMessages.add(ChatMessage);
             adapter.notifyDataSetChanged();
             editText.setText("");
         }
     }
 
     public void refreshHistory(JSONArray response){
-        chatBubbles.clear();
+        chatMessages.clear();
         try{
             for(int i=0;i < response.length(); i++){
-                String from = response.getJSONObject(i).getString("from_username");
-                String text = response.getJSONObject(i).getString("text");
-                myMessage = from.equals(app.getUsername());
-                ChatBubble ChatBubble = new ChatBubble(text, myMessage);
-                chatBubbles.add(ChatBubble);
+                ChatMessage chatMessage = ChatMessage.fromJSON(this, response.getJSONObject(i));
+                chatMessages.add(chatMessage);
             }
-            adapter.notifyDataSetChanged();
         }catch (JSONException e){
             e.printStackTrace();
+            finish();
+            return ;
+        }catch (ParseException e){
+            e.printStackTrace();
+            finish();
+            return ;
         }
+        Collections.sort(chatMessages, new Comparator<ChatMessage>() {
+            @Override
+            public int compare(ChatMessage o1, ChatMessage o2) {
+                return o1.date.compareTo(o2.date);
+            }
+        });
+        adapter.notifyDataSetChanged();
     }
 }

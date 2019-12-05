@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -13,28 +12,28 @@ import java.util.List;
 public class MessageAdapter extends BaseAdapter {
 
     private Activity activity;
-    List<ChatBubble> messages;
+    List<ChatMessage> messages;
 
-    public MessageAdapter(Activity context, List<ChatBubble> objects) {
+    public MessageAdapter(Activity context, List<ChatMessage> objects) {
         this.activity = context;
         this.messages = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ChatBubble chatBubble = messages.get(position);
+        ChatMessage chatMessage = messages.get(position);
         View view;
-        if (convertView != null && (boolean)convertView.getTag(R.id.TAG_MINE) == chatBubble.myMessage()) { // Do not use convertView if it is of wrong type
+        if (convertView != null && (boolean)convertView.getTag(R.id.TAG_MINE) == chatMessage.mine) { // Do not use convertView if it is of wrong type
             view = convertView;
         } else {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            int layoutResource = chatBubble.myMessage()?R.layout.right_chat_bubble:R.layout.left_chat_bubble;
+            int layoutResource = chatMessage.mine?R.layout.right_chat_bubble:R.layout.left_chat_bubble;
             view = inflater.inflate(layoutResource, parent, false);
-            view.setTag(R.id.TAG_MINE, chatBubble.myMessage());
+            view.setTag(R.id.TAG_MINE, chatMessage.mine);
         }
 
-        //set message content
-        ((TextView)view.findViewById(R.id.txt_msg)).setText(chatBubble.getContent());
+        //set message text
+        ((TextView)view.findViewById(R.id.txt_msg)).setText(chatMessage.text);
 
         return view;
     }
@@ -63,6 +62,6 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return messages.get(position).myMessage()?0:1;
+        return messages.get(position).mine?0:1;
     }
 }
