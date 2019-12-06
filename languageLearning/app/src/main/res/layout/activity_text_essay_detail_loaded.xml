@@ -41,4 +41,13 @@
         app:layout_constraintEnd_toEndOf="@+id/essayTextScrollView"
         app:layout_constraintTop_toBottomOf="@+id/essayTextScrollView" />
 
+    <Button
+        android:id="@+id/completedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Completed"
+        app:layout_constraintEnd_toEndOf="@+id/essayTextScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/essayTextScrollView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

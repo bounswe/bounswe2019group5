@@ -9,9 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,7 +48,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     TextView reviewerInfoTextView;
     ImageButton reviewerProfileButton;
     PhotoView essayPhotoView;
-    Button annotateButton, rejectButton;
+    Button annotateButton, rejectButton, completedButton;
     MyApplication app;
     ProgressBar progressBar;
     Bitmap essayImage;
@@ -119,25 +118,18 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         return closestAnnotation;
     }
 
-    private void acceptOrReject(final boolean accept) {
+    private void patchStatus(final String status, Response.Listener<JSONObject> callback) {
+        essay.status = status;
         JSONObject data = new JSONObject();
         try {
-            data.put("status", accept?"accepted":"rejected");
+            data.put("status", status);
         }
         catch (JSONException e) {
             e.printStackTrace();
             finish();
             return ;
         }
-        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (accept == false) {
-                    Toast.makeText(ImageEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        }, new Response.ErrorListener() {
+        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, callback, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 finish();
@@ -146,11 +138,34 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     }
 
     private void reject() {
-        acceptOrReject(false);
+        patchStatus("rejected", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(ImageEssayDetailActivity.this, "Essay rejected", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     private void accept() {
-        acceptOrReject(true);
+        rejectButton.setVisibility(View.INVISIBLE);
+        completedButton.setVisibility(View.VISIBLE);
+        patchStatus("accepted", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            }
+        });
+    }
+
+    private void complete() {
+        annotateButton.setVisibility(View.INVISIBLE);
+        completedButton.setVisibility(View.INVISIBLE);
+        patchStatus("completed", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(ImageEssayDetailActivity.this, "Essay completed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean essayPhotoViewOnTouch(View v, float x, float y) {
@@ -211,6 +226,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         essayPhotoView = findViewById(R.id.essayPhotoView);
                         annotateButton = findViewById(R.id.annotateButton);
                         rejectButton = findViewById(R.id.rejectButton);
+                        completedButton = findViewById(R.id.completedButton);
                         cropImageView = findViewById(R.id.cropImageView);
                         progressBar = null;
                         drawAnnotations();
@@ -218,6 +234,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         if (app.getUsername().equals(essay.author)) { // We are the author
                             annotateButton.setVisibility(View.INVISIBLE);
                             rejectButton.setVisibility(View.INVISIBLE);
+                            completedButton.setVisibility(View.INVISIBLE);
                             reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
                             reviewerProfileButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -230,35 +247,43 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             reviewerInfoLayout.setVisibility(View.GONE);
                             if (essay.status.equals("accepted")) {
                                 rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.VISIBLE);
+                                annotateButton.setVisibility(View.VISIBLE);
                             }
-                            else {
+                            else if (essay.status.equals("pending")){
                                 rejectButton.setVisibility(View.VISIBLE);
-                                rejectButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        reject();
-                                    }
-                                });
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.VISIBLE);
                             }
-                            annotateButton.setVisibility(View.VISIBLE);
+                            else if (essay.status.equals("completed")) {
+                                rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.INVISIBLE);
+                            }
+                            else if (essay.status.equals("rejected")) {
+                                rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.INVISIBLE);
+                            }
+                            completedButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    complete();
+                                }
+                            });
+                            rejectButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    reject();
+                                }
+                            });
+
                             annotateButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (currentlyCroppingForAnnotation == false) {
                                         essayPhotoView.setVisibility(View.INVISIBLE);
 
-                                        /*Matrix m = new Matrix();
-                                        essayPhotoView.getSuppMatrix(m);
-                                        Matrix inverted = new Matrix();
-                                        m.invert(inverted);
-                                        float[] pts = new float[2];
-                                        pts[0]=0;
-                                        pts[1]=0;
-                                        inverted.mapPoints(pts);
-                                        Rect cropRect = new Rect((int)(pts[0]),
-                                                (int)(pts[1]),
-                                                (int)(pts[0]+100),
-                                                (int)(pts[1]+100));*/
                                         cropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
                                         cropImageView.setImageBitmap(essayImage);
                                         //cropImageView.setCropRect(cropRect);
@@ -298,8 +323,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                                 }
                                                 if (essay.status.equals("accepted") == false) {
                                                     accept();
-                                                    essay.status = "accepted";
-                                                    rejectButton.setVisibility(View.INVISIBLE);
                                                 }
                                                 app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
                                                     @Override
