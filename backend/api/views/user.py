@@ -142,7 +142,10 @@ class RecommendationView(GenericViewSet,
                 if ctr[i] > 4:
                     busy.append(i)
 
-            return User.objects.filter(popular | new_user).exclude(id__in=busy)
+            return (User.objects
+                    .filter(popular | new_user)
+                    .exclude(id__in=busy)
+                    .exclude(username=self.request.user.username))
         else:
             return Comment.objects.all()
 
