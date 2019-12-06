@@ -72,4 +72,4 @@ class Essay(Exam):
                                  blank=True,
                                  null=True)
 
-    status = models.CharField(choices=status, max_length=8, default='created')
+    status = models.CharField(choices=status, max_length=9, default='created')
