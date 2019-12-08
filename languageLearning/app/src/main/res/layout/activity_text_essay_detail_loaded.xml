@@ -10,19 +10,27 @@
         android:id="@+id/detail_header_layout_include"
         layout="@layout/essay_detail_header" />
 
-    <TextView
-        android:id="@+id/essayTextView"
+    <ScrollView
+        android:id="@+id/essayTextScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:singleLine="false"
-        android:text="This is where the essay will be. It will potentially be very long, perhaps many paragraphs."
+        app:layout_constraintHeight_percent=".75"
+        app:layout_constraintWidth_percent=".8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_header_layout_include"
-        app:layout_constraintVertical_bias="0.19"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintVertical_bias="0.19">
+
+        <TextView
+            android:id="@+id/essayTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="false"
+            android:text="This is where the essay will be. It will potentially be very long, perhaps many paragraphs."
+            android:textSize="20sp" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/rejectButton"
@@ -30,7 +38,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Reject"
-        app:layout_constraintEnd_toEndOf="@+id/essayTextView"
-        app:layout_constraintTop_toBottomOf="@+id/essayTextView" />
+        app:layout_constraintEnd_toEndOf="@+id/essayTextScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/essayTextScrollView" />
+
+    <Button
+        android:id="@+id/completedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Completed"
+        app:layout_constraintEnd_toEndOf="@+id/essayTextScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/essayTextScrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

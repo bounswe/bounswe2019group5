@@ -10,8 +10,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -37,6 +36,9 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.github.chrisbanes.photoview.PhotoView;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+
 public class ImageEssayDetailActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getName();
@@ -45,8 +47,8 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     ConstraintLayout reviewerInfoLayout;
     TextView reviewerInfoTextView;
     ImageButton reviewerProfileButton;
-    ImageView essayImageView;
-    Button annotateButton, rejectButton;
+    PhotoView essayPhotoView;
+    Button annotateButton, rejectButton, completedButton;
     MyApplication app;
     ProgressBar progressBar;
     Bitmap essayImage;
@@ -80,7 +82,9 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         canvas.setBitmap(bmOverlay);
         canvas.drawBitmap(essayImage, new Matrix(), null);
         canvas.drawBitmap(overlayBitmap, new Matrix(), null);
-        essayImageView.setImageBitmap(bmOverlay);
+        essayPhotoView.setImageBitmap(bmOverlay);
+        essayPhotoView.setZoomable(true);
+        //essayPhotoView.setScaleType(ImageView.ScaleType.CENTER);
     }
 
     private AnnotationForImageEssay getAnnotationFromXYPosition(int x, int y) {
@@ -88,23 +92,17 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         AnnotationForImageEssay closestAnnotation = null;
         double closestAnnotationDist = 1e9;
 
-        final int resizedW = essayImageView.getWidth();
-        final int resizedH = essayImageView.getHeight();
-
-        final double xResizeFactor = ((float)resizedW)/essayImage.getWidth();
-        final double yResizeFactor = ((float)resizedH)/essayImage.getHeight();
-
         for (int curX = x-RADIUS; curX <= x+RADIUS; curX++) {
-            if (curX < 0 || curX >= essayImageView.getWidth())
+            if (curX < 0 || curX >= essayImage.getWidth())
                 continue;
             for (int curY = y - RADIUS; curY <= y + RADIUS; curY++) {
-                if (curY < 0 || curY >= essayImageView.getHeight())
+                if (curY < 0 || curY >= essayImage.getHeight())
                     continue;
                 for (AnnotationForImageEssay ann : annotations) {
-                    int left = (int)(ann.x*essayImage.getWidth()*xResizeFactor/100);
-                    int top = (int)(ann.y*essayImage.getHeight()*yResizeFactor/100);
-                    int right = (int)((ann.x+ann.w)*essayImage.getWidth()*xResizeFactor/100);
-                    int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()*yResizeFactor/100);
+                    int left = (int)(ann.x*essayImage.getWidth()/100);
+                    int top = (int)(ann.y*essayImage.getHeight()/100);
+                    int right = (int)((ann.x+ann.w)*essayImage.getWidth()/100);
+                    int bottom = (int)((ann.y+ann.h)*essayImage.getHeight()/100);
 
                     if (left <= curX && right > curX && top <= curY && bottom > curY) {
                         double dist = (curX - left) * (curX - left) + (curY - top) * (curY - top); //TODO: Here and in TextEssayDetailsActivity, calculate distance to the middle point of annotations, not to their top-left corner.
@@ -120,25 +118,18 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         return closestAnnotation;
     }
 
-    private void acceptOrReject(final boolean accept) {
+    private void patchStatus(final String status, Response.Listener<JSONObject> callback) {
+        essay.status = status;
         JSONObject data = new JSONObject();
         try {
-            data.put("status", accept?"accepted":"rejected");
+            data.put("status", status);
         }
         catch (JSONException e) {
             e.printStackTrace();
             finish();
             return ;
         }
-        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (accept == false) {
-                    Toast.makeText(ImageEssayDetailActivity.this, "Essay Rejected", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        }, new Response.ErrorListener() {
+        app.initiateAPICall(Request.Method.PATCH, "essay/" + essay.id + "/", data, callback, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 finish();
@@ -147,23 +138,42 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
     }
 
     private void reject() {
-        acceptOrReject(false);
+        patchStatus("rejected", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(ImageEssayDetailActivity.this, "Essay rejected", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     private void accept() {
-        acceptOrReject(true);
+        rejectButton.setVisibility(View.INVISIBLE);
+        completedButton.setVisibility(View.VISIBLE);
+        patchStatus("accepted", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            }
+        });
     }
 
-    private boolean essayImageViewOnTouch(View v, MotionEvent event) {
-        if (event.getAction() != MotionEvent.ACTION_UP)
-            return true;
-        int[] location = new int[2];
-        v.getLocationOnScreen(location);
-        int x = (int)(event.getRawX()-location[0]);
-        int y = (int)(event.getRawY()-location[1]);
-        AnnotationForImageEssay ann = getAnnotationFromXYPosition(x, y);
+    private void complete() {
+        annotateButton.setVisibility(View.INVISIBLE);
+        completedButton.setVisibility(View.INVISIBLE);
+        patchStatus("completed", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(ImageEssayDetailActivity.this, "Essay completed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean essayPhotoViewOnTouch(View v, float x, float y) {
+        int x_pix = (int)(x*essayImage.getWidth());
+        int y_pix = (int)(y*essayImage.getHeight());
+        AnnotationForImageEssay ann = getAnnotationFromXYPosition(x_pix, y_pix);
         if (ann != null)
-            Toast.makeText(this, ann.annotationText, Toast.LENGTH_SHORT).show();
+            AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
         return true;
     }
 
@@ -213,9 +223,10 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         reviewerInfoLayout = findViewById(R.id.detail_header_layout_include);
                         reviewerInfoTextView = reviewerInfoLayout.findViewById(R.id.reviewerInfoTextView);
                         reviewerProfileButton = reviewerInfoLayout.findViewById(R.id.reviewerProfileButton);
-                        essayImageView = findViewById(R.id.essayImageView);
+                        essayPhotoView = findViewById(R.id.essayPhotoView);
                         annotateButton = findViewById(R.id.annotateButton);
                         rejectButton = findViewById(R.id.rejectButton);
+                        completedButton = findViewById(R.id.completedButton);
                         cropImageView = findViewById(R.id.cropImageView);
                         progressBar = null;
                         drawAnnotations();
@@ -223,6 +234,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         if (app.getUsername().equals(essay.author)) { // We are the author
                             annotateButton.setVisibility(View.INVISIBLE);
                             rejectButton.setVisibility(View.INVISIBLE);
+                            completedButton.setVisibility(View.INVISIBLE);
                             reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
                             reviewerProfileButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -235,23 +247,46 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             reviewerInfoLayout.setVisibility(View.GONE);
                             if (essay.status.equals("accepted")) {
                                 rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.VISIBLE);
+                                annotateButton.setVisibility(View.VISIBLE);
                             }
-                            else {
+                            else if (essay.status.equals("pending")){
                                 rejectButton.setVisibility(View.VISIBLE);
-                                rejectButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        reject();
-                                    }
-                                });
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.VISIBLE);
                             }
-                            annotateButton.setVisibility(View.VISIBLE);
+                            else if (essay.status.equals("completed")) {
+                                rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.INVISIBLE);
+                            }
+                            else if (essay.status.equals("rejected")) {
+                                rejectButton.setVisibility(View.INVISIBLE);
+                                completedButton.setVisibility(View.INVISIBLE);
+                                annotateButton.setVisibility(View.INVISIBLE);
+                            }
+                            completedButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    complete();
+                                }
+                            });
+                            rejectButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    reject();
+                                }
+                            });
+
                             annotateButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (currentlyCroppingForAnnotation == false) {
-                                        essayImageView.setVisibility(View.INVISIBLE);
-                                        cropImageView.setImageBitmap(Bitmap.createScaledBitmap(essayImage, essayImageView.getWidth(), essayImageView.getHeight(), false));
+                                        essayPhotoView.setVisibility(View.INVISIBLE);
+
+                                        cropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
+                                        cropImageView.setImageBitmap(essayImage);
+                                        //cropImageView.setCropRect(cropRect);
                                         cropImageView.setVisibility(View.VISIBLE);
                                         currentlyCroppingForAnnotation = true;
                                     }
@@ -264,21 +299,16 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                         alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                essayImageView.setVisibility(View.VISIBLE);
+                                                essayPhotoView.setVisibility(View.VISIBLE);
                                                 cropImageView.setVisibility(View.INVISIBLE);
                                                 currentlyCroppingForAnnotation = false;
 
                                                 final AnnotationForImageEssay ann = new AnnotationForImageEssay();
 
-                                                final int resizedW = essayImageView.getWidth();
-                                                final int resizedH = essayImageView.getHeight();
-                                                final double xResizeFactor = ((float)resizedW)/essayImage.getWidth();
-                                                final double yResizeFactor = ((float)resizedH)/essayImage.getHeight();
-
-                                                ann.x = rect.left / xResizeFactor / essayImage.getWidth() * 100;
-                                                ann.y = rect.top / yResizeFactor / essayImage.getHeight() * 100;
-                                                ann.w = (rect.right-rect.left) / xResizeFactor / essayImage.getWidth() * 100;
-                                                ann.h = (rect.bottom-rect.top) / yResizeFactor / essayImage.getHeight() * 100;
+                                                ann.x = (float)rect.left / essayImage.getWidth() * 100;
+                                                ann.y = (float)rect.top / essayImage.getHeight() * 100;
+                                                ann.w = (float)(rect.right-rect.left) / essayImage.getWidth() * 100;
+                                                ann.h = (float)(rect.bottom-rect.top) / essayImage.getHeight() * 100;
                                                 ann.annotationText = edittext.getText().toString();
                                                 ann.essayId = String.valueOf(essay.id);
                                                 ann.id = "";
@@ -293,8 +323,6 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                                 }
                                                 if (essay.status.equals("accepted") == false) {
                                                     accept();
-                                                    essay.status = "accepted";
-                                                    rejectButton.setVisibility(View.INVISIBLE);
                                                 }
                                                 app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
                                                     @Override
@@ -311,13 +339,12 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                             });
                         }
 
-                        essayImageView.setOnTouchListener(new View.OnTouchListener() {
+                        essayPhotoView.setOnPhotoTapListener(new OnPhotoTapListener() {
                             @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                return essayImageViewOnTouch(v, event);
+                            public void onPhotoTap(ImageView v, float x, float y) {
+                                essayPhotoViewOnTouch(v, x, y);
                             }
                         });
-
                     }
                 }, null);
             }

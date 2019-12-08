@@ -10,46 +10,56 @@
         android:id="@+id/detail_header_layout_include"
         layout="@layout/essay_detail_header" />
 
-    <ImageView
-        android:id="@+id/essayImageView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/essayPhotoView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rejectButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_header_layout_include"
-        app:layout_constraintVertical_bias="0.21"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintVertical_bias="0.21" />
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/cropImageView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_header_layout_include"
-        app:layout_constraintVertical_bias="0.21"
-        app:layout_constraintWidth_percent=".8" />
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@+id/essayPhotoView"
+        app:layout_constraintTop_toTopOf="@+id/essayPhotoView"
+        app:layout_constraintEnd_toEndOf="@+id/essayPhotoView"
+        app:layout_constraintStart_toStartOf="@+id/essayPhotoView"/>
 
     <Button
         android:id="@+id/annotateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:text="Annotate"
-        app:layout_constraintEnd_toEndOf="@+id/essayImageView"
-        app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/essayPhotoView" />
 
     <Button
         android:id="@+id/rejectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="Reject"
+        app:layout_constraintBottom_toBottomOf="@+id/annotateButton"
         app:layout_constraintEnd_toStartOf="@+id/annotateButton"
-        app:layout_constraintTop_toBottomOf="@+id/essayImageView" />
+        app:layout_constraintTop_toTopOf="@+id/annotateButton" />
+
+    <Button
+        android:id="@+id/completedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Completed"
+        app:layout_constraintBottom_toBottomOf="@+id/annotateButton"
+        app:layout_constraintEnd_toStartOf="@+id/annotateButton"
+        app:layout_constraintTop_toTopOf="@+id/annotateButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
