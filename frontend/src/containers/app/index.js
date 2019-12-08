@@ -16,8 +16,8 @@ import WritingUpload from "../writingUpload";
 import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
 import WritingList from "../WritingList";
-import Exercises from "../exercises"
-
+import Exercises from "../exercises";
+import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -128,6 +128,7 @@ class App extends Component {
           <Route exact path="/recommendation" component={Recommendation} />
           <Route exact path="/show-writing/:id" component={WritingShow} />
           <Route exact path="/writing-list" component={WritingList} />
+          <Route exact path="/suggestion" component={SuggestExercise} />
         </main>
       </div>
     );
