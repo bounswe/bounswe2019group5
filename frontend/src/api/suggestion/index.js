@@ -23,7 +23,7 @@ export const suggest_exercise = async (token, exercise) => {
         .catch(err => {
             console.log(err.response);
             return {
-                message: 'Suggestion Cannot Done!',
+                message: err.response.data ? "Some fields are empty. You should add keyword(s), tag(s). All question bodies should be non-empty. All options should be non-empty. ": "Connection Error!",
             };
         });
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import { FormControl, InputGroup, Button, Card, CardDeck, Image, ListGroup, ListGroupItem, Dropdown, DropdownButton, ButtonToolbar, Form } from 'react-bootstrap';
+import { Toast, FormControl, InputGroup, Button, Card, CardDeck, Image, ListGroup, ListGroupItem, Dropdown, DropdownButton, ButtonToolbar, Form } from 'react-bootstrap';
 import _ from 'lodash';
 
 import {upload_file} from '../../api/upload';
@@ -31,6 +31,7 @@ class SuggestExercise extends Component {
             tagsText: '',
             suggesting: false,
             suggested: false,
+            message: '',
         }
     }
 
@@ -196,6 +197,21 @@ class SuggestExercise extends Component {
         return (
             <div>
 
+                <Toast
+                    show={this.state.message && this.state.message.length>0}
+                    onClose={()=>this.setState({message: ''})}
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                    }}
+                >
+                    <Toast.Header>
+                        <strong className="mr-auto">Suggestion</strong>
+                    </Toast.Header>
+                    <Toast.Body>{this.state.message}</Toast.Body>
+                </Toast>
+
                 <ButtonToolbar>
 
                     {!this.state.created &&
@@ -301,7 +317,7 @@ class SuggestExercise extends Component {
                                             this.setState({suggested: true});
                                         }
                                         else{
-                                            this.setState({suggesting: false});
+                                            this.setState({suggesting: false, message: newExercise.message});
                                         }
                                     });
                             }}
