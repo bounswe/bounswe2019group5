@@ -114,12 +114,15 @@ public class ExerciseActivity extends AppCompatActivity {
                 else
                     buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
                 if(correctAnswers!=null) {
+                    if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
+                        if (!chosenAnswers[currentQuestionIndex].equals(correctAnswers[currentQuestionIndex]))
+                            buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_dark));
+                        else
+                            buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
+                    else
+                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
                 if(exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) {
-                    if (!chosenAnswers[currentQuestionIndex].equals(correctAnswers[currentQuestionIndex]))
-                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_light));
-                    else if (exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) {
-                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_green_light));
-                    }
+                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_green_light));
                 }
 
             }
