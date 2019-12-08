@@ -10,6 +10,7 @@ import Tab from 'react-bootstrap/Tab';
 import { FormControl, InputGroup, Button, Card, CardDeck, Image, ListGroup, ListGroupItem, Dropdown, DropdownButton, ButtonToolbar, Form } from 'react-bootstrap';
 import _ from 'lodash';
 
+import {upload_file} from '../../api/upload';
 import {suggest_exercise} from '../../api/suggestion';
 
 class SuggestExercise extends Component {
@@ -57,20 +58,46 @@ class SuggestExercise extends Component {
                             }}
                         >Delete Question</Button>
                     </InputGroup>
-                    <Form.Group>
-                        <Form.Label>Question Text:</Form.Label>
-                        <Form.Control 
-                            style={{width: '60vw'}} 
-                            as="textarea" 
-                            rows="2"
-                            value={this.state.exercise.questions[qId].body}
-                            onChange={e => {
-                                var exercise = _.cloneDeep( this.state.exercise );
-                                exercise.questions[qId].body = e.target.value;
-                                this.setState({exercise});
-                            }}
-                        />
-                    </Form.Group>
+                    { this.state.exercise.type!=='listening' &&
+                        <Form.Group>
+                            <Form.Label>Question Text:</Form.Label>
+                            <Form.Control 
+                                style={{width: '60vw'}} 
+                                as="textarea" 
+                                rows="2"
+                                value={this.state.exercise.questions[qId].body}
+                                onChange={e => {
+                                    var exercise = _.cloneDeep( this.state.exercise );
+                                    exercise.questions[qId].body = e.target.value;
+                                    this.setState({exercise});
+                                }}
+                            />
+                        </Form.Group>
+                    }
+                    { this.state.exercise.type==='listening' &&
+                        <Form.Group>
+                            <Form.Label>Question Audio:</Form.Label>
+                            <Form.Control 
+                                style={{width: '60vw'}} 
+                                as="input"
+                                type="file"
+                                accept="audio/*"
+                                onChange={e => {
+                                    let file = _.cloneDeep(e.target.files[0]);
+                                    upload_file(this.props.userInfo.token, e.target.files[0])
+                                        .then(data => {
+                                            console.log(data);
+                                            if (!data.message){
+                                                var exercise = _.cloneDeep( this.state.exercise );
+                                                exercise.questions[qId].body = data.file;
+                                                exercise.questions[qId].file = file;
+                                                this.setState({exercise});
+                                            }
+                                        })
+                                }}
+                            />
+                        </Form.Group>
+                    }
 
                     <Form.Group>
                         <Form.Label>Options:</Form.Label>
@@ -141,6 +168,27 @@ class SuggestExercise extends Component {
     }
     
     render() {
+
+        if (this.props.userInfo.token == null) {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/home"
+                }}
+              />
+            );
+          }
+      
+          if (this.state.suggested) {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/home"
+                }}
+              />
+            );
+          }
+
         return (
             <div>
 
