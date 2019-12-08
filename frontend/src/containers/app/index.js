@@ -96,6 +96,13 @@ class App extends Component {
             )}
           </Nav>
           <Form inline>
+            <Nav.Link href="contribute">
+              <Link to="/suggestion">
+                <Button variant="outline-info">Contribute</Button>
+              </Link>
+            </Nav.Link>
+          </Form>
+          <Form inline>
             <Nav.Link href="about-us">
               <Link to="/about-us">
                 <Button variant="outline-info">About</Button>
