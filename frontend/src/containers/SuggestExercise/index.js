@@ -215,6 +215,11 @@ class SuggestExercise extends Component {
                             active={this.state.exercise.type==='listening'} 
                             onClick={()=>{this.setState({exercise: {...this.state.exercise, type: 'listening'}})}}
                         >Listening</Dropdown.Item>
+                       
+                        <Dropdown.Item 
+                            active={this.state.exercise.type==='proficiency'} 
+                            onClick={()=>{this.setState({exercise: {...this.state.exercise, type: 'proficiency'}})}}
+                        >Proficiency</Dropdown.Item>
                     </DropdownButton>
                     }
                     {this.state.created &&
