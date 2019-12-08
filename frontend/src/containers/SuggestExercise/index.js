@@ -42,14 +42,15 @@ class SuggestExercise extends Component {
     questionModal(qId) {
         
         return (
-            <Card style={{width: '80vw'}}>
+            <Card style={{width: '50vw'}}>
                 <Card.Body>
                     <InputGroup>
                         <Card.Title inline>{"Question "+(qId+1)}</Card.Title>
                         <Button
                             inline
                             variant="light"
-                            style={{width: '10vw', marginLeft: '68vw'}}
+                            style={{width: '10vw', marginLeft: '38vw'}}
+                            required
                             onClick={()=>{
                                 var exercise = _.cloneDeep( this.state.exercise );
                                 exercise.questions = exercise.questions
@@ -62,9 +63,10 @@ class SuggestExercise extends Component {
                         <Form.Group>
                             <Form.Label>Question Text:</Form.Label>
                             <Form.Control 
-                                style={{width: '60vw'}} 
+                                style={{width: '40vw'}} 
                                 as="textarea" 
                                 rows="2"
+                                required
                                 value={this.state.exercise.questions[qId].body}
                                 onChange={e => {
                                     var exercise = _.cloneDeep( this.state.exercise );
@@ -78,7 +80,7 @@ class SuggestExercise extends Component {
                         <Form.Group>
                             <Form.Label>Question Audio:</Form.Label>
                             <Form.Control 
-                                style={{width: '60vw'}} 
+                                style={{width: '40vw'}} 
                                 as="input"
                                 type="file"
                                 accept="audio/*"
@@ -104,7 +106,9 @@ class SuggestExercise extends Component {
                         {this.state.exercise.questions[qId].options
                             .map((option, index) => {
                                 return (
-                                        <InputGroup className="mb-3">
+                                        <InputGroup
+                                            className="mb-3"
+                                            style={{width: '40vw'}}>
                                             <InputGroup.Prepend>
                                                 <InputGroup.Checkbox
                                                     checked={index == this.state.exercise.questions[qId].answerIndex}
@@ -117,8 +121,8 @@ class SuggestExercise extends Component {
                                                 />
                                             </InputGroup.Prepend>
                                             <FormControl
-                                                style={{width: '40vw', 
-                                                        backgroundColor: this.state.exercise.questions[qId].answerIndex==index? '#00CC00': 'white'
+                                                style={{
+                                                    backgroundColor: this.state.exercise.questions[qId].answerIndex==index? '#00CC00': 'white'
                                                     }}
                                                 as="textarea"
                                                 rows="1"
@@ -315,7 +319,7 @@ class SuggestExercise extends Component {
 
                         <Button 
                             variant="light"
-                            style={{width: "10vw", marginLeft: "35vw", marginRight: "55vw"}}
+                            style={{width: "10vw", marginLeft: "20vw", marginRight: "70vw"}}
                             onClick={() => {
                                 var exercise = _.cloneDeep( this.state.exercise );
                                 exercise.questions = exercise.questions.concat({body: '', answer: '', answerIndex: -1, options: ['', '']});
@@ -326,7 +330,7 @@ class SuggestExercise extends Component {
                 }
 
                 {this.state.created &&
-                    <div style={{marginLeft: '20vw'}}>
+                    <div style={{marginLeft: '5vw'}}>
                         <Form.Group>
                             <Form.Label>Keywords(write with comma seperator or space):</Form.Label>
                             <Form.Control 
