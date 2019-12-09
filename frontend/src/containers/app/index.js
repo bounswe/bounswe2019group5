@@ -7,7 +7,17 @@ import About from "../about";
 import Login from "../login";
 import SignUp from "../signup";
 import ProfTest from "../profTest";
-
+import Profile from "../profile";
+import VocabularyTest from "../exercises/vocabularyTest";
+import GrammarTest from "../exercises/grammarTest";
+import ListeningTest from "../exercises/listeningTest";
+import Chat from "../chat";
+import WritingUpload from "../writingUpload";
+import Recommendation from "../recommendation";
+import WritingShow from "../writingShow";
+import WritingList from "../WritingList";
+import Exercises from "../exercises";
+import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -51,22 +61,47 @@ class App extends Component {
             </Link>
           </Navbar.Brand>
           <Nav className="mr-auto">
-            {this.props.authentication.token && (
+            {this.props.userInfo.token && (
               <Link to="/" onClick={() => this.props.logout()}>
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
-            {!this.props.authentication.token && (
+
+            {
+              // TODO -> Profil Page hazir oldugunda buradan link edilecek
+            }
+            {this.props.userInfo.token && this.props.userInfo.userProfile && (
+              <Link to={"/profile/" + this.props.userInfo.userProfile.username}>
+                <Button variant="outline-success">
+                  My Profile({this.props.userInfo.userProfile.username})
+                </Button>
+              </Link>
+            )}
+            {this.props.userInfo.token && (
+              <Link to="/exercises/">
+                <Button variant="outline-warning">
+                  Solve Exercise
+                </Button>
+              </Link>
+            )}
+            {!this.props.userInfo.token && (
               <Link to="/login">
                 <Button variant="outline-warning">Login</Button>
               </Link>
             )}
-            {!this.props.authentication.token && (
+            {!this.props.userInfo.token && (
               <Link to="/signup">
                 <Button variant="outline-success">Sign-up</Button>
               </Link>
             )}
           </Nav>
+          <Form inline>
+            <Nav.Link href="contribute">
+              <Link to="/suggestion">
+                <Button variant="outline-info">Contribute</Button>
+              </Link>
+            </Nav.Link>
+          </Form>
           <Form inline>
             <Nav.Link href="about-us">
               <Link to="/about-us">
@@ -86,14 +121,29 @@ class App extends Component {
           <Route exact path="/test-result" component={TestResult} />
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/vocabulary-test" component={VocabularyTest} />
+          <Route exact path="/grammar-test" component={GrammarTest} />
+          <Route exact path="/listening-test" component={ListeningTest} />
+          <Route exact path="/profile/:user" component={Profile} />
+          <Route exact path="/chat/:chatWith" component={Chat} />
+          <Route exact path="/exercises" component={Exercises} />
+          <Route
+            exact
+            path="/upload-writing/:reviewer?"
+            component={WritingUpload}
+          />
+          <Route exact path="/recommendation" component={Recommendation} />
+          <Route exact path="/show-writing/:id" component={WritingShow} />
+          <Route exact path="/writing-list" component={WritingList} />
+          <Route exact path="/suggestion" component={SuggestExercise} />
         </main>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  authentication
+const mapStateToProps = ({ userInfo }) => ({
+  userInfo
 });
 
 const mapDispatchToProps = dispatch =>
@@ -104,7 +154,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
