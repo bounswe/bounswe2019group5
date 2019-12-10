@@ -11,17 +11,21 @@ import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import ExerciseTypes from "./exerciseTypes";
-import { set_selected_language } from "../../redux/action-creators/userInfo";
+import { set_selected_language, set_user_profile } from "../../redux/action-creators/userInfo";
 import { search_test } from "../../redux/action-creators/exercises";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { Link } from "react-router-dom";
 
+
 class Exercises extends Component {
   state = { key: "" };
   constructor(props) {
     super(props);
-    console.log(props.userInfo.token);
+  }
+
+  componentDidMount() {
+    this.props.set_user_profile(this.props.userInfo.token);
   }
 
   render() {
@@ -70,7 +74,7 @@ class Exercises extends Component {
                     <Typography component="h5" variant="h5" align="center">
                       You should solve the prof test of this language first.
                     </Typography>
-                    <Link to="/prof-test/">
+                    <Link to="/prof-test/english">
                       <Button 
                         onClick={() => this.props.set_selected_language("english")}
                         variant="success"                      >
@@ -88,7 +92,7 @@ class Exercises extends Component {
                     <Typography component="h5" variant="h5" align="center">
                       You should solve the prof test of this language first.
                     </Typography>
-                    <Link to="/prof-test/">
+                    <Link to="/prof-test/turkish">
                       <Button
                         onClick={() => this.props.set_selected_language("turkish")}
                         variant="success"                      >
@@ -106,7 +110,7 @@ class Exercises extends Component {
                     <Typography component="h5" variant="h5" align="center">
                       You should solve the prof test of this language first.
                     </Typography>
-                    <Link to="/prof-test/">
+                    <Link to="/prof-test/german">
                       <Button
                         onClick={() => this.props.set_selected_language("german")}
                         variant="success"                      >
@@ -133,7 +137,8 @@ const mapStateToProps = ({ userInfo }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      set_selected_language
+      set_selected_language,
+      set_user_profile,
     },
     dispatch
   );

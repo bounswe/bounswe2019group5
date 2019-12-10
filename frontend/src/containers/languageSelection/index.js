@@ -17,14 +17,14 @@ import LanguageGrid from "./languageGrid"
 
 
 class LanguageSelection extends Component {
-    state = { isLanguageSelected: false }
+    state = { isLanguageSelected: false, language: null }
     constructor(props) {
         super(props);
         console.log(props.userInfo.token);
     };
     handleSubmit = (language) => {
         this.props.set_selected_language(language);
-        this.setState({ isLanguageSelected: true })
+        this.setState({ isLanguageSelected: true, language })
     };
 
     render() {
@@ -42,7 +42,7 @@ class LanguageSelection extends Component {
             return (
                 <Redirect
                     to={{
-                        pathname: "/prof-test",
+                        pathname: "/prof-test/"+this.state.language,
                     }}
                 />
             );

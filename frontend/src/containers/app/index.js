@@ -114,7 +114,7 @@ class App extends Component {
           <Route exact path="/about-us" component={About} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/prof-test" component={ProfTest} />
+          <Route exact path="/prof-test/:lang" component={ProfTest} />
           <Route exact path="/lang-select" component={LanguageSelection} />
           <Route exact path="/test-result" component={TestResult} />
           <Route exact path="/guest-login" component={GuestLogin} />

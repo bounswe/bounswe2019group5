@@ -35,12 +35,10 @@ class ProfTest extends Component {
 
   componentDidMount() {
     this.props.clear_prof_test();
-    if (this.props.userInfo.selectedLanguage)
-      this.props.get_prof_test(
-        this.props.userInfo.token,
-        this.props.userInfo.selectedLanguage
-      );
-    this.state.isAnswersPrepared = false;
+    this.props.get_prof_test(
+      this.props.userInfo.token,
+      this.props.match.params.lang
+    );
   }
 
   componentDidUpdate() {
@@ -67,16 +65,6 @@ class ProfTest extends Component {
         <Redirect
           to={{
             pathname: "/home"
-          }}
-        />
-      );
-    }
-
-    if (this.props.userInfo.selectedLanguage == null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/lang-select"
           }}
         />
       );
