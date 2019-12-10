@@ -8,15 +8,13 @@ import Login from "../login";
 import SignUp from "../signup";
 import ProfTest from "../profTest";
 import Profile from "../profile";
-import VocabularyTest from "../exercises/vocabularyTest";
-import GrammarTest from "../exercises/grammarTest";
-import ListeningTest from "../exercises/listeningTest";
+import Exercise from "../exercise/exercise";
 import Chat from "../chat";
 import WritingUpload from "../writingUpload";
 import Recommendation from "../recommendation";
 import WritingShow from "../writingShow";
 import WritingList from "../WritingList";
-import Exercises from "../exercises";
+import Exercises from "../exercise";
 import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -121,9 +119,7 @@ class App extends Component {
           <Route exact path="/test-result" component={TestResult} />
           <Route exact path="/guest-login" component={GuestLogin} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/vocabulary-test" component={VocabularyTest} />
-          <Route exact path="/grammar-test" component={GrammarTest} />
-          <Route exact path="/listening-test" component={ListeningTest} />
+          <Route exact path="/exercise/:id" component={Exercise} />
           <Route exact path="/profile/:user" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
           <Route exact path="/exercises" component={Exercises} />

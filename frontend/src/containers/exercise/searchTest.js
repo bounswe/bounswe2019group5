@@ -106,17 +106,7 @@ class SearchTest extends React.Component {
                       secondary={
                         <React.Fragment>
                           <Link
-                            to={
-                              this.props.type == "grammar"
-                                ? "grammar-test/" + value.id
-                                : this.props.type == "vocabulary"
-                                ? "vocabulary-test/" + value.id
-                                : this.props.type == "listening"
-                                ? "listening-test/" + value.id
-                                : this.props.type == "reading"
-                                ? "reading-test/" + value.id
-                                : "/upload-writing/"
-                            }
+                            to={"exercise/" + value.id}
                           >
                             <Button variant="success">Go to test</Button>
                           </Link>

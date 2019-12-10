@@ -18,12 +18,8 @@ export const TEST_RESULT = "test/TEST_RESULT";
 export const PROF_TEST_CLEAR = "test/PROF_TEST_CLEAR";
 
 // Exercises
-export const VOCABULARY_TEST_REQUESTED = "exercises/VOCABULARY_TEST_REQUESTED";
-export const VOCABULARY_TEST = "exercises/VOCABULARY_TEST";
-export const GRAMMAR_TEST_REQUESTED = "exercises/GRAMMAR_TEST_REQUESTED";
-export const GRAMMAR_TEST = "exercises/GRAMMAR_TEST";
-export const LISTENING_TEST_REQUESTED = "exercises/LISTENING_TEST_REQUESTED";
-export const LISTENING_TEST = "exercises/LISTENING_TEST";
+export const EXERCISE_REQUESTED = "exercises/EXERCISE_REQUESTED";
+export const EXERCISE = "exercises/EXERCISE";
 export const SEARCH_TEST = "exercises/SEARCH_TEST";
 
 // User Info

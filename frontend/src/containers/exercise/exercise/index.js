@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Question from "../../question";
-import { get_listening_test } from "../../../redux/action-creators/exercises";
+import { get_exercise } from "../../../redux/action-creators/exercises";
 import { get_test_result } from "../../../redux/action-creators/test";
 import _ from "lodash";
 import { Button } from "react-bootstrap";
@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
-class ListeningTest extends Component {
+class Exercise extends Component {
   constructor(props) {
     super(props);
   }
@@ -27,20 +27,20 @@ class ListeningTest extends Component {
   };
 
   componentDidMount() {
-    this.props.get_listening_test(
+    this.props.get_exercise(
       this.props.userInfo.token,
-      this.props.userInfo.selectedLanguage
+      this.props.match.params.id
     );
     this.state.isAnswersPrepared = false;
   }
 
   componentDidUpdate() {
-    if (this.props.exercises.listeningTest && !this.state.isAnswersPrepared) {
+    if (this.props.exercises.exercise && !this.state.isAnswersPrepared) {
       const answers = new Array(
-        this.props.exercises.listeningTest.questions.length
+        this.props.exercises.exercise.questions.length
       );
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.exercises.listeningTest.questions[i].options[0];
+        answers[i] = this.props.exercises.exercise.questions[i].options[0];
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -65,7 +65,7 @@ class ListeningTest extends Component {
       );
     }
 
-    const listeningTest = this.props.exercises.listeningTest;
+    const exercise = this.props.exercises.exercise;
     const { classes } = this.props;
 
     if (this.props.exercises.loading) {
@@ -90,9 +90,10 @@ class ListeningTest extends Component {
       );
     }
 
-    if (listeningTest) {
+    if (exercise) {
+
       const questionIndex = this.state.questionIndex;
-      const question = listeningTest.questions[questionIndex];
+      const question = exercise.questions[questionIndex];
 
       return (
         <Container
@@ -105,11 +106,9 @@ class ListeningTest extends Component {
           <Grid item component={Paper} square>
             <div className={classes.paper}>
               <div className="d-flex flex-column">
-                <div>
-                  <audio autoplay controls src={question.body}>
-                    The "audio" tag is not supported by your browser.
-                  </audio>
-                </div>
+                <Typography component="h1" variant="h5">
+                  {question.body}
+                </Typography>
 
                 <Question
                   questionOptions={question.options}
@@ -128,37 +127,37 @@ class ListeningTest extends Component {
                   }}
                 />
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="info"
-                  className={classes.submit}
-                  onClick={() =>
-                    this.setState({
-                      questionIndex:
-                        questionIndex > 0 ? questionIndex - 1 : questionIndex
-                    })
-                  }
-                >
-                  PREV
-                </Button>
+                {questionIndex > 0 &&
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="info"
+                    className={classes.submit}
+                    onClick={() =>
+                      this.setState({
+                        questionIndex: questionIndex - 1,
+                      })
+                    }
+                  >
+                    PREV
+                  </Button>
+                }
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="info"
-                  className={classes.submit}
-                  onClick={() =>
-                    this.setState({
-                      questionIndex:
-                        questionIndex < listeningTest.questions.length - 1
-                          ? questionIndex + 1
-                          : questionIndex
-                    })
-                  }
-                >
-                  NEXT
-                </Button>
+                {questionIndex < exercise.questions.length - 1 && 
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="info"
+                    className={classes.submit}
+                    onClick={() =>
+                      this.setState({
+                        questionIndex: questionIndex + 1,
+                      })
+                    }
+                  >
+                    NEXT
+                  </Button>
+                }
 
                 {!this.props.exercises.isFinished && (
                   <Button
@@ -168,7 +167,7 @@ class ListeningTest extends Component {
                     onClick={() =>
                       this.props.get_test_result(
                         this.props.userInfo.token,
-                        listeningTest.id,
+                        exercise.id,
                         this.state.answers
                       )
                     }
@@ -205,12 +204,12 @@ const mapStateToProps = ({ userInfo, exercises }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      get_listening_test,
-      get_test_result
+      get_exercise,
+      get_test_result,
     },
     dispatch
   );
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(ListeningTest)
+  connect(mapStateToProps, mapDispatchToProps)(Exercise)
 );
