@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AnnotationForTextEssay {
-    public String id, annotationText, essayId;
+    public String id, annotationText, essayId, creator;
     int start, end;
 
     static AnnotationForTextEssay fromJSON(JSONObject object) throws JSONException {
@@ -15,6 +15,7 @@ public class AnnotationForTextEssay {
         ta.id = object.getString("id");
         ta.annotationText = object.getJSONObject("body").getString("value");
         ta.essayId = object.getJSONObject("target").getString("source");
+        ta.creator = object.getString("creator");
         String selectorValue = object.getJSONObject("target").getJSONObject("selector").getString("value");
         Pattern pat = Pattern.compile("char=(\\d*),(\\d*)");
         Matcher mat = pat.matcher(selectorValue);
