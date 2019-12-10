@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.languageLearning">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -11,9 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatMainScreenActivity"></activity>
+        <activity android:name=".AppProgress"></activity>
+        <activity android:name=".ChatMainScreenActivity" />
         <activity android:name=".ChatHistory" />
-        <activity android:name=".UserSearchActivity" android:exported="true"></activity>
+        <activity
+            android:name=".UserSearchActivity"
+            android:exported="true" />
         <activity android:name=".QuestionSuggestionActivity" />
         <activity android:name=".ExerciseSuggestionActivity" />
         <activity android:name=".LeaveRatingActivity" />
@@ -55,8 +61,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
