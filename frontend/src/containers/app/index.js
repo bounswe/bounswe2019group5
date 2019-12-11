@@ -109,6 +109,10 @@ class App extends Component {
           </Form>
         </Navbar>
 
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{flex: 1}}>
+        </div>
+        <div style={{flex: 4}}>
         <main>
           <Route exact path="/" component={Home} />
           <Route exact path="/about-us" component={About} />
@@ -133,6 +137,8 @@ class App extends Component {
           <Route exact path="/writing-list" component={WritingList} />
           <Route exact path="/suggestion" component={SuggestExercise} />
         </main>
+        </div>
+      </div>
       </div>
     );
   }
