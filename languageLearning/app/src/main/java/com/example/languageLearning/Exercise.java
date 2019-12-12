@@ -16,8 +16,6 @@ public class Exercise implements Serializable {
         Exercise exercise = new Exercise();
         exercise.id = object.getInt("id");
         JSONArray jquestions = object.getJSONArray("questions");
-        Log.d("JQUESTIONS", jquestions.toString());
-        Log.d("JQUESTIONSID", jquestions.toString());
         exercise.questions = new Question[jquestions.length()];
         for (int i=0; i<jquestions.length(); i++)
             exercise.questions[i] = Question.fromJSON(jquestions.getJSONObject(i));

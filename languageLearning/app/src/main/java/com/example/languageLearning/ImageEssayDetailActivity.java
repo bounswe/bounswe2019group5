@@ -173,7 +173,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
         int y_pix = (int)(y*essayImage.getHeight());
         AnnotationForImageEssay ann = getAnnotationFromXYPosition(x_pix, y_pix);
         if (ann != null)
-            AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
+            AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, ann.creator);
         return true;
     }
 
@@ -232,7 +232,7 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                         drawAnnotations();
 
                         if (app.getUsername().equals(essay.author)) { // We are the author
-                            annotateButton.setVisibility(View.INVISIBLE);
+                            annotateButton.setVisibility(View.VISIBLE);
                             rejectButton.setVisibility(View.INVISIBLE);
                             completedButton.setVisibility(View.INVISIBLE);
                             reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
@@ -277,68 +277,70 @@ public class ImageEssayDetailActivity extends AppCompatActivity {
                                     reject();
                                 }
                             });
+                        }
 
-                            annotateButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (currentlyCroppingForAnnotation == false) {
-                                        essayPhotoView.setVisibility(View.INVISIBLE);
+                        annotateButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (currentlyCroppingForAnnotation == false) {
+                                    essayPhotoView.setVisibility(View.INVISIBLE);
 
-                                        cropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
-                                        cropImageView.setImageBitmap(essayImage);
-                                        //cropImageView.setCropRect(cropRect);
-                                        cropImageView.setVisibility(View.VISIBLE);
-                                        currentlyCroppingForAnnotation = true;
-                                    }
-                                    else {
-                                        final Rect rect = cropImageView.getCropRect();
-                                        AlertDialog.Builder alert = new AlertDialog.Builder(ImageEssayDetailActivity.this);
-                                        final EditText edittext = new EditText(ImageEssayDetailActivity.this);
-                                        alert.setTitle("Enter Your Annotation");
-                                        alert.setView(edittext);
-                                        alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                essayPhotoView.setVisibility(View.VISIBLE);
-                                                cropImageView.setVisibility(View.INVISIBLE);
-                                                currentlyCroppingForAnnotation = false;
+                                    cropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
+                                    cropImageView.setImageBitmap(essayImage);
+                                    //cropImageView.setCropRect(cropRect);
+                                    cropImageView.setVisibility(View.VISIBLE);
+                                    currentlyCroppingForAnnotation = true;
+                                }
+                                else {
+                                    final Rect rect = cropImageView.getCropRect();
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(ImageEssayDetailActivity.this);
+                                    final EditText edittext = new EditText(ImageEssayDetailActivity.this);
+                                    alert.setTitle("Enter Your Annotation");
+                                    alert.setView(edittext);
+                                    alert.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            essayPhotoView.setVisibility(View.VISIBLE);
+                                            cropImageView.setVisibility(View.INVISIBLE);
+                                            currentlyCroppingForAnnotation = false;
 
-                                                final AnnotationForImageEssay ann = new AnnotationForImageEssay();
+                                            final AnnotationForImageEssay ann = new AnnotationForImageEssay();
 
-                                                ann.x = (float)rect.left / essayImage.getWidth() * 100;
-                                                ann.y = (float)rect.top / essayImage.getHeight() * 100;
-                                                ann.w = (float)(rect.right-rect.left) / essayImage.getWidth() * 100;
-                                                ann.h = (float)(rect.bottom-rect.top) / essayImage.getHeight() * 100;
-                                                ann.annotationText = edittext.getText().toString();
-                                                ann.essayId = String.valueOf(essay.id);
-                                                ann.id = "";
-                                                JSONObject data;
-                                                try {
-                                                    data = ann.toJSON();
-                                                    data.remove("id");
-                                                }
-                                                catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                    return ;
-                                                }
+                                            ann.x = (float)rect.left / essayImage.getWidth() * 100;
+                                            ann.y = (float)rect.top / essayImage.getHeight() * 100;
+                                            ann.w = (float)(rect.right-rect.left) / essayImage.getWidth() * 100;
+                                            ann.h = (float)(rect.bottom-rect.top) / essayImage.getHeight() * 100;
+                                            ann.annotationText = edittext.getText().toString();
+                                            ann.essayId = String.valueOf(essay.id);
+                                            ann.id = "";
+                                            ann.creator = app.getUsername();
+                                            JSONObject data;
+                                            try {
+                                                data = ann.toJSON();
+                                                data.remove("id");
+                                            }
+                                            catch (JSONException e) {
+                                                e.printStackTrace();
+                                                return ;
+                                            }
+                                            if (essay.reviewer.equals(app.getUsername())) { // Reviewers implicitly accept essays by creating annotations
                                                 if (essay.status.equals("accepted") == false) {
                                                     accept();
                                                 }
-                                                app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
-                                                    @Override
-                                                    public void onResponse(JSONObject response) {
-                                                        annotations.add(ann);
-                                                        drawAnnotations();
-                                                    }
-                                                }, null);
                                             }
-                                        });
-                                        alert.show();
-                                    }
+                                            app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+                                                    annotations.add(ann);
+                                                    drawAnnotations();
+                                                }
+                                            }, null);
+                                        }
+                                    });
+                                    alert.show();
                                 }
-                            });
-                        }
-
+                            }
+                        });
                         essayPhotoView.setOnPhotoTapListener(new OnPhotoTapListener() {
                             @Override
                             public void onPhotoTap(ImageView v, float x, float y) {

@@ -154,6 +154,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 ann.annotationText = edittext.getText().toString();
                 ann.essayId = String.valueOf(essay.id);
                 ann.id = "";
+                ann.creator = app.getUsername();
                 JSONObject data;
                 try {
                     data = ann.toJSON();
@@ -163,10 +164,12 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return ;
                 }
-                if (essay.status.equals("accepted") == false) {
-                    accept();
-                    essay.status = "accepted";
-                    rejectButton.setVisibility(View.INVISIBLE);
+                if (essay.reviewer.equals(app.getUsername())) { // Reviewers implicitly accept essays by creating annotations
+                    if (essay.status.equals("accepted") == false) {
+                        accept();
+                        essay.status = "accepted";
+                        rejectButton.setVisibility(View.INVISIBLE);
+                    }
                 }
                 app.initiateAPICall(Request.Method.POST, "annotation/", data, new Response.Listener<JSONObject>() {
                     @Override
@@ -234,35 +237,9 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                     complete();
                 }
             });
-            essayTextView.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-                @Override
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    mode.getMenuInflater().inflate(R.menu.essay_annotation_menu, menu);
-                    return true;
-                }
-
-                @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
-
-                @Override
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    if (item.getItemId() == R.id.annotate) {
-                        final int selStart = essayTextView.getSelectionStart();
-                        final int selEnd = essayTextView.getSelectionEnd();
-                        mode.finish();
-                        return annotateClicked(selStart, selEnd);
-                    }
-                    return false;
-                }
-
-                @Override
-                public void onDestroyActionMode(ActionMode mode) {
-                }
-            });
         }
         else { // We are the author
+            essayTextView.setTextIsSelectable(true);
             rejectButton.setVisibility(View.INVISIBLE);
             completedButton.setVisibility(View.INVISIBLE);
             reviewerInfoTextView.setText("Reviewer is @" + essay.reviewer);
@@ -273,6 +250,33 @@ public class TextEssayDetailActivity extends AppCompatActivity {
                 }
             });
         }
+        essayTextView.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.essay_annotation_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if (item.getItemId() == R.id.annotate) {
+                    final int selStart = essayTextView.getSelectionStart();
+                    final int selEnd = essayTextView.getSelectionEnd();
+                    mode.finish();
+                    return annotateClicked(selStart, selEnd);
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+            }
+        });
         essayTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -305,7 +309,7 @@ public class TextEssayDetailActivity extends AppCompatActivity {
             int lineOffset = offset-layout.getLineStart(line);
             AnnotationForTextEssay ann = getAnnotationFromXYPosition(line, lineOffset);
             if (ann != null) {
-                AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, essay.reviewer);
+                AnnotationDialogHelper.showAnnotationDialog(this, ann.annotationText, ann.creator);
                 return true;
             }
             else {

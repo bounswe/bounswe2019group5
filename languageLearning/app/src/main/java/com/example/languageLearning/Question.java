@@ -25,9 +25,7 @@ public class Question implements Serializable {
     public static Question fromJSON(JSONObject jquestion) throws JSONException {
         Question question = new Question();
         JSONArray joptions = jquestion.getJSONArray("options");
-        Log.d("Question Optionss", joptions.toString());
         String options[] = new String[joptions.length()];
-        Log.d("Question OPTIONS a ", joptions.get(0).toString());
         for (int j=0; j<joptions.length(); j++)
             options[j] = joptions.get(j).toString();
 
