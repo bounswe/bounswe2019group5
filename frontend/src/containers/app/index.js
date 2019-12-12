@@ -18,6 +18,8 @@ import Exercises from "../exercise";
 import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
+import { withStyles } from '@material-ui/core/styles';
 import {
   Navbar,
   Nav,
@@ -27,12 +29,15 @@ import {
   Col,
   Image,
   Button,
-  ButtonToolbar
+  ButtonToolbar,
+  NavDropdown,
+  NavItem
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
 
 import { logout } from "../../redux/action-creators/authentication";
+import { red } from "@material-ui/core/colors";
 
 class App extends Component {
   render() {
@@ -110,7 +115,17 @@ class App extends Component {
         </Navbar>
 
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        <div style={{flex: 1}}>
+        <div style={{flex: 1}} id="left-navigation">
+        <div className="container-fluid">
+        <Navbar variant="light" className="flex-column navigation-full-width">
+        <Nav className="flex-column navigation-full-width">
+              <Nav.Link className="navigation" href="/" >Home</Nav.Link>
+              <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
+        </Nav>
+        
+        
+        </Navbar>
+        </div>
         </div>
         <div style={{flex: 4}}>
         <main>
@@ -156,4 +171,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default  connect(mapStateToProps, mapDispatchToProps)(App);
