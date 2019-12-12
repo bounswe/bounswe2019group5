@@ -39,12 +39,14 @@ class ProgressView(GenericViewSet,
 
         r = {
             'number_of_test_completed': len(queryset),
-            'number_of_test': len(filtered_exercise),
-            'completed_exercise_current_level': len(queryset.filter(exercise__level=self.request.user.level))
+            'number_of_test': len(filtered_exercise)
         }
         if 'language' not in self.request.query_params:
             raise ParseError('language parameter is necessary')
         else:
+            r['completed_exercise_current_level'] = len(queryset.filter(exercise__level=self.request.user.levels[
+                self.request.query_params['language']
+            ]))
             r['exercise_in_current_level'] = len(filtered_exercise.filter(level=self.request.user.levels[
                 self.request.query_params['language']
             ]))
