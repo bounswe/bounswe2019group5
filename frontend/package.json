@@ -11,15 +11,18 @@
     "history": "^4.10.1",
     "lodash": "^4.17.15",
     "react": "^16.10.1",
+    "react-audio-player": "^0.11.1",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-chat-elements": "^10.7.1",
     "react-chat-widget": "^2.1.5",
     "react-dom": "^16.10.1",
+    "react-h5-audio-player": "^1.2.3",
     "react-image-annotation": "^0.9.10",
     "react-list": "^0.8.13",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.1",
-    "react-scripts": "3.1.2",
+    "react-scripts": "^3.3.0",
+    "react-sound": "^1.2.0",
     "reactjs-popup": "^1.5.0",
     "redux": "^4.0.4",
     "redux-localstorage": "^0.4.1",
@@ -46,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-hot-loader": "^4.12.18"
   }
 }

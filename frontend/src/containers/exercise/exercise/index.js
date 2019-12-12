@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import AudioPlayer from "react-h5-audio-player";
 
 class Exercise extends Component {
   constructor(props) {
@@ -102,14 +103,25 @@ class Exercise extends Component {
           justify="center"
           alignItems="center"
         >
+
           <CssBaseline />
           <Grid item component={Paper} square>
             <div className={classes.paper}>
               <div className="d-flex flex-column">
-                <Typography component="h1" variant="h5">
-                  {question.body}
-                </Typography>
-
+                {!question.body.includes('http://') &&
+                  <Typography component="h1" variant="h5">
+                    {question.body}
+                  </Typography>
+                }
+                {question.body.includes('http://') &&
+                  <AudioPlayer
+                    src={question.body}
+                    onPlay={e => console.log("onPlay")}
+                    crossOrigin="anonymous"
+                    // other props here
+                  />
+                }
+                
                 <Question
                   questionOptions={question.options}
                   selectedOption={this.state.answers[questionIndex]}
