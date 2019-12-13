@@ -13,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,6 +181,14 @@ public class ProfilePageActivity extends AppCompatActivity {
             leaveRatingLayout.setVisibility(View.GONE);
             yourCommentLayout.addView(createCommentViewFromComment(ourComment), 1);
         }
+    }
+
+    public void onClickChatImage(View view){
+
+        Intent i = new Intent(ProfilePageActivity.this, ChatMainScreenActivity.class);
+        startActivity(i);
+
+
     }
 
 }
