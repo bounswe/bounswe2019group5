@@ -3,8 +3,6 @@ package com.example.languageLearning;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -28,7 +26,7 @@ public class AnnotationDialogHelper {
             alert.setNegativeButton("Chat", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(context, ChatHistory.class);
+                    Intent intent = new Intent(context, ChatLiveScreenActivity.class);
                     intent.putExtra("Person", reviewerUsername);
                     context.startActivity(intent);
                 }

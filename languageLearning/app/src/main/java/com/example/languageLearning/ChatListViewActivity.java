@@ -14,20 +14,16 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
-public class ChatMainScreenActivity extends AppCompatActivity {
+public class ChatListViewActivity extends AppCompatActivity {
 
     HashSet<HashSet<String>> conversation_pairs;
     JSONObject classified_conversations;
@@ -41,7 +37,7 @@ public class ChatMainScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_main_screen);
+        setContentView(R.layout.activity_chat_list_view);
 
         app = (MyApplication) getApplication();
 
@@ -64,7 +60,7 @@ public class ChatMainScreenActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String person = String.valueOf(adapterView.getItemAtPosition(i));
-                        Intent intent = new Intent(ChatMainScreenActivity.this, ChatHistory.class);
+                        Intent intent = new Intent(ChatListViewActivity.this, ChatLiveScreenActivity.class);
                         intent.putExtra("Person", person);
                         startActivity(intent);
                     }

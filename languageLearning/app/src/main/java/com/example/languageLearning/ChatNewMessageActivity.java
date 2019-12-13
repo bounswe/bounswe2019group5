@@ -12,15 +12,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChatNewMessageActivity extends AppCompatActivity {
 
@@ -33,7 +27,7 @@ public class ChatNewMessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_new_message);
+        setContentView(R.layout.activity_chat_main_screen);
         app = (MyApplication) getApplication();
 
         username = (EditText) findViewById(R.id.username);
@@ -73,11 +67,11 @@ public class ChatNewMessageActivity extends AppCompatActivity {
     }
 
     public void onClickChat(View view){
-        Intent i = new Intent(ChatNewMessageActivity.this, ChatHistory.class);
+        Intent i = new Intent(ChatNewMessageActivity.this, ChatLiveScreenActivity.class);
         startActivity(i);
     }
     public void onClickMain(View view){
-        Intent i = new Intent(ChatNewMessageActivity.this, ChatMainScreenActivity.class);
+        Intent i = new Intent(ChatNewMessageActivity.this, ChatListViewActivity.class);
         startActivity(i);
     }
 

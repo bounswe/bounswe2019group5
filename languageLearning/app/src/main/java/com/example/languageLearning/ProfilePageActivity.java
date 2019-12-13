@@ -11,13 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -185,7 +182,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     public void onClickChatImage(View view){
 
-        Intent i = new Intent(ProfilePageActivity.this, ChatHistory.class);
+        Intent i = new Intent(ProfilePageActivity.this, ChatLiveScreenActivity.class);
         i.putExtra("Person",username);
         startActivity(i);
 

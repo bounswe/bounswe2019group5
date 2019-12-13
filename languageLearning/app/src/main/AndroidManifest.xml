@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatMainScreenActivity"></activity>
-        <activity android:name=".ChatHistory" />
+        <activity android:name=".ChatListViewActivity"></activity>
+        <activity android:name=".ChatLiveScreenActivity" />
         <activity android:name=".UserSearchActivity" android:exported="true"></activity>
         <activity android:name=".QuestionSuggestionActivity" />
         <activity android:name=".ExerciseSuggestionActivity" />
