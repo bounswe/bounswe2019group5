@@ -49,7 +49,7 @@
         android:gravity="start|top"
         android:hint="Your question goes here"
         android:inputType="textMultiLine"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
@@ -148,7 +148,7 @@
         android:layout_marginTop="50dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
@@ -161,6 +161,7 @@
         android:layout_marginTop="8dp"
         android:text="Upload Listening File"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/uploadListening"
         app:layout_constraintStart_toStartOf="@+id/uploadListening"
         app:layout_constraintTop_toBottomOf="@+id/uploadListening" />

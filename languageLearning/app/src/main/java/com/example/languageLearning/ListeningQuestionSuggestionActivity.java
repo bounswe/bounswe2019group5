@@ -12,16 +12,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -29,16 +33,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
 
     private static final int FILE_SELECT_CODE = 1;
     private static final int PERMISSION_REQUEST_CODE = 2;
-    TextView questionBody, uploadListeningFileTextView;
+    EditText questionBody;
+    EditText correctAnswerSelection;
+    EditText otherAnswer1;
+    EditText otherAnswer2;
+    EditText otherAnswer3;
+    Button addAnotherQuestion;
+    Button addAndFinishSuggestion;
+    ArrayList<Question> questions = new ArrayList<Question>();
+    TextView uploadListeningFileTextView;
     ImageButton uploadListening;
     MyApplication app;
     Suggestion suggestion;
+    String fileUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +79,95 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
             }
         });
 
+        correctAnswerSelection = findViewById(R.id.correctAnswerSelection);
+        otherAnswer1 = findViewById(R.id.otherAnswer1);
+        otherAnswer2 = findViewById(R.id.otherAnswer2);
+        otherAnswer3 = findViewById(R.id.otherAnswer3);
+
+        addAnotherQuestion = findViewById(R.id.addAnotherQuestion);
+        addAnotherQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (areTextEditsValid()) {
+                    addQuestion();
+                    Toast.makeText(getApplicationContext(), "Question has been saved.", Toast.LENGTH_SHORT).show();
+                    clearTextEdits();
+                }else {
+                    Toast.makeText(getApplicationContext(), "All fields must be filled to create a question.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        addAndFinishSuggestion = findViewById(R.id.addAndFinishSuggestion);
+        addAndFinishSuggestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (areTextEditsValid()) {
+                    addQuestion();
+                    try {
+                        sendSuggestion();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "All fields must be filled to create a question.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        ArrayList<Question> questions;
+
+
+
+    }
+    private boolean areTextEditsValid() {
+        if (fileUrl.equals("") |
+                correctAnswerSelection.getText().toString().equals("") |
+                otherAnswer1.getText().toString().equals("") |
+                otherAnswer2.getText().toString().equals("") |
+                otherAnswer3.getText().toString().equals("")) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private void addQuestion() {
+        String qBody = fileUrl;
+        String correctAnswer = correctAnswerSelection.getText().toString();
+        String other1 = otherAnswer1.getText().toString();
+        String other2 = otherAnswer2.getText().toString();
+        String other3 = otherAnswer3.getText().toString();
+        String[] options = new String[]{other1,other2,other3,correctAnswer};
+        Question newQuestion = new Question(qBody, options, correctAnswer);
+        questions.add(newQuestion);
+    }
+
+    private void sendSuggestion() throws JSONException {
+        suggestion.questions = questions;
+        JSONObject JSONSuggestion = suggestion.toJsonObject();
+        String path = "suggest/";
+        app.initiateAPICall(Request.Method.POST, path, JSONSuggestion, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getApplicationContext(), "Your Suggestion has been submitted.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
+    }
+
+    private void clearTextEdits() {
+        fileUrl = "";
+        uploadListeningFileTextView.setText("Upload Listening File!");
+        correctAnswerSelection.setText("");
+        otherAnswer1.setText("");
+        otherAnswer2.setText("");
+        otherAnswer3.setText("");
     }
 
     public Boolean getExternalStoragePermission() {
@@ -113,7 +216,7 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
                         String fileName = result.getString(result.getColumnIndexOrThrow("_display_name"));
                         String mimeType = result.getString(result.getColumnIndexOrThrow("mime_type"));
 
-                        filePart[0] = new FormBodyPart("writing", new ByteArrayBody(isToByteArray(getContentResolver().openInputStream(uri)), ContentType.create(mimeType), fileName));
+                        filePart[0] = new FormBodyPart("file", new ByteArrayBody(isToByteArray(getContentResolver().openInputStream(uri)), ContentType.create(mimeType), fileName));
                     }
                     catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -132,6 +235,11 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("UPLOAD", response.toString());
+                            try {
+                                fileUrl = response.getString("file");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }, new StringFunction() {
                         @Override
