@@ -18,6 +18,8 @@ import Exercises from "../exercise";
 import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
+import { withStyles } from '@material-ui/core/styles';
 import {
   Navbar,
   Nav,
@@ -27,12 +29,15 @@ import {
   Col,
   Image,
   Button,
-  ButtonToolbar
+  ButtonToolbar,
+  NavDropdown,
+  NavItem
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
 
 import { logout } from "../../redux/action-creators/authentication";
+import { red } from "@material-ui/core/colors";
 
 class App extends Component {
   render() {
@@ -109,6 +114,25 @@ class App extends Component {
           </Form>
         </Navbar>
 
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{flex: 1}} id="left-navigation">
+        <div className="container-fluid">
+        <Navbar variant="light" className="flex-column navigation-full-width">
+        <Nav className="flex-column navigation-full-width">
+              <Nav.Link className="navigation" href="/" >Home</Nav.Link>
+              <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
+              <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
+              <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
+              <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+              <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
+              <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
+        </Nav>
+        
+        
+        </Navbar>
+        </div>
+        </div>
+        <div style={{flex: 4}}>
         <main>
           <Route exact path="/" component={Home} />
           <Route exact path="/about-us" component={About} />
@@ -133,6 +157,8 @@ class App extends Component {
           <Route exact path="/writing-list" component={WritingList} />
           <Route exact path="/suggestion" component={SuggestExercise} />
         </main>
+        </div>
+      </div>
       </div>
     );
   }
@@ -150,4 +176,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default  connect(mapStateToProps, mapDispatchToProps)(App);
