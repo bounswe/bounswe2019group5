@@ -185,7 +185,8 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     public void onClickChatImage(View view){
 
-        Intent i = new Intent(ProfilePageActivity.this, ChatMainScreenActivity.class);
+        Intent i = new Intent(ProfilePageActivity.this, ChatHistory.class);
+        i.putExtra("Person",username);
         startActivity(i);
 
 
