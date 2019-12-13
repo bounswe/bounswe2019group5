@@ -281,7 +281,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void onClickChat(View view){
 
-        Intent i = new Intent(this, ChatNewMessageActivity.class);
+        Intent i = new Intent(this, ChatMainScreenActivity.class);
         startActivity(i);
 
     }

@@ -4,89 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatNewMessageActivity">
-
-    <TextView
-        android:id="@+id/sendTo"
-        android:layout_width="69dp"
-        android:layout_height="31dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="152dp"
-        android:text="Send to: "
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Username"
-        app:layout_constraintStart_toEndOf="@+id/sendTo"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+    tools:context=".ChatMainScreenActivity">
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="260dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="44dp"
-        android:text="Create a New Message"
+        android:layout_width="197dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="56dp"
+        android:text="Welcome to Chat"
         android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:text="Message"
+    <Button
+        android:id="@+id/newMessageButton"
+        android:layout_width="222dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="88dp"
+        android:onClick="onClickNewMessage"
+        android:text="Send a message to a new person"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sendTo" />
-
-    <EditText
-        android:id="@+id/message"
-        android:layout_width="215dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Message..."
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <Button
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="72dp"
-        android:onClick="onClickSend"
-        android:text="Send"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message" />
-
-    <Button
-        android:id="@+id/button2"
+        android:id="@+id/prevConversationsButton"
         android:layout_width="236dp"
         android:layout_height="80dp"
-        android:layout_marginTop="184dp"
-        android:onClick="onClickMain"
-        android:text="Chat History"
-        app:layout_constraintEnd_toEndOf="@+id/sendButton"
-        app:layout_constraintStart_toStartOf="@+id/sendButton"
-        app:layout_constraintTop_toBottomOf="@+id/sendButton" />
+        android:layout_marginTop="68dp"
+        android:onClick="onClickHistory"
+        android:text="Previous Conversations"
+        app:layout_constraintEnd_toEndOf="@+id/newMessageButton"
+        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintStart_toStartOf="@+id/newMessageButton"
+        app:layout_constraintTop_toBottomOf="@+id/newMessageButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
