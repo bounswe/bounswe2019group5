@@ -120,7 +120,12 @@ class App extends Component {
         <Navbar variant="light" className="flex-column navigation-full-width">
         <Nav className="flex-column navigation-full-width">
               <Nav.Link className="navigation" href="/" >Home</Nav.Link>
+              <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
               <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
+              <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
+              <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+              <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
+              <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
         </Nav>
         
         
