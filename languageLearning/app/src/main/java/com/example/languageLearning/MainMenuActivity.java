@@ -180,7 +180,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.setContentView(R.layout.select_exercise_type_popup);
 
         final TextView suggestNewExercise;
-        ImageButton vocabTestButton, grammarTestButton, readingTestButton;
+        ImageButton vocabTestButton, grammarTestButton, readingTestButton, listeningTestButton;
 
         vocabTestButton = popup.findViewById(R.id.vocabTestButton);
         vocabTestButton.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +205,15 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path);
+            }
+        });
+
+        listeningTestButton = popup.findViewById(R.id.listeningTestButton);
+        listeningTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String path = "search/?type=listening&language=" + app.getLanguage().toLowerCase();
                 getAndStartExercise(path);
             }
         });
