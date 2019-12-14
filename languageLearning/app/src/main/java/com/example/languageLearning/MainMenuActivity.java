@@ -234,7 +234,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.show();
     }
 
-    public void getAndStartExercise(String path){
+    public void getAndStartExercise(final String path){
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -246,7 +246,13 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                     JSONObject jsonExercise = (JSONObject) response.get(new Random().nextInt(response.length()));
                     Exercise exercise = Exercise.fromJSON(jsonExercise);
-                    Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+
+                    Intent intent;
+                    if(path.contains("listening"))
+                        intent = new Intent(MainMenuActivity.this, ListeningExerciseActivity.class);
+                    else
+                        intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+
                     intent.putExtra("exercise", exercise);
                     startActivity(intent);
                 }
