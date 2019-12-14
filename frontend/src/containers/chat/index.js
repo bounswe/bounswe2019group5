@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import 'react-chat-elements/dist/main.css';
-import { MessageList,SystemMessage,Input,Button, SideBar } from 'react-chat-elements';
+import { MessageList,SystemMessage,Input,Button, SideBar, MessageBox } from 'react-chat-elements';
 
 import { activate_chat, deactivate_chat, get_all_messages, send_message } from '../../redux/action-creators/chat';
 
@@ -12,13 +12,14 @@ import {Paper, Grid, CssBaseline, withStyles } from '@material-ui/core';
 import styles from "./styles";
 
 import { Link } from 'react-router-dom';
+import { flexbox } from '@material-ui/system';
 
 export class Chat extends Component {
 
     componentDidMount() {
-        this.props.activate_chat(this.props.userInfo.token, this.props.match.params.chatWith);
+        this.props.activate_chat(this.props.userInfo.token, this.props.match.params.chatWith || this.props.chatWith);
         const f = () => {
-            this.props.get_all_messages(this.props.userInfo.token, this.props.match.params.chatWith);
+            this.props.get_all_messages(this.props.userInfo.token, this.props.match.params.chatWith || this.props.chatWith);
             this.timer = setTimeout(f, 3000);
         }
         f();
@@ -41,32 +42,44 @@ export class Chat extends Component {
         }
 
         const {classes} = this.props;
-        let chatWith = this.props.match.params.chatWith;
+        let chatWith = this.props.match.params.chatWith || this.props.chatWith;
 
         return (
             
-            <div style={{ border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>   
-                {this.props.chat.messages==null && this.props.chat.messagesLoading==true &&
-                    <div>
-                        <h1>LOADING</h1>
-                    </div>
-                }
-                {
-                    <div>
-                        <h1 style={{color: "red"}}>
-                            Chat With
-                            <Link to={{
-                                pathname: "/profile/" + chatWith
-                            }}> {chatWith}</Link>
-                        </h1>
-                    </div>
-                }
-                {this.props.chat.messages!=null &&
-                    <MessageList
-                        className='message-list'
-                        dataSource={this.props.chat.messages} />
-                }
-                <div style={{ border: '2px solid orange', 'border-radius': '2px', margin: '10px' }}>
+            <div style={{ display: 'flex', 'flex-direction': 'column', height: '80vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>   
+                <div style={{flex: 1, justifyContent: 'center'}}>
+                    {this.props.chat.messages==null && this.props.chat.messagesLoading==true &&
+                        <div>
+                            <h1>LOADING</h1>
+                        </div>
+                    }
+                    {
+                        <div>
+                            <h1 style={{color: "red"}}>
+                                Chat With
+                                <Link to={{
+                                    pathname: "/profile/" + chatWith
+                                }}> {chatWith}</Link>
+                            </h1>
+                        </div>
+                    }
+                </div>
+                <div style={{flex: 9, 'overflow-y': 'scroll'}}>
+                    {this.props.chat.messages && 
+                    this.props.chat.messages
+                        .map(message => {
+                            return (
+                                <div>
+                                <MessageBox
+                                    position={message.position}
+                                    type={'text'}
+                                    text={message.text}
+                                    date={message.date}/>
+                                </div>
+                                );
+                        })}
+                </div>
+                <div style={{ flex: 1, border: '2px solid orange', 'border-radius': '2px', margin: '10px' }}>
                     <Input
                         placeholder="Type here..."
                         multiline={true}
@@ -87,7 +100,7 @@ export class Chat extends Component {
                             />
                     }/>
                 </div>
-          </div>
+            </div>
       );
     }
 }
