@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class ChatListViewAdapter extends ArrayAdapter<String> {
+class       ChatListViewAdapter extends ArrayAdapter<String> {
 
     public ChatListViewAdapter(@NonNull Context context, String[] families) {
         super(context, R.layout.chat_list_view_custom_row,families);

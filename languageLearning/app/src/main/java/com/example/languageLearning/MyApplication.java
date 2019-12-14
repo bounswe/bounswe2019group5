@@ -152,7 +152,7 @@ public class MyApplication extends Application {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                 Log.e(TAG, error.toString());
-                Log.e(TAG, error.getMessage());
+                //Log.e(TAG, error.getMessage());
                 error.printStackTrace();
                 if (errorListener != null)
                     errorListener.onErrorResponse(error);
