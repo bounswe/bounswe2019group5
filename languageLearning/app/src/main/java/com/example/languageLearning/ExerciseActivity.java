@@ -154,15 +154,12 @@ public class ExerciseActivity extends AppCompatActivity {
                 answers.put(JSONObject.NULL);
         }
         data.put("answers", answers);
-        Log.d("RESSPONNSEEEE1111", data.toString(2));
         app.initiateAPICall(Request.Method.POST, path, data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("RESSPONNSEEEE", response.toString(2));
                     String[] correctAnswers = new String[response.getJSONArray("correct_answer").length()];
                     correctAnswers = toStringArray(response.getJSONArray("correct_answer"));
-                    Log.d("HEYHEEEEEY", correctAnswers[0]);
                     Intent intent = new Intent(ExerciseActivity.this, ExerciseResultOverviewActivity.class);
                     intent.putExtra("exercise", exercise);
                     intent.putExtra("chosenAnswers", chosenAnswers);
