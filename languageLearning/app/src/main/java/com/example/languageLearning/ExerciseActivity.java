@@ -164,6 +164,7 @@ public class ExerciseActivity extends AppCompatActivity {
                     intent.putExtra("exercise", exercise);
                     intent.putExtra("chosenAnswers", chosenAnswers);
                     intent.putExtra("correctAnswers", correctAnswers);
+                    intent.putExtra("testType","nonlistening");
                     startActivity(intent);
                 }
                 catch (JSONException e) {
