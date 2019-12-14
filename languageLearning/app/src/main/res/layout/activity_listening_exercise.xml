@@ -27,6 +27,7 @@
         android:layout_marginTop="24dp"
         android:background="@color/white"
         android:scaleType="fitCenter"
+        android:onClick="onClickPlay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercise_question"
         app:srcCompat="@drawable/ic_play_icon" />
