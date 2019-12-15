@@ -20,19 +20,12 @@ public class ChatMainScreenActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
 
-    EditText username;
-    EditText message;
-
     MyApplication app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main_screen);
         app = (MyApplication) getApplication();
-
-        username = (EditText) findViewById(R.id.username);
-        message = (EditText) findViewById(R.id.message);
-
     }
 
 
