@@ -67,7 +67,7 @@ public class UserAdapter extends BaseAdapter {
         try {
             usernameString = jsonUser.getString("username");
             username.setText(username.getText().toString() + usernameString);
-            nativeLanguage.setText(nativeLanguage.getText().toString() + jsonUser.getString("native_language"));
+            nativeLanguage.setText(nativeLanguage.getText().toString() + jsonUser.getString("native_language").substring(0,1).toUpperCase() + jsonUser.getString("native_language").substring(1));
             averageRating.setText(averageRating.getText().toString() + String.format("%.2f", jsonUser.getDouble("rating_average")));
         } catch (JSONException e) {
             e.printStackTrace();
