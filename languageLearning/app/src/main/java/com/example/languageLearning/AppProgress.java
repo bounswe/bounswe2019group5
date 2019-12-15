@@ -23,6 +23,7 @@ public class AppProgress extends AppCompatActivity {
 
     MyApplication app;
     double total_progress = 0;
+    String languageSet = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class AppProgress extends AppCompatActivity {
         Button b = (Button) view;
         final String language = b.getText().toString().toLowerCase();
         Log.d("LANGUAGE IS SET LIKE : ",language);
+        languageSet = language;
         getProgress(language);
         Log.d("OFF METHOD  : "," GETPROGRESS OUT ONCLICK AGAIN");
 
@@ -69,11 +71,12 @@ public class AppProgress extends AppCompatActivity {
 
                     total_progress = (ntc/nt)*100;
                     double total_progressTwoDigit = Math.floor(total_progress* 100) / 100;
-                    String progressString= total_progressTwoDigit+"";
-                    Log.d(TAG," "+total_progressTwoDigit);
+                    String progressString= total_progressTwoDigit+"%";
+                    Log.d(TAG," "+total_progressTwoDigit+"%");
 
                     Intent i = new Intent(AppProgress.this, AppProgressResullt.class);
                     i.putExtra("progress", progressString);
+                    i.putExtra("language", languageSet);
                     startActivity(i);
 
                 } catch (JSONException e) {

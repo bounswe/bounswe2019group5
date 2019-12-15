@@ -8,23 +8,40 @@
 
     <TextView
         android:id="@+id/progressPercentage"
-        android:layout_width="119dp"
-        android:layout_height="125dp"
-        android:layout_marginBottom="316dp"
+        android:layout_width="299dp"
+        android:layout_height="93dp"
+        android:layout_marginBottom="388dp"
         android:text="%"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#693EC3"
+        android:textSize="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/progressLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You have accomplish"
+        android:text="You have accomplished"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/progressPercentage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.778" />
+
+    <TextView
+        android:id="@+id/progressLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="You have accomplished"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressPercentage"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
