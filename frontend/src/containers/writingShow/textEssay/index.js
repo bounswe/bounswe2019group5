@@ -43,6 +43,7 @@ class TextEssay extends Component {
             else if (x==14)  res = res + 'E';
             else if (x==15)  res = res + 'F';
         }
+        return "yellow";
         return res;
     }
 

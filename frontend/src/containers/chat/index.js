@@ -16,10 +16,16 @@ import { flexbox } from '@material-ui/system';
 
 export class Chat extends Component {
 
+    constructor(props) {
+        super(props);
+        this.chatWith = this.props.match && this.props.match.params ? this.props.match.params.chatWith || this.props.chatWith
+                                                                    : this.props.chatWith;
+    }
+
     componentDidMount() {
-        this.props.activate_chat(this.props.userInfo.token, this.props.match.params.chatWith || this.props.chatWith);
+        this.props.activate_chat(this.props.userInfo.token, this.chatWith);
         const f = () => {
-            this.props.get_all_messages(this.props.userInfo.token, this.props.match.params.chatWith || this.props.chatWith);
+            this.props.get_all_messages(this.props.userInfo.token, this.chatWith);
             this.timer = setTimeout(f, 3000);
         }
         f();
@@ -42,29 +48,33 @@ export class Chat extends Component {
         }
 
         const {classes} = this.props;
-        let chatWith = this.props.match.params.chatWith || this.props.chatWith;
+        let chatWith = this.chatWith;
 
         return (
             
-            <div style={{ display: 'flex', 'flex-direction': 'column', height: '80vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>   
-                <div style={{flex: 1, justifyContent: 'center'}}>
-                    {this.props.chat.messages==null && this.props.chat.messagesLoading==true &&
-                        <div>
-                            <h1>LOADING</h1>
-                        </div>
-                    }
-                    {
-                        <div>
-                            <h1 style={{color: "red"}}>
-                                Chat With
-                                <Link to={{
-                                    pathname: "/profile/" + chatWith
-                                }}> {chatWith}</Link>
-                            </h1>
-                        </div>
-                    }
-                </div>
-                <div style={{flex: 9, 'overflow-y': 'scroll'}}>
+            <div style={{ display: 'flex', 'flex-direction': 'column', height: '60vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>   
+                {!this.props.notShowTitle &&
+                    <div style={{flex: 1, justifyContent: 'center'}}>
+                        {this.props.chat.messages==null && this.props.chat.messagesLoading==true &&
+                            <div>
+                                <h1>LOADING</h1>
+                            </div>
+                        }
+                        {
+                            <div>
+                                <h1 style={{color: "red"}}>
+                                    Chat With
+                                    <Link to={{
+                                        pathname: "/profile/" + chatWith
+                                    }}> {chatWith}</Link>
+                                </h1>
+                            </div>
+                        }
+                    </div>
+                }
+                <div
+                    style={{flex: 9, 'overflow-y': 'scroll'}}
+                    ref={(el) => {this.messageListRef = el;}}>
                     {this.props.chat.messages && 
                     this.props.chat.messages
                         .map(message => {
@@ -91,6 +101,7 @@ export class Chat extends Component {
                                 text='Send'
                                 onClick={
                                     () => {
+                                        this.messageListRef.scrollIntoView({block: 'end', behavior: 'smooth'});
                                         this.props.send_message(this.props.userInfo.token,
                                             chatWith,
                                             this.refs.send_message_text.state.value, 
