@@ -23,6 +23,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
     private final String TAG = getClass().getName();
+    ImageView chatButton;
     ConstraintLayout rateDistributionLayout;
     LinearLayout linearLayout, yourCommentLayout, leaveRatingLayout;
     ImageView commentStars[] = new ImageView[5];
@@ -66,6 +67,10 @@ public class ProfilePageActivity extends AppCompatActivity {
         progressBars[3] = findViewById(R.id.progressBar4);
         progressBars[4] = findViewById(R.id.progressBar5);
         reviewCount = findViewById(R.id.reviewCount);
+        chatButton = findViewById(R.id.chatButton);
+
+        if (username.equals(app.getUsername()))
+            chatButton.setVisibility(View.INVISIBLE);
 
         getProfile();
     }

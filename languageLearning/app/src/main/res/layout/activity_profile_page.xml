@@ -30,6 +30,7 @@
                 app:srcCompat="@drawable/ic_settings" />
 
             <ImageView
+                android:id="@+id/chatButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
