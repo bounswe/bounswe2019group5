@@ -1,5 +1,6 @@
 package com.example.languageLearning;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -39,7 +40,6 @@ import java.util.HashMap;
 public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
 
     private static final int FILE_SELECT_CODE = 1;
-    private static final int PERMISSION_REQUEST_CODE = 2;
     EditText questionBody;
     EditText correctAnswerSelection;
     EditText otherAnswer1;
@@ -72,7 +72,7 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
         uploadListening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean permissionResult = getExternalStoragePermission();
+                Boolean permissionResult = MyApplication.getExternalStoragePermission(ListeningQuestionSuggestionActivity.this);
                 if (permissionResult != null && permissionResult == true) {
                     showFileChooser();
                 }
@@ -114,10 +114,6 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
                 }
             }
         });
-        ArrayList<Question> questions;
-
-
-
     }
     private boolean areTextEditsValid() {
         if (fileUrl.equals("") |
@@ -170,20 +166,6 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
         otherAnswer3.setText("");
     }
 
-    public Boolean getExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    PERMISSION_REQUEST_CODE);
-            return null;
-        }
-
-        return true;
-    }
-
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
@@ -197,6 +179,21 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
             Toast.makeText(this, "No file chooser was found",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MyApplication.EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "Read external storage permission is required to upload files",
+                        Toast.LENGTH_SHORT).show();
+                return ;
+            }
+            else {
+                showFileChooser();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -216,7 +213,7 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
                         String fileName = result.getString(result.getColumnIndexOrThrow("_display_name"));
                         String mimeType = result.getString(result.getColumnIndexOrThrow("mime_type"));
 
-                        filePart[0] = new FormBodyPart("file", new ByteArrayBody(isToByteArray(getContentResolver().openInputStream(uri)), ContentType.create(mimeType), fileName));
+                        filePart[0] = new FormBodyPart("file", new ByteArrayBody(MyApplication.isToByteArray(getContentResolver().openInputStream(uri)), ContentType.create(mimeType), fileName));
                     }
                     catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -251,17 +248,5 @@ public class ListeningQuestionSuggestionActivity extends AppCompatActivity {
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    byte[] isToByteArray(InputStream in) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        while (true) {
-            int r = in.read(buffer);
-            if (r == -1) break;
-            out.write(buffer, 0, r);
-        }
-
-        return out.toByteArray();
     }
 }

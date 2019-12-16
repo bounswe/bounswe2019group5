@@ -23,28 +23,14 @@ import java.nio.charset.StandardCharsets;
 public class NewEssayActivity extends AppCompatActivity {
 
     private static final int FILE_SELECT_CODE = 1;
-    private static final int PERMISSION_REQUEST_CODE = 2;
     private final String TAG = this.getClass().getName();
 
+    private MyApplication app;
     ImageButton uploadFromFile, writeNew, myEssays;
-
-    public Boolean getExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    PERMISSION_REQUEST_CODE);
-            return null;
-        }
-
-        return true;
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_CODE) {
+        if (requestCode == MyApplication.EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
             if (grantResults.length == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Toast.makeText(this, "Read external storage permission is required to upload files",
                         Toast.LENGTH_SHORT).show();
@@ -93,6 +79,7 @@ public class NewEssayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_essay);
+        app = (MyApplication) getApplicationContext();
         uploadFromFile = findViewById(R.id.uploadFileButton);
         writeNew = findViewById(R.id.writeButton);
         myEssays = findViewById(R.id.myEssaysButton);
@@ -108,7 +95,7 @@ public class NewEssayActivity extends AppCompatActivity {
         uploadFromFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean permissionResult = getExternalStoragePermission();
+                Boolean permissionResult = MyApplication.getExternalStoragePermission(NewEssayActivity.this);
                 if (permissionResult != null && permissionResult == true)
                     showFileChooser();
             }

@@ -52,20 +52,6 @@ public class UploadEssayActivity extends AppCompatActivity {
     Button finishButton;
     TextView textView;
 
-
-
-    byte[] isToByteArray(InputStream in) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        while (true) {
-            int r = in.read(buffer);
-            if (r == -1) break;
-            out.write(buffer, 0, r);
-        }
-
-        return out.toByteArray();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +86,7 @@ public class UploadEssayActivity extends AppCompatActivity {
                 String fileName = result.getString(result.getColumnIndexOrThrow("_display_name"));
                 String mimeType = result.getString(result.getColumnIndexOrThrow("mime_type"));
 
-                filePart[0] = new FormBodyPart("writing", new ByteArrayBody(isToByteArray(getContentResolver().openInputStream(Uri.parse(essayPath))), ContentType.create(mimeType), fileName));
+                filePart[0] = new FormBodyPart("writing", new ByteArrayBody(MyApplication.isToByteArray(getContentResolver().openInputStream(Uri.parse(essayPath))), ContentType.create(mimeType), fileName));
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();
