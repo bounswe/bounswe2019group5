@@ -93,32 +93,48 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="249dp"
                         android:layout_height="wrap_content"
-                        android:text="Native Language"
-                        android:textColor="@color/headings"
-                        android:textSize="20sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/nativeLang"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/english"
-                        android:textColor="#000000"
-                        android:textSize="25sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Native Language"
+                            android:textColor="@color/headings"
+                            android:textSize="20sp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/grey" />
+                        <TextView
+                            android:id="@+id/nativeLang"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="@string/english"
+                            android:textColor="#000000"
+                            android:textSize="25sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/grey" />
 
 
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/progressButton"
+                        android:layout_width="183dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/grad"
+                        android:textColor="#FFFFFF"
+                        android:text="Progress"
+                        android:onClick="onClickProgressButton"/>
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout

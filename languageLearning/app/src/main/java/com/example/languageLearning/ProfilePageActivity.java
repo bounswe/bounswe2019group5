@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -101,6 +102,11 @@ public class ProfilePageActivity extends AppCompatActivity {
         TextView commentText = commentView.findViewById(R.id.commentText);
         commentText.setText(comment.comment);
         return commentView;
+    }
+
+    public void onClickProgressButton(View view){
+        Intent intent = new Intent(ProfilePageActivity.this, AppProgress.class);
+        startActivity(intent);
     }
 
     public void fillScreen(JSONObject response){
