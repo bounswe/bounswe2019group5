@@ -29,6 +29,18 @@
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/ic_settings" />
 
+            <ImageView
+                android:id="@+id/chatButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="350dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:onClick="onClickChatImage"
+                app:srcCompat="@drawable/ic_chat_icon" />
+
             <RelativeLayout
                 android:id="@+id/imgUser"
                 android:layout_width="wrap_content"

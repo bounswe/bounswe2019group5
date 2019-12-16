@@ -62,7 +62,7 @@ public class LeaveRatingActivity extends AppCompatActivity {
                 }
             });
         }
-        sendButton = findViewById(R.id.sendButton);
+        sendButton = findViewById(R.id.newMessageButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

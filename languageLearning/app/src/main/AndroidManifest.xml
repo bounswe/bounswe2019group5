@@ -15,8 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ListeningQuestionSuggestionActivity"/>
-        <activity android:name=".ChatMainScreenActivity" />
-        <activity android:name=".ChatHistory" />
+        <activity android:name=".ChatNewMessageActivity" />
+        <activity android:name=".ChatListViewActivity" />
+        <activity android:name=".ChatLiveScreenActivity" />
         <activity
             android:name=".UserSearchActivity"
             android:exported="true" />
@@ -27,7 +28,7 @@
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ExerciseResultOverviewActivity" />
-        <activity android:name=".ChatNewMessageActivity" />
+        <activity android:name=".ChatMainScreenActivity" />
         <activity
             android:name=".ImageEssayDetailTestActivity"
             android:exported="true" />
@@ -61,5 +62,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

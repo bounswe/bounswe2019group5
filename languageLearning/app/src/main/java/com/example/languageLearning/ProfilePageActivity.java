@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,6 +23,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
     MyApplication app;
     private final String TAG = getClass().getName();
+    ImageView chatButton;
     ConstraintLayout rateDistributionLayout;
     LinearLayout linearLayout, yourCommentLayout, leaveRatingLayout;
     ImageView commentStars[] = new ImageView[5];
@@ -67,6 +67,10 @@ public class ProfilePageActivity extends AppCompatActivity {
         progressBars[3] = findViewById(R.id.progressBar4);
         progressBars[4] = findViewById(R.id.progressBar5);
         reviewCount = findViewById(R.id.reviewCount);
+        chatButton = findViewById(R.id.chatButton);
+
+        if (username.equals(app.getUsername()))
+            chatButton.setVisibility(View.INVISIBLE);
 
         getProfile();
     }
@@ -179,6 +183,15 @@ public class ProfilePageActivity extends AppCompatActivity {
             leaveRatingLayout.setVisibility(View.GONE);
             yourCommentLayout.addView(createCommentViewFromComment(ourComment), 1);
         }
+    }
+
+    public void onClickChatImage(View view){
+
+        Intent i = new Intent(ProfilePageActivity.this, ChatLiveScreenActivity.class);
+        i.putExtra("Person",username);
+        startActivity(i);
+
+
     }
 
 }
