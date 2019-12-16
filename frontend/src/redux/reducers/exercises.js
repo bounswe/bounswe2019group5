@@ -1,10 +1,6 @@
 import {
-  VOCABULARY_TEST_REQUESTED,
-  VOCABULARY_TEST,
-  GRAMMAR_TEST_REQUESTED,
-  GRAMMAR_TEST,
-  LISTENING_TEST_REQUESTED,
-  LISTENING_TEST,
+  EXERCISE_REQUESTED,
+  EXERCISE,
   TEST_RESULT_REQUESTED,
   TEST_RESULT,
   SEARCH_TEST,
@@ -12,9 +8,7 @@ import {
 
 const initialState = {
   loading: false,
-  vocabularyTest: null,
-  grammarTest: null,
-  listeningTest: null,
+  exercise: null,
   isFinished: false,
   testResult: null,
   searchedTest: {
@@ -27,52 +21,20 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case VOCABULARY_TEST_REQUESTED:
+    case EXERCISE_REQUESTED:
       return {
         ...state,
         loading: true,
         isFinished: false,
-        vocabularyTest: null,
-        testResult: null
+        exercise: null,
+        testResult: null,
       };
 
-    case VOCABULARY_TEST:
+    case EXERCISE:
       return {
         ...state,
         loading: false,
-        vocabularyTest: action.vocabularyTest
-      };
-
-    case GRAMMAR_TEST_REQUESTED:
-      return {
-        ...state,
-        loading: true,
-        isFinished: false,
-        grammarTest: null,
-        testResult: null
-      };
-
-    case GRAMMAR_TEST:
-      return {
-        ...state,
-        loading: false,
-        grammarTest: action.grammarTest
-      };
-
-    case LISTENING_TEST_REQUESTED:
-      return {
-        ...state,
-        loading: true,
-        isFinished: false,
-        listeningTest: null,
-        testResult: null
-      };
-
-    case LISTENING_TEST:
-      return {
-        ...state,
-        loading: false,
-        listeningTest: action.listeningTest
+        exercise: action.exercise,
       };
 
     case TEST_RESULT_REQUESTED:

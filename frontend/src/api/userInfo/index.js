@@ -58,3 +58,30 @@ export const get_user_test_results = async (token, language, type, level) => {
     return test_statistics;
         
 };
+export const get_user_progress = async (token, language, type, level) => {
+
+    let user_progress = await axios
+        .get( parameters.apiUrl + "/progress",
+            {
+                params: {
+                    language,
+                    type,
+                    level,
+                },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Token "+token,
+                },
+                timeout: 10000
+            }
+        )
+        .then(response => response.data)
+        .catch(err => {
+            return {
+                message: err.response ? err.response.data.message : "Connection Error!"
+            };
+        });
+
+    return user_progress;
+        
+};

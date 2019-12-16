@@ -1,0 +1,19 @@
+
+.navigation:hover {
+    background-color: orange !important;
+  }
+
+  .navigation-full-width {
+    width: 100%;
+    padding: 0;
+  }
+
+  .container-fluid {
+    padding: 0;
+}
+
+#left-navigation {
+    background-color: white !important;
+    border: 1px solid silver;
+    height: 100vh;
+}

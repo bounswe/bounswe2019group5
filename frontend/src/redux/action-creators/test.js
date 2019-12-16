@@ -15,10 +15,10 @@ export const get_prof_test = (token, selectedLanguage) => {
 			type : PROF_TEST_REQUESTED
 		});
 		get_prof_test_api(token, selectedLanguage)
-			.then(response => {
+			.then(profTest => {
 				dispatch({
                     type: PROF_TEST,
-                    profTest: response,
+                    profTest: profTest,
 				});
 			});
 	}

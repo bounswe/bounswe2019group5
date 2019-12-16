@@ -1,5 +1,5 @@
 import {
-    ACTIVATE_CHAT, DEACTIVATE_CHAT, SEND_MESSAGE, GET_ALL_MESSAGES_REQUESTED, GET_ALL_MESSAGES,
+    ACTIVATE_CHAT, DEACTIVATE_CHAT, SEND_MESSAGE, GET_ALL_MESSAGES_REQUESTED, GET_ALL_MESSAGES, CHAT_HISTORY_CLEAR, CHAT_HISTORY_REQUESTED, CHAT_HISTORY,
   } from "../actions";
   
   const initialState = {
@@ -7,6 +7,8 @@ import {
     messagesLoading: false,
     messages: null,
     to: null,
+    chatHistory: null,
+    chatHistoryLoading: false,
   };
   
   export default (state = initialState, action) => {
@@ -47,6 +49,26 @@ import {
                 ...state,
                 messagesLoading: false,
                 messages: action.messages,
+            };
+        
+        case CHAT_HISTORY_CLEAR:
+            return {
+                ...state,
+                chatHistoryLoading: false,
+                chatHistory: null,
+            };
+        
+        case CHAT_HISTORY_REQUESTED:
+            return {
+                ...state,
+                chatHistoryLoading: true,
+            };
+
+        case CHAT_HISTORY:
+            return {
+                ...state,
+                chatHistoryLoading: false,
+                chatHistory: action.chatHistory,
             };
   
       default:

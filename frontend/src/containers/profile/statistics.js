@@ -2,10 +2,8 @@ import React from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Typography from "@material-ui/core/Typography";
-import { Redirect } from "react-router";
-import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
-import { Button, Card, CardDeck, Image, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default function Statistics({ userInfo, language, writings}) {
   const [key, setKey] = React.useState("General");
@@ -14,97 +12,76 @@ export default function Statistics({ userInfo, language, writings}) {
     if (n_of_false === null || n_of_true === null) {
       return 0
     } else {
-      return n_of_true / (n_of_false + n_of_true)
+      return Math.round((n_of_true / (n_of_false + n_of_true))*100)/100
     }
+  }
+  const calculateProgress = (progress) => {
+    if(!progress)
+      return 0;
+    else 
+      return Math.round( (progress.number_of_test_completed / progress.number_of_test) * 100 ) / 100
   }
 
   return (
     <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
       <Tab eventKey="General" title="General">
         <Typography variant="h3" gutterBottom>
-          Your Level: A2
+          Your Level: {userInfo.userProfile.levels[language]}
         </Typography>
-        {/*  not functional yet 
+        
         <Typography variant="h4" gutterBottom>
-          Progress in current level: %5 
+          Progress so far: {calculateProgress(userInfo.progress[language].general)}
         </Typography>
  
         <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
+          Number of tests you've completed: {userInfo.progress[language].general.number_of_test_completed}
         </Typography>       */}
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
-          {language == "english"
-            ? correctAnswerRate(userInfo.english_general_test_result.number_of_true, userInfo.english_general_test_result.number_of_false)
-            : language == "turkish"
-            ? correctAnswerRate(userInfo.turkish_general_test_result.number_of_true, userInfo.turkish_general_test_result.number_of_false)
-            : correctAnswerRate(userInfo.german_general_test_result.number_of_true, userInfo.german_general_test_result.number_of_false)}
+          {correctAnswerRate(userInfo.testResult[language].general.number_of_true, userInfo.testResult[language].general.number_of_false)
+          }
         </Typography>
       </Tab>
       <Tab eventKey="Grammar" title="Grammar">
         {" "}
-        {/*
         <Typography variant="h4" gutterBottom>
-          Progress in current level: %5
+          Progress so far: {calculateProgress(userInfo.progress[language].grammar)}
         </Typography>
         <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
+          Number of tests you've completed: {userInfo.progress[language].grammar.number_of_test_completed}
         </Typography>
-      */}
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
-          {language == "english"
-            ? correctAnswerRate(userInfo.english_grammar.number_of_true, userInfo.english_grammar.number_of_false)
-            : language == "turkish"
-            ? correctAnswerRate(userInfo.turkish_grammar.number_of_true, userInfo.turkish_grammar.number_of_false)
-            : correctAnswerRate(userInfo.german_grammar.number_of_true, userInfo.german_grammar.number_of_false)}
+          {correctAnswerRate(userInfo.testResult[language].grammar.number_of_true, userInfo.testResult[language].grammar.number_of_false)
+          }
         </Typography>
       </Tab>
       <Tab eventKey="Vocabulary" title="Vocabulary">
-        {/*
         <Typography variant="h4" gutterBottom>
-          Progress in current level: %5
+          Progress so far: {calculateProgress(userInfo.progress[language].vocabulary)}
         </Typography>
         <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
+          Number of tests you've completed: {userInfo.progress[language].vocabulary.number_of_test_completed}
         </Typography>
-      */}
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
-          {language == "english"
-            ? correctAnswerRate(userInfo.english_voc.number_of_true, userInfo.english_voc.number_of_false)
-            : language == "turkish"
-            ? correctAnswerRate(userInfo.turkish_voc.number_of_true, userInfo.turkish_voc.number_of_false)
-            : correctAnswerRate(userInfo.german_voc.number_of_true, userInfo.german_voc.number_of_false)}
+          {correctAnswerRate(userInfo.testResult[language].vocabulary.number_of_true, userInfo.testResult[language].vocabulary.number_of_false)}
         </Typography>
       </Tab>
       <Tab eventKey="Reading" title="Reading">
-        {/*
         <Typography variant="h4" gutterBottom>
-          Progress in current level: %5
+          Progress so far: {calculateProgress(userInfo.progress[language].reading)}
         </Typography>
         <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
+          Number of tests you've completed: {userInfo.progress[language].reading.number_of_test_completed}
         </Typography>
-      */}
         <Typography variant="h4" gutterBottom>
           Average correct answer rate: 
-          {language == "english"
-            ? correctAnswerRate(userInfo.english_read.number_of_true, userInfo.english_read.number_of_false)
-            : language == "turkish"
-            ? correctAnswerRate(userInfo.turkish_read.number_of_true, userInfo.turkish_read.number_of_false)
-            : correctAnswerRate(userInfo.german_read.number_of_true, userInfo.german_read.number_of_false)}
+          {correctAnswerRate(userInfo.testResult[language].reading.number_of_true, userInfo.testResult[language].reading.number_of_false)
+          }
         </Typography>
       </Tab>
       <Tab eventKey="Writing" title="Writing">
-        {/*
-        <Typography variant="h4" gutterBottom>
-          Progress in current level: %5
-        </Typography>
-        <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
-        </Typography>
-      */}
         {writings && (writings.map(item => {
           if (item.author === this.props.userInfo.username)
             return (
@@ -130,21 +107,16 @@ export default function Statistics({ userInfo, language, writings}) {
         }))}
       </Tab>
       <Tab eventKey="Listening" title="Listening">
-        {/*
         <Typography variant="h4" gutterBottom>
-          Progress in current level: %5
+          Progress so far: {calculateProgress(userInfo.progress[language].listening)}
         </Typography>
         <Typography variant="h4" gutterBottom>
-          Number of tests you've completed: 12
+          Number of tests you've completed: {userInfo.progress[language].listening}
         </Typography>
-      */}
         <Typography variant="h4" gutterBottom>
         Average correct answer rate: 
-          {language == "english"
-            ? correctAnswerRate(userInfo.english_listen.number_of_true, userInfo.english_listen.number_of_false)
-            : language == "turkish"
-            ? correctAnswerRate(userInfo.turkish_listen.number_of_true, userInfo.turkish_listen.number_of_false)
-            : correctAnswerRate(userInfo.german_listen.number_of_true, userInfo.german_listen.number_of_false)}
+        {correctAnswerRate(userInfo.testResult[language].listening.number_of_true, userInfo.testResult[language].listening.number_of_false)
+        }
         </Typography>
       </Tab>
     </Tabs>

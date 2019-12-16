@@ -26,6 +26,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ImageEssay from './imageEssay';
 import TextEssay from './textEssay';
 import Popup from 'reactjs-popup';
+import Chat from '../chat';
 
 import Modal from "@material-ui/core/Modal";
 
@@ -191,6 +192,19 @@ class WritingShow extends Component {
                 <label>{this.state.annotation.annotationText}</label>
               </div>
             </div>
+            ||
+            <div>
+              <div><Link style={{color:'white'}}>.</Link></div>
+              <div><mark style={{color:'white', backgroundColor: 'white'}}>.</mark></div>
+              <div><label style={{color:'white'}}>.</label></div>
+            </div>
+          }
+
+          {this.state.essay.reviewer &&
+            <Chat 
+              chatWith={this.props.userInfo.username === this.state.essay.reviewer ?
+                              this.state.essay.author : this.state.essay.reviewer}
+              notShowTitle/>
           }
 
         <Modal
