@@ -180,14 +180,14 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.setContentView(R.layout.select_exercise_type_popup);
 
         final TextView suggestNewExercise;
-        ImageButton vocabTestButton, grammarTestButton, readingTestButton;
+        ImageButton vocabTestButton, grammarTestButton, readingTestButton, listeningTestButton;
 
         vocabTestButton = popup.findViewById(R.id.vocabTestButton);
         vocabTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=vocabulary&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "vocabulary");
             }
         });
 
@@ -196,7 +196,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=grammar&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "grammar");
             }
         });
 
@@ -205,7 +205,16 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "reading");
+            }
+        });
+
+        listeningTestButton = popup.findViewById(R.id.listeningTestButton);
+        listeningTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String path = "search/?type=listening&language=" + app.getLanguage().toLowerCase();
+                getAndStartExercise(path, "listening");
             }
         });
 
@@ -225,7 +234,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.show();
     }
 
-    public void getAndStartExercise(String path){
+    public void getAndStartExercise(final String path, final String type){
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -237,8 +246,11 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                     JSONObject jsonExercise = (JSONObject) response.get(new Random().nextInt(response.length()));
                     Exercise exercise = Exercise.fromJSON(jsonExercise);
+
                     Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+
                     intent.putExtra("exercise", exercise);
+                    intent.putExtra("type", type);
                     startActivity(intent);
                 }
                 catch (JSONException e) {

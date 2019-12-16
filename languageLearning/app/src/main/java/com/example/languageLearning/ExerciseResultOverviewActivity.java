@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ExerciseResultOverviewActivity extends AppCompatActivity {
@@ -30,11 +32,16 @@ public class ExerciseResultOverviewActivity extends AppCompatActivity {
         final String[] chosenAnswers = getIntent().getStringArrayExtra("chosenAnswers");
         final String[] correctAnswers = getIntent().getStringArrayExtra("correctAnswers");
 
+        final String exerciseType = getIntent().getStringExtra("type");
+
         seeCorrectAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(ExerciseResultOverviewActivity.this, ExerciseActivity.class);
+
                 intent.putExtra("exercise", exercise);
+                intent.putExtra("type", exerciseType);
                 intent.putExtra("chosenAnswers", chosenAnswers);
                 intent.putExtra("correctAnswers", correctAnswers); // Providing a non-null correctAnswers causes the ExerciseActivity to be run in "answer key" mode.
                 startActivity(intent);
