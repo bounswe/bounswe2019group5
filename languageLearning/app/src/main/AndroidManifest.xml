@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AppProgressResullt"></activity>
+        <activity android:name=".AppProgressResult"></activity>
         <activity android:name=".AppProgress" />
         <activity android:name=".ChatNewMessageActivity"></activity>
         <activity android:name=".ChatListViewActivity" />

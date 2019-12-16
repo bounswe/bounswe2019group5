@@ -13,7 +13,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,7 +73,7 @@ public class AppProgress extends AppCompatActivity {
                     String progressString= total_progressTwoDigit+"%";
                     Log.d(TAG," "+total_progressTwoDigit+"%");
 
-                    Intent i = new Intent(AppProgress.this, AppProgressResullt.class);
+                    Intent i = new Intent(AppProgress.this, AppProgressResult.class);
                     i.putExtra("progress", progressString);
                     i.putExtra("language", languageSet);
                     startActivity(i);

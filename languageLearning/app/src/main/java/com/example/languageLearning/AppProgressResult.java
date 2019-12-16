@@ -3,7 +3,7 @@ package com.example.languageLearning;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.os.Bundle;
-public class AppProgressResullt extends AppCompatActivity {
+public class AppProgressResult extends AppCompatActivity {
     TextView progressView;
     TextView progressLabel2;
 
