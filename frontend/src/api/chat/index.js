@@ -75,6 +75,8 @@ export const get_all_messages = async (token, _with) => {
                         type: 'text',
                         text: message.text,
                         date: new Date(message.date),
+                        to_username: message.to_username,
+                        from_username: message.from_username,
                     };
             });
         })
@@ -91,31 +93,20 @@ export const get_all_messages = async (token, _with) => {
     return messages;
 }
 
-/*
-[
-    {
-        position: 'right',
-        type: 'text',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
-        date: new Date(),
-    },
-    {
-        position: 'right',
-        type: 'text',
-        text: 'Merhaba',
-        date: new Date(),
-    },
-    {
-        position: 'left',
-        type: 'text',
-        text: 'consectetur adipisicing elit',
-        date: new Date(),
-    },
-    {
-        position: 'right',
-        type: 'text',
-        text: 'adadasdsafd',
-        date: new Date(),
-    },
-];
-*/
+export const get_chat_history = async (token, username) => {
+    var messages = await get_all_messages(token, "");
+    if(messages.message)
+        return messages;
+    let dict = {};
+    messages = messages
+                .reverse()
+                .filter(message => {
+                    let chatWith = message.to_username === username ? message.from_username : message.to_username;
+                    if (dict[chatWith]) return false;
+                    dict[chatWith] = true;
+                    return true;
+                });
+    console.log("MESSAGE HISTORY");
+    console.log(messages);
+    return messages;
+}

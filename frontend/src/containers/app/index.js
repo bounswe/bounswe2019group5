@@ -17,6 +17,7 @@ import WritingList from "../WritingList";
 import Exercises from "../exercise";
 import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
+import ChatHistory from "../chat/chatHistory";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import { withStyles } from '@material-ui/core/styles';
@@ -147,6 +148,7 @@ class App extends Component {
           <Route exact path="/exercise/:id" component={Exercise} />
           <Route exact path="/profile/:user" component={Profile} />
           <Route exact path="/chat/:chatWith" component={Chat} />
+          <Route exact path="/chatHistory" component={ChatHistory} />
           <Route exact path="/exercises" component={Exercises} />
           <Route
             exact
