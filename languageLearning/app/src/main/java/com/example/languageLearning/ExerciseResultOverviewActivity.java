@@ -32,19 +32,16 @@ public class ExerciseResultOverviewActivity extends AppCompatActivity {
         final String[] chosenAnswers = getIntent().getStringArrayExtra("chosenAnswers");
         final String[] correctAnswers = getIntent().getStringArrayExtra("correctAnswers");
 
-        final String testType = getIntent().getStringExtra("testType");
+        final String exerciseType = getIntent().getStringExtra("type");
 
         seeCorrectAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent;
-                if(Objects.equals(testType,"listening"))
-                    intent = new Intent(ExerciseResultOverviewActivity.this, ListeningExerciseActivity.class);
-                else
-                    intent = new Intent(ExerciseResultOverviewActivity.this, ExerciseActivity.class);
+                Intent intent = new Intent(ExerciseResultOverviewActivity.this, ExerciseActivity.class);
 
                 intent.putExtra("exercise", exercise);
+                intent.putExtra("type", exerciseType);
                 intent.putExtra("chosenAnswers", chosenAnswers);
                 intent.putExtra("correctAnswers", correctAnswers); // Providing a non-null correctAnswers causes the ExerciseActivity to be run in "answer key" mode.
                 startActivity(intent);

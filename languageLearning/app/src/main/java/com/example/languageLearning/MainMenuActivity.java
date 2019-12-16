@@ -187,7 +187,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=vocabulary&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "vocabulary");
             }
         });
 
@@ -196,7 +196,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=grammar&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "grammar");
             }
         });
 
@@ -205,7 +205,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "reading");
             }
         });
 
@@ -214,7 +214,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=listening&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path);
+                getAndStartExercise(path, "listening");
             }
         });
 
@@ -234,7 +234,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.show();
     }
 
-    public void getAndStartExercise(final String path){
+    public void getAndStartExercise(final String path, final String type){
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -247,13 +247,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     JSONObject jsonExercise = (JSONObject) response.get(new Random().nextInt(response.length()));
                     Exercise exercise = Exercise.fromJSON(jsonExercise);
 
-                    Intent intent;
-                    if(path.contains("listening"))
-                        intent = new Intent(MainMenuActivity.this, ListeningExerciseActivity.class);
-                    else
-                        intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
+                    Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
 
                     intent.putExtra("exercise", exercise);
+                    intent.putExtra("type", type);
                     startActivity(intent);
                 }
                 catch (JSONException e) {

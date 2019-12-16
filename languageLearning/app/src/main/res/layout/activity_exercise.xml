@@ -11,26 +11,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="TextView"
+        android:text="This is the question body?"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintVertical_bias="0.105" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        android:onClick="onClickPlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_question"
+        app:srcCompat="@drawable/ic_play_icon" />
 
     <Button
         android:id="@+id/exercise_option_1"
         android:layout_width="120dp"
         android:layout_height="49dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/holo_blue_bright"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_question" />
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
     <Button
         android:id="@+id/exercise_option_2"
@@ -121,5 +134,7 @@
         app:layout_constraintStart_toEndOf="@+id/exerciseFABLeft"
         app:layout_constraintTop_toBottomOf="@+id/exercise_option_4"
         app:layout_constraintVertical_bias="0.3" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

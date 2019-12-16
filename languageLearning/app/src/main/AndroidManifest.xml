@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ListeningExerciseActivity"></activity>
+        <activity android:name=".ExerciseActivity"></activity>
         <activity android:name=".ChatMainScreenActivity" />
         <activity android:name=".ChatHistory" />
         <activity
@@ -45,7 +45,6 @@
         <activity
             android:name=".ProfExamActivity"
             android:exported="true" />
-        <activity android:name=".ExerciseActivity" />
         <activity
             android:name=".ExerciseActivityTestActivity"
             android:exported="true" />
