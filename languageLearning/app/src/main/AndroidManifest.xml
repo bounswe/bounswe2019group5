@@ -16,8 +16,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".AppProgressResullt"></activity>
         <activity android:name=".AppProgress" />
-        <activity android:name=".ChatMainScreenActivity" />
-        <activity android:name=".ChatHistory" />
+        <activity android:name=".ChatNewMessageActivity"></activity>
+        <activity android:name=".ChatListViewActivity" />
+        <activity android:name=".ChatLiveScreenActivity" />
         <activity
             android:name=".UserSearchActivity"
             android:exported="true" />
@@ -28,7 +29,7 @@
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ExerciseResultOverviewActivity" />
-        <activity android:name=".ChatNewMessageActivity" />
+        <activity android:name=".ChatMainScreenActivity" />
         <activity
             android:name=".ImageEssayDetailTestActivity"
             android:exported="true" />
@@ -62,5 +63,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

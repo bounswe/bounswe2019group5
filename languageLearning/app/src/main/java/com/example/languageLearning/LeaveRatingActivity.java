@@ -40,8 +40,10 @@ public class LeaveRatingActivity extends AppCompatActivity {
         stars[3] = findViewById(R.id.star3);
         stars[4] = findViewById(R.id.star4);
         commentEditText = findViewById(R.id.commentEditText);
-        for (int i=0; i<rating; i++) {
+        for (int i=0; i<rating; i++) { // The rest of the stars will stay off, as they are defined in the layout xml
             stars[i].setImageResource(android.R.drawable.star_big_on);
+        }
+        for (int i=0; i<5; i++) {
             stars[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,7 +62,7 @@ public class LeaveRatingActivity extends AppCompatActivity {
                 }
             });
         }
-        sendButton = findViewById(R.id.sendButton);
+        sendButton = findViewById(R.id.newMessageButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

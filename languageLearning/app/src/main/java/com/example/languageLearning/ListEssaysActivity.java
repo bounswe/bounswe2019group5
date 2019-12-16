@@ -36,9 +36,6 @@ public class ListEssaysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_essays);
         listView = findViewById(R.id.listView);
         app = (MyApplication)getApplication();
-
-
-
     }
 
     @Override
