@@ -1,14 +1,15 @@
 package com.example.languageLearning;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class ExerciseActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
@@ -26,12 +29,14 @@ public class ExerciseActivity extends AppCompatActivity {
     MyApplication app;
     TextView question_textview, progress_textview;
     Button buttons[] = new Button[4];
+    ImageButton playButton;
     FloatingActionButton fabLeft, fabRight;
     Button submitButton;
     int currentQuestionIndex;
 
     private boolean answerKeyMode; // True if we are in the "answer key" mode. The app switches to this mode once the user chooses to see the correct answers at the exercise result overview screen.
     private Exercise exercise;
+    private String exerciseType;
     private String[] chosenAnswers;
     private String[] correctAnswers; // Used in the "answer key" mode.
 
@@ -41,6 +46,7 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
         app = (MyApplication) getApplication();
         exercise = (Exercise) getIntent().getSerializableExtra("exercise");
+        exerciseType = getIntent().getStringExtra("type");
         correctAnswers = getIntent().getStringArrayExtra("correctAnswers");
         if (correctAnswers == null)
             answerKeyMode = false;
@@ -52,6 +58,11 @@ public class ExerciseActivity extends AppCompatActivity {
             chosenAnswers = getIntent().getStringArrayExtra("chosenAnswers");
         question_textview = findViewById(R.id.exercise_question);
         progress_textview = findViewById(R.id.exercise_progress);
+        playButton = findViewById(R.id.playButton);
+        if (exerciseType.equals("listening"))
+            question_textview.setText("What is the sentence in this audio?");
+        else
+            playButton.setVisibility(View.GONE);
         buttons[0] = findViewById(R.id.exercise_option_1);
         buttons[1] = findViewById(R.id.exercise_option_2);
         buttons[2] = findViewById(R.id.exercise_option_3);
@@ -106,25 +117,19 @@ public class ExerciseActivity extends AppCompatActivity {
     private void setCurrentQuestion(int index) {
         currentQuestionIndex = index;
         progress_textview.setText((index+1) + " / " + exercise.questions.length);
+        if (exerciseType.equals("listening") == false)
         question_textview.setText(exercise.questions[index].text);
         for (int i=0; i<4; i++) {
             buttons[i].setText(exercise.questions[index].options[i]);
+            if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
+                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark)); // Highlight the chosen answer
+            else
+                buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
+            if(correctAnswers!=null && exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) { // If we are in "answer key" mode and we are drawing the correct answer's button...
                 if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
-                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
+                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_green_light)); // Paint it green, if the user chose this answer (he was correct)
                 else
-                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
-                if(correctAnswers!=null) {
-                    if (exercise.questions[index].options[i].equals(chosenAnswers[currentQuestionIndex]))
-                        if (!chosenAnswers[currentQuestionIndex].equals(correctAnswers[currentQuestionIndex]))
-                            buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_dark));
-                        else
-                            buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_dark));
-                    else
-                        buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_blue_bright));
-                if(exercise.questions[index].options[i].equals(correctAnswers[currentQuestionIndex])) {
-                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_green_light));
-                }
-
+                    buttons[i].setBackground(getResources().getDrawable(android.R.color.holo_red_light)); // Paint it red, if the user answered incorrectly
             }
         }
     }
@@ -157,17 +162,14 @@ public class ExerciseActivity extends AppCompatActivity {
                 answers.put(JSONObject.NULL);
         }
         data.put("answers", answers);
-        Log.d("RESSPONNSEEEE1111", data.toString(2));
         app.initiateAPICall(Request.Method.POST, path, data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("RESSPONNSEEEE", response.toString(2));
-                    String[] correctAnswers = new String[response.getJSONArray("correct_answer").length()];
-                    correctAnswers = toStringArray(response.getJSONArray("correct_answer"));
-                    Log.d("HEYHEEEEEY", correctAnswers[0]);
+                    String[] correctAnswers = toStringArray(response.getJSONArray("correct_answer"));
                     Intent intent = new Intent(ExerciseActivity.this, ExerciseResultOverviewActivity.class);
                     intent.putExtra("exercise", exercise);
+                    intent.putExtra("type", exerciseType);
                     intent.putExtra("chosenAnswers", chosenAnswers);
                     intent.putExtra("correctAnswers", correctAnswers);
                     startActivity(intent);
@@ -195,5 +197,23 @@ public class ExerciseActivity extends AppCompatActivity {
             arr[i]=array.optString(i);
         }
         return arr;
+    }
+
+    public void onClickPlay(View view){
+
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setDataSource(exercise.questions[currentQuestionIndex].text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            mediaPlayer.prepare(); // might take long! (for buffering, etc)
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
+
     }
 }

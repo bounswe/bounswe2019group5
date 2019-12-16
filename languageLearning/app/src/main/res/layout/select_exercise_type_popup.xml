@@ -11,8 +11,8 @@
 
     <ImageButton
         android:id="@+id/vocabTestButton"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
@@ -34,8 +34,8 @@
 
     <ImageButton
         android:id="@+id/grammarTestButton"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
@@ -59,8 +59,8 @@
 
     <ImageButton
         android:id="@+id/readingTestButton"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
@@ -80,6 +80,30 @@
         app:layout_constraintEnd_toEndOf="@+id/readingTestButton"
         app:layout_constraintStart_toStartOf="@+id/readingTestButton"
         app:layout_constraintTop_toBottomOf="@+id/readingTestButton" />
+
+    <ImageButton
+        android:id="@+id/listeningTestButton"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="40dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/ic_play_icon" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Listening Test"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/listeningTestButton"
+        app:layout_constraintStart_toStartOf="@+id/listeningTestButton"
+        app:layout_constraintTop_toBottomOf="@+id/listeningTestButton" />
 
     <TextView
         android:id="@+id/suggestNewExercise"

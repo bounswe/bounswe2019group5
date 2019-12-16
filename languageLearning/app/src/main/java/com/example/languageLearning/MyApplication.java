@@ -1,6 +1,9 @@
 package com.example.languageLearning;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -8,6 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +42,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -61,6 +68,7 @@ interface BufferedReaderFunction {
 
 public class MyApplication extends Application {
     static final String SERVER = "http://35.158.176.194/";
+    static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 2;
     private final String TAG = getClass().getName();
     public final int TOUCH_AND_HOLD_DELAY_MS = 500;
 
@@ -102,6 +110,32 @@ public class MyApplication extends Application {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    static public Boolean getExternalStoragePermission(Activity activity) {
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+            return null;
+        }
+
+        return true;
+    }
+
+    static byte[] isToByteArray(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        while (true) {
+            int r = in.read(buffer);
+            if (r == -1) break;
+            out.write(buffer, 0, r);
+        }
+
+        return out.toByteArray();
     }
 
     public void initiateAPICall(int method,

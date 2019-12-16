@@ -3,10 +3,7 @@ package com.example.languageLearning;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.util.LocaleData;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,10 +67,17 @@ public class ExerciseSuggestionActivity extends AppCompatActivity {
 
                 Suggestion suggestion = new Suggestion(type, language, level, tags, keywords);
 
-                Intent intent = new Intent(ExerciseSuggestionActivity.this, QuestionSuggestionActivity.class);
-                intent.putExtra("suggestion", suggestion);
-                startActivity(intent);
-                finish();
+                if(!type.equals("listening")) {
+                    Intent intent = new Intent(ExerciseSuggestionActivity.this, QuestionSuggestionActivity.class);
+                    intent.putExtra("suggestion", suggestion);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(ExerciseSuggestionActivity.this, ListeningQuestionSuggestionActivity.class);
+                    intent.putExtra("suggestion", suggestion);
+                    startActivity(intent);
+                    finish();
+                }
 
 
             }
