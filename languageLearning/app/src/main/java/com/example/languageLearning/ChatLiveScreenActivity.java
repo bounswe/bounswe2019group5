@@ -22,20 +22,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ChatHistory extends AppCompatActivity {
+public class ChatLiveScreenActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
     private static final int MESSAGE_POLL_PERIOD_MS = 5000;
@@ -59,7 +55,7 @@ public class ChatHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_history);
+        setContentView(R.layout.activity_chat_live_screen);
         app = (MyApplication) getApplication();
 
         username = findViewById(R.id.username);
@@ -101,7 +97,7 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 refreshHistory(response);
-                //Toast.makeText(ChatHistory.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
+                //Toast.makeText(ChatLiveScreenActivity.this,"Messages taken successfully",Toast.LENGTH_LONG).show();
 
             }
 
@@ -135,7 +131,7 @@ public class ChatHistory extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 placeNewMessage();
-                //Toast.makeText(ChatHistory.this,"Message sent successfully",Toast.LENGTH_LONG).show();
+                //Toast.makeText(ChatLiveScreenActivity.this,"Message sent successfully",Toast.LENGTH_LONG).show();
             }
 
         }, new Response.ErrorListener() {
@@ -150,7 +146,7 @@ public class ChatHistory extends AppCompatActivity {
 
     public void placeNewMessage(){
         if (editText.getText().toString().trim().equals("")) {
-            //Toast.makeText(ChatHistory.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ChatLiveScreenActivity.this, "Please input some text...", Toast.LENGTH_SHORT).show();
         } else {
             //add message to list
             ChatMessage ChatMessage = new ChatMessage(app.getUsername(), person, editText.getText().toString(), Calendar.getInstance().getTime(), true);
