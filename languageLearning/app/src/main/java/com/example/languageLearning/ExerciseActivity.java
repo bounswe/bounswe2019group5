@@ -36,7 +36,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private boolean answerKeyMode; // True if we are in the "answer key" mode. The app switches to this mode once the user chooses to see the correct answers at the exercise result overview screen.
     private Exercise exercise;
-    private String exerciseType;
     private String[] chosenAnswers;
     private String[] correctAnswers; // Used in the "answer key" mode.
 
@@ -46,7 +45,6 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
         app = (MyApplication) getApplication();
         exercise = (Exercise) getIntent().getSerializableExtra("exercise");
-        exerciseType = getIntent().getStringExtra("type");
         correctAnswers = getIntent().getStringArrayExtra("correctAnswers");
         if (correctAnswers == null)
             answerKeyMode = false;
@@ -59,7 +57,7 @@ public class ExerciseActivity extends AppCompatActivity {
         question_textview = findViewById(R.id.exercise_question);
         progress_textview = findViewById(R.id.exercise_progress);
         playButton = findViewById(R.id.playButton);
-        if (exerciseType.equals("listening"))
+        if (exercise.type.equals("listening"))
             question_textview.setText("What is the sentence in this audio?");
         else
             playButton.setVisibility(View.GONE);
@@ -117,7 +115,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private void setCurrentQuestion(int index) {
         currentQuestionIndex = index;
         progress_textview.setText((index+1) + " / " + exercise.questions.length);
-        if (exerciseType.equals("listening") == false)
+        if (exercise.type.equals("listening") == false)
         question_textview.setText(exercise.questions[index].text);
         for (int i=0; i<4; i++) {
             buttons[i].setText(exercise.questions[index].options[i]);
@@ -169,7 +167,6 @@ public class ExerciseActivity extends AppCompatActivity {
                     String[] correctAnswers = toStringArray(response.getJSONArray("correct_answer"));
                     Intent intent = new Intent(ExerciseActivity.this, ExerciseResultOverviewActivity.class);
                     intent.putExtra("exercise", exercise);
-                    intent.putExtra("type", exerciseType);
                     intent.putExtra("chosenAnswers", chosenAnswers);
                     intent.putExtra("correctAnswers", correctAnswers);
                     startActivity(intent);
