@@ -168,7 +168,15 @@ class RecommendationView(GenericViewSet,
                      author=commented_user,
                      status='accepted')
 
-        approved_essays = Essay.objects.filter(author | reviewer)
+        author_c = Q(author=self.request.user,
+                     reviewer=commented_user,
+                     status='completed')
+
+        reviewer_c = Q(reviewer=self.request.user,
+                       author=commented_user,
+                       status='completed')
+
+        approved_essays = Essay.objects.filter(author | reviewer | author_c | reviewer_c)
         if len(approved_essays) == 0:
             raise PermissionDenied("You didn't send or accept an essay")
 
