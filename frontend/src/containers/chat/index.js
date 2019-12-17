@@ -98,7 +98,6 @@ export class Chat extends Component {
                             {
                                 <div>
                                     <h1 style={{color: "red"}}>
-                                        Chat With
                                         <Link to={{
                                             pathname: "/profile/" + chatWith
                                         }}> {chatWith}</Link>
