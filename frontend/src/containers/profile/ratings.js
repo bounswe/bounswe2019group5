@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Typography from '@material-ui/core/Typography';
+import StarRatings from 'react-star-ratings';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +22,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Ratings({userProfile}) {
   const classes = useStyles();
+  if (userProfile.user_comments.length === 0) {
+      return(
+        <Typography variant="h6" gutterBottom>
+          No one rated yet :(
+      </Typography>
+      )}
   return (
     <List className={classes.root}>
         {userProfile.user_comments && userProfile.user_comments.map((value, index) => {
@@ -31,7 +38,7 @@ export default function Ratings({userProfile}) {
                   <AccountCircleIcon alt="Remy Sharp" />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={"RATING:  "+value.rate+"/5"}
+                  primary={<StarRatings rating={value.rate} numberOfStars={5} starRatedColor="orange" starDimension="15px" starSpacing="0"/>}
                   secondary={
                     <React.Fragment>
                       <Typography

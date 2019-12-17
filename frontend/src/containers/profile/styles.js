@@ -1,7 +1,6 @@
 const styles = theme => ({
     root: {
         height: '100vh',
-        backgroundImage: 'url(https://github.com/bounswe/bounswe2019group5/blob/frontend/Images/coldots.png?raw=true)',
     },
     image: {
         backgroundRepeat: 'no-repeat',
@@ -12,7 +11,6 @@ const styles = theme => ({
         margin: theme.spacing(2, 4),
         display: 'flex',
         flexDirection: 'column',
-        alignItems: "center",
     },
     avatar: {
         margin: theme.spacing(1),

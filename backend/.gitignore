@@ -1,0 +1,7 @@
+db.sqlite3
+backend/productionSettings.py
+**/__pycache__
+**/migrations/
+Pipfile
+Pipfile.lock
+.idea

@@ -4,15 +4,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Button from 'react-bootstrap/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import ExerciseTypes from "./exerciseTypes";
 import { set_selected_language, set_user_profile } from "../../redux/action-creators/userInfo";
-import { search_test } from "../../redux/action-creators/exercises";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { Link } from "react-router-dom";
@@ -25,7 +22,7 @@ class Exercises extends Component {
   }
 
   componentDidMount() {
-    this.props.set_user_profile(this.props.userInfo.token);
+    //this.props.set_user_profile(this.props.userInfo.token);
   }
 
   render() {

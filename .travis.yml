@@ -1,16 +1,31 @@
-language: node_js
-sudo: false
-node_js:
- - "stable"
- 
-before_script:
+language: python
 
--cd /practice-app
--npm init
--npm install express
--npm install axios
--npm install mysql
+branches:
+  except:
+  - frontend
 
-script:
--cd /test
--node test.js test
+# safelist
+branches:
+  only:
+  - backend
+
+python: 
+  - "3.6"
+
+env:
+  global: 
+    - SECRET_KEY=$SECRET_KEY
+
+services:
+  - docker
+
+before_install:
+  - cd backend
+
+before_script: 
+  - pip install docker-compose
+
+script: 
+  - docker-compose run web sh -c "python manage.py makemigrations"
+  - docker-compose run web sh -c "python manage.py migrate"
+  - docker-compose run web sh -c "python manage.py test"

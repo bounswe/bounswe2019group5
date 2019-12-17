@@ -19,6 +19,7 @@ import Ratings from "./ratings";
 import _ from "lodash";
 import { get_essays } from "../../redux/action-creators/writinglist";
 import Divider from '@material-ui/core/Divider';
+import StarRatings from 'react-star-ratings';
 
 class Profile extends Component {
   state = { selfProfile: true };
@@ -73,6 +74,9 @@ class Profile extends Component {
   render() {
     console.log(this.props.userInfo);
     const { classes } = this.props;
+    const rating = this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
+      (this.props.userInfo.overallRating[0] /
+        this.props.userInfo.overallRating[1] ) ) : 0 ;
 
     if (this.props.userInfo.token == null) {
       return (
@@ -92,12 +96,11 @@ class Profile extends Component {
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <Grid xs={3} className={classes.paper}>
-            <div className={classes.paper}>
+          <Grid item xs={3}>
+            <div>
               <Card
                 border="warning"
                 className="text-center"
-                style={{ width: "18rem" }}
               >
                 <Card.Header>
                   <AccountCircleIcon fontSize="large"> </AccountCircleIcon>
@@ -123,10 +126,7 @@ class Profile extends Component {
                         </Typography>
                         <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
-                          {console.log("overall rating",this.props.userInfo.overallRating)}
-                          {this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
-                            (this.props.userInfo.overallRating[0] /
-                              this.props.userInfo.overallRating[1] ) ) : 0 }{" "}
+                          <StarRatings rating={rating} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px"/>
                           out of{" "}
                           {this.props.userInfo.overallRating ?
                             this.props.userInfo.overallRating[1] : 0}{" "} 
@@ -142,9 +142,7 @@ class Profile extends Component {
                         <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
                           {console.log("overall rating",this.props.userInfo.overallRating)}
-                          {this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
-                            (this.props.userInfo.overallRating[0] /
-                              this.props.userInfo.overallRating[1] ) ) : 0 }{" "}
+                          <StarRatings rating={rating} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px"/>
                           out of{" "}
                           {this.props.userInfo.overallRating ?
                             this.props.userInfo.overallRating[1] : 0}{" "} 
@@ -157,8 +155,11 @@ class Profile extends Component {
               </Card>
             </div>
           </Grid>
-          <Grid item component={Paper}>
+          <Grid item xs={9} component={Paper}>
             <div className={classes.paper}>
+            <Typography variant="h6" gutterBottom>
+              You can view the statistics of your learning progress of the languages you're learning.
+              </Typography>
               {this.state.selfProfile && (
                 <LangTab
                   userInfo={this.props.userInfo}
@@ -175,7 +176,7 @@ class Profile extends Component {
             <Divider variant="inset" component="li" />     
 
               <div className={classes.paper}>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                   User ratings and comments:
                 </Typography>
                 {this.state.selfProfile ? (

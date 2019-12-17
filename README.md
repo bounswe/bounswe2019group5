@@ -1,5 +1,7 @@
 # CMPE 352-451 - Group 5
 
+<h3>Can access Web App on http://52.14.169.152:3000/</h3>
+
 This is the repository of group 5 in course CMPE352 Fundamentals of Software Engineering.
 <br>
 For more information, [Visit the home page](https://github.com/bounswe/bounswe2019group5/wiki)

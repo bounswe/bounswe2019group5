@@ -6,25 +6,14 @@ import {
   USER_PROFILE_SET,
   OTHER_USER_PROFILE_SET,
   OTHER_USER_PROFILE_REQUESTED,
-  SET_ENGLISH_GRAMMAR_RESULT,
-  SET_ENGLISH_VOC_RESULT,
-  SET_ENGLISH_LISTEN_RESULT,
-  SET_ENGLISH_READ_RESULT,
-  SET_TURKISH_GRAMMAR_RESULT,
-  SET_TURKISH_VOC_RESULT,
-  SET_TURKISH_LISTEN_RESULT,
-  SET_TURKISH_READ_RESULT,
-  SET_GERMAN_GRAMMAR_RESULT,
-  SET_GERMAN_VOC_RESULT,
-  SET_GERMAN_LISTEN_RESULT,
-  SET_GERMAN_READ_RESULT,
-  SET_ENGLISH_GENERAL_TEST_RESULT,
-  SET_TURKISH_GENERAL_TEST_RESULT,
-  SET_GERMAN_GENERAL_TEST_RESULT
+  SET_TEST_RESULT,
+  SET_USER_PROGRESS
 } from "../actions";
 
 import { get_user_profile as get_user_profile_api } from "../../api/userInfo";
 import { get_user_test_results as get_user_test_results_api } from "../../api/userInfo";
+import { get_user_progress as get_user_progress_api } from "../../api/userInfo";
+
 
 export const set_selected_language = selectedLanguage => {
   return dispatch => {
@@ -73,130 +62,295 @@ export const set_user_profile = token => {
         profile,
         overall_rating: calculateRating(profile)
       });
+
     });
     get_user_test_results_api(token, "english", "grammar", "").then(
-      english_grammar => {
-        console.log('setting english grammer', english_grammar)
+      testresult => {
+        console.log('test resulsts are ', testresult)
         dispatch({
-          type: SET_ENGLISH_GRAMMAR_RESULT,
-          english_grammar
+          type: SET_TEST_RESULT,
+          language: "english",
+          exercise_type: "grammar",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "english", "vocabulary", "").then(
-      english_voc => {
+      testresult => {
         dispatch({
-          type: SET_ENGLISH_VOC_RESULT,
-          english_voc
+          type: SET_TEST_RESULT,
+          language: "english",
+          exercise_type: "vocabulary",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "english", "listening", "").then(
-      english_listen => {
+      testresult => {
         dispatch({
-          type: SET_ENGLISH_LISTEN_RESULT,
-          english_listen
+          type: SET_TEST_RESULT,
+          language: "english",
+          exercise_type: "listening",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "english", "reading", "").then(
-      english_read => {
+      testresult => {
         dispatch({
-          type: SET_ENGLISH_READ_RESULT,
-          english_read
+          type: SET_TEST_RESULT,
+          language: "english",
+          exercise_type: "reading",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "turkish", "grammar", "").then(
-      turkish_grammar => {
+      testresult => {
         dispatch({
-          type: SET_TURKISH_GRAMMAR_RESULT,
-          turkish_grammar
+          type: SET_TEST_RESULT,
+          language: "turkish",
+          exercise_type: "grammar",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "turkish", "vocabulary", "").then(
-      turkish_voc => {
+      testresult => {
         dispatch({
-          type: SET_TURKISH_VOC_RESULT,
-          turkish_voc
+          type: SET_TEST_RESULT,
+          language: "turkish",
+          exercise_type: "vocabulary",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "turkish", "listening", "").then(
-      turkish_listen => {
+      testresult => {
         dispatch({
-          type: SET_TURKISH_LISTEN_RESULT,
-          turkish_listen
+          type: SET_TEST_RESULT,
+          language: "turkish",
+          exercise_type: "listening",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "turkish", "reading", "").then(
-      turkish_read => {
+      testresult => {
         dispatch({
-          type: SET_TURKISH_READ_RESULT,
-          turkish_read
+          type: SET_TEST_RESULT,
+          language: "turkish",
+          exercise_type: "reading",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "german", "grammar", "").then(
-      german_grammar => {
+      testresult => {
         dispatch({
-          type: SET_GERMAN_GRAMMAR_RESULT,
-          german_grammar
+          type: SET_TEST_RESULT,
+          language: "german",
+          exercise_type: "grammar",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "german", "vocabulary", "").then(
-      german_voc => {
+      testresult => {
         dispatch({
-          type: SET_GERMAN_VOC_RESULT,
-          german_voc
+          type: SET_TEST_RESULT,
+          language: "german",
+          exercise_type: "vocabulary",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "german", "listening", "").then(
-      german_listen => {
+      testresult => {
         dispatch({
-          type: SET_GERMAN_LISTEN_RESULT,
-          german_listen
+          type: SET_TEST_RESULT,
+          language: "german",
+          exercise_type: "listening",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "german", "reading", "").then(
-      german_read => {
-        console.log("germanreading",german_read);
+      testresult => {
         dispatch({
-          type: SET_GERMAN_READ_RESULT,
-          german_read
+          type: SET_TEST_RESULT,
+          language: "german",
+          exercise_type: "reading",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "english", "", "").then(
-      english_general_test_result => {
-        console.log("general",english_general_test_result);
+      testresult => {
         dispatch({
-          type: SET_ENGLISH_GENERAL_TEST_RESULT,
-          english_general_test_result
+          type: SET_TEST_RESULT,
+          language: "english",
+          exercise_type:"general",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "turkish", "", "").then(
-      turkish_general_test_result => {
+      testresult => {
         dispatch({
-          type: SET_TURKISH_GENERAL_TEST_RESULT,
-          turkish_general_test_result
+          type: SET_TEST_RESULT,
+          language: "turkish",
+          exercise_type:"general",
+          test_result: testresult
         });
       }
     );
     get_user_test_results_api(token, "german", "", "").then(
-      german_general_test_result => {
+      testresult => {
         dispatch({
-          type: SET_GERMAN_GENERAL_TEST_RESULT,
-          german_general_test_result
+          type: SET_TEST_RESULT,
+          language: "german",
+          exercise_type:"general",
+          test_result: testresult
         });
       }
     );
+
+    get_user_progress_api(token, "english", "grammar").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "english",
+        exercise_type: "grammar",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "english", "vocabulary").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "english",
+        exercise_type: "vocabulary",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "english", "listening").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "english",
+        exercise_type: "listening",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "english", "reading").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "english",
+        exercise_type: "reading",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "english", null).then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "english",
+        exercise_type: "general",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "turkish", "grammar").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "turkish",
+        exercise_type: "grammar",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "turkish", "listening").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "turkish",
+        exercise_type: "listening",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "turkish", "vocabulary").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "turkish",
+        exercise_type: "vocabulary",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "turkish", "reading").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "turkish",
+        exercise_type: "reading",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "turkish", null).then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "turkish",
+        exercise_type: "general",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "german", "grammar").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "german",
+        exercise_type: "grammar",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "german", "vocabulary").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "german",
+        exercise_type: "vocabulary",
+        progress: testprogress
+      });
+    });    
+    get_user_progress_api(token, "german", "listening").then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "german",
+        exercise_type: "listening",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "german", "reading", ).then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "german",
+        exercise_type: "reading",
+        progress: testprogress
+      });
+    });
+    get_user_progress_api(token, "german", null).then(
+      testprogress => {
+      dispatch({
+        type: SET_USER_PROGRESS,
+        prog_language: "german",
+        exercise_type: "general",
+        progress: testprogress
+      });
+    });
   };
 };
 
@@ -220,3 +374,4 @@ export const set_other_user_profile = (token, username) => {
     });
   };
 };
+

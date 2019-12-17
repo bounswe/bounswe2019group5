@@ -14,7 +14,7 @@ export default function LangTab({userInfo, attendedLang, writings}) {
     }
     console.log(langs);
     return (
-      <Tabs bg="secondary" text="white"  id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
+      <Tabs text="white"  size="big" id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
         <Tab eventKey="ENGLISH" title="ENGLISH" disabled={!langs.includes('english') }
          >
            {<Statistics userInfo={userInfo} language={"english"} writings={writings}/> }
