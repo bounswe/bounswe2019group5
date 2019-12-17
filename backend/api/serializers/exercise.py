@@ -20,7 +20,7 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
         if 'SearchView' in str(view):
 
             for i in list(fields):
-                if i != 'id' and i != 'questions' and i != 'type':
+                if i != 'id' and i != 'questions' and i != 'type' and i != 'tags' and i != 'keywords':
                     fields.pop(i, None)
             return fields
 
