@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class ChatMessage {
 
@@ -33,6 +34,7 @@ public class ChatMessage {
         String text = obj.getString("text");
         String sdate = obj.getString("date");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = df.parse(sdate);
         boolean mine = from.equals(app.getUsername());
         return new ChatMessage(from, to, text, date, mine);

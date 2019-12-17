@@ -15,6 +15,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class EssayAdapter extends BaseAdapter {
 
@@ -58,8 +62,8 @@ public class EssayAdapter extends BaseAdapter {
     public View getView(int i, View essayElementView, ViewGroup viewGroup) {
 
         essayElementView = layoutInflater.inflate(R.layout.essay_element, null, false);
-        TextView essayID, language, author, reviewer, status;
-        essayID = essayElementView.findViewById(R.id.essayID);
+        TextView date, language, author, reviewer, status;
+        date = essayElementView.findViewById(R.id.date);
         language = essayElementView.findViewById(R.id.language);
         author = essayElementView.findViewById(R.id.author);
         reviewer = essayElementView.findViewById(R.id.reviewer);
@@ -69,13 +73,13 @@ public class EssayAdapter extends BaseAdapter {
         Essay essay = null;
         try {
             essay = Essay.fromJSON(jsonEssay);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         final Essay essay1 = essay;
-        essayID.setText(essayID.getText().toString() + String.valueOf(essay.id));
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("Europe/Istanbul"));
+        date.setText(date.getText().toString() + df.format(essay.date));
         language.setText(language.getText().toString() + essay.language);
         author.setText(author.getText().toString() + essay.author);
         reviewer.setText(reviewer.getText().toString() + essay.reviewer);
