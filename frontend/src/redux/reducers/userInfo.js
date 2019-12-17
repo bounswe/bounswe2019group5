@@ -214,7 +214,7 @@ export default (state = initialState, action) => {
     case USER_PROFILE_REQUESTED:
       return {
         ...state,
-        loading: true,
+        loading: !state.userProfile,
       }
     case USER_PROFILE_SET:
       return {
