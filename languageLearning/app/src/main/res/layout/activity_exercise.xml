@@ -7,36 +7,59 @@
     tools:context=".ExerciseActivity">
 
     <TextView
-        android:id="@+id/exercise_question"
-        android:layout_width="wrap_content"
+        android:id="@+id/exercise_progress"
+        android:layout_width="61dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.languageLearning.MaxHeightScrollView
+        android:id="@+id/questionTextScrollView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="This is the question body?"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintTop_toBottomOf="@id/exercise_progress"
+        app:layout_constraintWidth_percent=".8"
+        app:maxHeight="150dp">
+
+        <TextView
+            android:id="@+id/exercise_question"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="This is the question body?"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.105" />
+
+    </com.example.languageLearning.MaxHeightScrollView>
 
     <ImageButton
         android:id="@+id/playButton"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_marginStart="184dp"
         android:layout_marginTop="24dp"
         android:background="@color/white"
-        android:scaleType="fitCenter"
         android:onClick="onClickPlay"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_question"
+        app:layout_constraintTop_toBottomOf="@+id/questionTextScrollView"
         app:srcCompat="@drawable/ic_play_icon" />
 
     <Button
         android:id="@+id/exercise_option_1"
         android:layout_width="120dp"
         android:layout_height="49dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:background="@android:color/holo_blue_bright"
         android:text="Button"
@@ -49,8 +72,6 @@
         android:id="@+id/exercise_option_2"
         android:layout_width="120dp"
         android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_blue_bright"
         android:text="Button"
@@ -62,8 +83,6 @@
         android:id="@+id/exercise_option_3"
         android:layout_width="123dp"
         android:layout_height="41dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_blue_bright"
         android:text="Button"
@@ -75,8 +94,6 @@
         android:id="@+id/exercise_option_4"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_blue_bright"
         android:text="Button"
@@ -84,29 +101,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercise_option_3" />
 
-    <TextView
-        android:id="@+id/exercise_progress"
-        android:layout_width="61dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/exerciseFABLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/exercise_submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_option_4"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="@+id/exercise_submit"
         app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -115,12 +120,11 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/exercise_submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_option_4"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="@+id/exercise_submit"
         app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
     <Button
@@ -132,8 +136,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/exerciseFABRight"
         app:layout_constraintStart_toEndOf="@+id/exerciseFABLeft"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_option_4"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
 
 
 
