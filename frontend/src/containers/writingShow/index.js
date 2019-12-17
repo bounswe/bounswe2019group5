@@ -204,7 +204,8 @@ class WritingShow extends Component {
             <Chat 
               chatWith={this.props.userInfo.username === this.state.essay.reviewer ?
                               this.state.essay.author : this.state.essay.reviewer}
-              notShowTitle/>
+              notShowTitle
+              notShowHistory/>
           }
 
         <Modal
