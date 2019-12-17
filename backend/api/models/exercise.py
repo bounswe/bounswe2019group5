@@ -60,6 +60,8 @@ class Essay(Exam):
         ('completed', 'completed'),
     ]
 
+    date = models.DateTimeField(auto_now=True)
+
     writing = models.FileField(upload_to='essays')
 
     author = models.ForeignKey(User,

@@ -119,7 +119,7 @@ class EssaySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Essay
-        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author', 'status')
+        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author', 'status', 'date')
 
 
 class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
@@ -129,13 +129,14 @@ class EssayCreateSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Essay
-        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author', 'status')
+        fields = ('id', 'type', 'language', 'writing', 'reviewer', 'author', 'status', 'date')
         read_only_fields = ('type',)
 
     def get_fields(self):
         fields = super().get_fields()
         if self.context.get('view').action == 'create':
             fields['status'].read_only = True
+            fields['date'].read_only = True
         return fields
 
     def validate(self, attrs):
