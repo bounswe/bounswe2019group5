@@ -30,11 +30,6 @@ export const get_prof_test = async (token, language) => {
 };
 
 export const get_test_result = async (token, id, answers) => {
-
-  console.log("GET TEST RESULT");
-  console.log(token);
-  console.log(id);
-  console.log(answers);
   
   let examResult = await axios
         .post(parameters.apiUrl+'/result/',
@@ -73,8 +68,6 @@ export const get_test_result = async (token, id, answers) => {
   }
 
   examResult.result = result;
-
-  console.log(examResult);
 
   return examResult;
 };

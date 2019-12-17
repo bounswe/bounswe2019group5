@@ -238,7 +238,6 @@ export default (state = initialState, action) => {
       };
 
     case SET_TEST_RESULT:
-      console.log(action, state)
       return {
         ...state,
         testResult: {...state.testResult, [action.language]: {...state.testResult[action.language], [action.exercise_type]: action.test_result}},

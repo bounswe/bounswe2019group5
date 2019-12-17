@@ -116,7 +116,7 @@ class Exercise extends Component {
                 {question.body.includes('http://') &&
                   <AudioPlayer
                     src={question.body}
-                    onPlay={e => console.log("onPlay")}
+                    onPlay={e => {}}
                     crossOrigin="anonymous"
                     // other props here
                   />

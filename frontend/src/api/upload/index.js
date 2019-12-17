@@ -23,8 +23,6 @@ export const upload_file = async (token, file) => {
             message: 'File cannot Uploaded!',
         };
     });
-    
-    console.log(data);
   
     return data;
 };

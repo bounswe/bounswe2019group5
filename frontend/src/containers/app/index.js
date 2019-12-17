@@ -18,6 +18,10 @@ import Exercises from "../exercise";
 import SuggestExercise from "../SuggestExercise";
 import TestResult from "../testResult";
 import ChatHistory from "../chat/chatHistory";
+import {
+  set_user_profile,
+  clear_user_profile,
+} from "../../redux/action-creators/userInfo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import { withStyles } from '@material-ui/core/styles';
@@ -41,6 +45,23 @@ import { logout } from "../../redux/action-creators/authentication";
 import { red } from "@material-ui/core/colors";
 
 class App extends Component {
+
+  componentDidMount(){
+      const f = () => {
+          if(this.props.userInfo.token){
+            this.props.set_user_profile(this.props.userInfo.token);
+            console.log("user profile set");
+          }
+          this.timer = setTimeout(f, 3000);
+      }
+      f();
+  }
+
+  componentWillUnmount(){
+    if (this.timer)
+      clearTimeout(this.timer);
+  }
+
   render() {
     return (
       <div>
@@ -176,7 +197,9 @@ const mapStateToProps = ({ userInfo }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      logout
+      logout,
+      set_user_profile,
+      clear_user_profile,
     },
     dispatch
   );

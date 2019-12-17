@@ -42,8 +42,6 @@ class SearchTest extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.exercises);
-    console.log("tag",prevState.tag,this.state.tag);
     if (
       prevProps.language === this.props.language &&
       prevProps.type === this.props.type &&
@@ -97,7 +95,6 @@ class SearchTest extends React.Component {
         <List className={classes.root}>
           {this.props.exercises.searchedTest[this.props.type] &&
             this.props.exercises.searchedTest[this.props.type].map((value, index) => {
-              console.log(value);
               return (
                 <>
                   <ListItem alignItems="flex-start">

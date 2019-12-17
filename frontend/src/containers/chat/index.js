@@ -76,8 +76,6 @@ export class Chat extends Component {
         const {classes} = this.props;
         let chatWith = this.chatWith;
 
-        console.log(this.props.notShowHistory);
-
         return (
 
             <div style={{display: 'flex', flexDirection: 'row'}}>
