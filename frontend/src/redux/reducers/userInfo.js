@@ -20,48 +20,168 @@ const initialState = {
   otherUserProfile: null,
   progress: {
     english: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      grammar: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      reading: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      listening: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      vocabulary: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
     },
     turkish: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      grammar: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      reading: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      listening: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      vocabulary: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
     },
     german: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      grammar: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      reading: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      listening: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
+      vocabulary: {
+        number_of_test_completed: null,
+        number_of_test: null,
+        completed_exercise_current_level: null,
+        exercise_in_current_level: null
+      },
     },
   },  
   testResult: {
     english: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      grammar: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      reading: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      listening: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      vocabulary: {
+        number_of_true: null,
+        umber_of_false: null
+      },
     },
     turkish: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      grammar: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      reading: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      listening: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      vocabulary: {
+        number_of_true: null,
+        umber_of_false: null
+      },
     },
     german: {
-      general: null,
-      grammar: null,
-      reading: null,
-      listening: null,
-      vocabulary: null,
+      general: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      grammar: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      reading: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      listening: {
+        number_of_true: null,
+        umber_of_false: null
+      },
+      vocabulary: {
+        number_of_true: null,
+        umber_of_false: null
+      },
     },
   },
 
@@ -118,17 +238,18 @@ export default (state = initialState, action) => {
       };
 
     case SET_TEST_RESULT:
+      console.log(action, state)
       return {
         ...state,
+        testResult: {...state.testResult, [action.language]: {...state.testResult[action.language], [action.exercise_type]: action.test_result}},
         loading: false,
-        testResult: {...testResult, [action.language]: {...testResult[action.language], [action.exercise_type]: action.test_result}},
       };
 
     case SET_USER_PROGRESS:
       return {
         ...state,
-        loading: false,
-        progress: {...progress, [action.prog_language]: {...progress[action.prog_language], [action.exercise_type] : action.progress}},       
+        progress: {...state.progress, [action.prog_language]: {...state.progress[action.prog_language], [action.exercise_type] : action.progress}},    
+        loading: false,   
       };
 
     default:

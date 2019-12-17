@@ -6,6 +6,8 @@ import {
   USER_PROFILE_SET,
   OTHER_USER_PROFILE_SET,
   OTHER_USER_PROFILE_REQUESTED,
+  SET_TEST_RESULT,
+  SET_USER_PROGRESS
 } from "../actions";
 
 import { get_user_profile as get_user_profile_api } from "../../api/userInfo";
@@ -60,9 +62,11 @@ export const set_user_profile = token => {
         profile,
         overall_rating: calculateRating(profile)
       });
+
     });
     get_user_test_results_api(token, "english", "grammar", "").then(
       testresult => {
+        console.log('test resulsts are ', testresult)
         dispatch({
           type: SET_TEST_RESULT,
           language: "english",
@@ -173,7 +177,6 @@ export const set_user_profile = token => {
     );
     get_user_test_results_api(token, "german", "reading", "").then(
       testresult => {
-        console.log("germanreading",german_read);
         dispatch({
           type: SET_TEST_RESULT,
           language: "german",
@@ -213,7 +216,7 @@ export const set_user_profile = token => {
       }
     );
 
-    get_user_progress_api(token, "english", "grammar", "").then(
+    get_user_progress_api(token, "english", "grammar").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -222,7 +225,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "english", "vocabulary", "").then(
+    get_user_progress_api(token, "english", "vocabulary").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -231,7 +234,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "english", "listening", "").then(
+    get_user_progress_api(token, "english", "listening").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -240,7 +243,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "english", "reading", "").then(
+    get_user_progress_api(token, "english", "reading").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -249,7 +252,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "english", "", "").then(
+    get_user_progress_api(token, "english", null).then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -258,7 +261,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "turkish", "grammar", "").then(
+    get_user_progress_api(token, "turkish", "grammar").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -267,7 +270,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "turkish", "listening", "").then(
+    get_user_progress_api(token, "turkish", "listening").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -276,7 +279,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "turkish", "vocabulary", "").then(
+    get_user_progress_api(token, "turkish", "vocabulary").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -285,7 +288,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "turkish", "reading", "").then(
+    get_user_progress_api(token, "turkish", "reading").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -294,7 +297,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "turkish", "", "").then(
+    get_user_progress_api(token, "turkish", null).then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -303,7 +306,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "german", "grammar", "").then(
+    get_user_progress_api(token, "german", "grammar").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -312,7 +315,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "german", "vocabulary", "").then(
+    get_user_progress_api(token, "german", "vocabulary").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -321,7 +324,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });    
-    get_user_progress_api(token, "german", "listening", "").then(
+    get_user_progress_api(token, "german", "listening").then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -330,7 +333,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "german", "reading", "").then(
+    get_user_progress_api(token, "german", "reading", ).then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -339,7 +342,7 @@ export const set_user_profile = token => {
         progress: testprogress
       });
     });
-    get_user_progress_api(token, "german", "", "").then(
+    get_user_progress_api(token, "german", null).then(
       testprogress => {
       dispatch({
         type: SET_USER_PROGRESS,
@@ -372,16 +375,3 @@ export const set_other_user_profile = (token, username) => {
   };
 };
 
-
-export const set_user_progress = (token, language, type, level) => {
-  return dispatch =>  {
-    get_user_progress_api(token, language, type, level).then(data => {
-      dispatch({
-        type: SET_USER_PROGRESS,
-        prog_language: language,
-        progress: data,
-        exercise_type: type
-      });
-    });
-  };
-};
