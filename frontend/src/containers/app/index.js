@@ -74,10 +74,10 @@ class App extends Component {
       <div
         onMouseMove = {(e) => {
           let per = window.innerWidth/(e.screenX+1);
-          if (this.state.shouldShowNavBar && per<5) {
+          if (this.state.shouldShowNavBar && per<3) {
             this.setState({shouldShowNavBar: false});
           }
-          else if(!this.state.shouldShowNavBar && per>15){
+          else if(!this.state.shouldShowNavBar && per>100){
             this.setState({shouldShowNavBar: true});
           }
         }}>
