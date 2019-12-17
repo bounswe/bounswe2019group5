@@ -46,6 +46,13 @@ import { red } from "@material-ui/core/colors";
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldShowNavBar: true,
+    }
+  }
+
   componentDidMount(){
       const f = () => {
           if(this.props.userInfo.token){
@@ -64,7 +71,16 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div
+        onMouseMove = {(e) => {
+          let per = window.innerWidth/(e.screenX+1);
+          if (this.state.shouldShowNavBar && per<5) {
+            this.setState({shouldShowNavBar: false});
+          }
+          else if(!this.state.shouldShowNavBar && per>15){
+            this.setState({shouldShowNavBar: true});
+          }
+        }}>
         <style type="text/css">
           {" "}
           {`
@@ -138,26 +154,31 @@ class App extends Component {
 
       
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        {(this.props.userInfo.token && this.props.userInfo.userProfile) &&
-          <div style={{flex: 1}} id="left-navigation">
-          <div className="container-fluid">
-          <Navbar variant="light" className="flex-column navigation-full-width">
-            <Nav className="flex-column navigation-full-width">
-                  <Nav.Link className="navigation" href="/" >Home</Nav.Link>
-                  <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
-                  <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
-                  <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
-                  <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
-                  <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
-                  <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
-                  <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
-                  <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
-            </Nav>
-          </Navbar>
+        {(this.props.userInfo.token && this.props.userInfo.userProfile && this.state.shouldShowNavBar) &&
+          <div style={{flex: 1000}} id="left-navigation">
+            <div className="container-fluid">
+              <Navbar variant="light" className="flex-column navigation-full-width">
+                <Nav className="flex-column navigation-full-width">
+                      <Nav.Link className="navigation" href="/" >Home</Nav.Link>
+                      <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
+                      <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
+                      <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
+                      <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+                      <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
+                      <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
+                      <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
+                      <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
+                </Nav>
+              </Navbar>
+            </div>
           </div>
+          ||
+          <div style={{flex: 1}} id="left-navigation">
+            <div className="container-fluid">
+            </div>
           </div>
         }
-        <div style={{flex: 4}}>
+        <div style={{flex: 4000}}>
         <main>
           <Route exact path="/" component={Home} />
           <Route exact path="/about-us" component={About} />
