@@ -16,6 +16,8 @@ import ChatHistory from './chatHistory';
 import { Link } from 'react-router-dom';
 import { flexbox } from '@material-ui/system';
 
+import { Image } from 'react-bootstrap';
+
 import _ from 'lodash';
 
 export class Chat extends Component {
@@ -100,7 +102,13 @@ export class Chat extends Component {
                                     <h1 style={{color: "red"}}>
                                         <Link to={{
                                             pathname: "/profile/" + chatWith
-                                        }}> {chatWith}</Link>
+                                        }}>
+                                            <Image 
+                                                src={"https://ui-avatars.com/api/?rounded=true&name="+chatWith}
+                                                roundedCircle 
+                                            />
+                                            {chatWith}
+                                        </Link>
                                     </h1>
                                 </div>
                             }
