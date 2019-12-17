@@ -118,7 +118,30 @@ class ProfileView(mixins.ListModelMixin,
             raise NotFound('User not found')
 
         user = user.first()
-        return Response(ProfileSerializer(user).data, status=status.HTTP_200_OK)
+
+        commented_user = user
+
+        author = Q(author=self.request.user,
+                   reviewer=commented_user,
+                   status='accepted')
+
+        reviewer = Q(reviewer=self.request.user,
+                     author=commented_user,
+                     status='accepted')
+
+        author_c = Q(author=self.request.user,
+                     reviewer=commented_user,
+                     status='completed')
+
+        reviewer_c = Q(reviewer=self.request.user,
+                       author=commented_user,
+                       status='completed')
+
+        approved_essays = Essay.objects.filter(author | reviewer | author_c | reviewer_c)
+
+        d = ProfileSerializer(user).data
+        d['can_rate'] = len(approved_essays) == 0
+        return Response(d, status=status.HTTP_200_OK)
 
 
 class RecommendationView(GenericViewSet,
