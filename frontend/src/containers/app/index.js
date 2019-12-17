@@ -128,6 +128,7 @@ class App extends Component {
                   <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
                   <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
                   <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
+                  <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
                   <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
             </Nav>
           </Navbar>

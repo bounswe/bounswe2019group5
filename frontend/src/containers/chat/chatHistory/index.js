@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import _ from 'lodash';
 
 import 'react-chat-elements/dist/main.css';
-import { MessageList,SystemMessage,Input,Button, SideBar, MessageBox } from 'react-chat-elements';
+import { MessageList,SystemMessage,Input,Button, SideBar, MessageBox, ChatList } from 'react-chat-elements';
 
 import { clear_chat_history, get_chat_history } from '../../../redux/action-creators/chat';
 
@@ -16,6 +16,9 @@ export class ChatHistory extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            chatWith: null,
+        };
     }
 
     componentDidMount() {
@@ -47,9 +50,39 @@ export class ChatHistory extends Component {
             );
         }
 
+        if (this.state.chatWith) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: "/chat/"+this.state.chatWith,
+                    }}
+                />
+            );
+        }
+
         return (
-            <div>
-                HELLO WORLD!
+            <div style={{ display: 'flex', 'flex-direction': 'column', height: '60vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>
+                {this.props.chat.chatHistory &&
+                    <ChatList
+                        dataSource = {
+                            this.props.chat.chatHistory
+                                .map(message => {
+                                    return {
+                                        avatar: "https://ui-avatars.com/api/?rounded=true&name="+message.chatWith,
+                                        alt: message.chatWith,
+                                        title: 
+                                            message.chatWith===message.from_username ? 
+                                                "incoming from "+message.chatWith    :
+                                                "sent to "+message.chatWith          ,
+                                        subtitle: message.text,
+                                        date: message.date,
+                                        unread: 0,
+                                    }
+                                })
+                        }
+                        onClick = {(chat) => this.props.goChatWith? this.props.goChatWith(chat.alt) : this.setState({chatWith: chat.alt})}
+                    />
+                }
             </div>
         );
     }

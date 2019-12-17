@@ -1,5 +1,6 @@
 import parameters from '../parameters'
 import axios from 'axios';
+import _ from 'lodash';
 
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -106,6 +107,13 @@ export const get_chat_history = async (token, username) => {
                     dict[chatWith] = true;
                     return true;
                 });
+    messages = messages
+                .map(message => {
+                    let chatWith = message.to_username === username ? message.from_username : message.to_username;
+                    var message2 = _.cloneDeep(message);
+                    message2["chatWith"] = chatWith;
+                    return message2;
+                })
     console.log("MESSAGE HISTORY");
     console.log(messages);
     return messages;
