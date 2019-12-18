@@ -17,16 +17,17 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class EssayAdapter extends BaseAdapter {
 
     private LayoutInflater layoutInflater;
-    private JSONArray essays;
+    private ArrayList<Essay> essays;
     private Context context;
 
-    public EssayAdapter(Context context, Activity activity, JSONArray jessays){
+    public EssayAdapter(Context context, Activity activity, ArrayList<Essay> jessays){
         this.layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.essays = jessays;
         this.context = context;
@@ -34,28 +35,17 @@ public class EssayAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return essays.length();
+        return essays.size();
     }
 
     @Override
     public Object getItem(int i) {
-        try {
-            return essays.get(i);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return essays.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        try {
-            JSONObject jobject = (JSONObject) essays.get(i);
-            return jobject.getInt("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return 0;
-        }
+        return essays.get(i).id;
     }
 
     @Override
@@ -69,15 +59,9 @@ public class EssayAdapter extends BaseAdapter {
         reviewer = essayElementView.findViewById(R.id.reviewer);
         status = essayElementView.findViewById(R.id.status);
 
-        JSONObject jsonEssay = (JSONObject) getItem(i);
-        Essay essay = null;
-        try {
-            essay = Essay.fromJSON(jsonEssay);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Essay essay = essays.get(i);
         final Essay essay1 = essay;
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("Europe/Istanbul"));
         date.setText(date.getText().toString() + df.format(essay.date));
         language.setText(language.getText().toString() + essay.language);

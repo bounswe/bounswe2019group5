@@ -21,6 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class ListEssaysActivity extends AppCompatActivity {
@@ -38,6 +41,44 @@ public class ListEssaysActivity extends AppCompatActivity {
         app = (MyApplication)getApplication();
     }
 
+    private void gotEssays(JSONArray essays) {
+        if (essays.length() == 0) {
+            Toast.makeText(getApplicationContext(), "No Essays", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            ArrayList<Essay> essaysParsed = new ArrayList<>();
+
+            for (int i=0; i<essays.length(); i++) {
+                try {
+                    essaysParsed.add(Essay.fromJSON(essays.getJSONObject(i)));
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(ListEssaysActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    finish();
+                    return ;
+                }
+            }
+
+            Collections.sort(essaysParsed, new Comparator<Essay>() {
+                @Override
+                public int compare(Essay o1, Essay o2) {
+                    return -o1.date.compareTo(o2.date); // Sort in reverse, show recent essays at the top
+                }
+            });
+
+            EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, essaysParsed);
+            listView.setAdapter(essayAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -47,21 +88,7 @@ public class ListEssaysActivity extends AppCompatActivity {
             app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    try {
-
-                        if (response.length() == 0) {
-                            Toast.makeText(getApplicationContext(), "No Essays", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, response);
-                        if (response.length() != 0) {
-                            listView.setAdapter(essayAdapter);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return;
-                    }
+                    gotEssays(response);
                 }
 
             }, new Response.ErrorListener() {
@@ -71,15 +98,17 @@ public class ListEssaysActivity extends AppCompatActivity {
                 }
             });
         }else {
+            JSONArray pendings;
             try {
-                JSONArray pendings = new JSONArray(pendingsString);
-                TextView title = findViewById(R.id.listEssaysTitle);
-                title.setText("Your Review Pending Essays");
-                EssayAdapter essayAdapter = new EssayAdapter(ListEssaysActivity.this, ListEssaysActivity.this, pendings);
-                listView.setAdapter(essayAdapter);
-            } catch (JSONException e) {
-                e.printStackTrace();
+                pendings = new JSONArray(pendingsString);
             }
+            catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                finish();
+                return ;
+            }
+            gotEssays(pendings);
         }
     }
 }
