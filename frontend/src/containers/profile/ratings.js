@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import StarRatings from 'react-star-ratings';
 
@@ -35,7 +35,7 @@ export default function Ratings({userProfile}) {
                 <>
                 <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <AccountCircleIcon alt="Remy Sharp" />
+                <Avatar src= {"https://ui-avatars.com/api/?rounded=true&name="+userProfile.username} fontSize="large"> </Avatar>
                 </ListItemAvatar>
                 <ListItemText
                   primary={<StarRatings rating={value.rate} numberOfStars={5} starRatedColor="orange" starDimension="15px" starSpacing="0"/>}

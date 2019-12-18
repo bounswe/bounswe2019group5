@@ -44,7 +44,7 @@ export default function Statistics({ userInfo, language, writings }) {
         <Typography variant="h6" gutterBottom>
           Progress in current level: <CircularProgressbar styles={{ root: { height: '80px', width: '100px' }, path:{stroke: '#0f4c81'} }}
             value={calculateProgressInLevel(userInfo.progress[language].general)} 
-            text={`${calculateProgressInLevel(userInfo.progress[language].general)}%`} /> out of {userInfo.progress[language].general.number_of_test_completed} tests.
+            text={`${calculateProgressInLevel(userInfo.progress[language].general)}%`} /> out of {userInfo.progress[language].general.exercise_in_current_level} tests.
         </Typography>
 
         <Typography variant="h6" gutterBottom>
@@ -64,7 +64,7 @@ export default function Statistics({ userInfo, language, writings }) {
         <Typography variant="h6" gutterBottom>
           Progress in current level: <CircularProgressbar styles={{ root: { height: '80px', width: '100px' }, path:{stroke: '#0f4c81'} }}
             value={calculateProgressInLevel(userInfo.progress[language].grammar)} 
-            text={`${calculateProgressInLevel(userInfo.progress[language].grammar)}%`} /> out of {userInfo.progress[language].grammar.number_of_test_completed} tests.
+            text={`${calculateProgressInLevel(userInfo.progress[language].grammar)}%`} /> out of {userInfo.progress[language].grammar.exercise_in_current_level} tests.
         </Typography>
 
         <Typography variant="h6" gutterBottom>
@@ -83,7 +83,7 @@ export default function Statistics({ userInfo, language, writings }) {
         <Typography variant="h6" gutterBottom>
           Progress in current level: <CircularProgressbar styles={{ root: { height: '80px', width: '100px' }, path:{stroke: '#0f4c81'} }}
             value={calculateProgressInLevel(userInfo.progress[language].vocabulary)} 
-            text={`${calculateProgressInLevel(userInfo.progress[language].vocabulary)}%`} /> out of {userInfo.progress[language].vocabulary.number_of_test_completed} tests.
+            text={`${calculateProgressInLevel(userInfo.progress[language].vocabulary)}%`} /> out of {userInfo.progress[language].vocabulary.exercise_in_current_level} tests.
         </Typography>
 
         <Typography variant="h6" gutterBottom>
@@ -102,7 +102,7 @@ export default function Statistics({ userInfo, language, writings }) {
         <Typography variant="h6" gutterBottom>
           Progress in current level: <CircularProgressbar styles={{ root: { height: '80px', width: '100px' }, path:{stroke: '#0f4c81'} }}
             value={calculateProgressInLevel(userInfo.progress[language].reading)} 
-            text={`${calculateProgressInLevel(userInfo.progress[language].reading)}%`} /> out of {userInfo.progress[language].reading.number_of_test_completed} tests.
+            text={`${calculateProgressInLevel(userInfo.progress[language].reading)}%`} /> out of {userInfo.progress[language].reading.exercise_in_current_level} tests.
         </Typography>
 
         <Typography variant="h6" gutterBottom>
@@ -121,7 +121,7 @@ export default function Statistics({ userInfo, language, writings }) {
         <Typography variant="h6" gutterBottom>
           Progress in current level: <CircularProgressbar styles={{ root: { height: '80px', width: '100px' }, path:{stroke: '#0f4c81'} }}
             value={calculateProgressInLevel(userInfo.progress[language].listening)} 
-            text={`${calculateProgressInLevel(userInfo.progress[language].listening)}%`} /> out of {userInfo.progress[language].listening.number_of_test_completed} tests.
+            text={`${calculateProgressInLevel(userInfo.progress[language].listening)}%`} /> out of {userInfo.progress[language].listening.exercise_in_current_level} tests.
         </Typography>
 
         <Typography variant="h6" gutterBottom>

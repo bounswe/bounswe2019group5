@@ -13,7 +13,7 @@ import {
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import LangTab from "./langTab";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Avatar from '@material-ui/core/Avatar';
 import Paper from "@material-ui/core/Paper";
 import Ratings from "./ratings";
 import _ from "lodash";
@@ -96,14 +96,13 @@ class Profile extends Component {
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <Grid item xs={3}>
-            <div>
+          <Grid item xs={3} alignContent="center">
               <Card
                 border="warning"
                 className="text-center"
               >
                 <Card.Header>
-                  <AccountCircleIcon fontSize="large"> </AccountCircleIcon>
+                  <Avatar style={{margin:"0 auto" }}src= {"https://ui-avatars.com/api/?rounded=true&name="+this.props.userInfo.userProfile.username} fontSize="large"> </Avatar>
                 </Card.Header>
                 <Card.Body>
                   {this.state.selfProfile ? (
@@ -153,13 +152,9 @@ class Profile extends Component {
                   </Card.Text>
                 </Card.Body>
               </Card>
-            </div>
           </Grid>
           <Grid item xs={9} component={Paper}>
             <div className={classes.paper}>
-            <Typography variant="h6" gutterBottom>
-              You can view the statistics of your learning progress of the languages you're learning.
-              </Typography>
               {this.state.selfProfile && (
                 <LangTab
                   userInfo={this.props.userInfo}
@@ -173,8 +168,7 @@ class Profile extends Component {
               )}
             </div>
             <Grid>
-            <Divider variant="inset" component="li" />     
-
+            <Divider variant="inset" />     
               <div className={classes.paper}>
                 <Typography variant="h5" gutterBottom>
                   User ratings and comments:

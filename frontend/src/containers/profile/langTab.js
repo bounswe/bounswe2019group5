@@ -14,6 +14,10 @@ export default function LangTab({userInfo, attendedLang, writings}) {
     }
     console.log(langs);
     return (
+      <>
+      <Typography variant="h6" gutterBottom>
+      You can view the statistics of your learning progress of the languages you're learning.
+      </Typography>
       <Tabs text="white"  size="big" id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
         <Tab eventKey="ENGLISH" title="ENGLISH" disabled={!langs.includes('english') }
          >
@@ -28,5 +32,6 @@ export default function LangTab({userInfo, attendedLang, writings}) {
            {<Statistics userInfo={userInfo} language={"german"} writings={writings}/> }
         </Tab>
       </Tabs>
+      </>
     );
 }
