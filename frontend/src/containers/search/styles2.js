@@ -7,6 +7,11 @@ const styles2 = theme => ({
     inline: {
       display: 'inline',
     },
+    paper: {
+      margin: theme.spacing(2, 4),
+      display: 'flex',
+      flexDirection: 'column',
+  },
   }) ;
 
   export default styles2;

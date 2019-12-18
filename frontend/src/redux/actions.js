@@ -53,3 +53,7 @@ export const SET_RECOMMENDATION_LANGUAGE = "recommendation/SET_RECOMMENDATION_LA
 export const GET_WRITINGS_REQUESTED = "writinglist/GET_WRITINGS_REQUESTED";
 export const GET_WRITINGS = "writinglist/GET_WRITINGS";
 
+//Searching
+export const SET_SEARCHED_USERS =  "search/SET_SEARCHED_USERS";
+export const SET_SEARCHED_EXERCISES = "search/SET_SEARCHED_EXERCISES";
+export const SET_INPUT = "search/SET_INPUT";

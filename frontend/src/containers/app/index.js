@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Home from "../home";
@@ -24,45 +24,48 @@ import {
 } from "../../redux/action-creators/userInfo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
-import { withStyles } from '@material-ui/core/styles';
 import {
   Navbar,
   Nav,
   Form,
-  Container,
-  Row,
-  Col,
   Image,
   Button,
-  ButtonToolbar,
-  NavDropdown,
-  NavItem
+
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
-
+import Search from "../search";
+import { set_input } from "../../redux/action-creators/search";
 import { logout } from "../../redux/action-creators/authentication";
-import { red } from "@material-ui/core/colors";
+
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       shouldShowNavBar: true,
     }
+    this.ref = React.createRef()
+    this.search = this.search.bind(this)
+  }
+
+  search(e) {
+    e.preventDefault()
+    this.props.set_input(this.ref.current.value);
+    this.props.history.push('/search')
   }
 
   render() {
     return (
       <div
-        onMouseMove = {(e) => {
-          let per = window.innerWidth/(e.screenX+1);
-          if (this.state.shouldShowNavBar && per<3) {
-            this.setState({shouldShowNavBar: false});
+        onMouseMove={(e) => {
+          let per = window.innerWidth / (e.screenX + 1);
+          if (this.state.shouldShowNavBar && per < 3) {
+            this.setState({ shouldShowNavBar: false });
           }
-          else if(!this.state.shouldShowNavBar && per>100){
-            this.setState({shouldShowNavBar: true});
+          else if (!this.state.shouldShowNavBar && per > 100) {
+            this.setState({ shouldShowNavBar: true });
           }
         }}>
         <style type="text/css">
@@ -91,10 +94,6 @@ class App extends Component {
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
-
-            {
-              // TODO -> Profil Page hazir oldugunda buradan link edilecek
-            }
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
               <Link to={"/profile/" + this.props.userInfo.userProfile.username}>
                 <Button variant="outline-success">
@@ -127,6 +126,10 @@ class App extends Component {
               </Link>
             </Nav.Link>
           </Form>
+          <Form inline onSubmit={this.search} >
+            <Form.Control ref={this.ref} type="text" placeholder="Search user/exercise" className="mr-sm-2" />
+            <Button type="submit" variant="outline-success">Search</Button>
+          </Form>
           <Form inline>
             <Nav.Link href="about-us">
               <Link to="/about-us">
@@ -136,67 +139,64 @@ class App extends Component {
           </Form>
         </Navbar>
 
-      
-      <div style={{display: 'flex', flexDirection: 'row'}}>
-        {(this.props.userInfo.token && this.props.userInfo.userProfile && this.state.shouldShowNavBar) &&
-          <div style={{flex: 1000}} id="left-navigation">
-            <div className="container-fluid">
-              <Navbar variant="light" className="flex-column navigation-full-width">
-                <Nav className="flex-column navigation-full-width">
-                      <Nav.Link className="navigation" href="/" >Home</Nav.Link>
-                      <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
-                      <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
-                      <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
-                      <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
-                      <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
-                      <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
-                      <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
-                      <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
-                </Nav>
-              </Navbar>
+
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {(this.props.userInfo.token && this.props.userInfo.userProfile) &&
+            <div style={{ flex: 1 }} id="left-navigation">
+              <div className="container-fluid">
+                <Navbar variant="light" className="flex-column navigation-full-width">
+                  <Nav className="flex-column navigation-full-width">
+                    <Nav.Link className="navigation" href="/" >Home</Nav.Link>
+                    <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
+                    <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
+                    <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
+                    <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+                    <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
+                    <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
+                    <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
+                  </Nav>
+                </Navbar>
+              </div>
             </div>
+          }
+          <div style={{ flex: 4 }}>
+            <main>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about-us" component={About} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/prof-test/:lang" component={ProfTest} />
+              <Route exact path="/lang-select" component={LanguageSelection} />
+              <Route exact path="/test-result" component={TestResult} />
+              <Route exact path="/guest-login" component={GuestLogin} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/exercise/:id" component={Exercise} />
+              <Route exact path="/profile/:user" component={Profile} />
+              <Route exact path="/chat/:chatWith" component={Chat} />
+              <Route exact path="/chatHistory" component={ChatHistory} />
+              <Route exact path="/exercises" component={Exercises} />
+              <Route
+                exact
+                path="/upload-writing/:reviewer?"
+                component={WritingUpload}
+              />
+              <Route exact path="/recommendation" component={Recommendation} />
+              <Route exact path="/show-writing/:id" component={WritingShow} />
+              <Route exact path="/writing-list" component={WritingList} />
+              <Route exact path="/suggestion" component={SuggestExercise} />
+              <Route exact path="/suggestion" component={SuggestExercise} />
+              <Route exact path="/search" component={Search} />
+            </main>
           </div>
-          ||
-          <div style={{flex: 1}} id="left-navigation">
-            <div className="container-fluid">
-            </div>
-          </div>
-        }
-        <div style={{flex: 4000}}>
-        <main>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about-us" component={About} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/prof-test/:lang" component={ProfTest} />
-          <Route exact path="/lang-select" component={LanguageSelection} />
-          <Route exact path="/test-result" component={TestResult} />
-          <Route exact path="/guest-login" component={GuestLogin} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/exercise/:id" component={Exercise} />
-          <Route exact path="/profile/:user" component={Profile} />
-          <Route exact path="/chat/:chatWith" component={Chat} />
-          <Route exact path="/chatHistory" component={ChatHistory} />
-          <Route exact path="/exercises" component={Exercises} />
-          <Route
-            exact
-            path="/upload-writing/:reviewer?"
-            component={WritingUpload}
-          />
-          <Route exact path="/recommendation" component={Recommendation} />
-          <Route exact path="/show-writing/:id" component={WritingShow} />
-          <Route exact path="/writing-list" component={WritingList} />
-          <Route exact path="/suggestion" component={SuggestExercise} />
-        </main>
         </div>
-      </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ userInfo }) => ({
-  userInfo
+const mapStateToProps = ({ userInfo, search }) => ({
+  userInfo,
+  search
 });
 
 const mapDispatchToProps = dispatch =>
@@ -205,8 +205,9 @@ const mapDispatchToProps = dispatch =>
       logout,
       set_user_profile,
       clear_user_profile,
+      set_input
     },
     dispatch
   );
 
-export default  connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

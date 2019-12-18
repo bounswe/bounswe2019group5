@@ -22,7 +22,7 @@ export const search_users = async (token, language, username) => {
     });
 };
 
-export const search_test = async (token, tag, keyword, language, type) => {
+export const search_exercises = async (token, tag, keyword, language, type) => {
   return await axios
     .get(parameters.apiUrl + "/search/", {
       params: {

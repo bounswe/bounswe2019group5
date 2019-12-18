@@ -103,7 +103,7 @@ class SearchTest extends React.Component {
                       secondary={
                         <React.Fragment>
                           <Link
-                            to={"exercise/" + value.id}
+                            to={"/exercise/" + value.id}
                           >
                             <Button variant="success">Go to test</Button>
                           </Link>

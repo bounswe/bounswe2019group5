@@ -53,8 +53,7 @@ class Profile extends Component {
         );
         this.setState({ selfProfile: false });
       }
-    } else {
-      
+    } else {     
       if (!prevState.selfProfile) {
         this.props.set_user_profile(this.props.userInfo.token);
         this.setState({ selfProfile: true });
