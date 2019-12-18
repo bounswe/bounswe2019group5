@@ -53,22 +53,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
-      const f = () => {
-          if(this.props.userInfo.token){
-            this.props.set_user_profile(this.props.userInfo.token);
-            console.log("user profile set");
-          }
-          this.timer = setTimeout(f, 3000);
-      }
-      f();
-  }
-
-  componentWillUnmount(){
-    if (this.timer)
-      clearTimeout(this.timer);
-  }
-
   render() {
     return (
       <div

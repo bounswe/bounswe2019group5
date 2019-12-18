@@ -30,6 +30,7 @@ class Profile extends Component {
     if (
       this.props.match.params.user != this.props.userInfo.userProfile.username
     ) {
+      console.log('other user')
       this.props.set_other_user_profile(
         this.props.userInfo.token,
         this.props.match.params.user
@@ -88,6 +89,7 @@ class Profile extends Component {
         </div>
       );
     } else {
+      console.log(this.props.userInfo)
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
