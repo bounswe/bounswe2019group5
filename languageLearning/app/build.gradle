@@ -46,9 +46,11 @@ dependencies {
     implementation 'com.android.support:percent:28.1.0'
     implementation 'com.android.support:cardview-v7:28.1.0'
     implementation 'com.android.volley:volley:1.1.1'
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore
-    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.12'
-    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.6'
+
+    //implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.12'
+    //implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.6'
+    implementation group: 'cz.msebera.android' , name: 'httpclient', version: '4.5.3'
+    
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation project(':photoview')
 }

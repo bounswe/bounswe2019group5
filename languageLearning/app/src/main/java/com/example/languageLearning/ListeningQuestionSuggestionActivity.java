@@ -23,9 +23,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.FormBodyPart;
-import org.apache.http.entity.mime.content.ByteArrayBody;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.mime.FormBodyPart;
+import cz.msebera.android.httpclient.entity.mime.content.ByteArrayBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
