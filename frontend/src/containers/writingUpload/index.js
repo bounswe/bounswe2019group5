@@ -48,18 +48,20 @@ class WritingUpload extends Component {
     {
       this.setState({file: e.target.files[0]});
     }
+    else{
+      this.setState({[e.target.id]: e.target.value});
+    }
 
   }
 
   onSubmit(e){
-    if(!this.state.isPlainText && this.state.file)
+    if((!this.state.isPlainText && this.state.file) || (this.state.isPlainText && this.state.essayText.length!=0))
     {
         upload_writing(this.props.userInfo.token, 
                        this.props.userInfo.selectedLanguage,
-                       this.state.file,
+                       (!this.state.isPlainText) && this.state.file || new File([new Blob([this.state.essayText])], "essay.txt"),
                        this.state.reviewer)
           .then(essay => {
-            console.log(essay);
             if (essay.message)
             {
               this.setState({message: essay.message});
@@ -74,12 +76,6 @@ class WritingUpload extends Component {
     }
     else if(this.state.isPlainText && this.state.essayText!=="")
     {
-      /*let fileName = "file"+(""+Math.random()).split('.')[1]+".txt";
-      console.log(fileName);
-      writeFileP(fileName, this.state.text)
-        .then((err, data) => {
-          console.log(err, data);
-        });*/
     }
   }
 

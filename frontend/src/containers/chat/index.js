@@ -16,6 +16,8 @@ import ChatHistory from './chatHistory';
 import { Link } from 'react-router-dom';
 import { flexbox } from '@material-ui/system';
 
+import { Image } from 'react-bootstrap';
+
 import _ from 'lodash';
 
 export class Chat extends Component {
@@ -74,8 +76,6 @@ export class Chat extends Component {
         const {classes} = this.props;
         let chatWith = this.chatWith;
 
-        console.log(this.props.notShowHistory);
-
         return (
 
             <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -98,10 +98,15 @@ export class Chat extends Component {
                             {
                                 <div>
                                     <h1 style={{color: "red"}}>
-                                        Chat With
                                         <Link to={{
                                             pathname: "/profile/" + chatWith
-                                        }}> {chatWith}</Link>
+                                        }}>
+                                            <Image 
+                                                src={"https://ui-avatars.com/api/?rounded=true&name="+chatWith}
+                                                roundedCircle 
+                                            />
+                                            {chatWith}
+                                        </Link>
                                     </h1>
                                 </div>
                             }

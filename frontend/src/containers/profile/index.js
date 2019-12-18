@@ -30,17 +30,14 @@ class Profile extends Component {
     if (
       this.props.match.params.user != this.props.userInfo.userProfile.username
     ) {
-      console.log("other user profile");
       this.props.set_other_user_profile(
         this.props.userInfo.token,
         this.props.match.params.user
       );
       this.setState({ selfProfile: false });
-      console.log("other profile");
     } else {
       this.props.set_user_profile(this.props.userInfo.token);
       this.props.get_essays(this.props.userInfo.token);
-      console.log("self profile");
     }
   }
 
@@ -57,7 +54,6 @@ class Profile extends Component {
       }
     } else {
       
-      console.log("self profileuu");
       if (!prevState.selfProfile) {
         this.props.set_user_profile(this.props.userInfo.token);
         this.setState({ selfProfile: true });
@@ -72,7 +68,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.props.userInfo);
     const { classes } = this.props;
     const rating = this.props.userInfo.overallRating ? (this.props.userInfo.overallRating[1]===0 ? 0 :
       (this.props.userInfo.overallRating[0] /
@@ -140,7 +135,6 @@ class Profile extends Component {
                         </Typography>
                         <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
-                          {console.log("overall rating",this.props.userInfo.overallRating)}
                           <StarRatings rating={rating} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px"/>
                           out of{" "}
                           {this.props.userInfo.overallRating ?

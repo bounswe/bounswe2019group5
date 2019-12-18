@@ -43,132 +43,144 @@ class SuggestExercise extends Component {
     questionModal(qId) {
         
         return (
-            <Card style={{width: '50vw'}}>
-                <Card.Body>
-                    <InputGroup>
-                        <Card.Title inline>{"Question "+(qId+1)}</Card.Title>
-                        <Button
-                            inline
-                            variant="light"
-                            style={{width: '10vw', marginLeft: '38vw'}}
-                            required
-                            onClick={()=>{
-                                var exercise = _.cloneDeep( this.state.exercise );
-                                exercise.questions = exercise.questions
-                                    .filter((question, i) => i!=qId);
-                                this.setState({exercise});
-                            }}
-                        >Delete Question</Button>
-                    </InputGroup>
-                    { this.state.exercise.type!=='listening' &&
-                        <Form.Group>
-                            <Form.Label>Question Text:</Form.Label>
-                            <Form.Control 
-                                style={{width: '40vw'}} 
-                                as="textarea" 
-                                rows="2"
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <Card style={{flex:8}}>
+                    <Card.Body>
+                        <InputGroup style={{display: 'flex', flexDirection: 'row'}}>
+                            <Card.Title style={{flex: 2}} inline>{"Question "+(qId+1)}</Card.Title>
+                            <div style={{flex:4}}/>
+                            <Button
+                                inline
+                                variant="light"
+                                style={{flex: 2}}
                                 required
-                                value={this.state.exercise.questions[qId].body}
-                                onChange={e => {
+                                onClick={()=>{
                                     var exercise = _.cloneDeep( this.state.exercise );
-                                    exercise.questions[qId].body = e.target.value;
+                                    exercise.questions = exercise.questions
+                                        .filter((question, i) => i!=qId);
                                     this.setState({exercise});
                                 }}
-                            />
-                        </Form.Group>
-                    }
-                    { this.state.exercise.type==='listening' &&
-                        <Form.Group>
-                            <Form.Label>Question Audio:</Form.Label>
-                            <Form.Control 
-                                style={{width: '40vw'}} 
-                                as="input"
-                                type="file"
-                                accept="audio/*"
-                                onChange={e => {
-                                    let file = _.cloneDeep(e.target.files[0]);
-                                    upload_file(this.props.userInfo.token, e.target.files[0])
-                                        .then(data => {
-                                            console.log(data);
-                                            if (!data.message){
-                                                var exercise = _.cloneDeep( this.state.exercise );
-                                                exercise.questions[qId].body = data.file;
-                                                exercise.questions[qId].file = file;
-                                                this.setState({exercise});
-                                            }
-                                        })
-                                }}
-                            />
-                        </Form.Group>
-                    }
-
-                    <Form.Group>
-                        <Form.Label>Options:</Form.Label>
-                        {this.state.exercise.questions[qId].options
-                            .map((option, index) => {
-                                return (
-                                        <InputGroup
-                                            className="mb-3"
-                                            style={{width: '40vw'}}>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Checkbox
-                                                    checked={index == this.state.exercise.questions[qId].answerIndex}
-                                                    onClick={() => {
+                            >Delete Question</Button>
+                        </InputGroup>
+                        { this.state.exercise.type!=='listening' &&
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <Form.Group style={{flex: 8}}>
+                                    <Form.Label>Question Text:</Form.Label>
+                                    <Form.Control
+                                        as="textarea" 
+                                        rows="2"
+                                        required
+                                        value={this.state.exercise.questions[qId].body}
+                                        onChange={e => {
+                                            var exercise = _.cloneDeep( this.state.exercise );
+                                            exercise.questions[qId].body = e.target.value;
+                                            this.setState({exercise});
+                                        }}
+                                    />
+                                </Form.Group>
+                                <div style={{flex:1}}/>
+                            </div>
+                        }
+                        { this.state.exercise.type==='listening' &&
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <Form.Group style={{flex:8}}>
+                                    <Form.Label>Question Audio:</Form.Label>
+                                    <Form.Control 
+                                        as="input"
+                                        type="file"
+                                        accept="audio/*"
+                                        onChange={e => {
+                                            let file = _.cloneDeep(e.target.files[0]);
+                                            upload_file(this.props.userInfo.token, e.target.files[0])
+                                                .then(data => {
+                                                    console.log(data);
+                                                    if (!data.message){
                                                         var exercise = _.cloneDeep( this.state.exercise );
-                                                        exercise.questions[qId].answerIndex = index;
-                                                        exercise.questions[qId].answer = exercise.questions[qId].options[index];
+                                                        exercise.questions[qId].body = data.file;
+                                                        exercise.questions[qId].file = file;
                                                         this.setState({exercise});
-                                                    }}
-                                                />
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                style={{
-                                                    backgroundColor: this.state.exercise.questions[qId].answerIndex==index? '#00CC00': 'white'
-                                                    }}
-                                                as="textarea"
-                                                rows="1"
-                                                value={this.state.exercise.questions[qId].options[index]}
-                                                onChange={e => {
-                                                    var exercise = _.cloneDeep( this.state.exercise );
-                                                    exercise.questions[qId].options[index] = e.target.value;
-                                                    if (index==exercise.questions[qId].answerIndex)
-                                                        exercise.questions[qId].answer = e.target.value;
-                                                    this.setState({exercise});
-                                                }}
-                                            />
+                                                    }
+                                                })
+                                        }}
+                                    />
+                                </Form.Group>
 
-                                            <InputGroup.Append>
-                                                <Button
-                                                    variant="danger"
-                                                    onClick={()=>{
-                                                        var exercise = _.cloneDeep( this.state.exercise );
-                                                        exercise.questions[qId].options = exercise.questions[qId].options
-                                                            .filter((option, i) => i!=index);
-                                                        if (exercise.questions[qId].answerIndex==index) {
-                                                            exercise.questions[qId].answerIndex = -1;
-                                                            exercise.questions[qId].answer = '';
-                                                        }
-                                                        else if (exercise.questions[qId].answerIndex > index) 
-                                                            exercise.questions[qId].answerIndex = exercise.questions[qId].answerIndex-1;
-                                                        this.setState({exercise});
-                                                    }}>delete</Button>
-                                            </InputGroup.Append>
-                                        </InputGroup>
-                                );
-                            })}
-                    </Form.Group>
-                    
-                    <Button 
-                        variant="light"
-                        onClick={() => {
-                            var exercise = _.cloneDeep( this.state.exercise );
-                            exercise.questions[qId].options = exercise.questions[qId].options.concat('');
-                            this.setState({exercise});
-                        }}
-                        >+ Option</Button>
+                                <div style={{flex:1}}/>
+                            </div>
+                        }
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <Form.Group style={{flex:8}}>
+                                <Form.Label>Options:</Form.Label>
+                                {this.state.exercise.questions[qId].options
+                                    .map((option, index) => {
+                                        return (
+                                                <InputGroup
+                                                    className="mb-3">
+                                                    <InputGroup.Prepend>
+                                                        <InputGroup.Checkbox
+                                                            checked={index == this.state.exercise.questions[qId].answerIndex}
+                                                            onClick={() => {
+                                                                var exercise = _.cloneDeep( this.state.exercise );
+                                                                exercise.questions[qId].answerIndex = index;
+                                                                exercise.questions[qId].answer = exercise.questions[qId].options[index];
+                                                                this.setState({exercise});
+                                                            }}
+                                                        />
+                                                    </InputGroup.Prepend>
+                                                    <FormControl
+                                                        style={{
+                                                            backgroundColor: this.state.exercise.questions[qId].answerIndex==index? '#00CC00': 'white'
+                                                            }}
+                                                        as="textarea"
+                                                        rows="1"
+                                                        value={this.state.exercise.questions[qId].options[index]}
+                                                        onChange={e => {
+                                                            var exercise = _.cloneDeep( this.state.exercise );
+                                                            exercise.questions[qId].options[index] = e.target.value;
+                                                            if (index==exercise.questions[qId].answerIndex)
+                                                                exercise.questions[qId].answer = e.target.value;
+                                                            this.setState({exercise});
+                                                        }}
+                                                    />
 
-                </Card.Body>
-            </Card>
+                                                    <InputGroup.Append>
+                                                        <Button
+                                                            variant="danger"
+                                                            onClick={()=>{
+                                                                var exercise = _.cloneDeep( this.state.exercise );
+                                                                exercise.questions[qId].options = exercise.questions[qId].options
+                                                                    .filter((option, i) => i!=index);
+                                                                if (exercise.questions[qId].answerIndex==index) {
+                                                                    exercise.questions[qId].answerIndex = -1;
+                                                                    exercise.questions[qId].answer = '';
+                                                                }
+                                                                else if (exercise.questions[qId].answerIndex > index) 
+                                                                    exercise.questions[qId].answerIndex = exercise.questions[qId].answerIndex-1;
+                                                                this.setState({exercise});
+                                                            }}>delete</Button>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                        );
+                                    })}
+                            </Form.Group>
+
+                            <div style={{flex:1}}/>
+                        </div>
+                        
+                        <Button 
+                            variant="light"
+                            onClick={() => {
+                                var exercise = _.cloneDeep( this.state.exercise );
+                                exercise.questions[qId].options = exercise.questions[qId].options.concat('');
+                                this.setState({exercise});
+                            }}
+                            >+ Option</Button>
+
+                    </Card.Body>
+                </Card>
+
+                <div style={{flex:4}}/>
+            </div>
         );
     }
     
@@ -333,59 +345,66 @@ class SuggestExercise extends Component {
                                 .map((question, qId) => {return this.questionModal(qId)})
                         }
 
-                        <Button 
-                            variant="light"
-                            style={{width: "10vw", marginLeft: "20vw", marginRight: "70vw"}}
-                            onClick={() => {
-                                var exercise = _.cloneDeep( this.state.exercise );
-                                exercise.questions = exercise.questions.concat({body: '', answer: '', answerIndex: -1, options: ['', '']});
-                                this.setState({exercise});
-                            }}
-                            >+ Question</Button>
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <div style={{flex:3}}/>
+                            <Button 
+                                variant="light"
+                                style={{flex: 2}}
+                                onClick={() => {
+                                    var exercise = _.cloneDeep( this.state.exercise );
+                                    exercise.questions = exercise.questions.concat({body: '', answer: '', answerIndex: -1, options: ['', '']});
+                                    this.setState({exercise});
+                                }}
+                                >+ Question</Button>
+                            <div style={{flex:7}}/>
+                        </div>
                     </ListGroup>
                 }
 
                 {this.state.created &&
-                    <div style={{marginLeft: '5vw'}}>
-                        <Form.Group>
-                            <Form.Label>Keywords(write with comma seperator or space):</Form.Label>
-                            <Form.Control 
-                                style={{width: '40vw'}} 
-                                as="textarea" 
-                                rows="1"
-                                value={this.state.keywordsText}
-                                onChange={e => {
-                                    let temp = e.target.value
-                                        .split('\n').join(',').split('\t').join(',').split(' ').join(',').split(',');
-                                    let keywords = temp
-                                        .filter(t => t && t.length>0);
-                                    let keywordsText = temp
-                                        .filter((t, i) => i==temp.length-1 || (t && t.length>0))
-                                        .join(', ');
-                                    this.setState({keywordsText, exercise: {...this.state.exercise, keywords}});
-                                }}
-                            />
-                        </Form.Group>
+                    <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{flex:1}}/>
+                        <div style={{flex:6}}>
+                            <Form.Group>
+                                <Form.Label>Keywords(write with comma seperator or space):</Form.Label>
+                                <Form.Control
+                                    as="textarea" 
+                                    rows="1"
+                                    value={this.state.keywordsText}
+                                    onChange={e => {
+                                        let temp = e.target.value
+                                            .split('\n').join(',').split('\t').join(',').split(' ').join(',').split(',');
+                                        let keywords = temp
+                                            .filter(t => t && t.length>0);
+                                        let keywordsText = temp
+                                            .filter((t, i) => i==temp.length-1 || (t && t.length>0))
+                                            .join(', ');
+                                        this.setState({keywordsText, exercise: {...this.state.exercise, keywords}});
+                                    }}
+                                />
+                            </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Tags(write with comma seperator or space):</Form.Label>
-                            <Form.Control 
-                                style={{width: '40vw'}} 
-                                as="textarea" 
-                                rows="1"
-                                value={this.state.tagsText}
-                                onChange={e => {
-                                    let temp = e.target.value
-                                        .split('\n').join(',').split('\t').join(',').split(' ').join(',').split(',');
-                                    let tags = temp
-                                        .filter(t => t && t.length>0);
-                                    let tagsText = temp
-                                        .filter((t, i) => i==temp.length-1 || (t && t.length>0))
-                                        .join(', ');
-                                    this.setState({tagsText, exercise: {...this.state.exercise, tags}});
-                                }}
-                            />
-                        </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Tags(write with comma seperator or space):</Form.Label>
+                                <Form.Control
+                                    as="textarea" 
+                                    rows="1"
+                                    value={this.state.tagsText}
+                                    onChange={e => {
+                                        let temp = e.target.value
+                                            .split('\n').join(',').split('\t').join(',').split(' ').join(',').split(',');
+                                        let tags = temp
+                                            .filter(t => t && t.length>0);
+                                        let tagsText = temp
+                                            .filter((t, i) => i==temp.length-1 || (t && t.length>0))
+                                            .join(', ');
+                                        this.setState({tagsText, exercise: {...this.state.exercise, tags}});
+                                    }}
+                                />
+                            </Form.Group>
+                        </div>
+
+                        <div style={{flex:5}}/>
                     </div>
                 }
 

@@ -20,7 +20,6 @@ class LanguageSelection extends Component {
     state = { isLanguageSelected: false, language: null }
     constructor(props) {
         super(props);
-        console.log(props.userInfo.token);
     };
     handleSubmit = (language) => {
         this.props.set_selected_language(language);

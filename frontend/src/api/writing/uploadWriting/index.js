@@ -9,8 +9,6 @@ export const upload_writing = async (token, language, file, reviewer) => {
 
     var bodyFormData = new FormData();
     bodyFormData.set('language', language);
-    console.log("file");
-    console.log(language);
     if (reviewer)
         bodyFormData.set('reviewer', reviewer);
     bodyFormData.set('writing', file);
@@ -32,7 +30,6 @@ export const upload_writing = async (token, language, file, reviewer) => {
         };
     });
     
-    console.log(data);
     timeout(10000);
   
     return data;

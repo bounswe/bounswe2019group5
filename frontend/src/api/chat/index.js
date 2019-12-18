@@ -114,7 +114,5 @@ export const get_chat_history = async (token, username) => {
                     message2["chatWith"] = chatWith;
                     return message2;
                 })
-    console.log("MESSAGE HISTORY");
-    console.log(messages);
     return messages;
 }

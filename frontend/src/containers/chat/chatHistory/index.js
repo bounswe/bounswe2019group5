@@ -70,11 +70,11 @@ export class ChatHistory extends Component {
                                     return {
                                         avatar: "https://ui-avatars.com/api/?rounded=true&name="+message.chatWith,
                                         alt: message.chatWith,
-                                        title: 
-                                            message.chatWith===message.from_username ? 
-                                                "incoming from "+message.chatWith    :
-                                                "sent to "+message.chatWith          ,
-                                        subtitle: message.text,
+                                        title: message.chatWith,
+                                        subtitle: 
+                                            message.from_username===message.chatWith ? 
+                                            message.chatWith+": "+message.text       :
+                                            "You: "+message.text                     ,
                                         date: message.date,
                                         unread: 0,
                                     }

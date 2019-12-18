@@ -13,7 +13,11 @@ export const get_user_recommendations = async (token, language) => {
       },
       timeout: 10000
     })
-    .then(response => response.data)
+    .then(response => {
+      return response
+              .data
+              .sort((a,b) => (b.rating_average-a.rating_average));
+    })
     .catch(err => {
       return {
         message: err.response ? err.response.data.message : "Connection Error!"
