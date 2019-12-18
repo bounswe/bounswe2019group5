@@ -111,7 +111,7 @@ class Search extends React.Component {
                                                     primary={(index + 1) + ": user: " + value.username}
                                                     secondary={ //add native lang
                                                         <React.Fragment>
-
+                                                            <Typography>Native language: {value.native_language}</Typography>
                                                             <Link
                                                                 to={"/profile/" + value.username}
                                                             >
@@ -190,7 +190,12 @@ class Search extends React.Component {
                                                     primary={(index + 1) + " :  " + value.type + " exercise "}
                                                     secondary={ //add tag and keywords
                                                         <React.Fragment>
-
+                                                    <Typography>Tags: {value.tags.map((val, i) => {
+                                                        return (val + ", ")
+                                                    })}</Typography>
+                                                    <Typography>Keywords: {value.keywords.map((val, i) => {
+                                                        return (val + ", ")
+                                                    })}</Typography>
                                                             <Link
                                                                 to={"/exercise/" + value.id}
                                                             >
