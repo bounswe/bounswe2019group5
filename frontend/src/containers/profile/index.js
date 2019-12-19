@@ -100,7 +100,7 @@ class Profile extends Component {
               className="text-center"
             >
               <Card.Header>
-                <Avatar style={{ margin: "0 auto" }} src={"https://ui-avatars.com/api/?rounded=true&name=" + this.props.userInfo.userProfile.username} fontSize="large"> </Avatar>
+                <Avatar style={{ margin: "0 auto" }} src={this.state.selfProfile ? ("https://ui-avatars.com/api/?rounded=true&name=" + this.props.userInfo.userProfile.username) : ("https://ui-avatars.com/api/?rounded=true&name=" + this.props.userInfo.otherUserProfile.username)} fontSize="large"> </Avatar>
               </Card.Header>
               <Card.Body>
                 {this.state.selfProfile ? (

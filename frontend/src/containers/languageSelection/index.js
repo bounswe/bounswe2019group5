@@ -46,7 +46,7 @@ class LanguageSelection extends Component {
             return (
                 <>
                     <Grid><Typography component="h1" variant="h3" align='center'>
-                        Select a language to take its proficiency test.
+                        Select a language first.
               </Typography>
                     </Grid>
                     <Grid><Typography component="h1" variant="button" align='center'>

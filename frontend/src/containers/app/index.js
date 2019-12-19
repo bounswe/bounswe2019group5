@@ -30,7 +30,6 @@ import {
   Form,
   Image,
   Button,
-
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
