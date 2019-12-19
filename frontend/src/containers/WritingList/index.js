@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
 import { Link } from 'react-router-dom'
-
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Button, Card, CardDeck, Image, ListGroup, ListGroupItem } from 'react-bootstrap';
-
 import { get_essays } from '../../redux/action-creators/writinglist';
 
 class WritingList extends Component {

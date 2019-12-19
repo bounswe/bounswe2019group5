@@ -1,9 +1,7 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 import { Button, Card, CardDeck, Image } from 'react-bootstrap';
-import { login } from "../../redux/action-creators/authentication";
 
 const Home = (props) => { 
   return (

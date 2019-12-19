@@ -1,10 +1,4 @@
-import orange from '@material-ui/core/colors/orange';
 const styles = theme => ({
-    '@global': {
-        body: {
-            backgroundColor: orange[400],
-        },
-    },
         root: {
         height: '100vh',
     },

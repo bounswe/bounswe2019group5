@@ -1,11 +1,6 @@
 import React from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import Typography from "@material-ui/core/Typography";
-import { Redirect } from "react-router";
-import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
-import { Button, Card, CardDeck, Image, ListGroup, ListGroupItem } from 'react-bootstrap';
 import SearchTest from "./searchTest"
 
 export default function ExerciseTypes({ language }) {

@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
@@ -9,7 +8,6 @@ import styles2 from "./styles2";
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
 import Button from "react-bootstrap/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { set_selected_language } from "../../redux/action-creators/userInfo";
