@@ -12,27 +12,20 @@ import Button from "react-bootstrap/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { set_selected_language } from "../../redux/action-creators/userInfo";
 import { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
 class SearchTest extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tag: "" , keyword:""};
+    this.state = { input: null };
+    this.ref = React.createRef()
 
-    this.handleChangeTag = this.handleChangeTag.bind(this);
-    this.handleChangeKeyword = this.handleChangeKeyword.bind(this);
-
+    this.combineTandK = this.combineTandK.bind(this);
   }
 
-  handleChangeTag(event) {
-    this.setState({ tag: event.target.value });
-  }
-  handleChangeKeyword(event) {
-    this.setState({ keyword: event.target.value });
-  }
   componentDidMount() {
     this.props.search_test(
       this.props.userInfo.token,
-      "",
       "",
       this.props.language,
       this.props.type
@@ -40,70 +33,68 @@ class SearchTest extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.language === this.props.language &&
-      prevProps.type === this.props.type &&
-      prevState.tag === this.state.tag &&
-      prevState.keyword === this.state.keyword &&
-      prevProps.exercises.searchTest === this.props.exercises.searchTest
-    ) {
-      return;
+    console.log("prev",prevState.input);
+    console.log("now",this.state.input);
+    if (prevState.input !== this.state.input) {
+      console.log("in update");
+      this.props.search_test(
+        this.props.userInfo.token,
+        this.state.input,
+        this.props.language,
+        this.props.type
+      );
     }
-    this.props.search_test(
-      this.props.userInfo.token,
-      this.state.tag,
-      this.state.keyword,
-      this.props.language,
-      this.props.type
-    );
+  }
+  combineTandK(WT, WK) {
+    if ((!WT || WT.message) && (!WK || WK.message)) {
+      return [];
+    }
+    else if ((!WT || WT.message) && WK) {
+      return WK;
+    }
+    else if (WT && (!WK || WK.message)) {
+      return WT;
+    }
+    else {
+      const setty = new Set([...WT, ...WK]);
+      return Array.from(setty);
+    }
   }
 
   render() {
     const { classes } = this.props;
-
+    const searchedTest = this.combineTandK(this.props.exercises.searchedTest.T[this.props.type], this.props.exercises.searchedTest.K[this.props.type]);
+    console.log(this.props.exercises.searchedTest);
     return (
       <>
-        <form>
-          <label>
-            {" "}
-            <Typography component="overline" variant="block" color="primary">
-              Search tag:
-            </Typography>
-            <input
-              type="text"
-              value={this.state.tag}
-              onChange={this.handleChangeTag}
-            />
-          </label>
-        </form>
-        <form>
-          <label>
-            {" "}
-            <Typography component="overline" variant="block" color="primary">
-              Search keyword:
-            </Typography>
-            <input
-              type="text"
-              value={this.state.keyword}
-              onChange={this.handleChangeKeyword}
-            />
-          </label>
-        </form>
+        <Form inline onSubmit={(e) => {
+          e.preventDefault();
+          this.setState({ input: this.ref.current.value })
+        }} >
+          <Form.Control ref={this.ref} type="text" className="mr-sm-2" />
+          <Button type="submit" variant="outline-success">Search</Button>
+        </Form>
 
         <List className={classes.root}>
-          {this.props.exercises.searchedTest[this.props.type] &&
-            this.props.exercises.searchedTest[this.props.type].map((value, index) => {
+          {searchedTest &&
+            searchedTest.map((value, index) => {
               return (
                 <>
                   <ListItem alignItems="flex-start">
                     <ListItemText
-                      primary={"EXERCISE ID:  " + value.id}
-                      secondary={
+                      primary={(index + 1) + " :  " + value.type + " exercise "}
+                      secondary={ //add tag and keywords
                         <React.Fragment>
+                          <Typography>Tags: {value.tags.map((val, i) => {
+                            return (val + ", ")
+                          })}</Typography>
+                          <Typography>Keywords: {value.keywords.map((val, i) => {
+                            return (val + ", ")
+                          })}</Typography>
                           <Link
                             to={"/exercise/" + value.id}
                           >
-                            <Button variant="success">Go to test</Button>
+                            <Button variant="success">Go to exercise</Button>
                           </Link>
                         </React.Fragment>
                       }
