@@ -14,8 +14,10 @@ const initialState = {
 
   selectedLanguage: null,
   token: null,
-  loading: false,
-  overallRating: null,
+  loadingS: false,
+  loadingO: false,
+  overallRatingS: null,
+  overallRatingO: null,
   userProfile: null,
   otherUserProfile: null,
   progress: {
@@ -214,41 +216,41 @@ export default (state = initialState, action) => {
     case USER_PROFILE_REQUESTED:
       return {
         ...state,
-        loading: !state.userProfile,
+        loadingS: !state.userProfile,
       }
     case USER_PROFILE_SET:
       return {
         ...state,
         userProfile: action.profile,
-        overallRating: action.overall_rating,
-        loading: false,
+        overallRatingS: action.overall_rating,
+        loadingS: false,
       };
 
     case OTHER_USER_PROFILE_REQUESTED:
       return {
         ...state,
-        loading: !state.otherUserProfile,
+        loadingO: !state.otherUserProfile,
       };
     case OTHER_USER_PROFILE_SET:
       return {
         ...state,
         otherUserProfile: action.profile,
-        overallRating: action.overall_rating,
-        loading: false,
+        overallRatingO: action.overall_rating,
+        loadingO: false,
       };
 
     case SET_TEST_RESULT:
       return {
         ...state,
         testResult: {...state.testResult, [action.language]: {...state.testResult[action.language], [action.exercise_type]: action.test_result}},
-        loading: false,
+        loadingS: false,
       };
 
     case SET_USER_PROGRESS:
       return {
         ...state,
         progress: {...state.progress, [action.prog_language]: {...state.progress[action.prog_language], [action.exercise_type] : action.progress}},    
-        loading: false,   
+        loadingS: false,   
       };
 
     default:
