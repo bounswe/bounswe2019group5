@@ -33,8 +33,8 @@ class SearchTest extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("prev",prevState.input);
-    console.log("now",this.state.input);
+    console.log("prev", prevState.input);
+    console.log("now", this.state.input);
     if (prevState.input !== this.state.input) {
       console.log("in update");
       this.props.search_test(
@@ -76,6 +76,8 @@ class SearchTest extends React.Component {
         </Form>
 
         <List className={classes.root}>
+          {searchedTest.length == 0 &&
+            <Typography>Great! You've solved all exercises. Try leveling up.</Typography>}
           {searchedTest &&
             searchedTest.map((value, index) => {
               return (

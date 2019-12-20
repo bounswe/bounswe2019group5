@@ -34,6 +34,9 @@ class Search extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if(prevProps.search.input != this.props.search.input) {
+            this.ref.current.value = this.props.search.input;
+        }
         if ((this.state.exlanguage !== prevState.exlanguage ||
             this.state.type !== prevState.type ||
             this.state.level !== prevState.level ||
