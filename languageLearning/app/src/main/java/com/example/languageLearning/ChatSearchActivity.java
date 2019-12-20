@@ -6,17 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
-//import android.widget.SearchView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,7 +23,6 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-//public class ChatSearchActivity extends AppCompatActivity {
 public class ChatSearchActivity extends AppCompatActivity {
     private UserSearchAdapter adapter;
     private List<UserSearchItem> exampleList;
@@ -46,7 +40,6 @@ public class ChatSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_search);
 
         app = (MyApplication) getApplication();
-        fillExampleList();
         setUpRecyclerView();
 
         Toolbar toolbar = findViewById(R.id.main_toolbar);
@@ -58,19 +51,6 @@ public class ChatSearchActivity extends AppCompatActivity {
 
 
         users_list = new ArrayList<>();
-    }
-
-    private void fillExampleList() {
-        exampleList = new ArrayList<>();
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "One", "Ten"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Two", "Eleven"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Three", "Twelve"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Four", "Thirteen"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Five", "Fourteen"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Six", "Fifteen"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Seven", "Sixteen"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Eight", "Seventeen"));
-        exampleList.add(new UserSearchItem(R.drawable.ic_chat_black_24dp, "Nine", "Eighteen"));
     }
 
     private void setUpRecyclerView() {
@@ -142,12 +122,6 @@ public class ChatSearchActivity extends AppCompatActivity {
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                /*
-                if (response.length() == 0) {
-                    //Toast.makeText(getApplicationContext(), "No Users Found With Given Parameters", Toast.LENGTH_SHORT).show();
-                    setSearchResults(response);
-                    return ;
-                }*/
 
                 setSearchResults(response);
                 Json2Arraylist();
