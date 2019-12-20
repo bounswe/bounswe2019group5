@@ -44,15 +44,14 @@ class Profile extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.match.params.user != this.props.userInfo.userProfile.username
+      this.props.match.params.user != this.props.userInfo.userProfile.username ||
+      prevProps.match.params.user != this.props.match.params.user
     ) {
-      if (prevState.selfProfile) {
         this.props.set_other_user_profile(
           this.props.userInfo.token,
           this.props.match.params.user
         );
-        this.setState({ selfProfile: false });
-      }
+        this.setState({ selfProfile: false });     
     } else {
       if (!prevState.selfProfile) {
         this.props.set_user_profile(this.props.userInfo.token);
@@ -124,11 +123,13 @@ class Profile extends Component {
                       <Typography variant="h5" gutterBottom color="primary">
                         Overall rating:
                           <StarRatings rating={ratingS} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
-                        out of{" "}
-                        {this.props.userInfo.overallRatingS ?
-                          this.props.userInfo.overallRatingS[1] : 0}{" "}
-                        ratings.
-                        </Typography>
+                        <Typography variant="h7" gutterBottom color="primary">
+                          out of{" "}
+                          {this.props.userInfo.overallRatingS ?
+                            this.props.userInfo.overallRatingS[1] : 0}{" "}
+                          ratings.                        
+                          </Typography>
+                      </Typography>
                     </>
                   ) : (
                       <>
@@ -139,10 +140,12 @@ class Profile extends Component {
                         <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
                           <StarRatings rating={ratingO} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
+                          <Typography variant="h7" gutterBottom color="primary">
                           out of{" "}
                           {this.props.userInfo.overallRatingO ?
                             this.props.userInfo.overallRatingO[1] : 0}{" "}
                           ratings.
+                        </Typography>
                         </Typography>
                       </>
                     )}
@@ -168,7 +171,7 @@ class Profile extends Component {
               <Divider variant="inset" />
               <div className={classes.paper}>
                 <Typography variant="h5" gutterBottom>
-                  User ratings and comments:
+                  {this.state.selfProfile ? this.props.userInfo.userProfile.username : this.props.userInfo.otherUserProfile.username}'s ratings and comments:
                 </Typography>
                 {this.state.selfProfile ? (
                   <Ratings userProfile={this.props.userInfo.userProfile} />

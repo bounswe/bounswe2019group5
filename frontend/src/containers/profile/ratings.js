@@ -8,6 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import StarRatings from 'react-star-ratings';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,8 +51,7 @@ export default function Ratings({ userProfile }) {
                     >
                       <Link to={{
                         pathname: "/profile/" + value.username
-                      }}>
-
+                      }}> {value.username}
                       </Link>
                     </Typography>
                     {" " + value.comment}
