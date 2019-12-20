@@ -68,7 +68,7 @@ class Profile extends Component {
 
   render() {
     const { classes } = this.props;
-    if ( !this.props.userInfo.otherUserProfile.username && !this.state.selfProfile ) {
+    if ( (this.props.userInfo.otherUserProfile && !this.props.userInfo.otherUserProfile.username) && !this.state.selfProfile ) {
       return (
         <div>
           <h1>NO SUCH USER FOUND</h1>
@@ -77,7 +77,6 @@ class Profile extends Component {
     const ratingS = this.props.userInfo.userProfile.rating_average;
     const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;
 
-    console.log("ulan",!!this.props.userInfo.otherUserProfile);
     if (this.props.userInfo.token == null) {
       return (
         <Redirect
