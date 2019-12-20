@@ -22,16 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChatSearchActivity extends AppCompatActivity implements UserSearchAdapter.OnPersonListener {
     private UserSearchAdapter adapter;
-    private List<UserSearchItem> exampleList;
-
-
 
     private MyApplication app;
-    JSONArray users;
+    JSONArray users_json;
     ArrayList<UserSearchItem> users_list;
 
 
@@ -49,7 +45,6 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
         toolbar.setTitle("");
         toolbar_text.setText("Search User");
         setSupportActionBar(toolbar);
-
 
         users_list = new ArrayList<>();
     }
@@ -94,11 +89,11 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
     public void Json2Arraylist(){
 
         users_list.clear();
-        for(int i=0; i < users.length(); i++){
+        for(int i = 0; i < users_json.length(); i++){
 
             try {
-                String username = users.getJSONObject(i).getString("username");
-                String native_lang = users.getJSONObject(i).getString("native_language");
+                String username = users_json.getJSONObject(i).getString("username");
+                String native_lang = users_json.getJSONObject(i).getString("native_language");
 
                 users_list.add(new UserSearchItem(R.drawable.ic_person, username, native_lang));
 
@@ -110,12 +105,12 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
     }
 
     public void setSearchResults(JSONArray response){
-        users = response;
+        users_json = response;
     }
 
     public void makeGetRequest(final String query){
 
-        String path = "users/?";
+        String path = "users_json/?";
         if (!query.equals("")) {
             path += "&username=" + query;
         }

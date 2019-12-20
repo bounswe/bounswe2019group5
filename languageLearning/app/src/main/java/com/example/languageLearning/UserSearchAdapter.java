@@ -1,27 +1,15 @@
 package com.example.languageLearning;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ExampleViewHolder> implements Filterable {
     private List<UserSearchItem> exampleList;
-    private List<UserSearchItem> exampleListFull;
 
     ArrayList<UserSearchItem> users_list;
 
@@ -65,7 +52,6 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
 
     UserSearchAdapter(List<UserSearchItem> exampleList, OnPersonListener onPersonListener) {
         this.exampleList = exampleList;
-        exampleListFull = new ArrayList<>(exampleList);
 
         this.mOnPersonListener = onPersonListener;
     }
