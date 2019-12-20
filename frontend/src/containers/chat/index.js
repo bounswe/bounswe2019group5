@@ -115,7 +115,7 @@ export class Chat extends Component {
                     <div
                         style={{flex: 9, overflowY: 'scroll'}}
                         ref={(el) => {this.messageListRef = el;}}>
-                        {this.props.chat.messages && 
+                        {(this.props.chat.messages && !this.props.chat.messages.message) &&
                         this.props.chat.messages
                             .map(message => {
                                 return (
