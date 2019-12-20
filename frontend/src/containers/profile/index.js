@@ -47,11 +47,11 @@ class Profile extends Component {
       this.props.match.params.user != this.props.userInfo.userProfile.username ||
       prevProps.match.params.user != this.props.match.params.user
     ) {
-        this.props.set_other_user_profile(
-          this.props.userInfo.token,
-          this.props.match.params.user
-        );
-        this.setState({ selfProfile: false });     
+      this.props.set_other_user_profile(
+        this.props.userInfo.token,
+        this.props.match.params.user
+      );
+      this.setState({ selfProfile: false });
     } else {
       if (!prevState.selfProfile) {
         this.props.set_user_profile(this.props.userInfo.token);
@@ -68,12 +68,16 @@ class Profile extends Component {
 
   render() {
     const { classes } = this.props;
-    const ratingS = this.props.userInfo.overallRatingS ? (this.props.userInfo.overallRatingS[1] === 0 ? 0 :
-      (this.props.userInfo.overallRatingS[0] /
-        this.props.userInfo.overallRatingS[1])) : 0;
-    const ratingO = this.props.userInfo.overallRatingO ? (this.props.userInfo.overallRatingO[1] === 0 ? 0 :
-      (this.props.userInfo.overallRatingO[0] /
-        this.props.userInfo.overallRatingO[1])) : 0;
+    if ( !this.props.userInfo.otherUserProfile.username && !this.state.selfProfile ) {
+      return (
+        <div>
+          <h1>NO SUCH USER FOUND</h1>
+        </div>)
+    }
+    const ratingS = this.props.userInfo.userProfile.rating_average;
+    const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;
+
+    console.log("ulan",!!this.props.userInfo.otherUserProfile);
     if (this.props.userInfo.token == null) {
       return (
         <Redirect
@@ -88,7 +92,7 @@ class Profile extends Component {
           <h1>LOADING</h1>
         </div>
       );
-    } else {
+    }  else {
       console.log(this.props.userInfo)
       return (
         <Grid container component="main" className={classes.root}>
@@ -125,9 +129,9 @@ class Profile extends Component {
                           <StarRatings rating={ratingS} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
                         <Typography variant="h7" gutterBottom color="primary">
                           out of{" "}
-                          {this.props.userInfo.overallRatingS ?
-                            this.props.userInfo.overallRatingS[1] : 0}{" "}
-                          ratings.                        
+                          {this.props.userInfo.userProfile ?
+                            this.props.userInfo.userProfile.user_comments.length : 0}{" "}
+                          ratings.
                           </Typography>
                       </Typography>
                     </>
@@ -141,10 +145,10 @@ class Profile extends Component {
                           Overall rating:
                           <StarRatings rating={ratingO} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
                           <Typography variant="h7" gutterBottom color="primary">
-                          out of{" "}
-                          {this.props.userInfo.overallRatingO ?
-                            this.props.userInfo.overallRatingO[1] : 0}{" "}
-                          ratings.
+                            out of{" "}
+                            {this.props.userInfo.otherUserProfile ?
+                              this.props.userInfo.otherUserProfile.user_comments.length : 0}{" "}
+                            ratings.
                         </Typography>
                         </Typography>
                       </>

@@ -16,8 +16,6 @@ const initialState = {
   token: null,
   loadingS: false,
   loadingO: false,
-  overallRatingS: null,
-  overallRatingO: null,
   userProfile: null,
   otherUserProfile: null,
   progress: {
@@ -222,7 +220,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userProfile: action.profile,
-        overallRatingS: action.overall_rating,
         loadingS: false,
       };
 
@@ -235,7 +232,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         otherUserProfile: action.profile,
-        overallRatingO: action.overall_rating,
         loadingO: false,
       };
 
