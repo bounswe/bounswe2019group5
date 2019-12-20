@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +24,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatSearchActivity extends AppCompatActivity {
+public class ChatSearchActivity extends AppCompatActivity implements UserSearchAdapter.OnPersonListener {
     private UserSearchAdapter adapter;
     private List<UserSearchItem> exampleList;
 
@@ -57,7 +58,7 @@ public class ChatSearchActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new UserSearchAdapter(new ArrayList<UserSearchItem>());
+        adapter = new UserSearchAdapter(new ArrayList<UserSearchItem>(),this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -141,8 +142,12 @@ public class ChatSearchActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPersonClick(int position) {
+        String person = users_list.get(position).getUserName();
 
-
-
-
+        Intent intent = new Intent(this, ChatLiveScreenActivity.class);
+        intent.putExtra("Person",person);
+        startActivity(intent);
+    }
 }

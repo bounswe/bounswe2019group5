@@ -33,24 +33,41 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
 
     ArrayList<UserSearchItem> users_list;
 
-    class ExampleViewHolder extends RecyclerView.ViewHolder {
+    OnPersonListener mOnPersonListener;
+
+    class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView textView1;
         TextView textView2;
 
-        ExampleViewHolder(View itemView) {
+        OnPersonListener onPersonListener;
+
+        ExampleViewHolder(View itemView, OnPersonListener onPersonListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             textView1 = itemView.findViewById(R.id.text_view1);
             textView2 = itemView.findViewById(R.id.text_view2);
+
+            this.onPersonListener = onPersonListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onPersonListener.onPersonClick(getAdapterPosition());
         }
     }
 
-    UserSearchAdapter(List<UserSearchItem> exampleList) {
+    public interface OnPersonListener{
+        void onPersonClick(int position);
+    }
+
+    UserSearchAdapter(List<UserSearchItem> exampleList, OnPersonListener onPersonListener) {
         this.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
 
-
+        this.mOnPersonListener = onPersonListener;
     }
 
     @NonNull
@@ -58,7 +75,7 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_user_search_item,
                 parent, false);
-        return new ExampleViewHolder(v);
+        return new ExampleViewHolder(v,mOnPersonListener);
     }
 
     @Override
