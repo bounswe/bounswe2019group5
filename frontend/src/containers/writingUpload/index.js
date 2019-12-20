@@ -59,7 +59,7 @@ class WritingUpload extends Component {
   }
 
   onSubmit(e){
-    if(((!this.state.isPlainText && this.state.file) || (this.state.isPlainText && this.state.essayText.length!=0)) && "none"!==this.state.language)
+    if(((!this.state.isPlainText && this.state.file) || (this.state.isPlainText && this.state.essayText.length!=0)) && "none"!==this.state.language && this.state.reviewer)
     {
         upload_writing(this.props.userInfo.token, 
                        this.state.language,
@@ -77,9 +77,6 @@ class WritingUpload extends Component {
               })
             }
           });
-    }
-    else if(this.state.isPlainText && this.state.essayText!=="")
-    {
     }
   }
 
@@ -131,6 +128,7 @@ class WritingUpload extends Component {
               <Modal.Body>
                 <Recommendation 
                         mode="callback(username)"
+                        language={this.state.language!=="none" ? this.state.language: null}
                         onSelect={this.onSelectReviewer.bind(this)}/>
               </Modal.Body>
             </Modal>
@@ -168,7 +166,8 @@ class WritingUpload extends Component {
                         <text>No reviewer selected, you can select later or now..</text>
                 }
               </div>
-
+              
+              {this.state.language==="none" &&
               <div>
                 <DropdownButton required id="dropdown-basic-button" title={"Language: "+this.state.language} variant="info">
 
@@ -187,19 +186,24 @@ class WritingUpload extends Component {
                       onClick={()=>{this.setState({language: 'turkish'})}}
                   >Turkish</Dropdown.Item>
 
-              </DropdownButton>
-            </div>
-
-              <div>
-                <Button onClick={() => {
-                  this.setState({isOnSelectReviewer: true});
-                }}
-                variant="info">Select or Change Reviewer</Button>
+                </DropdownButton>
               </div>
+              }
+              
+              {this.state.language!=="none" &&
+                <div>
+                  <Button onClick={() => {
+                    this.setState({isOnSelectReviewer: true});
+                  }}
+                  variant="info">Select or Change Reviewer</Button>
+                </div>
+              }
 
-              <div>
-                <Button onClick={this.onSubmit.bind(this)}>Upload Essay</Button>
-              </div>
+              {(this.state.language && this.state.reviewer) &&
+                <div>
+                  <Button onClick={this.onSubmit.bind(this)}>Upload Essay</Button>
+                </div>
+              }
             </div>
         </div>
     );

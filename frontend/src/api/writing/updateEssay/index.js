@@ -30,6 +30,10 @@ export const respond_to_essay = async (token, status, id) => {
 
 export const change_reviewer_of_essay = async (token, reviewer, id) => {
     
+    console.log(token);
+    console.log(reviewer);
+    console.log(id);
+
     let essay = await axios
         .patch(parameters.apiUrl+'/essay/' + id + '/',
             {
