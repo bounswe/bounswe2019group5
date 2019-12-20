@@ -20,44 +20,49 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Ratings({userProfile}) {
+export default function Ratings({ userProfile }) {
   const classes = useStyles();
   if (userProfile.user_comments.length === 0) {
-      return(
-        <Typography variant="h6" gutterBottom>
-          No one rated yet :(
+    return (
+      <Typography variant="h6" gutterBottom>
+        No one rated yet :(
       </Typography>
-      )}
+    )
+  }
   return (
     <List className={classes.root}>
-        {userProfile.user_comments && userProfile.user_comments.map((value, index) => {
-            return (
-                <>
-                <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                <Avatar src= {"https://ui-avatars.com/api/?rounded=true&name="+userProfile.username} fontSize="large"> </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={<StarRatings rating={value.rate} numberOfStars={5} starRatedColor="orange" starDimension="15px" starSpacing="0"/>}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.inline}
-                        color="textPrimary"
-                      >
-                        {value.username}
-                      </Typography>
-                      {" " + value.comment}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            <Divider variant="inset" component="li" />     
-            </>
-            )
-        })}
+      {userProfile.user_comments && userProfile.user_comments.map((value, index) => {
+        return (
+          <>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar src={"https://ui-avatars.com/api/?rounded=true&name=" + value.username} fontSize="large"> </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={<StarRatings rating={value.rate} numberOfStars={5} starRatedColor="orange" starDimension="15px" starSpacing="0" />}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      <Link to={{
+                        pathname: "/profile/" + value.username
+                      }}>
+
+                      </Link>
+                    </Typography>
+                    {" " + value.comment}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+          </>
+        )
+      })}
     </List>
   );
 }
