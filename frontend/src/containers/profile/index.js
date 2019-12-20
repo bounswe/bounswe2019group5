@@ -25,6 +25,7 @@ import {
   Button,
 
 } from "react-bootstrap";
+import {send_comment} from '../../api/comment';
 
 
 class Profile extends Component {
@@ -83,7 +84,21 @@ class Profile extends Component {
   }
 
   sendComment() {
-    
+    send_comment(this.props.userInfo.token, this.props.userInfo.otherUserProfile.username, 
+      this.state.comment, this.state.rating)
+      .then(newComment => 
+          {
+            if (!newComment.message){
+              this.props.set_other_user_profile(
+                this.props.userInfo.token,
+                this.props.match.params.user
+              );
+              this.setState({ comment: "", rating: 3 });
+            }
+
+          }
+        
+      );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
