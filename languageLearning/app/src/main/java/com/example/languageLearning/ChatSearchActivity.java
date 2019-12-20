@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.SearchView;
 
@@ -42,16 +43,19 @@ public class ChatSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-
         setContentView(R.layout.activity_chat_search);
 
         app = (MyApplication) getApplication();
         fillExampleList();
         setUpRecyclerView();
+
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        TextView toolbar_text = findViewById(R.id.title_text);
+
+        toolbar.setTitle("");
+        toolbar_text.setText("Search User");
+        setSupportActionBar(toolbar);
+
 
         users_list = new ArrayList<>();
     }
@@ -73,7 +77,7 @@ public class ChatSearchActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new UserSearchAdapter(exampleList);
+        adapter = new UserSearchAdapter(new ArrayList<UserSearchItem>());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
