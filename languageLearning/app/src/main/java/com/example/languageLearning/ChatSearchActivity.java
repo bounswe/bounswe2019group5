@@ -14,7 +14,15 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 //import android.widget.SearchView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +31,13 @@ import java.util.List;
 public class ChatSearchActivity extends AppCompatActivity {
     private UserSearchAdapter adapter;
     private List<UserSearchItem> exampleList;
+
+
+
+    private MyApplication app;
+    JSONArray users;
+    ArrayList<UserSearchItem> users_list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +48,12 @@ public class ChatSearchActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_chat_search);
+
+        app = (MyApplication) getApplication();
         fillExampleList();
         setUpRecyclerView();
+
+        users_list = new ArrayList<>();
     }
 
     private void fillExampleList() {
@@ -80,10 +99,72 @@ public class ChatSearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                makeGetRequest(newText);
                 return false;
             }
         });
         return true;
     }
+
+    public void Json2Arraylist(){
+
+        users_list.clear();
+        for(int i=0; i < users.length(); i++){
+
+            try {
+                String username = users.getJSONObject(i).getString("username");
+                String native_lang = users.getJSONObject(i).getString("native_language");
+
+                users_list.add(new UserSearchItem(R.drawable.ic_person, username, native_lang));
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void setSearchResults(JSONArray response){
+        users = response;
+    }
+
+    public void makeGetRequest(final String query){
+
+        String path = "users/?";
+        if (!query.equals("")) {
+            path += "&username=" + query;
+        }
+
+        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                /*
+                if (response.length() == 0) {
+                    //Toast.makeText(getApplicationContext(), "No Users Found With Given Parameters", Toast.LENGTH_SHORT).show();
+                    setSearchResults(response);
+                    return ;
+                }*/
+
+                setSearchResults(response);
+                Json2Arraylist();
+                adapter.setUserList(users_list);
+                adapter.getFilter().filter(query);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //finish();
+                error.printStackTrace();
+            }
+        });
+
+    }
+
+
+
+
+
+
 }

@@ -2,24 +2,24 @@ package com.example.languageLearning;
 
 public class UserSearchItem {
     private int imageResource;
-    private String text1;
-    private String text2;
+    private String username;
+    private String nativeLang;
 
-    public UserSearchItem(int imageResource, String text1, String text2) {
+    public UserSearchItem(int imageResource, String username, String nativeLang) {
         this.imageResource = imageResource;
-        this.text1 = text1;
-        this.text2 = text2;
+        this.username = username;
+        this.nativeLang = nativeLang;
     }
 
     public int getImageResource() {
         return imageResource;
     }
 
-    public String getText1() {
-        return text1;
+    public String getUserName() {
+        return username;
     }
 
-    public String getText2() {
-        return text2;
+    public String getNativeLang() {
+        return nativeLang;
     }
 }

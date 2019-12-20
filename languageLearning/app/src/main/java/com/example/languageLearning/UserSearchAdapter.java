@@ -1,15 +1,27 @@
 package com.example.languageLearning;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ExampleViewHolder> implements Filterable {
     private List<UserSearchItem> exampleList;
     private List<UserSearchItem> exampleListFull;
+
+    ArrayList<UserSearchItem> users_list;
 
     class ExampleViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -35,6 +49,8 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
     UserSearchAdapter(List<UserSearchItem> exampleList) {
         this.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
+
+
     }
 
     @NonNull
@@ -50,8 +66,8 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
         UserSearchItem currentItem = exampleList.get(position);
 
         holder.imageView.setImageResource(currentItem.getImageResource());
-        holder.textView1.setText(currentItem.getText1());
-        holder.textView2.setText(currentItem.getText2());
+        holder.textView1.setText(currentItem.getUserName());
+        holder.textView2.setText(currentItem.getNativeLang());
     }
 
     @Override
@@ -67,22 +83,9 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<UserSearchItem> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (UserSearchItem item : exampleListFull) {
-                    if (item.getText2().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
 
             FilterResults results = new FilterResults();
-            results.values = filteredList;
+            results.values = users_list;
 
             return results;
         }
@@ -94,4 +97,11 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Ex
             notifyDataSetChanged();
         }
     };
+
+    public void setUserList(ArrayList<UserSearchItem> users){
+        users_list = users;
+    }
+
+
+
 }
