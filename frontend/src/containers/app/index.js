@@ -162,7 +162,7 @@ class App extends Component {
               </div>
             </div>
           }
-          <div style={{ flex: 4 }}>
+          <div style={{ flex: 8 }}>
             <main>
               <Route exact path="/" component={Home} />
               <Route exact path="/about-us" component={About} />
