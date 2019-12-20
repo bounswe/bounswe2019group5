@@ -134,17 +134,19 @@ class App extends Component {
               </Link>
             )}
           </Nav>
+          {this.props.userInfo.token && (
           <Form inline>
             <Nav.Link href="contribute">
               <Link to="/suggestion">
                 <Button variant="outline-info">Contribute</Button>
               </Link>
             </Nav.Link>
-          </Form>
+          </Form>)}
+          {this.props.userInfo.token && (
           <Form inline onSubmit={this.search} >
             <Form.Control ref={this.ref} type="text" placeholder="Search user/exercise" className="mr-sm-2" />
             <Button type="submit" variant="outline-success">Search</Button>
-          </Form>
+          </Form>)}
           <Form inline>
             <Nav.Link href="about-us">
               <Link to="/about-us">
