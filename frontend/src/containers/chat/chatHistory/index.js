@@ -62,7 +62,7 @@ export class ChatHistory extends Component {
 
         return (
             <div style={{ display: 'flex', 'flex-direction': 'column', height: '60vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>
-                {this.props.chat.chatHistory &&
+                {(this.props.chat.chatHistory && !this.props.chat.chatHistory.message && this.props.chat.chatHistory.length) &&
                     <ChatList
                         dataSource = {
                             this.props.chat.chatHistory

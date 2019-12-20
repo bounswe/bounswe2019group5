@@ -54,7 +54,7 @@ export const get_all_messages = async (token, _with) => {
 
     lock_for_get_all_messages = true;
 
-    messages = await axios
+    let messages2 = await axios
         .get(parameters.apiUrl+'/message/',
         {
             params: {
@@ -91,7 +91,9 @@ export const get_all_messages = async (token, _with) => {
 
     lock_for_get_all_messages = false;
 
-    return messages;
+    messages = _.cloneDeep(messages2);
+
+    return messages2;
 }
 
 export const get_chat_history = async (token, username) => {

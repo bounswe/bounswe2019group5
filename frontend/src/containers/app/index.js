@@ -152,8 +152,8 @@ class App extends Component {
                     <Nav.Link className="navigation" href="/" >Home</Nav.Link>
                     <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
                     <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
-                    <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
                     <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+                    <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
                     <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
                     <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
                     <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
@@ -186,7 +186,6 @@ class App extends Component {
               <Route exact path="/recommendation" component={Recommendation} />
               <Route exact path="/show-writing/:id" component={WritingShow} />
               <Route exact path="/writing-list" component={WritingList} />
-              <Route exact path="/suggestion" component={SuggestExercise} />
               <Route exact path="/suggestion" component={SuggestExercise} />
               <Route exact path="/search" component={Search} />
             </main>

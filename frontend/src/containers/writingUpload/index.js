@@ -91,16 +91,6 @@ class WritingUpload extends Component {
       );
     }
 
-    if (this.props.userInfo.selectedLanguage == null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/lang-select"
-          }}
-        />
-      );
-    }
-
     if (this.state.isUploaded){
       return (
         <Redirect
