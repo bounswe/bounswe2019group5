@@ -123,6 +123,7 @@ class Profile extends Component {
                         {this.props.userInfo.userProfile.first_name}{" "}
                         {this.props.userInfo.userProfile.last_name}
                       </Typography>
+                      <Typography>Native Language: {this.props.userInfo.userProfile.native_language} </Typography>
                       <Typography variant="h5" gutterBottom color="primary">
                         Overall rating:
                           <StarRatings rating={ratingS} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
@@ -140,6 +141,7 @@ class Profile extends Component {
                           {this.props.userInfo.otherUserProfile.first_name}{" "}
                           {this.props.userInfo.otherUserProfile.last_name}
                         </Typography>
+                        <Typography>Native Language: {this.props.userInfo.otherUserProfile.native_language} </Typography>
                         <Typography variant="h5" gutterBottom color="primary">
                           Overall rating:
                           <StarRatings rating={ratingO} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />

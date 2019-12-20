@@ -226,7 +226,7 @@ export default (state = initialState, action) => {
     case OTHER_USER_PROFILE_REQUESTED:
       return {
         ...state,
-        loadingO: !state.otherUserProfile,
+        loadingO: !state.otherUserProfile || (state.otherUserProfile.username!==action.new_username),
       };
     case OTHER_USER_PROFILE_SET:
       return {

@@ -345,7 +345,8 @@ export const set_user_profile = token => {
 
 export const set_other_user_profile = (token, username) => {
   return dispatch => {
-    dispatch({ type: OTHER_USER_PROFILE_REQUESTED });
+    dispatch({ type: OTHER_USER_PROFILE_REQUESTED, 
+                new_username: username});
     get_user_profile_api(token, username).then(profile => {
       dispatch({
         type: OTHER_USER_PROFILE_SET,
