@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/circular_button"
         android:src="@drawable/ic_message_white_48dp"
+        android:onClick="onClickMessage"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="50dp"
