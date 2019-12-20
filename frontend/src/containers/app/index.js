@@ -152,7 +152,6 @@ class App extends Component {
                     <Nav.Link className="navigation" href="/" >Home</Nav.Link>
                     <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
                     <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
-                    <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
                     <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
                     <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
                     <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
