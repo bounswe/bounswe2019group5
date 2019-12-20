@@ -112,14 +112,8 @@ class App extends Component {
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
               <Link to={"/profile/" + this.props.userInfo.userProfile.username}>
                 <Button variant="outline-success">
-                  My Profile({this.props.userInfo.userProfile.username})
-                </Button>
-              </Link>
-            )}
-            {this.props.userInfo.token && (
-              <Link to="/exercises/">
-                <Button variant="outline-warning">
-                  Solve Exercise
+                  <img style={{width: 20, height: 20, marginRight: 5}} src={"https://ui-avatars.com/api/?rounded=true&name="+this.props.userInfo.username}/>
+                  My Profile
                 </Button>
               </Link>
             )}
@@ -134,14 +128,6 @@ class App extends Component {
               </Link>
             )}
           </Nav>
-          {this.props.userInfo.token && (
-          <Form inline>
-            <Nav.Link href="contribute">
-              <Link to="/suggestion">
-                <Button variant="outline-info">Contribute</Button>
-              </Link>
-            </Nav.Link>
-          </Form>)}
           {this.props.userInfo.token && (
           <Form inline onSubmit={this.search} >
             <Form.Control ref={this.ref} type="text" placeholder="Search user/exercise" className="mr-sm-2" />
