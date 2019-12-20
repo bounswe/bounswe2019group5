@@ -30,9 +30,10 @@ class Exercises extends Component {
 
     var langs = [];
     var json;
-    for (json of this.props.userInfo.userProfile.attended_languages) {
-      langs.push(json.language);
-    }
+    if (this.props.userInfo.userProfile.attended_languages)
+      for (json of this.props.userInfo.userProfile.attended_languages) {
+        langs.push(json.language);
+      }
 
     if (this.props.userInfo.token == null) {
       return (
