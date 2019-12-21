@@ -30,7 +30,6 @@
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ExerciseResultOverviewActivity" />
-        <activity android:name=".ChatMainScreenActivity" />
         <activity
             android:name=".ImageEssayDetailTestActivity"
             android:exported="true" />
