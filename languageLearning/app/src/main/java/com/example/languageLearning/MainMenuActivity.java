@@ -187,7 +187,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=vocabulary&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path, "vocabulary");
+                getAndStartExercise(path);
             }
         });
 
@@ -196,7 +196,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=grammar&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path, "grammar");
+                getAndStartExercise(path);
             }
         });
 
@@ -205,7 +205,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=reading&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path, "reading");
+                getAndStartExercise(path);
             }
         });
 
@@ -214,7 +214,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String path = "search/?type=listening&language=" + app.getLanguage().toLowerCase();
-                getAndStartExercise(path, "listening");
+                getAndStartExercise(path);
             }
         });
 
@@ -234,7 +234,7 @@ public class MainMenuActivity extends AppCompatActivity {
         popup.show();
     }
 
-    public void getAndStartExercise(final String path, final String type){
+    public void getAndStartExercise(final String path){
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
             @Override
@@ -250,7 +250,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainMenuActivity.this, ExerciseActivity.class);
 
                     intent.putExtra("exercise", exercise);
-                    intent.putExtra("type", type);
                     startActivity(intent);
                 }
                 catch (JSONException e) {

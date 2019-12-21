@@ -59,7 +59,6 @@ public class ExerciseActivityTestActivity extends AppCompatActivity {
             finish();
             return ;
         }
-        intent.putExtra("type", "vocabulary");
         intent.putExtra("exercise", exercise);
         startActivity(intent);
         finish();
