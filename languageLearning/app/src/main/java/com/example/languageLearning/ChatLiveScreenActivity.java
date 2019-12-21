@@ -34,7 +34,7 @@ import java.util.TimerTask;
 public class ChatLiveScreenActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
-    private static final int MESSAGE_POLL_PERIOD_MS = 5000;
+    private static final int MESSAGE_POLL_PERIOD_MS = 2000;
 
     MyApplication app;
 
@@ -44,6 +44,8 @@ public class ChatLiveScreenActivity extends AppCompatActivity {
     boolean myMessage = true;
     private List<ChatMessage> chatMessages;
     private MessageAdapter adapter;
+
+    Timer pollTimer;
 
     EditText username;
     EditText message;
@@ -80,13 +82,24 @@ public class ChatLiveScreenActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         //arrange();
+    }
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pollTimer = new Timer();
+        pollTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 getHistory();
             }
         }, 0, MESSAGE_POLL_PERIOD_MS);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pollTimer.cancel();
     }
 
     public void getHistory(){
