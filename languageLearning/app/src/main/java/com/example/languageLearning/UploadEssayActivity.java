@@ -17,10 +17,10 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.FormBodyPart;
-import org.apache.http.entity.mime.content.ByteArrayBody;
-import org.apache.http.entity.mime.content.InputStreamBody;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.mime.FormBodyPart;
+import cz.msebera.android.httpclient.entity.mime.content.ByteArrayBody;
+import cz.msebera.android.httpclient.entity.mime.content.InputStreamBody;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
