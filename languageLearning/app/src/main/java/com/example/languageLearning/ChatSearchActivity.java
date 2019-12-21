@@ -110,9 +110,9 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
 
     public void makeGetRequest(final String query){
 
-        String path = "users_json/?";
+        String path = "users/";
         if (!query.equals("")) {
-            path += "&username=" + query;
+            path += "?username=" + query;
         }
 
         app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONArray>() {
