@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/textView10"
         android:layout_width="89dp"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Search"
         android:textSize="18sp"
@@ -57,7 +57,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="89dp"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Exercises"
         android:textSize="18sp"
@@ -69,7 +69,7 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="89dp"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Essay"
         android:textSize="18sp"
@@ -94,25 +94,27 @@
         android:id="@+id/exerciseButton"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:layout_marginTop="55dp"
         android:background="#00503E3E"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/changeLanguageButton"
         app:layout_constraintStart_toStartOf="@+id/changeLanguageButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55"
         app:srcCompat="@drawable/exercises" />
 
     <ImageButton
         android:id="@+id/changeLanguageButton"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:layout_marginTop="36dp"
         android:background="#00A88E8E"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
         app:srcCompat="@drawable/language" />
 
     <ImageButton
@@ -134,13 +136,13 @@
         android:id="@+id/newEssayButton"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:layout_marginTop="36dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/changeLanguageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
+        app:layout_constraintTop_toTopOf="@+id/changeLanguageButton"
         app:srcCompat="@drawable/essay" />
 
     <TextView
@@ -171,14 +173,14 @@
         android:id="@+id/chatButton"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:layout_marginTop="55dp"
         android:background="#00FFFFFF"
         android:onClick="onClickChat"
         android:scaleType="fitCenter"
         android:text="Chat"
+        app:layout_constraintBottom_toBottomOf="@+id/exerciseButton"
         app:layout_constraintEnd_toEndOf="@+id/newEssayButton"
         app:layout_constraintStart_toStartOf="@+id/newEssayButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/exerciseButton"
         app:srcCompat="@drawable/ic_chat_black_24dp" />
 
     <ImageButton
@@ -186,16 +188,16 @@
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginTop="328dp"
         android:background="#00FFFFFF"
         android:contentDescription="TODO"
         android:scaleType="fitCenter"
         android:text="@string/search_lowercase"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chatButtonExplanation"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/currentLanguageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.82"
         app:srcCompat="@drawable/search_button" />
 
     <TextView
