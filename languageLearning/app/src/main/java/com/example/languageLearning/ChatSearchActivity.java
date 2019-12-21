@@ -47,6 +47,7 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
         setSupportActionBar(toolbar);
 
         users_list = new ArrayList<>();
+        makeGetRequest("");
     }
 
     private void setUpRecyclerView() {
@@ -57,8 +58,6 @@ public class ChatSearchActivity extends AppCompatActivity implements UserSearchA
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
     }
 
     @Override
