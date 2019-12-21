@@ -149,4 +149,9 @@ public class ChatListViewActivity extends AppCompatActivity {
         });
     }
 
+    public void onClickMessage(View view){
+        Intent i = new Intent(this, ChatSearchActivity.class);
+        startActivity(i);
+    }
+
 }

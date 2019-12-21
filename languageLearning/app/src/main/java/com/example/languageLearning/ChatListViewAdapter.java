@@ -4,6 +4,7 @@ package com.example.languageLearning;
 
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,13 @@ class       ChatListViewAdapter extends ArrayAdapter<String> {
         LayoutInflater tonysInflater = LayoutInflater.from(getContext());
         View customView = tonysInflater.inflate(R.layout.chat_list_view_custom_row,parent,false);
 
-        String singleFamilyItem = getItem(position);
+        String username = getItem(position);
         TextView tonysText = (TextView) customView.findViewById(R.id.tonysText);
         ImageView tonysImage = (ImageView) customView.findViewById(R.id.tonysImage);
 
-        tonysText.setText(singleFamilyItem);
+        String boldUserName = "<b>" + username + "</b> ";
+        tonysText.setText(Html.fromHtml(boldUserName));
+
         tonysImage.setImageResource(R.drawable.ic_person);
 
         return customView;

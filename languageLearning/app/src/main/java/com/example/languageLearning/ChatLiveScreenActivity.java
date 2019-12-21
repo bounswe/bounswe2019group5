@@ -34,7 +34,7 @@ import java.util.TimerTask;
 public class ChatLiveScreenActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
-    private static final int MESSAGE_POLL_PERIOD_MS = 5000;
+    private static final int MESSAGE_POLL_PERIOD_MS = 2000;
 
     MyApplication app;
 

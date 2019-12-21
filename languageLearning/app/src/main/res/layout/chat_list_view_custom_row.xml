@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="0dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="  #ebf333  ">
 
     <ImageView
         android:id="@+id/tonysImage"
@@ -22,5 +23,6 @@
         android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="25sp"
+        />
 </LinearLayout>
