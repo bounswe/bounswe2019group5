@@ -88,8 +88,6 @@ public class SearchActivity extends AppCompatActivity {
                 JSONArray searchResults = (JSONArray) response ;
 
                 Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-                intent.putExtra("searchTag", tag.getText().toString());
-                intent.putExtra("searchKeyword", keyword.getText().toString());
                 intent.putExtra("searchLanguage", language);
                 intent.putExtra("searchResults", searchResults.toString());
                 startActivity(intent);
