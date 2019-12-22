@@ -74,9 +74,6 @@ class Profile extends Component {
           <h1>NO SUCH USER FOUND</h1>
         </div>)
     }
-    const ratingS = this.props.userInfo.userProfile.rating_average;
-    const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;
-
     if (this.props.userInfo.token == null) {
       return (
         <Redirect
@@ -92,7 +89,8 @@ class Profile extends Component {
         </div>
       );
     }  else {
-      console.log(this.props.userInfo)
+      const ratingS = this.props.userInfo.userProfile.rating_average;
+      const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;  
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
