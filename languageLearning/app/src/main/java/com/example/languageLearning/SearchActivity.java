@@ -82,7 +82,6 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 if (response.length() == 0) {
                     Toast.makeText(getApplicationContext(), "No question found according to this seach params", Toast.LENGTH_SHORT).show();
-                    finish();
                     return;
                 }
 
