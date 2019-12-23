@@ -10,6 +10,6 @@ VOLUME /app/api/migrations
 
 CMD python manage.py makemigrations api && \
     python manage.py migrate && \
-    python manage.py runserver 0.0.0.0:8000
+    gunicorn backend.wsgi --bind 0.0.0.0:8000 -w 8
 
 EXPOSE 8000

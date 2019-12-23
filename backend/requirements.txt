@@ -7,6 +7,7 @@ django-cors-headers==3.1.1
 django-filter==2.2.0
 django-filters==0.2.1
 djangorestframework==3.10.3
+gunicorn==19.9.0
 idna==2.8
 itypes==1.1.0
 Jinja2==2.10.3
@@ -14,6 +15,7 @@ Mako==1.1.0
 Markdown==3.1.1
 MarkupSafe==1.1.1
 numpy==1.17.2
+Pillow==6.2.1
 pipfile==0.0.2
 psycopg2-binary==2.8.2
 pycodestyle==2.5.0
