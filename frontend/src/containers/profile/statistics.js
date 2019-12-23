@@ -8,8 +8,6 @@ import 'react-circular-progressbar/dist/styles.css';
 export default function Statistics({ userInfo, language, writings }) {
   const [key, setKey] = React.useState("General");
 
-  console.log(userInfo)
-
   const correctAnswerRate = (n_of_true, n_of_false) => {
     if (n_of_false === null || n_of_true === null) {
       return 0

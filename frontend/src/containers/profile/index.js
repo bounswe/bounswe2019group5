@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Card from "react-bootstrap/Card";
@@ -23,13 +24,12 @@ import StarRatings from 'react-star-ratings';
 import TextField from "@material-ui/core/TextField";
 import {
   Button,
-
 } from "react-bootstrap";
-import {send_comment} from '../../api/comment';
+import { send_comment } from '../../api/comment';
 
 
 class Profile extends Component {
-  state = { 
+  state = {
     selfProfile: true,
     comment: "",
     rating: 3
@@ -49,7 +49,7 @@ class Profile extends Component {
         this.props.userInfo.token,
         this.props.match.params.user
       );
-      this.setState({ selfProfile: false });
+      this.setState({ selfProfile: false});
     } else {
       this.props.set_user_profile(this.props.userInfo.token);
       this.props.get_essays(this.props.userInfo.token);
@@ -79,24 +79,23 @@ class Profile extends Component {
   }
 
   changeComment(event) {
-    this.setState({comment: event.target.value});
+    this.setState({ comment: event.target.value });
   }
 
   sendComment() {
-    send_comment(this.props.userInfo.token, this.props.userInfo.otherUserProfile.username, 
+    send_comment(this.props.userInfo.token, this.props.userInfo.otherUserProfile.username,
       this.state.comment, this.state.rating)
-      .then(newComment => 
-          {
-            if (!newComment.message){
-              this.props.set_other_user_profile(
-                this.props.userInfo.token,
-                this.props.match.params.user
-              );
-              this.setState({ comment: "", rating: 3 });
-            }
+      .then(newComment => {
+        if (!newComment.message) {
+          this.props.set_other_user_profile(
+            this.props.userInfo.token,
+            this.props.match.params.user
+          );
+          this.setState({ comment: "", rating: 3 });
+        }
 
-          }
-        
+      }
+
       );
   }
 
@@ -108,13 +107,22 @@ class Profile extends Component {
 
   render() {
     const { classes } = this.props;
-    if ( (this.props.userInfo.otherUserProfile && !this.props.userInfo.otherUserProfile.username) && !this.state.selfProfile ) {
+
+    if(
+      (this.state.selfProfile && this.props.userInfo.userProfile && this.props.userInfo.userProfile.message) ||
+      (!this.state.selfProfile && this.props.userInfo.otherUserProfile && this.props.userInfo.otherUserProfile.message)
+    ) {
+      return(
+      <Typography variand="h2">CONNECTION ERROR</Typography>
+      )
+    }
+    else if ((this.props.userInfo.otherUserProfile && !this.props.userInfo.otherUserProfile.username) && !this.state.selfProfile) {
       return (
         <div>
           <h1>NO SUCH USER FOUND</h1>
         </div>)
     }
-    if (this.props.userInfo.token == null) {
+    else if (this.props.userInfo.token == null) {
       return (
         <Redirect
           to={{
@@ -128,9 +136,9 @@ class Profile extends Component {
           <h1>LOADING</h1>
         </div>
       );
-    }  else {
+    } else {
       const ratingS = this.props.userInfo.userProfile.rating_average;
-      const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;  
+      const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
@@ -167,7 +175,7 @@ class Profile extends Component {
                           <StarRatings rating={ratingS} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
                         <Typography variant="h7" gutterBottom color="primary">
                           out of{" "}
-                          {this.props.userInfo.userProfile ?
+                          {this.props.userInfo.userProfile && !this.props.userInfo.userProfile.message ?
                             this.props.userInfo.userProfile.user_comments.length : 0}{" "}
                           ratings.
                           </Typography>
@@ -185,11 +193,21 @@ class Profile extends Component {
                           <StarRatings rating={ratingO} numberOfStars={5} starRatedColor="orange" starDimension="35px" starSpacing="2px" />
                           <Typography variant="h7" gutterBottom color="primary">
                             out of{" "}
-                            {this.props.userInfo.otherUserProfile ?
+                            {this.props.userInfo.otherUserProfile && !this.props.userInfo.otherUserProfile.message ?
                               this.props.userInfo.otherUserProfile.user_comments.length : 0}{" "}
                             ratings.
                         </Typography>
                         </Typography>
+                        <Link to={{
+                          pathname: "/chat/" + this.props.userInfo.otherUserProfile.username
+                        }
+                        }>
+                          <Button variant="primary" > Chat With </Button></Link>
+
+                        <Link to={{
+                          pathname: "/upload-writing/" + this.props.userInfo.otherUserProfile.username
+                        }
+                        }> <Button variant="warning" >Send Essay Reviewing Request</Button></Link>
                       </>
                     )}
                 </Card.Text>
@@ -198,7 +216,7 @@ class Profile extends Component {
           </Grid>
           <Grid item xs={9} component={Paper}>
             <div className={classes.paper}>
-              {this.state.selfProfile && (
+              {this.state.selfProfile && !this.props.userInfo.userProfile.message && (
                 <LangTab
                   userInfo={this.props.userInfo}
                   attendedLang={
@@ -216,53 +234,54 @@ class Profile extends Component {
                 <Typography variant="h5" gutterBottom>
                   {this.state.selfProfile ? this.props.userInfo.userProfile.username : this.props.userInfo.otherUserProfile.username}'s ratings and comments:
                 </Typography>
-                {this.state.selfProfile ? (
+                {this.state.selfProfile && !this.props.userInfo.userProfile.message ? (
                   <Ratings userProfile={this.props.userInfo.userProfile} />
-                ) : (
-                    <Ratings userProfile={this.props.userInfo.otherUserProfile} />
+                ) : ( !this.props.userInfo.otherUserProfile.message &&
+                    (<Ratings userProfile={this.props.userInfo.otherUserProfile} />  )
                   )}
               </div>
             </Grid>
             {
-              !this.state.selfProfile && 
+              !this.state.selfProfile && this.props.userInfo.otherUserProfile && 
+              !this.props.userInfo.otherUserProfile.message && this.props.userInfo.otherUserProfile.can_rate &&
               <div>
-            <Grid>
-              <Divider variant="inset" />
-                <div className={classes.paper}>
-                  <Typography variant="h5" gutterBottom>
-                    Rate this user:
+                <Grid>
+                  <Divider variant="inset" />
+                  <div className={classes.paper}>
+                    <Typography variant="h5" gutterBottom>
+                      Rate this user:
                   </Typography>
-                  <StarRatings
-          rating={this.state.rating}
-          starRatedColor="orange"
-          changeRating={this.changeRating}
-          numberOfStars={5}
-          name='rating'
-        />
-                
-                
-                <TextField 
-                id="full-width-text-field"
-                    placeholder="Enter your comment"
-                    multiline={true}
-                    rows={2}
-                    rowsMax={10}
-                    value={this.state.comment}
-                    onChange={this.changeComment}
-                  />
-                  <br></br>
-                  <Button 
-                  onClick={this.sendComment}
-                  style={{
-                    width: "fit-content"
-                  }} variant="primary">Send</Button>
-                </div>
-            </Grid>
-            
-            </div>
+                    <StarRatings
+                      rating={this.state.rating}
+                      starRatedColor="orange"
+                      changeRating={this.changeRating}
+                      numberOfStars={5}
+                      name='rating'
+                    />
 
-            } 
-            
+
+                    <TextField
+                      id="full-width-text-field"
+                      placeholder="Enter your comment"
+                      multiline={true}
+                      rows={2}
+                      rowsMax={10}
+                      value={this.state.comment}
+                      onChange={this.changeComment}
+                    />
+                    <br></br>
+                    <Button
+                      onClick={this.sendComment}
+                      style={{
+                        width: "fit-content"
+                      }} variant="primary">Send</Button>
+                  </div>
+                </Grid>
+
+              </div>
+
+            }
+
           </Grid>
         </Grid>
       );

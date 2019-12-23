@@ -8,11 +8,9 @@ export default function LangTab({userInfo, attendedLang, writings}) {
     const [key, setKey] = React.useState('');
     var langs = [];
     var json;
-    console.log(attendedLang);
     for (json of attendedLang) {
       langs.push(json.language)
     }
-    console.log(langs);
     return (
       <>
       <Typography variant="h6" gutterBottom>

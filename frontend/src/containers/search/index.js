@@ -72,11 +72,14 @@ class Search extends React.Component {
 
     render() {
         const { classes } = this.props;
-
-        const searchedExercises = this.combineTandK(this.props.search.searchedExercises.searchedExercisesWT, this.props.search.searchedExercises.searchedExercisesWT);
+        
+        const searchedExercises = ( (this.props.search.searchedExercises.searchedExercisesWT && !this.props.search.searchedExercises.searchedExercisesWT.message) ||
+            (this.props.search.searchedExercises.searchedExercisesWK && !this.props.search.searchedExercises.searchedExercisesWK.message)) ?
+            this.combineTandK(this.props.search.searchedExercises.searchedExercisesWT, this.props.search.searchedExercises.searchedExercisesWT)
+            : 0 ;
 
         return (
-            <Grid className={classes.paper}>
+            <Grid className={classes.paper} >
                 <Form inline onSubmit={(e) => {
                     console.log(e)
                     e.preventDefault();
@@ -107,9 +110,11 @@ class Search extends React.Component {
                             </Form.Group>
                         </Form>
                         <List className={classes.root}>
+                            {this.props.search.searchedUsers && this.props.search.searchedUsers.message && 
+                            <Typography variand="h2">CONNECTION ERROR</Typography>}
                             {(this.props.search.searchedUsers == null || this.props.search.searchedUsers.length == 0) &&
                                 <Typography>Nothing found.</Typography>}
-                            {this.props.search.searchedUsers &&
+                            {this.props.search.searchedUsers && !this.props.search.searchedUsers.message &&
                                 this.props.search.searchedUsers.map((value, index) => {
                                     return (
                                         <>
@@ -126,6 +131,18 @@ class Search extends React.Component {
                                                             >
                                                                 <Button variant="success">Go to profile</Button>
                                                             </Link>
+                                                            <Link to={{
+                                                                pathname: "/chat/" + value.username
+                                                            }
+                                                            }>
+                                                                <Button variant="primary" > Chat With </Button></Link>
+
+                                                            <Link to={{
+                                                                pathname: "/upload-writing/" + value.username
+                                                            }
+                                                            }> <Button variant="warning" >Send Essay Reviewing Request</Button>
+                                                            </Link>
+
                                                         </React.Fragment>
                                                     }
                                                 />
@@ -190,9 +207,11 @@ class Search extends React.Component {
                             </Form.Row>
                         </Form>
                         <List className={classes.root}>
-                            {searchedExercises.length == 0 &&
+                            {searchedExercises == 0 &&
+                                <Typography variand="h2">CONNECTION ERROR</Typography>}
+                            {(searchedExercises != 0 && searchedExercises.length == 0) &&
                                 <Typography>Nothing found.</Typography>}
-                            {searchedExercises &&
+                            {( searchedExercises != 0 ) &&
                                 searchedExercises.map((value, index) => {
                                     return (
                                         <>
