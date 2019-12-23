@@ -20,11 +20,25 @@ import _ from "lodash";
 import { get_essays } from "../../redux/action-creators/writinglist";
 import Divider from '@material-ui/core/Divider';
 import StarRatings from 'react-star-ratings';
+import TextField from "@material-ui/core/TextField";
+import {
+  Button,
+
+} from "react-bootstrap";
+import {send_comment} from '../../api/comment';
+
 
 class Profile extends Component {
-  state = { selfProfile: true };
+  state = { 
+    selfProfile: true,
+    comment: "",
+    rating: 3
+  };
   constructor(props) {
     super(props);
+    this.changeRating = this.changeRating.bind(this);
+    this.changeComment = this.changeComment.bind(this);
+    this.sendComment = this.sendComment.bind(this);
   }
   componentDidMount() {
     if (
@@ -58,6 +72,32 @@ class Profile extends Component {
         this.setState({ selfProfile: true });
       }
     }
+  }
+
+  changeRating(rating) {
+    this.setState({ rating: rating });
+  }
+
+  changeComment(event) {
+    this.setState({comment: event.target.value});
+  }
+
+  sendComment() {
+    send_comment(this.props.userInfo.token, this.props.userInfo.otherUserProfile.username, 
+      this.state.comment, this.state.rating)
+      .then(newComment => 
+          {
+            if (!newComment.message){
+              this.props.set_other_user_profile(
+                this.props.userInfo.token,
+                this.props.match.params.user
+              );
+              this.setState({ comment: "", rating: 3 });
+            }
+
+          }
+        
+      );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -183,6 +223,46 @@ class Profile extends Component {
                   )}
               </div>
             </Grid>
+            {
+              !this.state.selfProfile && 
+              <div>
+            <Grid>
+              <Divider variant="inset" />
+                <div className={classes.paper}>
+                  <Typography variant="h5" gutterBottom>
+                    Rate this user:
+                  </Typography>
+                  <StarRatings
+          rating={this.state.rating}
+          starRatedColor="orange"
+          changeRating={this.changeRating}
+          numberOfStars={5}
+          name='rating'
+        />
+                
+                
+                <TextField 
+                id="full-width-text-field"
+                    placeholder="Enter your comment"
+                    multiline={true}
+                    rows={2}
+                    rowsMax={10}
+                    value={this.state.comment}
+                    onChange={this.changeComment}
+                  />
+                  <br></br>
+                  <Button 
+                  onClick={this.sendComment}
+                  style={{
+                    width: "fit-content"
+                  }} variant="primary">Send</Button>
+                </div>
+            </Grid>
+            
+            </div>
+
+            } 
+            
           </Grid>
         </Grid>
       );
