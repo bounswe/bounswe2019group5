@@ -105,7 +105,7 @@ class App extends Component {
           </Navbar.Brand>
           <Nav className="mr-auto">
             {this.props.userInfo.token && (
-              <Link to="/" onClick={() => this.props.logout()}>
+              <Link to="/logout">
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
@@ -188,6 +188,15 @@ class App extends Component {
               <Route exact path="/writing-list" component={WritingList} />
               <Route exact path="/suggestion" component={SuggestExercise} />
               <Route exact path="/search" component={Search} />
+              <Route exact path="/logout" component={ () => {
+                  this.props.logout();
+                  return (
+                    <div>
+                      <Redirect to={{pathname: "/home"}}/>
+                    </div>
+                  );
+                }
+              }/>
             </main>
           </div>
         </div>
