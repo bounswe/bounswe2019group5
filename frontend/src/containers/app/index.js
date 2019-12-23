@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Link, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import Home from "../home";
 import About from "../about";
