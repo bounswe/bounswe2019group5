@@ -22,12 +22,21 @@ export const get_exercise = (token, id) => {
   };
 };
 
-export const search_test = (token, tag, keyword, language, type) => {
+export const search_test = (token, input, language, type) => {
   return dispatch =>  {
-    search_test_api(token, tag, keyword, language, type).then(data => {
+    search_test_api(token, input, "", language, type).then(data => {
       dispatch({
         type: SEARCH_TEST,
         searchedTest: data,
+        with: "K",
+        exercise_type: type   
+      });
+    });
+    search_test_api(token, "", input, language, type).then(data => {
+      dispatch({
+        type: SEARCH_TEST,
+        searchedTest: data,
+        with: "T",
         exercise_type: type   
       });
     });

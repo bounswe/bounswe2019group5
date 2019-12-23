@@ -30,9 +30,10 @@ class Exercises extends Component {
 
     var langs = [];
     var json;
-    for (json of this.props.userInfo.userProfile.attended_languages) {
-      langs.push(json.language);
-    }
+    if (this.props.userInfo.userProfile.attended_languages)
+      for (json of this.props.userInfo.userProfile.attended_languages) {
+        langs.push(json.language);
+      }
 
     if (this.props.userInfo.token == null) {
       return (
@@ -67,21 +68,28 @@ class Exercises extends Component {
             >
               <Tab eventKey="ENGLISH" title="ENGLISH">
                 {!langs.includes("english") ? (
-                  <>
-                    <Typography component="h5" variant="h5" align="center">
-                      You should solve the prof test of this language first.
+                  <Grid container spacing={3}>                    <Typography component="h5" variant="h5" align="center">
+                    You should solve the prof test of this language first.
                     </Typography>
                     <Link to="/prof-test/english">
-                      <Button 
+                      <Button
                         onClick={() => this.props.set_selected_language("english")}
                         variant="success"                      >
                         Go To Prof Test
                       </Button>
                     </Link>
-                  </>
+                  </Grid>
                 ) : (
-                  <ExerciseTypes language={"english"} />
-                )}
+                    <Grid container spacing={3}>
+                      <Grid item xs={10}>
+                        <ExerciseTypes language={"english"} /> </Grid>
+                      <Grid item xs={2} >
+                        <Link to={"/prof-test/english"}>
+                          <Button variant="outline-info">LEVEL UP!</Button>
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  )}
               </Tab>
               <Tab eventKey="TURKISH" title="TURKISH">
                 {!langs.includes("turkish") ? (
@@ -97,9 +105,16 @@ class Exercises extends Component {
                       </Button>
                     </Link>
                   </>
-                ) : (
-                  <ExerciseTypes language={"turkish"} />
-                )}
+                ) : (<Grid container spacing={3}>
+                  <Grid item xs={10}>
+                    <ExerciseTypes language={"turkish"} /> </Grid>
+                  <Grid item xs={2} >
+                    <Link to={"/prof-test/turkish"}>
+                      <Button variant="outline-info">LEVEL UP!</Button>
+                    </Link>
+                  </Grid>
+                </Grid>
+                  )}
               </Tab>
               <Tab eventKey="GERMAN" title="GERMAN">
                 {!langs.includes("german") ? (
@@ -116,8 +131,15 @@ class Exercises extends Component {
                     </Link>
                   </>
                 ) : (
-                  <ExerciseTypes language={"german"} />
-                )}
+                    <Grid container spacing={3}>
+                      <Grid item xs={10}>
+                        <ExerciseTypes language={"german"} /> </Grid>
+                      <Grid item xs={2} >
+                        <Link to={"/prof-test/german"}>
+                          <Button variant="outline-info">LEVEL UP!</Button>
+                        </Link>
+                      </Grid>
+                    </Grid>)}
               </Tab>
             </Tabs>
           </Grid>

@@ -2,6 +2,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { set_input, set_searched_exercises, set_searched_users } from "../../redux/action-creators/search";
@@ -34,17 +36,20 @@ class Search extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if (prevProps.search.input != this.props.search.input) {
+            this.ref.current.value = this.props.search.input;
+        }
         if ((this.state.exlanguage !== prevState.exlanguage ||
             this.state.type !== prevState.type ||
-            this.state.level !== prevState.level || 
+            this.state.level !== prevState.level ||
             prevProps.search.input != this.props.search.input ||
-            this.state.key !== prevState.key ) &&
+            this.state.key !== prevState.key) &&
             this.state.key == "EXERCISE") {
             this.props.set_searched_exercises(this.props.userInfo.token, this.props.search.input, this.state.exlanguage, this.state.type);
         }
-        else if (this.state.key == "USER" && (this.state.language !== prevState.language || 
+        else if (this.state.key == "USER" && (this.state.language !== prevState.language ||
             prevProps.search.input !== this.props.search.input ||
-            this.state.key !== prevState.key )) {
+            this.state.key !== prevState.key)) {
             this.props.set_searched_users(this.props.userInfo.token, this.state.language, this.props.search.input)
         }
     }
@@ -102,12 +107,16 @@ class Search extends React.Component {
                             </Form.Group>
                         </Form>
                         <List className={classes.root}>
+                            {(this.props.search.searchedUsers == null || this.props.search.searchedUsers.length == 0) &&
+                                <Typography>Nothing found.</Typography>}
                             {this.props.search.searchedUsers &&
                                 this.props.search.searchedUsers.map((value, index) => {
                                     return (
                                         <>
                                             <ListItem alignItems="flex-start">
-                                                <ListItemText
+                                                <ListItemAvatar>
+                                                    <Avatar src={"https://ui-avatars.com/api/?rounded=true&name=" + value.username} fontSize="large"> </Avatar>
+                                                </ListItemAvatar>                                                <ListItemText
                                                     primary={(index + 1) + ": user: " + value.username}
                                                     secondary={ //add native lang
                                                         <React.Fragment>
@@ -181,6 +190,8 @@ class Search extends React.Component {
                             </Form.Row>
                         </Form>
                         <List className={classes.root}>
+                            {searchedExercises.length == 0 &&
+                                <Typography>Nothing found.</Typography>}
                             {searchedExercises &&
                                 searchedExercises.map((value, index) => {
                                     return (
@@ -190,12 +201,12 @@ class Search extends React.Component {
                                                     primary={(index + 1) + " :  " + value.type + " exercise "}
                                                     secondary={ //add tag and keywords
                                                         <React.Fragment>
-                                                    <Typography>Tags: {value.tags.map((val, i) => {
-                                                        return (val + ", ")
-                                                    })}</Typography>
-                                                    <Typography>Keywords: {value.keywords.map((val, i) => {
-                                                        return (val + ", ")
-                                                    })}</Typography>
+                                                            <Typography>Tags: {value.tags.map((val, i) => {
+                                                                return (val + ", ")
+                                                            })}</Typography>
+                                                            <Typography>Keywords: {value.keywords.map((val, i) => {
+                                                                return (val + ", ")
+                                                            })}</Typography>
                                                             <Link
                                                                 to={"/exercise/" + value.id}
                                                             >

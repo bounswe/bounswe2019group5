@@ -13,13 +13,16 @@ import Popup from 'reactjs-popup';
 import { upload_writing } from "../../api/writing/uploadWriting";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
-import { Chec } from 'react-bootstrap';
+import { Chec, Form } from 'react-bootstrap';
 
-import Modal from "@material-ui/core/Modal";
+import {Modal} from "react-bootstrap";
+
+import {Button, Textarea} from 'react-bootstrap';
 
 import writeFileP from "write-file-p";
 
 import Recommendation from '../recommendation';
+import { InputGroup,Checkbox,DropdownButton, Dropdown } from "react-bootstrap";
 
 class WritingUpload extends Component {
   constructor(props) {
@@ -32,6 +35,7 @@ class WritingUpload extends Component {
         isOnSelectReviewer: false,
         isPlainText: false,
         essayText: "",
+        language: "none",
     };
   }
 
@@ -55,10 +59,10 @@ class WritingUpload extends Component {
   }
 
   onSubmit(e){
-    if((!this.state.isPlainText && this.state.file) || (this.state.isPlainText && this.state.essayText.length!=0))
+    if(((!this.state.isPlainText && this.state.file) || (this.state.isPlainText && this.state.essayText.length!=0)) && "none"!==this.state.language && this.state.reviewer)
     {
         upload_writing(this.props.userInfo.token, 
-                       this.props.userInfo.selectedLanguage,
+                       this.state.language,
                        (!this.state.isPlainText) && this.state.file || new File([new Blob([this.state.essayText])], "essay.txt"),
                        this.state.reviewer)
           .then(essay => {
@@ -74,9 +78,6 @@ class WritingUpload extends Component {
             }
           });
     }
-    else if(this.state.isPlainText && this.state.essayText!=="")
-    {
-    }
   }
 
   render() {
@@ -85,16 +86,6 @@ class WritingUpload extends Component {
         <Redirect
           to={{
             pathname: "/home"
-          }}
-        />
-      );
-    }
-
-    if (this.props.userInfo.selectedLanguage == null) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/lang-select"
           }}
         />
       );
@@ -114,39 +105,41 @@ class WritingUpload extends Component {
     return (
         <div>
             <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
               style={{
                 minHeight: '50vh',
                 maxHeight: '2000vh',
                 minWidth: '50vw',
                 maxWidth: '50vw',
-                display:'flex',alignItems:'top',justifyContent:'center',
                 backgroundColor: "white",
                 'overflow-y': 'auto'
               }}
-              open={this.state.isOnSelectReviewer}
-              onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
-              <Recommendation 
-                      mode="callback(username)"
-                      onSelect={this.onSelectReviewer.bind(this)}/>
+              show={this.state.isOnSelectReviewer}
+              onHide={()=>{this.setState({isOnSelectReviewer: false});}}>
+              <Modal.Body>
+                <Recommendation 
+                        mode="callback(username)"
+                        language={this.state.language!=="none" ? this.state.language: null}
+                        onSelect={this.onSelectReviewer.bind(this)}/>
+              </Modal.Body>
             </Modal>
             <h1>Upload Your Writing Here!</h1>
             <div>
               { !this.state.isPlainText &&
                 <div>
-                  <input 
+                  <Form.Control
                     type="file" 
                     id="file"
                     accept="image/*,.txt"
-                    onChange={this.onChange.bind(this)} />
+                    value={this.state.file ? this.state.file.path : null}
+                    onChange={this.onChange.bind(this)}
+                  />
                 </div>
               }
               {this.state.isPlainText &&
-                <textarea id="essayText" value={this.state.essayText} onChange={this.onChange.bind(this)} style={{height: '50vh', width: '30vw'}}/>
+                <Form.Group as="textarea" rows={10} id="essayText" value={this.state.essayText} onChange={this.onChange.bind(this)} style={{height: '50vh', width: '30vw'}}/>
               }
               <div>
-                <input type="radio" value="Upload Writing as Plain Text" checked={this.state.isPlainText} onClick={()=>{this.setState({isPlainText: !this.state.isPlainText});}}/>
+                <Form.Check inline type="radio" checked={this.state.isPlainText} onClick={()=>{this.setState({isPlainText: !this.state.isPlainText});}}/>
                 <label>Upload as plain text</label>
               </div>
               {this.state.message &&
@@ -163,16 +156,44 @@ class WritingUpload extends Component {
                         <text>No reviewer selected, you can select later or now..</text>
                 }
               </div>
-
+              
+              {this.state.language==="none" &&
               <div>
-                <button onClick={() => {
-                  this.setState({isOnSelectReviewer: true});
-                }}>Select or Change Reviewer</button>
-              </div>
+                <DropdownButton required id="dropdown-basic-button" title={"Language: "+this.state.language} variant="info">
 
-              <div>
-                <button onClick={this.onSubmit.bind(this)}>Upload Essay</button>
+                  <Dropdown.Item 
+                      active={this.state.language==='english'} 
+                      onClick={()=>{this.setState({language: 'english'})}}
+                  >English</Dropdown.Item>
+
+                  <Dropdown.Item 
+                      active={this.state.language==='german'} 
+                      onClick={()=>{this.setState({language: 'german'})}}
+                  >German</Dropdown.Item>
+
+                  <Dropdown.Item 
+                      active={this.state.language==='turkish'} 
+                      onClick={()=>{this.setState({language: 'turkish'})}}
+                  >Turkish</Dropdown.Item>
+
+                </DropdownButton>
               </div>
+              }
+              
+              {this.state.language!=="none" &&
+                <div>
+                  <Button onClick={() => {
+                    this.setState({isOnSelectReviewer: true});
+                  }}
+                  variant="info">Select or Change Reviewer</Button>
+                </div>
+              }
+
+              {(this.state.language && this.state.reviewer) &&
+                <div>
+                  <Button onClick={this.onSubmit.bind(this)}>Upload Essay</Button>
+                </div>
+              }
             </div>
         </div>
     );

@@ -16,8 +16,6 @@ const initialState = {
   token: null,
   loadingS: false,
   loadingO: false,
-  overallRatingS: null,
-  overallRatingO: null,
   userProfile: null,
   otherUserProfile: null,
   progress: {
@@ -222,20 +220,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userProfile: action.profile,
-        overallRatingS: action.overall_rating,
         loadingS: false,
       };
 
     case OTHER_USER_PROFILE_REQUESTED:
       return {
         ...state,
-        loadingO: !state.otherUserProfile,
+        loadingO: !state.otherUserProfile || (state.otherUserProfile.username!==action.new_username),
       };
     case OTHER_USER_PROFILE_SET:
       return {
         ...state,
         otherUserProfile: action.profile,
-        overallRatingO: action.overall_rating,
         loadingO: false,
       };
 

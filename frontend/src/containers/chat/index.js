@@ -40,7 +40,11 @@ export class Chat extends Component {
         f();
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(prevProps, prevState) {
+
+        if (this.props.messages && prevProps.messages.length!=this.props.messages.length)
+            this.messageListRef.scrollTo({top: '%100'}, this.messageListRef.scrollHeight);
+
         let last = _.cloneDeep(this.chatWith);
         this.chatWith = this.state.chatWith ? this.state.chatWith : this.props.match && this.props.match.params ? this.props.match.params.chatWith || this.props.chatWith
                                                                     : this.props.chatWith;
@@ -115,11 +119,11 @@ export class Chat extends Component {
                     <div
                         style={{flex: 9, overflowY: 'scroll'}}
                         ref={(el) => {this.messageListRef = el;}}>
-                        {this.props.chat.messages && 
+                        {(this.props.chat.messages && !this.props.chat.messages.message) &&
                         this.props.chat.messages
-                            .map(message => {
+                            .map((message, index) => {
                                 return (
-                                    <div id={message.date}>
+                                    <div id={index}>
                                         <MessageBox
                                             position={message.position}
                                             type={'text'}
@@ -142,7 +146,6 @@ export class Chat extends Component {
                                     text='Send'
                                     onClick={
                                         () => {
-                                            this.messageListRef.scrollIntoView({block: 'end', behavior: 'smooth'});
                                             this.props.send_message(this.props.userInfo.token,
                                                 chatWith,
                                                 this.refs.send_message_text.state.value, 

@@ -10,7 +10,6 @@ import {
 } from "../../redux/action-creators/test";
 import _ from "lodash";
 import Avatar from "@material-ui/core/Avatar";
-import { Button } from "react-bootstrap";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from 'react-router-dom';
@@ -28,7 +27,7 @@ import TextEssay from './textEssay';
 import Popup from 'reactjs-popup';
 import Chat from '../chat';
 
-import Modal from "@material-ui/core/Modal";
+import {Modal, Button} from "react-bootstrap";
 
 import Recommendation from '../recommendation';
 
@@ -42,7 +41,6 @@ class WritingShow extends Component {
         isDeleted: false,
         annotation: null,
         isRejected: false,
-        isOnSelectReviewer: false,
     };
 
     this.id = this.props.match.params.id;
@@ -56,17 +54,6 @@ class WritingShow extends Component {
             else
                 this.setState({essay, message: null});
         });
-  }
-
-  onSelectReviewer(username) {
-    this.setState({
-      isOnSelectReviewer: false,
-    });
-    change_reviewer_of_essay(this.props.userInfo.token, username, this.state.essay.id)
-      .then(essay => {
-        if (!essay.message)
-          this.setState({essay});
-      });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -115,6 +102,10 @@ class WritingShow extends Component {
           );
     }
 
+    console.log("Essay");
+
+    console.log(this.state.essay);
+
     return (
       <Grid container component="main" className={classes.root}>
 
@@ -147,32 +138,45 @@ class WritingShow extends Component {
 
           { this.state.essay.reviewer && this.props.userInfo.username === this.state.essay.reviewer && this.state.essay.status === 'pending' &&
             <div>
-              <button onClick={()=>{
-                respond_to_essay(this.props.userInfo.token, 'accepted', this.state.essay.id)
-                  .then(essay => {
-                    if(!essay.message)
-                      this.setState({essay});
-                  })
-              }}>
+              <Button 
+                variant="success"
+                onClick={()=>{
+                  respond_to_essay(this.props.userInfo.token, 'accepted', this.state.essay.id)
+                    .then(essay => {
+                      if(!essay.message)
+                        this.setState({essay});
+                    })}}
+              >
                 Accept Essay
-              </button>
-              <button onClick={()=>{
-                respond_to_essay(this.props.userInfo.token, 'rejected', this.state.essay.id)
-                  .then(essay => {
-                    if(!essay.message)
-                      this.setState({isRejected: true});
-                  })
-              }}>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={()=>{
+                  respond_to_essay(this.props.userInfo.token, 'rejected', this.state.essay.id)
+                    .then(essay => {
+                      if(!essay.message)
+                        this.setState({isRejected: true});
+                    })
+                }}
+              >
                 Reject Essay
-              </button>
+              </Button>
             </div>
           }
 
-          { this.state.essay.author === this.props.userInfo.username && this.state.essay.status!=='accepted' &&
+          { this.state.essay.reviewer && this.props.userInfo.username === this.state.essay.reviewer && this.state.essay.status === 'accepted' &&
             <div>
-              <button onClick={() => {
-                this.setState({isOnSelectReviewer: true});
-              }}>Select or Change Reviewer</button>
+              <Button 
+                variant="warning"
+                onClick={()=>{
+                  respond_to_essay(this.props.userInfo.token, 'completed', this.state.essay.id)
+                    .then(essay => {
+                      if(!essay.message)
+                        this.setState({essay});
+                    })}}
+              >
+                Essay is Completed!
+              </Button>
             </div>
           }
 
@@ -208,31 +212,14 @@ class WritingShow extends Component {
               notShowHistory/>
           }
 
-        <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            style={{
-              minHeight: '50vh',
-              maxHeight: '2000vh',
-              minWidth: '50vw',
-              maxWidth: '50vw',
-              display:'flex',alignItems:'top',justifyContent:'center',
-              backgroundColor: "white",
-              'overflow-y': 'auto'
-            }}
-            open={this.state.isOnSelectReviewer}
-            onClose={()=>{this.setState({isOnSelectReviewer: false});}}>
-            <Recommendation 
-                    mode="callback(username)"
-                    onSelect={this.onSelectReviewer.bind(this)}/>
-          </Modal>
-
           { this.state.essay.author === this.props.userInfo.username &&
             <div className={classes.paper}>
-              <button onClick={()=>{
-                delete_essay(this.props.userInfo.token, this.state.essay.id);
-                this.setState({isDeleted: true});
-              }}>DELETE ESSAY</button>
+              <Button
+                variant="danger"
+                onClick={()=>{
+                  delete_essay(this.props.userInfo.token, this.state.essay.id);
+                  this.setState({isDeleted: true});
+                }}>DELETE ESSAY</Button>
             </div>
           }
         </Grid>

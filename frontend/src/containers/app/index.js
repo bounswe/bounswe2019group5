@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Link, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import Home from "../home";
 import About from "../about";
@@ -30,7 +31,6 @@ import {
   Form,
   Image,
   Button,
-
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
 import GuestLogin from "../guestLogin";
@@ -106,21 +106,15 @@ class App extends Component {
           </Navbar.Brand>
           <Nav className="mr-auto">
             {this.props.userInfo.token && (
-              <Link to="/" onClick={() => this.props.logout()}>
+              <Link to="/logout">
                 <Button variant="outline-warning">Logout</Button>
               </Link>
             )}
             {this.props.userInfo.token && this.props.userInfo.userProfile && (
               <Link to={"/profile/" + this.props.userInfo.userProfile.username}>
                 <Button variant="outline-success">
-                  My Profile({this.props.userInfo.userProfile.username})
-                </Button>
-              </Link>
-            )}
-            {this.props.userInfo.token && (
-              <Link to="/exercises/">
-                <Button variant="outline-warning">
-                  Solve Exercise
+                  <img style={{width: 20, height: 20, marginRight: 5}} src={"https://ui-avatars.com/api/?rounded=true&name="+this.props.userInfo.username}/>
+                  My Profile
                 </Button>
               </Link>
             )}
@@ -135,17 +129,11 @@ class App extends Component {
               </Link>
             )}
           </Nav>
-          <Form inline>
-            <Nav.Link href="contribute">
-              <Link to="/suggestion">
-                <Button variant="outline-info">Contribute</Button>
-              </Link>
-            </Nav.Link>
-          </Form>
+          {this.props.userInfo.token && (
           <Form inline onSubmit={this.search} >
             <Form.Control ref={this.ref} type="text" placeholder="Search user/exercise" className="mr-sm-2" />
             <Button type="submit" variant="outline-success">Search</Button>
-          </Form>
+          </Form>)}
           <Form inline>
             <Nav.Link href="about-us">
               <Link to="/about-us">
@@ -165,8 +153,8 @@ class App extends Component {
                     <Nav.Link className="navigation" href="/" >Home</Nav.Link>
                     <Nav.Link className="navigation" href={"/profile/" + this.props.userInfo.userProfile.username}>My Profile</Nav.Link>
                     <Nav.Link className="navigation" href="/exercises" >Exercises</Nav.Link>
-                    <Nav.Link className="navigation" href="/lang-select" >Change Language</Nav.Link>
                     <Nav.Link className="navigation" href="/upload-writing" >Write an Essay</Nav.Link>
+                    <Nav.Link className="navigation" href="/recommendation" >Recommend Expert</Nav.Link>
                     <Nav.Link className="navigation" href="/writing-list" >My Essays</Nav.Link>
                     <Nav.Link className="navigation" href="/chatHistory" >Chats</Nav.Link>
                     <Nav.Link className="navigation" href="/suggestion" >Contribute</Nav.Link>
@@ -175,7 +163,7 @@ class App extends Component {
               </div>
             </div>
           }
-          <div style={{ flex: 4 }}>
+          <div style={{ flex: 8 }}>
             <main>
               <Route exact path="/" component={Home} />
               <Route exact path="/about-us" component={About} />
@@ -200,8 +188,16 @@ class App extends Component {
               <Route exact path="/show-writing/:id" component={WritingShow} />
               <Route exact path="/writing-list" component={WritingList} />
               <Route exact path="/suggestion" component={SuggestExercise} />
-              <Route exact path="/suggestion" component={SuggestExercise} />
               <Route exact path="/search" component={Search} />
+              <Route exact path="/logout" component={ () => {
+                  this.props.logout();
+                  return (
+                    <div>
+                      <Redirect to={{pathname: "/home"}}/>
+                    </div>
+                  );
+                }
+              }/>
             </main>
           </div>
         </div>

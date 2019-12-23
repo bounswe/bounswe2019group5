@@ -47,19 +47,10 @@ export const set_user_profile = token => {
   return dispatch => {
     dispatch({ type: USER_PROFILE_REQUESTED });
 
-    function calculateRating(profile) {
-      let total_rate = 0;
-      let no_of_rates = profile.user_comments.length;
-      for (let rating of profile.user_comments) {
-        total_rate = total_rate + rating.rate;
-      }
-      return [total_rate, no_of_rates];
-    }
     get_user_profile_api(token, "").then(profile => {
       dispatch({
         type: USER_PROFILE_SET,
         profile,
-        overall_rating: calculateRating(profile)
       });
 
     });
@@ -354,20 +345,12 @@ export const set_user_profile = token => {
 
 export const set_other_user_profile = (token, username) => {
   return dispatch => {
-    dispatch({ type: OTHER_USER_PROFILE_REQUESTED });
-    function calculateRating(profile) {
-      let total_rate = 0;
-      let no_of_rates = profile.user_comments.length;
-      for (let rating of profile.user_comments) {
-        total_rate = total_rate + rating.rate;
-      }
-      return [total_rate, no_of_rates];
-    }
+    dispatch({ type: OTHER_USER_PROFILE_REQUESTED, 
+                new_username: username});
     get_user_profile_api(token, username).then(profile => {
       dispatch({
         type: OTHER_USER_PROFILE_SET,
         profile,
-        overall_rating: calculateRating(profile)
       });
     });
   };
