@@ -9,8 +9,9 @@ import { MessageList,SystemMessage,Input,Button, SideBar, MessageBox, ChatList }
 
 import { clear_chat_history, get_chat_history } from '../../../redux/action-creators/chat';
 
-import { Link } from 'react-router-dom';
-import { flexbox } from '@material-ui/system';
+import {Button as BootstrapButton, Modal} from 'react-bootstrap';
+
+import Recommendation from '../../recommendation';
 
 export class ChatHistory extends Component {
 
@@ -18,6 +19,8 @@ export class ChatHistory extends Component {
         super(props);
         this.state = {
             chatWith: null,
+            isRecommendExpert: false,
+            selectedExpert: null,
         };
     }
 
@@ -62,6 +65,38 @@ export class ChatHistory extends Component {
 
         return (
             <div style={{ display: 'flex', 'flex-direction': 'column', height: '60vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>
+                
+                <Modal
+                    style={{
+                        minHeight: '50vh',
+                        maxHeight: '2000vh',
+                        minWidth: '50vw',
+                        maxWidth: '50vw',
+                        backgroundColor: "white",
+                        'overflow-y': 'auto'
+                    }}
+                    show={this.state.isRecommendExpert}
+                    onHide={()=>{this.setState({isRecommendExpert: false});}}>
+                    <Modal.Body>
+                        <Recommendation 
+                                mode="callback(username)"
+                                language={this.state.language!=="none" ? this.state.language: null}
+                                onSelect={(username) => 
+                                    {
+                                        this.props.goChatWith? this.props.goChatWith(username) : this.setState({chatWith: username});
+                                        this.setState({isRecommendExpert: false});
+                                    }}
+                                />
+                    </Modal.Body>
+                </Modal>
+                
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <div style={{flex: 6}}/>
+                    <BootstrapButton
+                        variant="light"
+                        onClick={()=>this.setState({isRecommendExpert: true})}
+                    > + New Chat </BootstrapButton>
+                </div>
                 {(this.props.chat.chatHistory && !this.props.chat.chatHistory.message && this.props.chat.chatHistory.length) &&
                     <ChatList
                         dataSource = {

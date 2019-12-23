@@ -102,10 +102,6 @@ class WritingShow extends Component {
           );
     }
 
-    console.log("Essay");
-
-    console.log(this.state.essay);
-
     return (
       <Grid container component="main" className={classes.root}>
 
