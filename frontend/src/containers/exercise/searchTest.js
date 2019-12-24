@@ -24,6 +24,7 @@ class SearchTest extends React.Component {
   }
 
   componentDidMount() {
+    console.log("in mount");
     this.props.search_test(
       this.props.userInfo.token,
       "",
@@ -33,10 +34,9 @@ class SearchTest extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("prev", prevState.input);
-    console.log("now", this.state.input);
-    if (prevState.input !== this.state.input) {
-      console.log("in update");
+    if (prevState.input !== this.state.input ||
+      prevProps.type !== this.props.type ||
+      prevProps.language !== this.props.language) {
       this.props.search_test(
         this.props.userInfo.token,
         this.state.input,
@@ -45,6 +45,7 @@ class SearchTest extends React.Component {
       );
     }
   }
+  
   combineTandK(WT, WK) {
     if ((!WT || WT.message) && (!WK || WK.message)) {
       return [];
@@ -57,6 +58,7 @@ class SearchTest extends React.Component {
     }
     else {
       const setty = new Set([...WT, ...WK]);
+      console.log(setty);
       return Array.from(setty);
     }
   }
