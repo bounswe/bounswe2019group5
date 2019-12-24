@@ -6,6 +6,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Button, Card, CardDeck, Image, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { get_essays } from '../../redux/action-creators/writinglist';
+import { Typography } from '@material-ui/core';
 
 class WritingList extends Component {
 
@@ -14,13 +15,15 @@ class WritingList extends Component {
     }
 
     render() {
+        let myessays_count = 0
+        let mypending_count = 0
         return (
             <Tabs bg="secondary" text="white" id="controlled-tab-example" >
                 <Tab eventKey="my-essays" title="MY ESSAYS"
                 >
-
                     {this.props.writinglist.writings.map(item => {
-                        if (item.author === this.props.userInfo.username)
+                        if (item.author === this.props.userInfo.username) {
+                            myessays_count++;
                             return (
                                 <div>
                                     <Card bg="light" style={{ width: '36rem' }}>
@@ -38,13 +41,23 @@ class WritingList extends Component {
                                     <br />
                                 </div>
                             );
+                                        }
                     })}
+                    {myessays_count==0 && 
+                    <>
+                    <Typography>You did not write any essay! Try it here:</Typography>
+                    <Link to={{ pathname: "/upload-writing/"}}> 
+                    <Button variant="warning" >Upload Writing</Button>
+                    </Link> 
+                    </>
+                      }
 
                 </Tab>
                 <Tab eventKey="review-requests" title="REVIEW REQUESTS"
                 >
                     {this.props.writinglist.writings.map(item => {
-                        if (item.reviewer === this.props.userInfo.username)
+                        if (item.reviewer === this.props.userInfo.username) {
+                            mypending_count++;
                             return (
                                 <div>
                                     <Card bg="light" style={{ width: '36rem' }}>
@@ -63,7 +76,11 @@ class WritingList extends Component {
                                     <br />
                                 </div>
                             );
+                                        }
                     })}
+                    {mypending_count==0 && 
+                    <Typography>You dont have any review requests</Typography>
+                    }
                 </Tab>
 
             </Tabs>

@@ -12,6 +12,7 @@ import { clear_chat_history, get_chat_history } from '../../../redux/action-crea
 import {Button as BootstrapButton, Modal} from 'react-bootstrap';
 
 import Recommendation from '../../recommendation';
+import { Typography } from '@material-ui/core';
 
 export class ChatHistory extends Component {
 
@@ -97,7 +98,9 @@ export class ChatHistory extends Component {
                         onClick={()=>this.setState({isRecommendExpert: true})}
                     > + New Chat </BootstrapButton>
                 </div>
-                {(this.props.chat.chatHistory && !this.props.chat.chatHistory.message && this.props.chat.chatHistory.length) &&
+                {(this.props.chat.chatHistory && !this.props.chat.chatHistory.message && this.props.chat.chatHistory.length==0 &&
+                    <Typography>You don't have any chats. Try from (+) to chat with someone.</Typography>)}
+                {(this.props.chat.chatHistory && !this.props.chat.chatHistory.message ) &&
                     <ChatList
                         dataSource = {
                             this.props.chat.chatHistory
