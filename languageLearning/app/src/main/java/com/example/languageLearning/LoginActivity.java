@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -136,6 +137,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MyApplication.REQUEST_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
 
         reqQ.add(jsonRequest);
     }
