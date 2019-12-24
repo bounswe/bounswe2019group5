@@ -256,7 +256,7 @@ class Profile extends Component {
             </Grid>
             <Divider variant="inset" />
             {!this.state.selfProfile &&
-              <Typography>You can only rate someone when they accepted your writing review request and once.</Typography>
+              <Typography>You can rate someone when you sent an essay for review or reviewed someone's essay and once.</Typography>
             }
             {
               !this.state.selfProfile && this.props.userInfo.otherUserProfile &&
