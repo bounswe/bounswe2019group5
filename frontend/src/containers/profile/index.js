@@ -69,9 +69,9 @@ class Profile extends Component {
         prevProps.match.params.user != this.props.match.params.user)
       //|| !(this.props.userInfo.otherUserProfile.message && !prevProps.userInfo.otherUserProfile.message)
     ) {
-      console.log("first",this.props.match.params.user != this.props.userInfo.userProfile.username);
-      console.log("sec",prevProps.match.params.user != this.props.match.params.user);
-      console.log("third",!(this.props.userInfo.otherUserProfile.message && !prevProps.userInfo.otherUserProfile.message));
+      //console.log("first",this.props.match.params.user != this.props.userInfo.userProfile.username);
+      //console.log("sec",prevProps.match.params.user != this.props.match.params.user);
+      //console.log("third",!(this.props.userInfo.otherUserProfile.message && !prevProps.userInfo.otherUserProfile.message));
       this.props.set_other_user_profile(
         this.props.userInfo.token,
         this.props.match.params.user
