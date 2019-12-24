@@ -68,8 +68,7 @@ interface BufferedReaderFunction {
 }
 
 public class MyApplication extends Application {
-    static final String SERVER = "http://35.158.176.194/";
-    static final int REQUEST_TIMEOUT_MS = 10000;
+    static final String SERVER = "http://35.156.237.253/";
     static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 2;
     private final String TAG = getClass().getName();
     public final int TOUCH_AND_HOLD_DELAY_MS = 500;

@@ -13,15 +13,14 @@
         android:layout_marginBottom="164dp"
         android:text="Keep Practicing! :)"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="45dp"
         android:textColor="#37D3BA"
+        android:textSize="45dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressLabel2"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.989" />
 
     <TextView
         android:id="@+id/progressPercentage"
@@ -41,6 +40,20 @@
         app:layout_constraintTop_toBottomOf="@+id/progressLabel"
         app:layout_constraintVertical_bias="0.35000002" />
 
+    <ProgressBar
+        android:id="@+id/appProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="339dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="28dp"
+        android:indeterminate="false"
+        android:progress="70"
+        android:progressBackgroundTint="#D6D5E0"
+        android:progressTint="#693EC3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressPercentage" />
+
     <TextView
         android:id="@+id/progressLabel"
         android:layout_width="wrap_content"
@@ -59,14 +72,15 @@
         android:id="@+id/progressLabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="248dp"
         android:text="of the exercises"
-        android:textStyle="bold"
-        android:textSize="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressPercentage"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/appProgressBar"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
