@@ -73,10 +73,10 @@ class Search extends React.Component {
     render() {
         const { classes } = this.props;
         
-        const searchedExercises = ( (this.props.search.searchedExercises.searchedExercisesWT && !this.props.search.searchedExercises.searchedExercisesWT.message) ||
-            (this.props.search.searchedExercises.searchedExercisesWK && !this.props.search.searchedExercises.searchedExercisesWK.message)) ?
-            this.combineTandK(this.props.search.searchedExercises.searchedExercisesWT, this.props.search.searchedExercises.searchedExercisesWT)
-            : 0 ;
+        const searchedExercises = ( (this.props.search.searchedExercises.searchedExercisesWT && this.props.search.searchedExercises.searchedExercisesWT.message) ||
+            (this.props.search.searchedExercises.searchedExercisesWK && this.props.search.searchedExercises.searchedExercisesWK.message)) ?
+            -1
+            : this.combineTandK(this.props.search.searchedExercises.searchedExercisesWK, this.props.search.searchedExercises.searchedExercisesWT) ;
 
         return (
             <Grid className={classes.paper} >
@@ -207,11 +207,11 @@ class Search extends React.Component {
                             </Form.Row>
                         </Form>
                         <List className={classes.root}>
-                            {searchedExercises == 0 &&
+                            {searchedExercises == -1 &&
                                 <Typography variand="h2">CONNECTION ERROR</Typography>}
-                            {(searchedExercises != 0 && searchedExercises.length == 0) &&
+                            {(searchedExercises != -1 && searchedExercises.length == 0) &&
                                 <Typography>Nothing found.</Typography>}
-                            {( searchedExercises != 0 ) &&
+                            {( searchedExercises != -1 ) &&
                                 searchedExercises.map((value, index) => {
                                     return (
                                         <>
