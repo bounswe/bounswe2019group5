@@ -49,7 +49,7 @@ class Profile extends Component {
         this.props.userInfo.token,
         this.props.match.params.user
       );
-      this.setState({ selfProfile: false});
+      this.setState({ selfProfile: false });
     } else {
       this.props.set_user_profile(this.props.userInfo.token);
       this.props.get_essays(this.props.userInfo.token);
@@ -58,8 +58,9 @@ class Profile extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.match.params.user != this.props.userInfo.userProfile.username ||
-      prevProps.match.params.user != this.props.match.params.user
+      (this.props.match.params.user != this.props.userInfo.userProfile.username ||
+        prevProps.match.params.user != this.props.match.params.user)
+      //|| !(this.props.userInfo.otherUserProfile.message && !prevProps.userInfo.otherUserProfile.message)
     ) {
       this.props.set_other_user_profile(
         this.props.userInfo.token,
@@ -87,13 +88,14 @@ class Profile extends Component {
       this.state.comment, this.state.rating)
       .then(newComment => {
         if (!newComment.message) {
+          console.log("sent rate");
           this.props.set_other_user_profile(
             this.props.userInfo.token,
             this.props.match.params.user
           );
           this.setState({ comment: "", rating: 3 });
         }
-
+        console.log("coulndt sent rate");
       }
 
       );
@@ -108,12 +110,12 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
 
-    if(
+    if (
       (this.state.selfProfile && this.props.userInfo.userProfile && this.props.userInfo.userProfile.message) ||
       (!this.state.selfProfile && this.props.userInfo.otherUserProfile && this.props.userInfo.otherUserProfile.message)
     ) {
-      return(
-      <Typography variand="h2">CONNECTION ERROR</Typography>
+      return (
+        <Typography variand="h2">CONNECTION ERROR</Typography>
       )
     }
     else if ((this.props.userInfo.otherUserProfile && !this.props.userInfo.otherUserProfile.username) && !this.state.selfProfile) {
@@ -137,6 +139,7 @@ class Profile extends Component {
         </div>
       );
     } else {
+      console.log(this.props.userInfo.token);
       const ratingS = this.props.userInfo.userProfile.rating_average;
       const ratingO = !this.state.selfProfile ? this.props.userInfo.otherUserProfile.rating_average : 0;
       return (
@@ -236,19 +239,23 @@ class Profile extends Component {
                 </Typography>
                 {this.state.selfProfile && !this.props.userInfo.userProfile.message ? (
                   <Ratings userProfile={this.props.userInfo.userProfile} />
-                ) : ( !this.props.userInfo.otherUserProfile.message &&
-                    (<Ratings userProfile={this.props.userInfo.otherUserProfile} />  )
+                ) : (!this.props.userInfo.otherUserProfile.message &&
+                  (<Ratings userProfile={this.props.userInfo.otherUserProfile} />)
                   )}
               </div>
             </Grid>
+            <Divider variant="inset" />
+            {!this.state.selfProfile &&
+              <Typography>You can only rate someone when they accepted your writing review request and once.</Typography>
+            }
             {
-              !this.state.selfProfile && this.props.userInfo.otherUserProfile && 
+              !this.state.selfProfile && this.props.userInfo.otherUserProfile &&
               !this.props.userInfo.otherUserProfile.message && this.props.userInfo.otherUserProfile.can_rate &&
               <div>
                 <Grid>
                   <Divider variant="inset" />
                   <div className={classes.paper}>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h6" gutterBottom>
                       Rate this user:
                   </Typography>
                     <StarRatings
@@ -258,8 +265,6 @@ class Profile extends Component {
                       numberOfStars={5}
                       name='rating'
                     />
-
-
                     <TextField
                       id="full-width-text-field"
                       placeholder="Enter your comment"
@@ -274,14 +279,11 @@ class Profile extends Component {
                       onClick={this.sendComment}
                       style={{
                         width: "fit-content"
-                      }} variant="primary">Send</Button>
+                      }} variant="success">Rate</Button>
                   </div>
                 </Grid>
-
               </div>
-
             }
-
           </Grid>
         </Grid>
       );
