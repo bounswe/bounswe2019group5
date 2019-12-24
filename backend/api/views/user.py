@@ -139,8 +139,11 @@ class ProfileView(mixins.ListModelMixin,
 
         approved_essays = Essay.objects.filter(author | reviewer | author_c | reviewer_c)
 
+        previous = Comment.objects.filter(username=self.request.user.username,
+                                          commented_user=commented_user)
+
         d = ProfileSerializer(user).data
-        d['can_rate'] = len(approved_essays) == 0
+        d['can_rate'] = ((len(approved_essays) != 0) and len(previous) == 0)
         return Response(d, status=status.HTTP_200_OK)
 
 
