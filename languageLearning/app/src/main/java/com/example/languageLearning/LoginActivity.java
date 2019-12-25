@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 app.setToken(token);
                 app.setUsername(username);
 
-                Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                Intent intent = new Intent(LoginActivity.this, BridgeActivity.class);
                 startActivity(intent);
 
             }

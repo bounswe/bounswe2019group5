@@ -128,12 +128,18 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                /* Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
-                        + "\nStatus Code " + error.networkResponse.statusCode
-                        + "\nCause " + error.getCause()
-                        + "\nnetworkResponse " + error.networkResponse.data.toString()
-                        + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show(); */
-                Toast.makeText(getApplicationContext(), "This username is taken", Toast.LENGTH_SHORT).show();
+                if(name.getText().toString().equals("") | surname.getText().toString().equals("") | email.getText().toString().equals("") | password.getText().toString().equals("") | username.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Registration credentials cannot be left blank.", Toast.LENGTH_SHORT).show();
+                }else if(!username.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "This username is taken", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(RegisterActivity.this, "Error: " + error.toString()
+                            + "\nStatus Code " + error.networkResponse.statusCode
+                            + "\nCause " + error.getCause()
+                            + "\nnetworkResponse " + error.networkResponse.data.toString()
+                            + "\nmessage" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+               // Toast.makeText(getApplicationContext(), "This username is taken", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
