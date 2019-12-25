@@ -24,7 +24,7 @@
         android:focusable="auto"
         android:selectAllOnFocus="true"
         android:shadowColor="#00DB2D2D"
-        android:text="Choose a language for proficiency exam"
+        android:text="Choose a language to continue"
 
         android:textColor="#673AB7"
         android:textSize="16sp" />
