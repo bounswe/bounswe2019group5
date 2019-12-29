@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/Users/furkankadioglu/451/bounswe2019group5/backend/api</OriginalElement>
+  <nodes>
+    <node x="11288.61467375217" y="252.0">rest_framework.serializers.BaseSerializer</node>
+    <node x="2848.657643216574" y="328.0">django.contrib.auth.models.AbstractUser</node>
+    <node x="12394.11467375217" y="126.0">django.apps.config.AppConfig</node>
+    <node x="5115.374999999999" y="434.0">api.filters.user.RecommendationFilterSet</node>
+    <node x="4476.542157974303" y="886.0">api.test.test_user.RegisterViewTests</node>
+    <node x="6035.374999999999" y="434.0">api.filters.message.MessageFilterSet</node>
+    <node x="8071.61467375217" y="780.0">api.views.exercise.ResultView</node>
+    <node x="6681.374999999999" y="434.0">api.filters.exercise.ExerciseFilterSet</node>
+    <node x="12257.61467375217" y="780.0">api.serializers.question.QuestionSerializer</node>
+    <node x="5597.558134524211" y="780.0">api.views.exercise.SuggestView</node>
+    <node x="1518.0" y="252.0">api.models.exercise.Result</node>
+    <node x="7730.157643216573" y="886.0">api.serializers.exercise.ExerciseSerializer</node>
+    <node x="12640.11467375217" y="126.0">rest_framework.schemas.inspectors.ViewInspector</node>
+    <node x="12429.11467375217" y="252.0">api.apps.ApiConfig</node>
+    <node x="10530.61467375217" y="780.0">api.serializers.annotation.AnnotationCreateSerializer</node>
+    <node x="11458.86467375217" y="886.0">api.serializers.annotation.AnnotationBodySerializer</node>
+    <node x="7776.61467375217" y="780.0">api.views.annotation.AnnotationView</node>
+    <node x="11639.61467375217" y="780.0">api.serializers.user.ProfileSerializer</node>
+    <node x="4778.542157974303" y="886.0">api.test.test_user.ProfileViewTests</node>
+    <node x="3811.874999999999" y="126.0">unittest.case.TestCase</node>
+    <node x="11462.36467375217" y="434.0">rest_framework.serializers.ModelSerializer</node>
+    <node x="8324.61467375217" y="780.0">api.views.user.RecommendationView</node>
+    <node x="1709.6563404188382" y="126.0">django.db.models.base.Model</node>
+    <node x="8502.157643216573" y="886.0">api.serializers.exercise.ResultSerializer</node>
+    <node x="9057.21921425136" y="434.0">rest_framework.mixins.ListModelMixin</node>
+    <node x="4015.874999999999" y="126.0">rest_framework.mixins.DestroyModelMixin</node>
+    <node x="4497.374999999999" y="434.0">rest_framework.mixins.RetrieveModelMixin</node>
+    <node x="2298.0" y="252.0">api.models.annotation.AnnotationSelector</node>
+    <node x="9596.61467375217" y="780.0">api.views.exam.ProficiencyView</node>
+    <node x="5916.86467375217" y="126.0">django_filters.filterset.BaseFilterSet</node>
+    <node x="12661.11467375217" y="252.0">rest_framework.schemas.openapi.AutoSchema</node>
+    <node x="3783.874999999999" y="434.0">django.test.testcases.TestCase</node>
+    <node x="8145.11467375217" y="0.0">object</node>
+    <node x="1272.0" y="252.0">api.models.question.Question</node>
+    <node x="11302.61467375217" y="780.0">api.serializers.comment.CommentSerializer</node>
+    <node x="3780.374999999999" y="780.0">rest_framework.test.APITestCase</node>
+    <node x="6045.11467375217" y="328.0">django_filters.rest_framework.filterset.FilterSet</node>
+    <node x="2628.0" y="252.0">django.contrib.auth.base_user.AbstractBaseUser</node>
+    <node x="6232.86467375217" y="126.0">django_filters.filterset.FilterSetMetaclass</node>
+    <node x="8081.157643216573" y="886.0">api.serializers.annotation.AnnotationTargetSerializer</node>
+    <node x="3413.5313404188378" y="886.0">api.test.test_message.MessageTest</node>
+    <node x="11973.11467375217" y="126.0">rest_framework.schemas.generators.BaseSchemaGenerator</node>
+    <node x="4383.901794105373" y="780.0">api.views.exercise.EssayView</node>
+    <node x="766.0" y="252.0">api.models.comment.Comment</node>
+    <node x="8605.61467375217" y="780.0">api.views.message.MessageView</node>
+    <node x="0.0" y="252.0">api.models.question.File</node>
+    <node x="3694.5313404188373" y="886.0">api.test.test_user.LoginViewTests</node>
+    <node x="11625.61467375217" y="252.0">rest_framework.serializers.SerializerMetaclass</node>
+    <node x="6097.61467375217" y="252.0">django_filters.filterset.FilterSet</node>
+    <node x="11479.86467375217" y="328.0">rest_framework.serializers.Serializer</node>
+    <node x="5747.374999999999" y="434.0">api.filters.search.SearchFilterSet</node>
+    <node x="11337.61467375217" y="126.0">rest_framework.fields.Field</node>
+    <node x="3000.0" y="252.0">django.contrib.auth.models.PermissionsMixin</node>
+    <node x="8858.61467375217" y="780.0">api.views.search.SearchView</node>
+    <node x="12064.11467375217" y="328.0">api.schemas.SchemaGenerator</node>
+    <node x="1750.0" y="252.0">api.models.annotation.AnnotationBody</node>
+    <node x="9097.61467375217" y="780.0">api.views.user.ProfileView</node>
+    <node x="6997.374999999999" y="434.0">api.filters.user.UserFilterSet</node>
+    <node x="6337.374999999999" y="434.0">api.filters.annotation.AnnotationFilterSet</node>
+    <node x="2052.0" y="252.0">api.models.language.Language</node>
+    <node x="3520.374999999999" y="328.0">api.models.exercise.Essay</node>
+    <node x="3975.5313404188373" y="886.0">api.test.test_exam.ExerciseTest</node>
+    <node x="10038.689935064935" y="126.0">django.db.migrations.migration.Migration</node>
+    <node x="4827.374999999999" y="434.0">api.filters.exercise.ExamFilterSet</node>
+    <node x="11865.86467375217" y="886.0">api.serializers.exercise.EssayCreateSerializer</node>
+    <node x="6761.157643216573" y="780.0">api.views.exercise.UploadView</node>
+    <node x="3406.124999999999" y="252.0">api.models.exercise.Exam</node>
+    <node x="8314.11467375217" y="328.0">rest_framework.generics.GenericAPIView</node>
+    <node x="11997.61467375217" y="252.0">rest_framework.schemas.openapi.SchemaGenerator</node>
+    <node x="7558.61467375217" y="780.0">api.views.user.LoginView</node>
+    <node x="8342.11467375217" y="126.0">django.views.generic.base.View</node>
+    <node x="218.0" y="252.0">api.models.message.Message</node>
+    <node x="9329.61467375217" y="780.0">api.views.exercise.ProgressView</node>
+    <node x="11955.61467375217" y="780.0">api.serializers.user.LoginSerializer</node>
+    <node x="12608.61467375217" y="780.0">api.serializers.user.RegisterSerializer</node>
+    <node x="9991.86467375217" y="886.0">api.serializers.exercise.EssaySerializer</node>
+    <node x="10644.86467375217" y="886.0">api.serializers.annotation.AnnotationSelectorSerializer</node>
+    <node x="12727.61467375217" y="328.0">api.schemas.AutoSchema</node>
+    <node x="4181.374999999999" y="434.0">rest_framework.mixins.UpdateModelMixin</node>
+    <node x="9856.61467375217" y="780.0">api.views.user.UserSearchView</node>
+    <node x="450.0" y="252.0">api.models.annotation.AnnotationTarget</node>
+    <node x="1640.9063404188382" y="0.0">django.db.models.base.ModelBase</node>
+    <node x="2915.157643216574" y="434.0">api.models.user.User</node>
+    <node x="8349.11467375217" y="252.0">rest_framework.views.APIView</node>
+    <node x="10951.61467375217" y="780.0">api.serializers.language.LanguageSerializer</node>
+    <node x="3745.374999999999" y="328.0">django.test.testcases.TransactionTestCase</node>
+    <node x="8040.11467375217" y="126.0">rest_framework.viewsets.ViewSetMixin</node>
+    <node x="10321.86467375217" y="886.0">api.serializers.question.FileSerializer</node>
+    <node x="7257.374999999999" y="434.0">rest_framework.mixins.CreateModelMixin</node>
+    <node x="7014.157643216573" y="780.0">api.views.user.RegisterView</node>
+    <node x="8173.61467375217" y="434.0">rest_framework.viewsets.GenericViewSet</node>
+    <node x="5445.374999999999" y="434.0">api.filters.exercise.ResultFilterSet</node>
+    <node x="11079.86467375217" y="886.0">api.serializers.annotation.AnnotationSerializer</node>
+    <node x="3762.874999999999" y="252.0">django.test.testcases.SimpleTestCase</node>
+    <node x="7393.157643216573" y="886.0">api.serializers.message.MessageSerializer</node>
+    <node x="3274.3749999999995" y="328.0">api.models.exercise.Exercise</node>
+    <node x="998.0" y="252.0">api.models.annotation.Annotation</node>
+    <node x="10109.61467375217" y="780.0">rest_framework.serializers.HyperlinkedModelSerializer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="api.views.exercise.ResultView" target="rest_framework.mixins.ListModelMixin">
+      <point x="77.66666666666674" y="-13.0" />
+      <point x="8265.781340418836" y="730.0" />
+      <point x="9146.946486978632" y="730.0" />
+      <point x="-51.27272727272748" y="13.0" />
+    </edge>
+    <edge source="api.models.annotation.AnnotationSelector" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="2453.0" y="212.0" />
+      <point x="1869.6948019572992" y="212.0" />
+      <point x="50.53846153846098" y="13.0" />
+    </edge>
+    <edge source="api.models.language.Language" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="2165.0" y="222.0" />
+      <point x="1852.8486481111468" y="222.0" />
+      <point x="33.69230769230853" y="13.0" />
+    </edge>
+    <edge source="api.views.user.UserSearchView" target="rest_framework.mixins.ListModelMixin">
+      <point x="58.25" y="-13.0" />
+      <point x="10031.36467375217" y="480.0" />
+      <point x="9326.401032433176" y="480.0" />
+      <point x="128.18181818181802" y="13.0" />
+    </edge>
+    <edge source="rest_framework.mixins.CreateModelMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="7405.374999999999" y="106.0" />
+      <point x="8176.31467375217" y="106.0" />
+      <point x="-4.800000000000182" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.UploadView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="58.25" y="-13.0" />
+      <point x="6935.907643216573" y="650.0" />
+      <point x="8226.471816609313" y="650.0" />
+      <point x="-95.14285714285734" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.ResultView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-77.66666666666674" y="-13.0" />
+      <point x="8110.448007085503" y="600.0" />
+      <point x="7471.152777777777" y="600.0" />
+      <point x="65.77777777777783" y="13.0" />
+    </edge>
+    <edge source="api.views.user.LoginView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-49.5" y="-13.0" />
+      <point x="7608.11467375217" y="620.0" />
+      <point x="7405.374999999999" y="620.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.viewsets.GenericViewSet" target="rest_framework.generics.GenericAPIView">
+      <point x="74.0" y="-13.0" />
+      <point x="8395.61467375217" y="414.0" />
+      <point x="8462.11467375217" y="414.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="django.test.testcases.TransactionTestCase" target="django.test.testcases.SimpleTestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.filters.user.RecommendationFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="5270.374999999999" y="384.0" />
+      <point x="6115.05217375217" y="384.0" />
+      <point x="-116.5625" y="13.0" />
+    </edge>
+    <edge source="api.views.user.RecommendationView" target="rest_framework.mixins.ListModelMixin">
+      <point x="87.0" y="-13.0" />
+      <point x="8542.11467375217" y="740.0" />
+      <point x="9172.582850614996" y="740.0" />
+      <point x="-25.636363636363512" y="13.0" />
+    </edge>
+    <edge source="api.views.user.RecommendationView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-87.0" y="-13.0" />
+      <point x="8368.11467375217" y="590.0" />
+      <point x="7504.041666666666" y="590.0" />
+      <point x="98.66666666666674" y="13.0" />
+    </edge>
+    <edge source="api.test.test_message.MessageTest" target="rest_framework.test.APITestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="3544.0313404188378" y="866.0" />
+      <point x="3805.074999999999" y="866.0" />
+      <point x="-98.80000000000018" y="13.0" />
+    </edge>
+    <edge source="django.views.generic.base.View" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="8462.11467375217" y="106.0" />
+      <point x="8185.9146737521705" y="106.0" />
+      <point x="4.800000000000182" y="13.0" />
+    </edge>
+    <edge source="api.models.message.Message" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="324.0" y="182.0" />
+      <point x="1734.9255711880687" y="182.0" />
+      <point x="-84.23076923076951" y="13.0" />
+    </edge>
+    <edge source="api.views.user.LoginView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="49.5" y="-13.0" />
+      <point x="7707.11467375217" y="670.0" />
+      <point x="8268.757530895027" y="670.0" />
+      <point x="-52.85714285714266" y="13.0" />
+    </edge>
+    <edge source="api.models.question.Question" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="1385.0" y="222.0" />
+      <point x="1802.310186572684" y="222.0" />
+      <point x="-16.846153846154266" y="13.0" />
+    </edge>
+    <edge source="django.db.migrations.migration.Migration" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="10193.689935064935" y="86.0" />
+      <point x="8195.51467375217" y="86.0" />
+      <point x="14.400000000000091" y="13.0" />
+    </edge>
+    <edge source="rest_framework.serializers.HyperlinkedModelSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="10310.11467375217" y="730.0" />
+      <point x="11482.61467375217" y="730.0" />
+      <point x="-141.75" y="13.0" />
+    </edge>
+    <edge source="api.models.annotation.AnnotationTarget" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="598.0" y="192.0" />
+      <point x="1751.771725034223" y="192.0" />
+      <point x="-67.38461538461524" y="13.0" />
+    </edge>
+    <edge source="django.contrib.auth.models.PermissionsMixin" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="3165.5" y="192.0" />
+      <point x="1903.3871096496077" y="192.0" />
+      <point x="84.23076923076951" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.ResultView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="0.0" y="-13.0" />
+      <point x="8188.11467375217" y="690.0" />
+      <point x="8311.043245180743" y="690.0" />
+      <point x="-10.571428571428442" y="13.0" />
+    </edge>
+    <edge source="api.views.user.UserSearchView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="-58.25" y="-13.0" />
+      <point x="9914.86467375217" y="490.0" />
+      <point x="8459.043245180743" y="490.0" />
+      <point x="137.42857142857156" y="13.0" />
+    </edge>
+    <edge source="django.contrib.auth.base_user.AbstractBaseUser" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="2804.0" y="202.0" />
+      <point x="1886.5409558034535" y="202.0" />
+      <point x="67.38461538461524" y="13.0" />
+    </edge>
+    <edge source="api.serializers.comment.CommentSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="11461.11467375217" y="760.0" />
+      <point x="11604.11467375217" y="760.0" />
+      <point x="-20.25" y="13.0" />
+    </edge>
+    <edge source="django.test.testcases.SimpleTestCase" target="unittest.case.TestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.schemas.generators.BaseSchemaGenerator" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="12173.61467375217" y="66.0" />
+      <point x="8205.11467375217" y="66.0" />
+      <point x="24.0" y="13.0" />
+    </edge>
+    <edge source="api.test.test_user.ProfileViewTests" target="rest_framework.test.APITestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="4916.042157974303" y="846.0" />
+      <point x="4002.6749999999993" y="846.0" />
+      <point x="98.80000000000018" y="13.0" />
+    </edge>
+    <edge source="rest_framework.views.APIView" target="django.views.generic.base.View">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.UploadView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-58.25" y="-13.0" />
+      <point x="6819.407643216573" y="610.0" />
+      <point x="7339.597222222221" y="610.0" />
+      <point x="-65.77777777777783" y="13.0" />
+    </edge>
+    <edge source="api.filters.user.UserFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="7117.374999999999" y="394.0" />
+      <point x="6394.80217375217" y="394.0" />
+      <point x="163.1875" y="13.0" />
+    </edge>
+    <edge source="api.serializers.user.LoginSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="12096.61467375217" y="750.0" />
+      <point x="11685.11467375217" y="750.0" />
+      <point x="60.75" y="13.0" />
+    </edge>
+    <edge source="api.models.exercise.Essay" target="api.models.exercise.Exam">
+      <point x="0.0" y="-13.0" />
+      <point x="3622.874999999999" y="303.0" />
+      <point x="3554.624999999999" y="303.0" />
+      <point x="49.5" y="13.0" />
+    </edge>
+    <edge source="api.serializers.user.ProfileSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="11787.61467375217" y="760.0" />
+      <point x="11644.61467375217" y="760.0" />
+      <point x="20.25" y="13.0" />
+    </edge>
+    <edge source="api.views.annotation.AnnotationView" target="rest_framework.mixins.ListModelMixin">
+      <point x="91.66666666666652" y="-13.0" />
+      <point x="8005.781340418836" y="720.0" />
+      <point x="9121.310123342268" y="720.0" />
+      <point x="-76.90909090909099" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.SuggestView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="0.0" y="-13.0" />
+      <point x="5717.558134524211" y="600.0" />
+      <point x="7306.708333333332" y="600.0" />
+      <point x="-98.66666666666674" y="13.0" />
+    </edge>
+    <edge source="api.serializers.language.LanguageSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="11117.11467375217" y="750.0" />
+      <point x="11563.61467375217" y="750.0" />
+      <point x="-60.75" y="13.0" />
+    </edge>
+    <edge source="api.serializers.message.MessageSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="7551.657643216573" y="826.0" />
+      <point x="10129.66467375217" y="826.0" />
+      <point x="-180.44999999999982" y="13.0" />
+    </edge>
+    <edge source="django.db.models.base.Model" target="django.db.models.base.ModelBase">
+      <point x="-54.75" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.viewsets.GenericViewSet" target="rest_framework.viewsets.ViewSetMixin">
+      <point x="-74.0" y="-13.0" />
+      <point x="8247.61467375217" y="414.0" />
+      <point x="8181.11467375217" y="414.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.mixins.DestroyModelMixin">
+      <point x="-94.16666666666652" y="-13.0" />
+      <point x="4402.735127438706" y="760.0" />
+      <point x="4167.374999999999" y="760.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.serializers.exercise.EssaySerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="10146.86467375217" y="866.0" />
+      <point x="10290.064673752171" y="866.0" />
+      <point x="-20.050000000000182" y="13.0" />
+    </edge>
+    <edge source="rest_framework.fields.Field" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="11447.11467375217" y="76.0" />
+      <point x="8200.314673752171" y="76.0" />
+      <point x="19.199999999999818" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.mixins.UpdateModelMixin">
+      <point x="-56.5" y="-13.0" />
+      <point x="4440.401794105373" y="750.0" />
+      <point x="4255.374999999999" y="750.0" />
+      <point x="-74.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.SuggestView" target="rest_framework.mixins.UpdateModelMixin">
+      <point x="-96.0" y="-13.0" />
+      <point x="5621.558134524211" y="570.0" />
+      <point x="4403.374999999999" y="570.0" />
+      <point x="74.0" y="13.0" />
+    </edge>
+    <edge source="django.apps.config.AppConfig" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="12507.11467375217" y="56.0" />
+      <point x="8209.91467375217" y="56.0" />
+      <point x="28.800000000000182" y="13.0" />
+    </edge>
+    <edge source="api.models.annotation.AnnotationBody" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="1891.0" y="232.0" />
+      <point x="1836.0024942649925" y="232.0" />
+      <point x="16.846153846154266" y="13.0" />
+    </edge>
+    <edge source="api.schemas.SchemaGenerator" target="rest_framework.schemas.openapi.SchemaGenerator">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.serializers.annotation.AnnotationTargetSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="8281.657643216573" y="846.0" />
+      <point x="10209.86467375217" y="846.0" />
+      <point x="-100.25" y="13.0" />
+    </edge>
+    <edge source="api.serializers.user.RegisterSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="12760.11467375217" y="730.0" />
+      <point x="11766.11467375217" y="730.0" />
+      <point x="141.75" y="13.0" />
+    </edge>
+    <edge source="api.filters.message.MessageFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="6176.374999999999" y="414.0" />
+      <point x="6254.92717375217" y="414.0" />
+      <point x="23.3125" y="13.0" />
+    </edge>
+    <edge source="api.views.user.RegisterView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="54.75" y="-13.0" />
+      <point x="7178.407643216573" y="660.0" />
+      <point x="8247.61467375217" y="660.0" />
+      <point x="-74.0" y="13.0" />
+    </edge>
+    <edge source="django_filters.filterset.FilterSet" target="django_filters.filterset.FilterSetMetaclass">
+      <point x="67.0" y="-13.0" />
+      <point x="6298.61467375217" y="232.0" />
+      <point x="6398.36467375217" y="232.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.search.SearchView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="-54.75" y="-13.0" />
+      <point x="8913.36467375217" y="550.0" />
+      <point x="8374.471816609313" y="550.0" />
+      <point x="52.85714285714266" y="13.0" />
+    </edge>
+    <edge source="django_filters.rest_framework.filterset.FilterSet" target="django_filters.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.user.ProfileView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="-53.0" y="-13.0" />
+      <point x="9150.61467375217" y="540.0" />
+      <point x="8395.61467375217" y="540.0" />
+      <point x="74.0" y="13.0" />
+    </edge>
+    <edge source="api.models.exercise.Result" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="1624.0" y="232.0" />
+      <point x="1819.1563404188382" y="232.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.message.MessageView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-77.66666666666652" y="-13.0" />
+      <point x="8644.448007085504" y="570.0" />
+      <point x="7536.930555555555" y="570.0" />
+      <point x="131.55555555555566" y="13.0" />
+    </edge>
+    <edge source="api.views.search.SearchView" target="rest_framework.mixins.ListModelMixin">
+      <point x="54.75" y="-13.0" />
+      <point x="9022.86467375217" y="760.0" />
+      <point x="9223.855577887722" y="760.0" />
+      <point x="25.636363636363512" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.SuggestView" target="rest_framework.mixins.RetrieveModelMixin">
+      <point x="-48.0" y="-13.0" />
+      <point x="5669.558134524211" y="560.0" />
+      <point x="4729.874999999999" y="560.0" />
+      <point x="77.5" y="13.0" />
+    </edge>
+    <edge source="django.contrib.auth.models.AbstractUser" target="django.contrib.auth.models.PermissionsMixin">
+      <point x="75.75" y="-13.0" />
+      <point x="3075.907643216574" y="303.0" />
+      <point x="3165.5" y="303.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.user.ProfileView" target="rest_framework.mixins.ListModelMixin">
+      <point x="53.0" y="-13.0" />
+      <point x="9256.61467375217" y="760.0" />
+      <point x="9249.491941524086" y="760.0" />
+      <point x="51.272727272727025" y="13.0" />
+    </edge>
+    <edge source="api.models.annotation.Annotation" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="1125.0" y="212.0" />
+      <point x="1785.4640327265297" y="212.0" />
+      <point x="-33.69230769230853" y="13.0" />
+    </edge>
+    <edge source="rest_framework.serializers.ModelSerializer" target="rest_framework.serializers.Serializer">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.filters.search.SearchFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="5881.374999999999" y="404.0" />
+      <point x="6208.30217375217" y="404.0" />
+      <point x="-23.3125" y="13.0" />
+    </edge>
+    <edge source="django_filters.filterset.BaseFilterSet" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="6064.86467375217" y="96.0" />
+      <point x="8171.51467375217" y="96.0" />
+      <point x="-9.599999999999909" y="13.0" />
+    </edge>
+    <edge source="api.views.message.MessageView" target="rest_framework.mixins.ListModelMixin">
+      <point x="77.66666666666652" y="-13.0" />
+      <point x="8799.781340418836" y="750.0" />
+      <point x="9198.21921425136" y="750.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.mixins.DestroyModelMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="4167.374999999999" y="66.0" />
+      <point x="8157.11467375217" y="66.0" />
+      <point x="-24.0" y="13.0" />
+    </edge>
+    <edge source="api.test.test_exam.ExerciseTest" target="rest_framework.test.APITestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="4099.031340418837" y="866.0" />
+      <point x="3903.874999999999" y="866.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.message.MessageView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="0.0" y="-13.0" />
+      <point x="8722.11467375217" y="560.0" />
+      <point x="8353.328959466457" y="560.0" />
+      <point x="31.71428571428578" y="13.0" />
+    </edge>
+    <edge source="api.filters.exercise.ExerciseFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="6829.374999999999" y="404.0" />
+      <point x="6348.17717375217" y="404.0" />
+      <point x="116.5625" y="13.0" />
+    </edge>
+    <edge source="api.views.annotation.AnnotationView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="0.0" y="-13.0" />
+      <point x="7914.11467375217" y="680.0" />
+      <point x="8289.900388037884" y="680.0" />
+      <point x="-31.71428571428578" y="13.0" />
+    </edge>
+    <edge source="api.filters.exercise.ExamFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="4961.374999999999" y="374.0" />
+      <point x="6068.42717375217" y="374.0" />
+      <point x="-163.1875" y="13.0" />
+    </edge>
+    <edge source="rest_framework.schemas.inspectors.ViewInspector" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="12819.61467375217" y="46.0" />
+      <point x="8214.71467375217" y="46.0" />
+      <point x="33.59999999999991" y="13.0" />
+    </edge>
+    <edge source="rest_framework.schemas.openapi.AutoSchema" target="rest_framework.schemas.inspectors.ViewInspector">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.user.RegisterView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-54.75" y="-13.0" />
+      <point x="7068.907643216573" y="620.0" />
+      <point x="7372.48611111111" y="620.0" />
+      <point x="-32.888888888888914" y="13.0" />
+    </edge>
+    <edge source="rest_framework.serializers.Serializer" target="rest_framework.serializers.BaseSerializer">
+      <point x="-72.25" y="-13.0" />
+      <point x="11552.11467375217" y="303.0" />
+      <point x="11447.11467375217" y="303.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.models.comment.Comment" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="872.0" y="202.0" />
+      <point x="1768.6178788803772" y="202.0" />
+      <point x="-50.53846153846098" y="13.0" />
+    </edge>
+    <edge source="rest_framework.serializers.Serializer" target="rest_framework.serializers.SerializerMetaclass">
+      <point x="72.25" y="-13.0" />
+      <point x="11696.61467375217" y="303.0" />
+      <point x="11801.61467375217" y="303.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="18.833333333333314" y="-13.0" />
+      <point x="4515.735127438706" y="590.0" />
+      <point x="7273.819444444443" y="590.0" />
+      <point x="-131.55555555555566" y="13.0" />
+    </edge>
+    <edge source="django.contrib.auth.models.AbstractUser" target="django.contrib.auth.base_user.AbstractBaseUser">
+      <point x="-75.75" y="-13.0" />
+      <point x="2924.407643216574" y="303.0" />
+      <point x="2804.0" y="303.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.mixins.ListModelMixin">
+      <point x="94.16666666666663" y="-13.0" />
+      <point x="4591.0684607720395" y="700.0" />
+      <point x="9070.03739606954" y="700.0" />
+      <point x="-128.18181818181802" y="13.0" />
+    </edge>
+    <edge source="api.test.test_user.LoginViewTests" target="rest_framework.test.APITestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="3825.0313404188373" y="866.0" />
+      <point x="3854.4749999999995" y="866.0" />
+      <point x="-49.399999999999636" y="13.0" />
+    </edge>
+    <edge source="api.filters.annotation.AnnotationFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="6499.374999999999" y="414.0" />
+      <point x="6301.55217375217" y="414.0" />
+      <point x="69.9375" y="13.0" />
+    </edge>
+    <edge source="django.test.testcases.TestCase" target="django.test.testcases.TransactionTestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.exam.ProficiencyView" target="rest_framework.mixins.ListModelMixin">
+      <point x="60.0" y="-13.0" />
+      <point x="9776.61467375217" y="500.0" />
+      <point x="9300.764668796814" y="500.0" />
+      <point x="102.5454545454545" y="13.0" />
+    </edge>
+    <edge source="api.apps.ApiConfig" target="django.apps.config.AppConfig">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.serializers.question.QuestionSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="12423.11467375217" y="740.0" />
+      <point x="11725.61467375217" y="740.0" />
+      <point x="101.25" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.ProgressView" target="rest_framework.mixins.ListModelMixin">
+      <point x="61.75" y="-13.0" />
+      <point x="9514.86467375217" y="520.0" />
+      <point x="9275.12830516045" y="520.0" />
+      <point x="76.90909090909099" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.SuggestView" target="rest_framework.mixins.ListModelMixin">
+      <point x="96.0" y="-13.0" />
+      <point x="5813.558134524211" y="710.0" />
+      <point x="9095.673759705904" y="710.0" />
+      <point x="-102.5454545454545" y="13.0" />
+    </edge>
+    <edge source="rest_framework.serializers.BaseSerializer" target="rest_framework.fields.Field">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.generics.GenericAPIView" target="rest_framework.views.APIView">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="django.db.models.base.Model" target="object">
+      <point x="54.75" y="-13.0" />
+      <point x="1873.9063404188382" y="46.0" />
+      <point x="8147.51467375217" y="46.0" />
+      <point x="-33.59999999999991" y="13.0" />
+    </edge>
+    <edge source="api.serializers.exercise.EssayCreateSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="12041.86467375217" y="826.0" />
+      <point x="10490.564673752171" y="826.0" />
+      <point x="180.44999999999982" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="56.5" y="-13.0" />
+      <point x="4553.401794105373" y="630.0" />
+      <point x="8184.186102323599" y="630.0" />
+      <point x="-137.42857142857156" y="13.0" />
+    </edge>
+    <edge source="api.test.test_user.RegisterViewTests" target="rest_framework.test.APITestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="4617.542157974303" y="856.0" />
+      <point x="3953.2749999999987" y="856.0" />
+      <point x="49.399999999999636" y="13.0" />
+    </edge>
+    <edge source="rest_framework.viewsets.ViewSetMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.models.user.User" target="django.contrib.auth.models.AbstractUser">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.schemas.openapi.SchemaGenerator" target="rest_framework.schemas.generators.BaseSchemaGenerator">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.serializers.annotation.AnnotationBodySerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="11652.36467375217" y="836.0" />
+      <point x="10450.46467375217" y="836.0" />
+      <point x="140.35000000000036" y="13.0" />
+    </edge>
+    <edge source="api.views.exam.ProficiencyView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="-60.0" y="-13.0" />
+      <point x="9656.61467375217" y="510.0" />
+      <point x="8437.900388037884" y="510.0" />
+      <point x="116.28571428571422" y="13.0" />
+    </edge>
+    <edge source="unittest.case.TestCase" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="3903.874999999999" y="56.0" />
+      <point x="8152.31467375217" y="56.0" />
+      <point x="-28.800000000000182" y="13.0" />
+    </edge>
+    <edge source="api.serializers.question.FileSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="10473.36467375217" y="866.0" />
+      <point x="10330.16467375217" y="866.0" />
+      <point x="20.050000000000182" y="13.0" />
+    </edge>
+    <edge source="api.serializers.exercise.ExerciseSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="7895.657643216573" y="836.0" />
+      <point x="10169.76467375217" y="836.0" />
+      <point x="-140.35000000000036" y="13.0" />
+    </edge>
+    <edge source="rest_framework.mixins.UpdateModelMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="4329.374999999999" y="76.0" />
+      <point x="8161.9146737521705" y="76.0" />
+      <point x="-19.199999999999818" y="13.0" />
+    </edge>
+    <edge source="api.schemas.AutoSchema" target="rest_framework.schemas.openapi.AutoSchema">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.views.user.RecommendationView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="0.0" y="-13.0" />
+      <point x="8455.11467375217" y="580.0" />
+      <point x="8332.186102323598" y="580.0" />
+      <point x="10.571428571428442" y="13.0" />
+    </edge>
+    <edge source="api.models.question.File" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="99.0" y="172.0" />
+      <point x="1718.0794173419144" y="172.0" />
+      <point x="-101.07692307692378" y="13.0" />
+    </edge>
+    <edge source="api.serializers.annotation.AnnotationSelectorSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="10852.36467375217" y="856.0" />
+      <point x="10370.26467375217" y="856.0" />
+      <point x="60.149999999999636" y="13.0" />
+    </edge>
+    <edge source="api.filters.exercise.ResultFilterSet" target="django_filters.rest_framework.filterset.FilterSet">
+      <point x="0.0" y="-13.0" />
+      <point x="5586.374999999999" y="394.0" />
+      <point x="6161.67717375217" y="394.0" />
+      <point x="-69.9375" y="13.0" />
+    </edge>
+    <edge source="api.serializers.annotation.AnnotationCreateSerializer" target="rest_framework.serializers.ModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="10731.11467375217" y="740.0" />
+      <point x="11523.11467375217" y="740.0" />
+      <point x="-101.25" y="13.0" />
+    </edge>
+    <edge source="api.models.exercise.Exercise" target="api.models.exercise.Exam">
+      <point x="0.0" y="-13.0" />
+      <point x="3387.3749999999995" y="303.0" />
+      <point x="3455.624999999999" y="303.0" />
+      <point x="-49.5" y="13.0" />
+    </edge>
+    <edge source="api.views.annotation.AnnotationView" target="rest_framework.mixins.CreateModelMixin">
+      <point x="-91.66666666666652" y="-13.0" />
+      <point x="7822.448007085504" y="610.0" />
+      <point x="7438.263888888888" y="610.0" />
+      <point x="32.888888888888914" y="13.0" />
+    </edge>
+    <edge source="rest_framework.mixins.RetrieveModelMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="4652.374999999999" y="86.0" />
+      <point x="8166.714673752171" y="86.0" />
+      <point x="-14.400000000000091" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.EssayView" target="rest_framework.mixins.RetrieveModelMixin">
+      <point x="-18.83333333333337" y="-13.0" />
+      <point x="4478.0684607720395" y="580.0" />
+      <point x="4574.874999999999" y="580.0" />
+      <point x="-77.5" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.SuggestView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="48.0" y="-13.0" />
+      <point x="5765.558134524211" y="640.0" />
+      <point x="8205.328959466457" y="640.0" />
+      <point x="-116.28571428571422" y="13.0" />
+    </edge>
+    <edge source="api.serializers.exercise.ResultSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="8660.657643216573" y="856.0" />
+      <point x="10249.96467375217" y="856.0" />
+      <point x="-60.149999999999636" y="13.0" />
+    </edge>
+    <edge source="api.views.exercise.ProgressView" target="rest_framework.viewsets.GenericViewSet">
+      <point x="-61.75" y="-13.0" />
+      <point x="9391.36467375217" y="530.0" />
+      <point x="8416.757530895027" y="530.0" />
+      <point x="95.14285714285734" y="13.0" />
+    </edge>
+    <edge source="api.models.exercise.Exam" target="django.db.models.base.Model">
+      <point x="0.0" y="-13.0" />
+      <point x="3505.124999999999" y="182.0" />
+      <point x="1920.233263495762" y="182.0" />
+      <point x="101.07692307692378" y="13.0" />
+    </edge>
+    <edge source="django_filters.filterset.FilterSet" target="django_filters.filterset.BaseFilterSet">
+      <point x="-67.0" y="-13.0" />
+      <point x="6164.61467375217" y="232.0" />
+      <point x="6064.86467375217" y="232.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="rest_framework.mixins.ListModelMixin" target="object">
+      <point x="0.0" y="-13.0" />
+      <point x="9198.21921425136" y="96.0" />
+      <point x="8190.714673752171" y="96.0" />
+      <point x="9.599999999999909" y="13.0" />
+    </edge>
+    <edge source="rest_framework.test.APITestCase" target="django.test.testcases.TestCase">
+      <point x="0.0" y="-13.0" />
+      <point x="0.0" y="13.0" />
+    </edge>
+    <edge source="api.serializers.annotation.AnnotationSerializer" target="rest_framework.serializers.HyperlinkedModelSerializer">
+      <point x="0.0" y="-13.0" />
+      <point x="11259.36467375217" y="846.0" />
+      <point x="10410.36467375217" y="846.0" />
+      <point x="100.25" y="13.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.08394777265745007" x="6500.000000000001" y="456.0" />
+  <SelectedNodes>
+    <node>rest_framework.serializers.HyperlinkedModelSerializer</node>
+  </SelectedNodes>
+  <Categories />
+</Diagram>
+

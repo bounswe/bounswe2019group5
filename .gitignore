@@ -6,3 +6,4 @@ npm-debug.*
 key.json
 .DS_Store
 .DS_Store
+**/grup5.pem

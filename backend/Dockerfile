@@ -1,7 +1,15 @@
-FROM python:3
-ENV PYTHONUNBUFFERED 1
-RUN mkdir /code
-WORKDIR /code
-COPY requirements.txt /code/
+FROM python:3.7
+
+ADD requirements.txt .
 RUN pip install -r requirements.txt
-COPY . /code/
+
+ADD . /app
+WORKDIR /app
+
+VOLUME /app/api/migrations
+
+CMD python manage.py makemigrations api && \
+    python manage.py migrate && \
+    gunicorn backend.wsgi --bind 0.0.0.0:8000 -w 8
+
+EXPOSE 8000

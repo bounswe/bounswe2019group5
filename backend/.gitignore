@@ -4,4 +4,8 @@ backend/productionSettings.py
 **/migrations/
 Pipfile
 Pipfile.lock
-.idea
+**/.idea/
+.DS_Store
+**/grup5.pem
+essays
+audio
