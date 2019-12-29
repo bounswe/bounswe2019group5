@@ -65,6 +65,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this, BridgeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
