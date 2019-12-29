@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -68,6 +69,7 @@ interface BufferedReaderFunction {
 
 public class MyApplication extends Application {
     static final String SERVER = "http://35.156.237.253/";
+    static final int REQUEST_TIMEOUT_MS = 10000;
     static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 2;
     private final String TAG = getClass().getName();
     public final int TOUCH_AND_HOLD_DELAY_MS = 500;
@@ -171,6 +173,11 @@ public class MyApplication extends Application {
                 return headers;
             }
         };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                REQUEST_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
         requestQueue.add(jsonObjectRequest);
     }
 
@@ -205,6 +212,11 @@ public class MyApplication extends Application {
                 return headers;
             }
         };
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                REQUEST_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
         requestQueue.add(jsonArrayRequest);
     }
 

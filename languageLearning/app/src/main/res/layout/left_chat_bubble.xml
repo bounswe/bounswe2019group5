@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="100dp"
             android:padding="5dp"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

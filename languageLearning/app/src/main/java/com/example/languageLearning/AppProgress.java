@@ -74,6 +74,7 @@ public class AppProgress extends AppCompatActivity {
                     Log.d(TAG," "+total_progressTwoDigit+"%");
 
                     Intent i = new Intent(AppProgress.this, AppProgressResult.class);
+                    i.putExtra("progressDouble", total_progressTwoDigit);
                     i.putExtra("progress", progressString);
                     i.putExtra("language", languageSet);
                     startActivity(i);
