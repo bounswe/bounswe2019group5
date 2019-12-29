@@ -50,6 +50,9 @@ public class BridgeActivity extends AppCompatActivity {
                     Intent i = new Intent(BridgeActivity.this, ProfExamActivity.class);
                     i.putExtra("languageChoice", language);
                     startActivity(i);
+                }else{
+                    Intent i = new Intent(BridgeActivity.this, MainMenuActivity.class);
+                    startActivity(i);
                 }
                 finish();
             }

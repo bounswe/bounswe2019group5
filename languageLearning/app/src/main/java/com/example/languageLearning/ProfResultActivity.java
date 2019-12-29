@@ -31,6 +31,7 @@ public class ProfResultActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ProfResultActivity.this, MainMenuActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
