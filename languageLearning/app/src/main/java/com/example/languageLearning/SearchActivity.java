@@ -82,15 +82,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 if (response.length() == 0) {
                     Toast.makeText(getApplicationContext(), "No question found according to this seach params", Toast.LENGTH_SHORT).show();
-                    finish();
                     return;
                 }
 
                 JSONArray searchResults = (JSONArray) response ;
 
                 Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-                intent.putExtra("searchTag", tag.getText().toString());
-                intent.putExtra("searchKeyword", keyword.getText().toString());
                 intent.putExtra("searchLanguage", language);
                 intent.putExtra("searchResults", searchResults.toString());
                 startActivity(intent);

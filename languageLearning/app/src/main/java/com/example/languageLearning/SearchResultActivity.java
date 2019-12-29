@@ -41,8 +41,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String jsonArray = intent.getStringExtra("searchResults");
-        String searchTag = intent.getStringExtra("searchTag");
-        String searchKeyword = intent.getStringExtra("searchKeyword");
         String searchLanguage = intent.getStringExtra("searchLanguage");
 
 
@@ -55,8 +53,12 @@ public class SearchResultActivity extends AppCompatActivity {
             System.out.println(arrayExercises.toString(2));
             for(int i = 0 ; i < arrayExercises.length(); i++){
                 JSONObject jsonExercise = (JSONObject) arrayExercises.get(i);
-                int a = jsonExercise.getInt("id");
-                titles1[i]=searchLanguage+" Exercises with Tag: "+searchTag.toUpperCase()+ " & Keywords: " + searchKeyword.toUpperCase() + " : "+ a;
+                String type = jsonExercise.getString("type");
+               JSONArray jarray = jsonExercise.getJSONArray("tags");
+                String tags = jarray.join(", ");
+                JSONArray jarray2 = jsonExercise.getJSONArray("keywords");
+                String keywords = jarray2.join(", ");
+                titles1[i]=searchLanguage.substring(0,1).toUpperCase()+searchLanguage.substring(1)+" "+type+" "+"exercises with tags: "+tags+ " & keywords: " + keywords;
             }
             titles = titles1;
             MyAdapter adapter = new MyAdapter(this, titles);
