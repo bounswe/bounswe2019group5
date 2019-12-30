@@ -1,4 +1,4 @@
-import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT } from "../actions";
+import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT, AUTHENTICATION_CLEAR } from "../actions";
 
 const initialState = {
   loading: false,
@@ -52,6 +52,12 @@ export default (state = initialState, action) => {
         token: action.token,
         message: action.message,
         loading: false,
+      };
+    
+    case AUTHENTICATION_CLEAR:
+      return {
+        ...state,
+        ...initialState,
       };
 
     default:

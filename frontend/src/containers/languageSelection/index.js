@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { login } from "../../redux/action-creators/authentication";
@@ -17,19 +13,18 @@ import LanguageGrid from "./languageGrid"
 
 
 class LanguageSelection extends Component {
-    state = { isLanguageSelected: false }
+    state = { isLanguageSelected: false, language: null }
     constructor(props) {
         super(props);
-        console.log(props.authentication.token);
     };
     handleSubmit = (language) => {
         this.props.set_selected_language(language);
-        this.setState({ isLanguageSelected: true })
+        this.setState({ isLanguageSelected: true, language })
     };
 
     render() {
         const { classes } = this.props;
-        if (this.props.authentication.token == null) {
+        if (this.props.userInfo.token == null) {
             return (
                 <Redirect
                     to={{
@@ -42,7 +37,7 @@ class LanguageSelection extends Component {
             return (
                 <Redirect
                     to={{
-                        pathname: "/prof-test",
+                        pathname: "/prof-test/"+this.state.language,
                     }}
                 />
             );
@@ -51,7 +46,7 @@ class LanguageSelection extends Component {
             return (
                 <>
                     <Grid><Typography component="h1" variant="h3" align='center'>
-                        Select a language to take its proficiency test.
+                        Select a language first.
               </Typography>
                     </Grid>
                     <Grid><Typography component="h1" variant="button" align='center'>
@@ -69,8 +64,7 @@ class LanguageSelection extends Component {
     }
 }
 
-const mapStateToProps = ({ authentication, userInfo }) => ({
-    authentication,
+const mapStateToProps = ({ userInfo }) => ({
     userInfo
 });
 

@@ -46,7 +46,7 @@ function GuestLogin(props) {
         language: "",
     } );
 
-    if (props.authentication.token != null) {
+    if (props.userInfo.token != null) {
         return (
             <Redirect
                 to={{
@@ -100,7 +100,7 @@ function GuestLogin(props) {
                     variant="contained"
                     color="secondary.contrast"
                     className={classes.submit}
-                ><Link to="/prof-test">Continue as guest</Link>
+                ><Link to={"/prof-test/"+this.state.language}>Continue as guest</Link>
                 </Button>
             </form>
         </div>

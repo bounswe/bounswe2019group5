@@ -1,8 +1,10 @@
-import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT } from "../actions";
+import { LOGIN_REQUESTED, LOGIN, SIGNUP_REQUESTED, SIGNUP, LOGOUT_REQUESTED, LOGOUT, SET_TOKEN, USER_PROFILE_CLEAR, AUTHENTICATION_CLEAR, USER_PROFILE_SET, } from "../actions";
 
 import { login as login_api } from "../../api/authentication";
 import { signup as signup_api } from "../../api/authentication";
 import { logout as logout_api } from "../../api/authentication";
+import { get_user_profile as get_user_profile_api } from "../../api/userInfo";
+import { set_user_profile } from "./userInfo";
 
 export const login = (usernameOrEmail, password) => {
   return dispatch => {
@@ -11,11 +13,37 @@ export const login = (usernameOrEmail, password) => {
     });
 
     login_api(usernameOrEmail, password).then(response => {
-      dispatch({
-        type: LOGIN,
-        token: response.token,
-        message: response.message,
-      });
+      if (response.token) {
+        dispatch({
+          type: SET_TOKEN,
+          token: response.token,
+          username: usernameOrEmail, 
+        });
+
+        get_user_profile_api(response.token, "")
+          .then(profile => {
+            dispatch({
+              type: USER_PROFILE_SET,
+              profile,
+            });
+
+            dispatch({
+              type: LOGIN,
+              token: response.token,
+              message: response.message,
+            });
+
+          });
+      }
+      else {
+
+        dispatch({
+          type: LOGIN,
+          token: response.token,
+          message: response.message,
+        });
+
+      }
     });
   };
 };
@@ -35,11 +63,38 @@ export const signup = (
 
     signup_api(name, surname, email, username, password, native_language).then(
       response => {
-        dispatch({
-          type: SIGNUP,
-          token: response.token,
-          message: response.message,
-        });
+        if (response.token) {
+          dispatch({
+            type: SET_TOKEN,
+            token: response.token,
+            username, 
+          });
+
+          get_user_profile_api(response.token, "")
+            .then(profile => {
+
+              dispatch({
+                type: USER_PROFILE_SET,
+                profile,
+              });
+
+              dispatch({
+                type: LOGIN,
+                token: response.token,
+                message: response.message,
+              });
+
+            });
+        }
+        else {
+
+          dispatch({
+            type: LOGIN,
+            token: response.token,
+            message: response.message,
+          });
+          
+        }
       }
     );
   };
@@ -57,8 +112,19 @@ export const logout = () => {
         token: null,
         message: null,
       });
+      dispatch({
+        type: USER_PROFILE_CLEAR,
+      });
     });
 
 
   }
+}
+
+export const clear_authentication = () => {
+	return dispatch => {
+		dispatch({
+			type : AUTHENTICATION_CLEAR,
+		});
+	}
 }

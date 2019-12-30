@@ -1,14 +1,13 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 import { Button, Card, CardDeck, Image } from 'react-bootstrap';
-import { login } from "../../redux/action-creators/authentication";
 
-const Home = props => (
+const Home = (props) => { 
+  return (
   <>    <CardDeck >
 
-    {!props.authentication.token && (
+    {!props.userInfo.token && (
       <Card border="warning" >
         <Card.Body align="center">
           <Card.Text>
@@ -18,7 +17,7 @@ const Home = props => (
         </Card.Body>
       </Card>
     )}
-    {!props.authentication.token && (
+    {!props.userInfo.token && (
       <Card border="success">
         <Card.Body align="center">
           <Card.Text>
@@ -28,7 +27,7 @@ const Home = props => (
         </Card.Body>
       </Card>
     )}
-    {!props.authentication.token && (
+    {!props.userInfo.token && (
       <Card border="secondary">
         <Card.Body align="center">
           <Card.Text>
@@ -42,8 +41,10 @@ const Home = props => (
     <Image src="https://github.com/bounswe/bounswe2019group5/blob/master/Images/kapak.png?raw=true" fluid />
   </>
 );
-const mapStateToProps = ({  authentication }) => ({
-  authentication
+    }
+const mapStateToProps = ({  userInfo, authentication }) => ({
+  userInfo,
+  authentication,
 });
 export default connect(
   mapStateToProps,

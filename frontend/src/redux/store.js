@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import persistState from 'redux-localstorage';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 const initialState = {}
 const enhancers = []
@@ -17,9 +18,9 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-const composedEnhancers = compose(
+const composedEnhancers = composeWithDevTools(
   applyMiddleware(...middleware),
-  persistState(),
+  persistState('userInfo'),
 )
 
 const store = createStore(

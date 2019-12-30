@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { signup } from "../../redux/action-creators/authentication";
+import { signup, clear_authentication } from "../../redux/action-creators/authentication";
+import { clear_user_profile } from '../../redux/action-creators/userInfo';
 import styles from "./styles";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -23,7 +24,7 @@ class SignUp extends Component {
     email: "",
     username: "",
     password: "",
-    native_language: ""
+    native_language: "english",
   };
   handleChange = e => {
     this.setState({
@@ -40,18 +41,22 @@ class SignUp extends Component {
       this.state.native_language
     );
   };
+
+  componentDidMount(){
+    this.props.clear_user_profile();
+    this.props.clear_authentication();
+  }
   
   render() {
 
     const {classes} = this.props;
-    console.log(this.props);
 
-    if (this.props.authentication.token != null) {
+    if (this.props.userInfo.token != null) {
       return (
         <Redirect
           to={{
             pathname: "/lang-select",
-            state: { token: this.props.authentication.token }
+            state: { token: this.props.userInfo.token }
           }}
         />
       );
@@ -147,10 +152,11 @@ class SignUp extends Component {
                     <Form.Control
                       as="select"
                       id="native_language"
-                      onChange={this.handleChange}>
-                      <option>English</option>
-                      <option>Turkish</option>
-                      <option>German</option>
+                      value={this.state.native_language}
+                      onChange={this.handleChange.bind(this)}>
+                      <option value="english">english</option>
+                      <option value="turkish">turkish</option>
+                      <option value="german">german</option>
                     </Form.Control>
                   </Grid>
 
@@ -185,14 +191,17 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  authentication
+const mapStateToProps = ({ authentication, userInfo }) => ({
+  authentication,
+  userInfo,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      signup
+      signup,
+      clear_user_profile,
+      clear_authentication,
     },
     dispatch
   );

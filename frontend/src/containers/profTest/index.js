@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import Question from "../question";
 import {
   get_prof_test,
-  get_test_result
+  get_test_result,
+  clear_prof_test
 } from "../../redux/action-creators/test";
 import _ from "lodash";
 import Avatar from "@material-ui/core/Avatar";
@@ -33,21 +34,18 @@ class ProfTest extends Component {
   };
 
   componentDidMount() {
+    this.props.clear_prof_test();
     this.props.get_prof_test(
-      this.props.authentication.token,
-      this.props.userInfo.selectedLanguage
+      this.props.userInfo.token,
+      this.props.match.params.lang
     );
-    this.state.isAnswersPrepared = false;
   }
 
   componentDidUpdate() {
     if (this.props.test.profTest && !this.state.isAnswersPrepared) {
       const answers = new Array(this.props.test.profTest.questions.length);
       for (let i = 0; i < answers.length; i++)
-        answers[i] = this.props.test.profTest.questions[
-          i
-        ].question_options[0].text;
-      console.log("YENI" + answers);
+        answers[i] = this.props.test.profTest.questions[i].options[0];
       this.setState({
         isAnswersPrepared: true,
         answers
@@ -62,7 +60,7 @@ class ProfTest extends Component {
   };
 
   render() {
-    if (this.props.authentication.token == null) {
+    if (this.props.userInfo.token == null) {
       return (
         <Redirect
           to={{
@@ -101,9 +99,6 @@ class ProfTest extends Component {
       const questionIndex = this.state.questionIndex;
       const question = profTest.questions[questionIndex];
 
-      console.log(
-        "SELAMEDDIN " + questionIndex + " " + this.state.answers[questionIndex]
-      );
       return (
         <Container
           component="main"
@@ -116,15 +111,15 @@ class ProfTest extends Component {
             <div className={classes.paper}>
               <div className="d-flex flex-column">
                 <Typography component="h1" variant="h5">
-                  {question.text}
+                  {question.body}
                 </Typography>
 
                 <Question
-                  questionOptions={question.question_options}
+                  questionOptions={question.options}
                   selectedOption={this.state.answers[questionIndex]}
                   questionAnswerStatus={
                     this.props.test.testResult
-                      ? this.props.test.testResult.statusOfAnswers[
+                      ? this.props.test.testResult.result.statusOfAnswers[
                           questionIndex
                         ]
                       : null
@@ -168,20 +163,22 @@ class ProfTest extends Component {
                   NEXT
                 </Button>
 
-                <Button
-                  variant="success"
-                  fullWidth
-                  className={classes.submit}
-                  onClick={() =>
-                    this.props.get_test_result(
-                      this.props.authentication.token,
-                      profTest,
-                      this.state.answers
-                    )
-                  }
-                >
-                  Complete the Test!
-                </Button>
+                {!this.props.test.isFinished && (
+                  <Button
+                    variant="success"
+                    fullWidth
+                    className={classes.submit}
+                    onClick={() =>
+                      this.props.get_test_result(
+                        this.props.userInfo.token,
+                        profTest.id,
+                        this.state.answers
+                      )
+                    }
+                  >
+                    Complete the Test!
+                  </Button>
+                )}
 
                 {this.props.test.isFinished && (
                   <Button
@@ -203,9 +200,8 @@ class ProfTest extends Component {
   }
 }
 
-const mapStateToProps = ({ test, authentication, userInfo }) => ({
+const mapStateToProps = ({ test, userInfo }) => ({
   test,
-  authentication,
   userInfo
 });
 
@@ -213,14 +209,12 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       get_prof_test,
-      get_test_result
+      get_test_result,
+      clear_prof_test
     },
     dispatch
   );
 
 export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ProfTest)
+  connect(mapStateToProps, mapDispatchToProps)(ProfTest)
 );

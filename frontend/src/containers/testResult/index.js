@@ -18,7 +18,7 @@ import { green, purple } from "@material-ui/core/colors";
 
 const TestResult = props => {
   const { classes } = props;
-  if (props.authentication.token != null) {
+  if (props.userInfo.token != null) {
     return (
       <Container
         component="main"
@@ -45,9 +45,14 @@ const TestResult = props => {
                 {props.test !== null
                   ? props.test.testResult !== null
                     ? "Number Of True Answers: " +
-                      props.test.testResult.nuOfTrueAnswers
+                      props.test.testResult.result.nuOfTrueAnswers
                     : ""
-                  : "isFinished not working"}
+                  : props.exercises !== null
+                  ? props.exercises.testResult !== null
+                    ? "Number Of True Answers: " +
+                      props.exercises.testResult.result.nuOfTrueAnswers
+                    : ""
+                  : ""}
               </Button>
 
               <Button
@@ -61,9 +66,14 @@ const TestResult = props => {
                 {props.test !== null
                   ? props.test.testResult !== null
                     ? "Number Of False Answers: " +
-                      props.test.testResult.nuOfFalseAnswers
+                      props.test.testResult.result.nuOfFalseAnswers
                     : ""
-                  : "isFinished not working"}
+                  : props.exercises !== null
+                  ? props.exercises.testResult !== null
+                    ? "Number Of False Answers: " +
+                      props.exercises.testResult.result.nuOfFalseAnswers
+                    : ""
+                  : ""}
               </Button>
 
               <Button
@@ -77,24 +87,13 @@ const TestResult = props => {
               >
                 {props.test !== null
                   ? props.test.testResult !== null
-                    ? "Your Level: " +
-                      ((props.test.testResult.nuOfTrueAnswers * 100) / 5 === 0
-                        ? "A1"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
-                          20
-                        ? "A2"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
-                          40
-                        ? "B1"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
-                          60
-                        ? "B2"
-                        : (props.test.testResult.nuOfTrueAnswers * 100) / 5 ===
-                          80
-                        ? "C1"
-                        : "C2")
+                    ? "Your Level: " + props.test.testResult.level
                     : ""
-                  : "props.test is not working"}
+                  : props.exercises !== null
+                  ? props.exercises.testResult !== null
+                    ? "Your Level: " + props.exercises.testResult.level
+                    : ""
+                  : ""}
               </Button>
 
               <Button
@@ -109,55 +108,6 @@ const TestResult = props => {
           </div>
         </Grid>
       </Container>
-
-      /*
-      <div className="card">
-        <p className="container">
-          {props.test !== null
-            ? props.test.testResult !== null
-              ? "Number Of True Answers: " +
-                props.test.testResult.nuOfTrueAnswers
-              : ""
-            : "isFinished not working"}
-        </p>
-
-        <p className="container">
-          {props.test !== null
-            ? props.test.testResult !== null
-              ? "Number Of False Answers: " +
-                props.test.testResult.nuOfFalseAnswers
-              : ""
-            : "isFinished not working"}
-        </p>
-
-        <p className="container">
-          {props.test !== null
-            ? props.test.testResult !== null
-              ? "Your Level: " +
-                ((props.test.testResult.nuOfTrueAnswers * 100) /
-                  props.test.testResult.nuOfQuestions ===
-                20
-                  ? "A2"
-                  : (props.test.testResult.nuOfTrueAnswers * 100) /
-                      props.test.testResult.nuOfQuestions ===
-                    40
-                  ? "B1"
-                  : (props.test.testResult.nuOfTrueAnswers * 100) /
-                      props.test.testResult.nuOfQuestions ===
-                    60
-                  ? "B2"
-                  : (props.test.testResult.nuOfTrueAnswers * 100) /
-                      props.test.testResult.nuOfQuestions ===
-                    80
-                  ? "C1"
-                  : "C2")
-              : ""
-            : "props.test is not working"}
-        </p>
-        <button className="button" onClick={() => props.history.push("/home")}>
-          Return To Home Page!
-        </button>
-      </div>*/
     );
   } else {
     return (
@@ -170,9 +120,10 @@ const TestResult = props => {
   }
 };
 
-const mapStateToProps = ({ test, authentication }) => ({
+const mapStateToProps = ({ test, authentication, userInfo }) => ({
   test,
-  authentication
+  authentication,
+  userInfo
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(TestResult));
