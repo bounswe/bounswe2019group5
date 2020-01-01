@@ -22,9 +22,9 @@ public class AppProgress extends AppCompatActivity {
 
     MyApplication app;
     double total_progress = 0;
-    double total_grade = 0;
-    int sent_grade = 0;
+    int total_grade = 0;
     String languageSet = "";
+    String gradeString = "Solve Exercises to get a grade";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,13 @@ public class AppProgress extends AppCompatActivity {
                     double number_of_false =  grades.getInt("number_of_false");
                     Log.d("falses", number_of_false+"");
                     double total_questions = number_of_false + number_of_true;
-                    total_grade = ((number_of_true/total_questions)*100);
-                    sent_grade = (int) total_grade;
-                    double total_gradeTwoDigit = Math.floor(total_grade);
-                    String gradeString= total_gradeTwoDigit+" over 100";
-                    Log.d(TAG," "+total_gradeTwoDigit+" over 100");
+                    double grade1= ((number_of_true/total_questions)*100);
+                    Log.d(TAG," "+grade1+" grade1");
+                    //double total_gradeTwoDigit = Math.floor(total_grade);
+                    total_grade = (int)grade1;
+
+                    gradeString="Total Grade: " + total_grade;
+                    Log.d(TAG," "+total_grade+" over 100");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -119,7 +121,7 @@ public class AppProgress extends AppCompatActivity {
                     i.putExtra("progressDouble", total_progressTwoDigit);
                     i.putExtra("progress", progressString);
                     i.putExtra("language", languageSet);
-                    i.putExtra("total_grade", total_grade);
+                    i.putExtra("total_grade", gradeString);
                     startActivity(i);
                     total_grade=0;
 
