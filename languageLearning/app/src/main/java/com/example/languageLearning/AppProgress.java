@@ -23,6 +23,7 @@ public class AppProgress extends AppCompatActivity {
     MyApplication app;
     double total_progress = 0;
     double total_grade = 0;
+    int sent_grade = 0;
     String languageSet = "";
 
     @Override
@@ -62,7 +63,8 @@ public class AppProgress extends AppCompatActivity {
                     double number_of_false =  grades.getInt("number_of_false");
                     Log.d("falses", number_of_false+"");
                     double total_questions = number_of_false + number_of_true;
-                    total_grade = ((number_of_true/total_questions))*100;
+                    total_grade = ((number_of_true/total_questions)*100);
+                    sent_grade = (int) total_grade;
                     double total_gradeTwoDigit = Math.floor(total_grade);
                     String gradeString= total_gradeTwoDigit+" over 100";
                     Log.d(TAG," "+total_gradeTwoDigit+" over 100");
