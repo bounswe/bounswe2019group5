@@ -65,8 +65,20 @@ class Search extends React.Component {
             return WT;
         }
         else {
-            const setty = new Set([...WT, ...WK]);
-            return Array.from(setty);
+            var exercises = [];
+            let set = new Set();
+            for(let exercise of WT) {
+                exercises.push(exercise);
+                set.add(exercise.id);
+            }
+            for (let exc of WK) {
+                if(!set.has(exc.id)) {
+                    exercises.push(exc);
+                }
+            }
+            return exercises;
+            //const setty = new Set([...WT, ...WK]);
+            //return Array.from(setty);
         }
     }
 

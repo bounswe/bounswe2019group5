@@ -33,7 +33,8 @@ import {
   Button,
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
-import GuestLogin from "../guestLogin";
+//import GuestLogin from "../guestLogin";
+//<Route exact path="/guest-login" component={GuestLogin} />
 import Search from "../search";
 import { set_input } from "../../redux/action-creators/search";
 import { logout } from "../../redux/action-creators/authentication";
@@ -172,7 +173,6 @@ class App extends Component {
               <Route exact path="/prof-test/:lang" component={ProfTest} />
               <Route exact path="/lang-select" component={LanguageSelection} />
               <Route exact path="/test-result" component={TestResult} />
-              <Route exact path="/guest-login" component={GuestLogin} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/exercise/:id" component={Exercise} />
               <Route exact path="/profile/:user" component={Profile} />

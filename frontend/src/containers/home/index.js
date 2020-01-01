@@ -26,8 +26,8 @@ const Home = (props) => {
           <Link to="/signup"><Button variant="outline-success">Sign-up </Button>  </Link>
         </Card.Body>
       </Card>
-    )}
-    {!props.userInfo.token && (
+    )} 
+    {/* !props.userInfo.token && (
       <Card border="secondary">
         <Card.Body align="center">
           <Card.Text>
@@ -36,12 +36,13 @@ const Home = (props) => {
           <Link to="/guest-login"><Button variant="outline-secondary">Guest  </Button> </Link>
         </Card.Body>
       </Card>
-    )}
+    )  */}
   </CardDeck>
     <Image src="https://github.com/bounswe/bounswe2019group5/blob/master/Images/kapak.png?raw=true" fluid />
   </>
 );
-    }
+  }
+    
 const mapStateToProps = ({  userInfo, authentication }) => ({
   userInfo,
   authentication,

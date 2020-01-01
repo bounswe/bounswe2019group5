@@ -29,7 +29,6 @@ export const search_test = (token, input, language, type) => {
         type: SEARCH_TEST,
         searchedTest: data,
         with: "K",
-        exercise_type: type   
       });
     });
     search_test_api(token, "", input, language, type).then(data => {
@@ -37,7 +36,6 @@ export const search_test = (token, input, language, type) => {
         type: SEARCH_TEST,
         searchedTest: data,
         with: "T",
-        exercise_type: type   
       });
     });
   };
