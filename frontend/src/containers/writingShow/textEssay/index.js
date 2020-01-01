@@ -75,6 +75,7 @@ class TextEssay extends Component {
             });
     }
 
+    // it takes an web annotation model object and turns a range in text.
     webAnnotationModel2range(webAnnotationModel) {
         var start = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[0] )+1;
         var end = parseInt( webAnnotationModel.target.selector.value.split('=')[1].split(',')[1] );
@@ -129,6 +130,7 @@ class TextEssay extends Component {
 
     }
 
+    // When mouse over an annotation, it set annotation string to current string
     onMouseOverHighlightedWordCallback(selection) {
         if(selection && selection.highlightStyle){
             this.props.setAnnotation({

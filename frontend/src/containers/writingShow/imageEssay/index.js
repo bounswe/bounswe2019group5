@@ -56,6 +56,8 @@ class ImageEssay extends Component {
             })
     }
 
+    // this function provides annotation for Annotation component.
+    // it takes a w3 annotation model and returns an annotation.
     webAnnotationModel2annotation(webAnnotationModel) {
         var x = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[0] );
         var y = parseFloat( webAnnotationModel.target.selector.value.split('=')[1].split(':')[1].split(',')[1] );
@@ -77,6 +79,7 @@ class ImageEssay extends Component {
         return annotation;
     }
 
+    // It takes an annotation created by Annotation component and maps it to w3 annotation model
     annotation2webAnnotationModel(annotation) {
         var geometry = annotation.geometry;
         var x = geometry.x;
@@ -102,6 +105,7 @@ class ImageEssay extends Component {
         this.setState({annotation});
     }
 
+    // send annotation to server
     onSubmit(annotation){
 
         send_annotation(this.props.userInfo.token,
@@ -125,8 +129,6 @@ class ImageEssay extends Component {
     }
 
     render() {
-
-        console.log(this.state.annotations);
 
         const {classes} = this.props;
 
