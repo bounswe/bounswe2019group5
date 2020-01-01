@@ -65,7 +65,7 @@ public class JSONUnitTests {
     }
 
     @Test
-    public void test_Essay() throws JSONException, URISyntaxException {
+    public void test_Essay() throws JSONException, URISyntaxException, ParseException {
         final int id = 12;
         final String language = "turkish";
         final String uri = "http://test.com/myfile.txt";
