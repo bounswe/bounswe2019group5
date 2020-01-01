@@ -153,6 +153,22 @@ public class JSONUnitTests {
     }
 
     @Test
+    public void test_UserProgress() throws JSONException {
+
+        final int not = 7;
+        final int nof = 3;
+        final int ntc = 6;
+        final int nt = 10;
+        final int cecl = 2;
+        final int eicl = 3;
+        final double grade = 70;
+        final double progress = 60;
+
+
+
+    }
+
+    @Test
     public void test_UserProfile() throws JSONException {
         final int id = 42;
         final String username = "halil";

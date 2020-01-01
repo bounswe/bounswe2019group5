@@ -13,8 +13,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+
+import java.util.ArrayList;
 
 public class AppProgress extends AppCompatActivity {
     private final String TAG = this.getClass().getName();
@@ -24,6 +28,10 @@ public class AppProgress extends AppCompatActivity {
     double total_progress = 0;
     int total_grade = 0;
     String languageSet = "";
+    public int number_of_true;
+    public int number_of_false;
+    public int total_questions;
+    public int ntc,nt,cecl,eicl;
     String gradeString = "Solve Exercises to get a grade";
 
     @Override
@@ -44,6 +52,18 @@ public class AppProgress extends AppCompatActivity {
 
     }
 
+    public static AppProgress fromJSON(JSONObject progress) throws JSONException {
+        AppProgress pgs = new AppProgress();
+        pgs.number_of_true = progress.getInt("number_of_true");
+        pgs.number_of_false = progress.getInt("number_of_false");
+        pgs.ntc = progress.getInt("number_of_test_completed");
+        pgs.nt = progress.getInt("number_of_test");
+        pgs.cecl = progress.getInt("completed_exercise_current_level");
+        pgs.eicl = progress.getInt("exercise_in_current_level");
+
+        return pgs;
+    }
+
     private void getProgress(String language) {
         final String path1 = "result/?language="+language;
         app.initiateAPICall(Request.Method.GET, path1, null, new Response.Listener<JSONObject>() {
@@ -58,12 +78,12 @@ public class AppProgress extends AppCompatActivity {
                 Log.d("Response", grades.toString());
                 try {
                     //JSONObject presult = (JSONObject) progressResults.get(0);
-                    double number_of_true = grades.getInt("number_of_true");
+                    number_of_true = grades.getInt("number_of_true");
                     Log.d("trues", number_of_true+"");
-                    double number_of_false =  grades.getInt("number_of_false");
+                    number_of_false =  grades.getInt("number_of_false");
                     Log.d("falses", number_of_false+"");
-                    double total_questions = number_of_false + number_of_true;
-                    double grade1= ((number_of_true/total_questions)*100);
+                    total_questions = number_of_false + number_of_true;
+                    double grade1= (((double)number_of_true/(double)total_questions)*100);
                     Log.d(TAG," "+grade1+" grade1");
                     //double total_gradeTwoDigit = Math.floor(total_grade);
                     total_grade = (int)grade1;
@@ -103,16 +123,16 @@ public class AppProgress extends AppCompatActivity {
                 Log.d("Response", progressResults.toString());
                 try {
                    //JSONObject presult = (JSONObject) progressResults.get(0);
-                    double ntc = progressResults.getInt("number_of_test_completed");
+                    ntc = progressResults.getInt("number_of_test_completed");
                     Log.d("ntc", ntc+"");
-                    double nt =  progressResults.getInt("number_of_test");
+                    nt =  progressResults.getInt("number_of_test");
                     Log.d("nt", nt+"");
-                    double cocl = progressResults.getInt("completed_exercise_current_level");
-                    Log.d("cocl", cocl+"");
-                    double eicl = progressResults.getInt("exercise_in_current_level");
+                    cecl = progressResults.getInt("completed_exercise_current_level");
+                    Log.d("cecl", cecl+"");
+                    eicl = progressResults.getInt("exercise_in_current_level");
                     Log.d("eicl", eicl+"");
 
-                    total_progress = (ntc/nt)*100;
+                    total_progress = ((double)ntc/(double)nt)*100;
                     double total_progressTwoDigit = Math.floor(total_progress* 100) / 100;
                     String progressString= total_progressTwoDigit+"%";
                     Log.d(TAG," "+total_progressTwoDigit+"%");
