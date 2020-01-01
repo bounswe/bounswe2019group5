@@ -31,7 +31,7 @@ public class AppProgress extends AppCompatActivity {
     public int number_of_true;
     public int number_of_false;
     public int total_questions;
-    public int ntc,nt,cocl,eicl;
+    public int ntc,nt,cecl,eicl;
     String gradeString = "Solve Exercises to get a grade";
 
     @Override
@@ -58,7 +58,7 @@ public class AppProgress extends AppCompatActivity {
         pgs.number_of_false = progress.getInt("number_of_false");
         pgs.ntc = progress.getInt("number_of_test_completed");
         pgs.nt = progress.getInt("number_of_test");
-        pgs.cocl = progress.getInt("completed_exercise_current_level");
+        pgs.cecl = progress.getInt("completed_exercise_current_level");
         pgs.eicl = progress.getInt("exercise_in_current_level");
 
         return pgs;
@@ -127,8 +127,8 @@ public class AppProgress extends AppCompatActivity {
                     Log.d("ntc", ntc+"");
                     nt =  progressResults.getInt("number_of_test");
                     Log.d("nt", nt+"");
-                    cocl = progressResults.getInt("completed_exercise_current_level");
-                    Log.d("cocl", cocl+"");
+                    cecl = progressResults.getInt("completed_exercise_current_level");
+                    Log.d("cecl", cecl+"");
                     eicl = progressResults.getInt("exercise_in_current_level");
                     Log.d("eicl", eicl+"");
 
