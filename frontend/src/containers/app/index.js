@@ -33,8 +33,6 @@ import {
   Button,
 } from "react-bootstrap";
 import LanguageSelection from "../languageSelection";
-//import GuestLogin from "../guestLogin";
-//<Route exact path="/guest-login" component={GuestLogin} />
 import Search from "../search";
 import { set_input } from "../../redux/action-creators/search";
 import { logout } from "../../redux/action-creators/authentication";
@@ -52,6 +50,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+
+    // Every tree seconds, this code piece re-set the user information by calling api.
     const f = () => {
       if (this.props.userInfo.token) {
         this.props.set_user_profile(this.props.userInfo.token);
@@ -60,13 +60,17 @@ class App extends Component {
       this.timer = setTimeout(f, 3000);
     }
     f();
+
   }
 
   componentWillUnmount() {
+
+    // clears timer when application is closed
     if (this.timer)
       clearTimeout(this.timer);
   }
 
+  // Search bar submit handler
   search(e) {
     e.preventDefault()
     this.props.set_input(this.ref.current.value);
@@ -77,6 +81,7 @@ class App extends Component {
     return (
       <div
         onMouseMove={(e) => {
+          // this piece implemented for hiddable navbar, but we consider to fix it
           let per = window.innerWidth / (e.screenX + 1);
           if (this.state.shouldShowNavBar && per < 3) {
             this.setState({ shouldShowNavBar: false });
@@ -145,6 +150,7 @@ class App extends Component {
         </Navbar>
 
 
+      {/* this part is for navbarlinks */}
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {(this.props.userInfo.token && this.props.userInfo.userProfile) &&
             <div style={{ flex: 1 }} id="left-navigation">
@@ -164,6 +170,8 @@ class App extends Component {
               </div>
             </div>
           }
+
+        {/* this part is for router links */} 
           <div style={{ flex: 8 }}>
             <main>
               <Route exact path="/" component={Home} />
@@ -179,11 +187,7 @@ class App extends Component {
               <Route exact path="/chat/:chatWith" component={Chat} />
               <Route exact path="/chatHistory" component={ChatHistory} />
               <Route exact path="/exercises" component={Exercises} />
-              <Route
-                exact
-                path="/upload-writing/:reviewer?"
-                component={WritingUpload}
-              />
+              <Route exact path="/upload-writing/:reviewer?" component={WritingUpload}/>
               <Route exact path="/recommendation" component={Recommendation} />
               <Route exact path="/show-writing/:id" component={WritingShow} />
               <Route exact path="/writing-list" component={WritingList} />

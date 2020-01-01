@@ -25,11 +25,15 @@ class Login extends Component {
     usernameOrEmail: "",
     password: ""
   };
+
+  // General change handler by id
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
   };
+
+  // General submit handler by id
   handleSubmit = e => {
     this.props.login(this.state.usernameOrEmail, this.state.password);
   };
