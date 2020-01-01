@@ -10,7 +10,6 @@
         android:id="@+id/progressLabel3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
         android:layout_marginBottom="60dp"
         android:text="Keep Practicing! :)"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -21,7 +20,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalGrade" />
+        app:layout_constraintTop_toBottomOf="@+id/totalGrade"
+        app:layout_constraintVertical_bias="0.705" />
 
     <TextView
         android:id="@+id/progressPercentage"
@@ -41,21 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressLabel"
         app:layout_constraintVertical_bias="0.35000002" />
 
-    <TextView
-        android:id="@+id/totalGrade"
-        android:layout_width="280dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="17dp"
-        android:text="Total Grade"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#693EC3"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressLabel2" />
-
+    
     <ProgressBar
         android:id="@+id/appProgressBar"
         style="@android:style/Widget.ProgressBar.Horizontal"
