@@ -200,7 +200,8 @@ class WritingShow extends Component {
             </div>
           }
 
-          {this.state.essay.reviewer &&
+          { // this is the chat component in essay show and annotation page with no title and history
+          this.state.essay.reviewer &&
             <Chat 
               chatWith={this.props.userInfo.username === this.state.essay.reviewer ?
                               this.state.essay.author : this.state.essay.reviewer}

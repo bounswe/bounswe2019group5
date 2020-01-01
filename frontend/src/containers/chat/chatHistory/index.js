@@ -26,6 +26,9 @@ export class ChatHistory extends Component {
     }
 
     componentDidMount() {
+
+        // it refreshes the chat history every 5 seconds
+
         this.props.clear_chat_history();
         const f = () => {
             this.props.get_chat_history(this.props.userInfo.token, this.props.userInfo.username);
@@ -67,6 +70,7 @@ export class ChatHistory extends Component {
         return (
             <div style={{ display: 'flex', 'flex-direction': 'column', height: '60vh', border: '4px solid purple', 'border-radius': '3px', margin: '20px'  }}>
                 
+                {/* popup for recommending user for chat */}
                 <Modal
                     style={{
                         minHeight: '50vh',

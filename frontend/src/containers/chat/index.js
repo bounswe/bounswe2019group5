@@ -32,6 +32,9 @@ export class Chat extends Component {
     }
 
     componentDidMount() {
+
+        // it refreshes the messages in current chat every 3 seconds
+
         this.props.activate_chat(this.props.userInfo.token, this.chatWith);
         const f = () => {
             this.props.get_all_messages(this.props.userInfo.token, this.chatWith);
@@ -44,6 +47,8 @@ export class Chat extends Component {
 
         if (this.props.messages && prevProps.messages.length!=this.props.messages.length)
             this.messageListRef.scrollTo({top: '%100'}, this.messageListRef.scrollHeight);
+
+        // if chat is changed with another chat, clear the messages and restart getting messages for every 3 seconds.
 
         let last = _.cloneDeep(this.chatWith);
         this.chatWith = this.state.chatWith ? this.state.chatWith : this.props.match && this.props.match.params ? this.props.match.params.chatWith || this.props.chatWith
@@ -134,6 +139,9 @@ export class Chat extends Component {
                                     );
                             })}
                     </div>
+
+                    {/* text area and submit button for sending message */}
+
                     <div style={{ flex: 1, border: '2px solid orange', borderRadius: '2px', margin: '10px' }}>
                         <Input
                             placeholder="Type here..."

@@ -121,7 +121,8 @@ class Exercise extends Component {
                     // other props here
                   />
                 }
-                
+
+                {/* this is a component for showing current question */}
                 <Question
                   questionOptions={question.options}
                   selectedOption={this.state.answers[questionIndex]}

@@ -10,6 +10,8 @@ export class Question extends Component {
   constructor(props) {
     super(props);
   }
+
+  // this function is for specify the color of the option, black(not decided or not related options), green for selected true answer, red for selected wrong answers.
   findColorOfText = option => {
     if (
       option != this.props.selectedOption ||
@@ -20,6 +22,7 @@ export class Question extends Component {
     else return { color: "red" };
   };
 
+  // this function is for specify the color of the radio buttons
   findColorOfRadioButton = option => {
     if (
       option != this.props.selectedOption ||
