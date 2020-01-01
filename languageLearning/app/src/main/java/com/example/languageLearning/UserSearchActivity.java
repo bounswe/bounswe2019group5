@@ -54,7 +54,7 @@ public class UserSearchActivity extends AppCompatActivity {
                 userListView.setVisibility(View.VISIBLE);
                 userLanguageView.setText("Language: " + searchUserLanguage);
 
-                String path = "users_json/?";
+                String path = "users/?";
                 if (!usernameSearch.getText().toString().equals("")) {
                     path += "&username=" + usernameSearch.getText().toString();
                 }
