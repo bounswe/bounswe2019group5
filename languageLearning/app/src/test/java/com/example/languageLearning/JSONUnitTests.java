@@ -165,6 +165,16 @@ public class JSONUnitTests {
         final double progress = 60;
 
 
+        JSONObject mockResponse = new JSONObject();
+        mockResponse.put("number_of_true", not);
+        mockResponse.put("number_of_false", nof);
+        mockResponse.put("number_of_test_completed", ntc);
+        mockResponse.put("number_of_test", nt);
+        mockResponse.put("completed_exercise_current_level", cecl);
+        mockResponse.put("exercise_in_current_level", eicl);
+
+
+
 
     }
 
