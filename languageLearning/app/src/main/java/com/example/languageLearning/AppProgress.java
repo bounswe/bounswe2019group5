@@ -30,8 +30,7 @@ public class AppProgress extends AppCompatActivity {
     double number_of_true;
     double number_of_false;
     double total_questions;
-    
-
+    double ntc,nt,cocl,eicl;
     String gradeString = "Solve Exercises to get a grade";
 
     @Override
@@ -54,9 +53,13 @@ public class AppProgress extends AppCompatActivity {
 
     public static AppProgress fromJSON(JSONObject progress) throws JSONException {
         AppProgress pgs = new AppProgress();
-        pgs.id = jessay.getInt("id");
-        profile.username = jessay.getString("username");
-        profile.first_name = jessay.getString("first_name");
+        pgs.number_of_true = progress.getInt("number_of_true");
+        pgs.number_of_false = progress.getInt("number_of_false");
+        pgs.ntc = progress.getInt("ntc");
+        pgs.nt = progress.getInt("ntc");
+        pgs.cocl = progress.getInt("ntc");
+        pgs.eicl = progress.getInt("ntc");
+
         profile.last_name = jessay.getString("last_name");
         profile.native_language = jessay.getString("native_language");
         profile.rating_average = jessay.getDouble("rating_average");
@@ -131,13 +134,13 @@ public class AppProgress extends AppCompatActivity {
                 Log.d("Response", progressResults.toString());
                 try {
                    //JSONObject presult = (JSONObject) progressResults.get(0);
-                    double ntc = progressResults.getInt("number_of_test_completed");
+                    ntc = progressResults.getInt("number_of_test_completed");
                     Log.d("ntc", ntc+"");
-                    double nt =  progressResults.getInt("number_of_test");
+                    nt =  progressResults.getInt("number_of_test");
                     Log.d("nt", nt+"");
-                    double cocl = progressResults.getInt("completed_exercise_current_level");
+                    cocl = progressResults.getInt("completed_exercise_current_level");
                     Log.d("cocl", cocl+"");
-                    double eicl = progressResults.getInt("exercise_in_current_level");
+                    eicl = progressResults.getInt("exercise_in_current_level");
                     Log.d("eicl", eicl+"");
 
                     total_progress = (ntc/nt)*100;
