@@ -173,8 +173,13 @@ public class JSONUnitTests {
         mockResponse.put("completed_exercise_current_level", cecl);
         mockResponse.put("exercise_in_current_level", eicl);
 
-
-
+        AppProgress parsed = AppProgress.fromJSON(mockResponse);
+        assertEquals(not, parsed.number_of_true);
+        assertEquals(nof, parsed.number_of_false);
+        assertEquals(ntc, parsed.ntc);
+        assertEquals(nt, parsed.nt);
+        assertEquals(cecl, parsed.cecl);
+        assertEquals(eicl, parsed.eicl);
 
     }
 
