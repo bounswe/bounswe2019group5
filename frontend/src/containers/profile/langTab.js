@@ -4,6 +4,8 @@ import Tab from 'react-bootstrap/Tab';
 import Statistics from "./statistics";
 import Typography from '@material-ui/core/Typography';
 
+//this is a small component to reduce code size
+//each language will have statistics of its own
 export default function LangTab({userInfo, attendedLang, writings}) {
     const [key, setKey] = React.useState('');
     var langs = [];

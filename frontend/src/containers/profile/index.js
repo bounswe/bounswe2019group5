@@ -27,7 +27,7 @@ import {
 } from "react-bootstrap";
 import { send_comment } from '../../api/comment';
 
-
+//outline of the profile page
 class Profile extends Component {
   state = {
     selfProfile: true,

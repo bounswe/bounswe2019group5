@@ -12,7 +12,7 @@ import orange from '@material-ui/core/colors/orange';
 import { Redirect } from "react-router";
 import { login } from "../../redux/action-creators/authentication";
 import { connect } from "react-redux";
-
+//NOT FINISHED IMPLEMENTING
 
 const useStyles = makeStyles(theme => ({
     '@global': {

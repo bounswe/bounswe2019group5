@@ -4,8 +4,8 @@ import Tab from "react-bootstrap/Tab";
 import Typography from "@material-ui/core/Typography";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
-export default function Statistics({ userInfo, language, writings }) {
+//lists statistics of a user of a specific language
+export default function Statistics({ userInfo, language }) {
   const [key, setKey] = React.useState("General");
 
   const correctAnswerRate = (n_of_true, n_of_false) => {

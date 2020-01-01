@@ -21,6 +21,9 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
+//USER and EXERCISE search
+//gets input from input form or search bar from navigation
+//unions tag and keyword outputs when an input is given for an exercise
 class Search extends React.Component {
     constructor(props) {
         super(props);

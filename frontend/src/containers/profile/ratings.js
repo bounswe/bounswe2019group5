@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import StarRatings from 'react-star-ratings';
 import { Link } from "react-router-dom";
-
+//lists rates and comments to a user
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
