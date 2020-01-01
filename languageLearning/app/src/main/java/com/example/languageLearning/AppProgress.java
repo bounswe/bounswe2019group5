@@ -22,6 +22,7 @@ public class AppProgress extends AppCompatActivity {
 
     MyApplication app;
     double total_progress = 0;
+    double total_grade = 0;
     String languageSet = "";
 
     @Override
@@ -43,9 +44,48 @@ public class AppProgress extends AppCompatActivity {
     }
 
     private void getProgress(String language) {
+        final String path1 = "result/?language="+language;
+        app.initiateAPICall(Request.Method.GET, path1, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "No grade found according to this language", Toast.LENGTH_SHORT).show();;
+                    return;
+                }
+
+                JSONObject grades = (JSONObject) response ;
+                Log.d("Response", grades.toString());
+                try {
+                    //JSONObject presult = (JSONObject) progressResults.get(0);
+                    double number_of_true = grades.getInt("number_of_true");
+                    Log.d("trues", number_of_true+"");
+                    double number_of_false =  grades.getInt("number_of_false");
+                    Log.d("falses", number_of_false+"");
+                    double total_questions = number_of_false + number_of_true;
+                    total_grade = ((number_of_true/total_questions))*100;
+                    double total_gradeTwoDigit = Math.floor(total_grade);
+                    String gradeString= total_gradeTwoDigit+" over 100";
+                    Log.d(TAG," "+total_gradeTwoDigit+" over 100");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
+            }
+        });
+        final String path2 = "progress/?language="+language;
         Log.d("PROCESSED","PROGRESS IS BEING PROCESSED.......");
-        final String path = "progress/?language="+language;
-        app.initiateAPICall(Request.Method.GET, path, null, new Response.Listener<JSONObject>() {
+        app.initiateAPICall(Request.Method.GET, path2, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response.length() == 0) {
@@ -77,7 +117,9 @@ public class AppProgress extends AppCompatActivity {
                     i.putExtra("progressDouble", total_progressTwoDigit);
                     i.putExtra("progress", progressString);
                     i.putExtra("language", languageSet);
+                    i.putExtra("total_grade", total_grade);
                     startActivity(i);
+                    total_grade=0;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
