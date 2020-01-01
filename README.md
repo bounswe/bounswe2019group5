@@ -1,6 +1,6 @@
 # Bonibon - The Language Learning Platform Android Application
 
-* Current Android SDK version 9.0 (Pie)
+* Supported Android Version 7.0 (Nougat) and higher. [Current Android SDK version 9.0 (Pie)]
 * The APK file for Android devices can be downloaded from -> [🤖Android](https://github.com/bounswe/bounswe2019group5/raw/master/Bonibon.apk)
 * After allowing the Android device for external applications ([Guidance](https://www.androidcentral.com/unknown-sources)) the app can be installed easily.
 * Done ✔️ The Login screen awaits when you run the application on your Anroid device.
@@ -14,7 +14,7 @@
 
 * An Integrated development environment for Android Applications (Preferably Android Studio) should be used.
 * Emulators can be used for testing and debugging purposes.
-* Android SDK Version 9.0 (Pie) or higher
+* Android SDK Version 7.0 (Nougat) or higher.  [Current Android SDK version 9.0 (Pie)]
 * That's it ✔️
 
 ## 🤖Android User Manual
