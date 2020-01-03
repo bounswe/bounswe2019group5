@@ -153,6 +153,37 @@ public class JSONUnitTests {
     }
 
     @Test
+    public void test_UserProgress() throws JSONException {
+
+        final int not = 7;
+        final int nof = 3;
+        final int ntc = 6;
+        final int nt = 10;
+        final int cecl = 2;
+        final int eicl = 3;
+        final double grade = 70;
+        final double progress = 60;
+
+
+        JSONObject mockResponse = new JSONObject();
+        mockResponse.put("number_of_true", not);
+        mockResponse.put("number_of_false", nof);
+        mockResponse.put("number_of_test_completed", ntc);
+        mockResponse.put("number_of_test", nt);
+        mockResponse.put("completed_exercise_current_level", cecl);
+        mockResponse.put("exercise_in_current_level", eicl);
+
+        AppProgress parsed = AppProgress.fromJSON(mockResponse);
+        assertEquals(not, parsed.number_of_true);
+        assertEquals(nof, parsed.number_of_false);
+        assertEquals(ntc, parsed.ntc);
+        assertEquals(nt, parsed.nt);
+        assertEquals(cecl, parsed.cecl);
+        assertEquals(eicl, parsed.eicl);
+
+    }
+
+    @Test
     public void test_UserProfile() throws JSONException {
         final int id = 42;
         final String username = "halil";
