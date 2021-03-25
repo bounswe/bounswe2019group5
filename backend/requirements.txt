@@ -20,7 +20,7 @@ pipfile==0.0.2
 psycopg2-binary==2.8.2
 pycodestyle==2.5.0
 pytz==2019.2
-PyYAML==5.1.2
+PyYAML==5.4
 requests==2.22.0
 sqlparse==0.3.0
 toml==0.10.0
