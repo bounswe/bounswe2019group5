@@ -11,7 +11,7 @@
     "cors": "^2.8.5",
     "ejs": "latest",
     "express": "^4.16.4",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "mysql": "^2.17.1",
     "querystring": "latest"
   },
